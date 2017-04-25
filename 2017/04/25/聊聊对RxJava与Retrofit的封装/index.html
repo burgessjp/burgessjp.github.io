@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    <title>聊聊对RxJava与Retrofit的封装 | 技术分享会</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="Android">
+    <meta name="description" content="目前RxJava和Retrofit结合使用已经是非常普遍了，网上关于这方面的文章也是层出不穷，其实大致的思想都是差不多的，今天我也来写一篇关于RxJava与Retrofit的文章，聊一聊关于RxJava与Retrofit的封装，尽可能的能让其适用于大部分项目，以供大家在学习这方面的时候多一份参考。  关于RxJava的基础使用可以参考我的另一篇文章：是时候学习RxJava了，至于Retrofit">
+<meta name="keywords" content="Android">
+<meta property="og:type" content="article">
+<meta property="og:title" content="聊聊对RxJava与Retrofit的封装">
+<meta property="og:url" content="http://yoursite.com/2017/04/25/聊聊对RxJava与Retrofit的封装/index.html">
+<meta property="og:site_name" content="技术分享会">
+<meta property="og:description" content="目前RxJava和Retrofit结合使用已经是非常普遍了，网上关于这方面的文章也是层出不穷，其实大致的思想都是差不多的，今天我也来写一篇关于RxJava与Retrofit的文章，聊一聊关于RxJava与Retrofit的封装，尽可能的能让其适用于大部分项目，以供大家在学习这方面的时候多一份参考。  关于RxJava的基础使用可以参考我的另一篇文章：是时候学习RxJava了，至于Retrofit">
+<meta property="og:updated_time" content="2017-04-25T03:40:20.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="聊聊对RxJava与Retrofit的封装">
+<meta name="twitter:description" content="目前RxJava和Retrofit结合使用已经是非常普遍了，网上关于这方面的文章也是层出不穷，其实大致的思想都是差不多的，今天我也来写一篇关于RxJava与Retrofit的文章，聊一聊关于RxJava与Retrofit的封装，尽可能的能让其适用于大部分项目，以供大家在学习这方面的时候多一份参考。  关于RxJava的基础使用可以参考我的另一篇文章：是时候学习RxJava了，至于Retrofit">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">_SOLID</h5>
+          <a href="mailto:jiapeng1818@gmail.com" title="jiapeng1818@gmail.com" class="mail">jiapeng1818@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/burgessjp" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://weibo.com/xljiepeng" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">聊聊对RxJava与Retrofit的封装</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="搜尋">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">聊聊对RxJava与Retrofit的封装</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2017-04-25T03:05:53.625Z" itemprop="datePublished" class="page-time">
+  2017-04-25
+</time>
+
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+<article id="post-聊聊对RxJava与Retrofit的封装"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">聊聊对RxJava与Retrofit的封装</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2017-04-25 11:05:53" datetime="2017-04-25T03:05:53.625Z"  itemprop="datePublished">2017-04-25</time>
+
+            
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <blockquote>
+<p>目前RxJava和Retrofit结合使用已经是非常普遍了，网上关于这方面的文章也是层出不穷，其实大致的思想都是差不多的，今天我也来写一篇关于RxJava与Retrofit的文章，聊一聊关于RxJava与Retrofit的封装，尽可能的能让其适用于大部分项目，以供大家在学习这方面的时候多一份参考。</p>
+</blockquote>
+<p>关于RxJava的基础使用可以参考我的另一篇文章：<a href="http://www.jianshu.com/p/8cf84f719188" target="_blank" rel="external">是时候学习RxJava了</a>，至于Retrofit的基本使用这里我就不做介绍了，这里可以给大家提供一个学习Retrofit比较全面的网址<a href="https://futurestud.io/blog/retrofit-getting-started-and-android-client" target="_blank" rel="external">retrofit-getting-started-and-android-client</a>，对Retrofit还不太熟悉的同学可以先去看看上面的系列文章。</p>
+<p>闲话不多说了，直接上今天的主题。我们先来看看关于RxJava和Retrofit最基本的使用是怎么样的</p>
+<p>首先我们需要去定义一个对应接口的Service和返回结果的实体类<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">public class GankResultBean &#123;</div><div class="line">    private boolean error;</div><div class="line">    private List<span class="tag">&lt;<span class="name">ResultsBean</span>&gt;</span> results;</div><div class="line">    ...省略部分代码...</div><div class="line">&#125;</div><div class="line"> public interface RxGankService &#123;</div><div class="line">        @GET("data/all/20/&#123;page&#125;")</div><div class="line">        Observable<span class="tag">&lt;<span class="name">GankResultBean</span>&gt;</span> getAndroidData(@Path("page") int page);</div><div class="line"> &#125;</div></pre></td></tr></table></figure></p>
+<p>接着再去初始化Retrofit<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">Retrofit retrofit = new Retrofit.Builder()</div><div class="line">                .baseUrl("http://gank.io/api/")</div><div class="line">                .addConverterFactory(GsonConverterFactory.create())</div><div class="line">                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())</div><div class="line">                .build();</div></pre></td></tr></table></figure></p>
+<p>最后我们就可以去使用了<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">RxGankService rxGankService = retrofit.create(RxGankService.class);</div><div class="line">Observable<span class="tag">&lt;<span class="name">GankResultBean</span>&gt;</span> observable = rxGankService.getAndroidData(1);</div><div class="line">observable.subscribeOn(Schedulers.io())</div><div class="line">               .observeOn(AndroidSchedulers.mainThread())</div><div class="line">               .subscribe(new Subscriber<span class="tag">&lt;<span class="name">GankResultBean</span>&gt;</span>() &#123;</div><div class="line">                   @Override</div><div class="line">                   public void onCompleted() &#123;</div><div class="line"></div><div class="line">                   &#125;</div><div class="line"></div><div class="line">                   @Override</div><div class="line">                   public void onError(Throwable e) &#123;</div><div class="line"></div><div class="line">                   &#125;</div><div class="line"></div><div class="line">                   @Override</div><div class="line">                   public void onNext(GankResultBean gankResultBean) &#123;</div><div class="line"></div><div class="line">                   &#125;</div><div class="line">               &#125;);</div></pre></td></tr></table></figure></p>
+<p>逻辑还是挺清晰的，但是呢，如果每次使用都让你去写这么多的代码肯定会觉得很乏味，并且这里我还没有对返回结果做错误处理，于是我们就应该考虑一下对代码封装一下了。</p>
+<p>但是应该从哪里入手呢，这里简单分析下：</p>
+<ul>
+<li>看上面的代码我们会发现Retrofit初始化的那段代码，一般就一个baseUrl会有不同，其他的基本是一致的，如果我们每次去创建一个Service都要去写那么多重复的代码也大大增加了冗余度</li>
+<li>对于返回的结果一般情况下数据格式是这样的：<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">   code:1,</div><div class="line">   msg:"your message",</div><div class="line">   data:[]</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>code是服务器端和客户端约定好的一种规则，比如1表示数据请求成功，-1表示请求失败，-2表示权限不足等等，msg代表提示消息，其中data可能是数组对象也可能是普通的对象，我们可以考虑对返回的结果做一个统一的处理。</p>
+<p>经过上面的分析我们大致有了一个方向，对于Service的创建应该有一个类去单独处理。所以这里我创建了一个ServiceFactory的类。<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line"> * Created by _SOLID</div><div class="line"> * Date:2016/7/27</div><div class="line"> * Time:15:23</div><div class="line"> */</div><div class="line">public class ServiceFactory &#123;</div><div class="line"></div><div class="line">    private final Gson mGsonDateFormat;</div><div class="line"></div><div class="line">    private ServiceFactory() &#123;</div><div class="line">        mGsonDateFormat = new GsonBuilder()</div><div class="line">                .setDateFormat("yyyy-MM-dd hh:mm:ss")</div><div class="line">                .create();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    private static class SingletonHolder &#123;</div><div class="line">        private static final ServiceFactory INSTANCE = new ServiceFactory();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public static ServiceFactory getInstance() &#123;</div><div class="line">        return SingletonHolder.INSTANCE;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    /**</div><div class="line">     * create a service</div><div class="line">     *</div><div class="line">     * @param serviceClass</div><div class="line">     * @param <span class="tag">&lt;<span class="name">S</span>&gt;</span></div><div class="line">     * @return</div><div class="line">     */</div><div class="line">    public <span class="tag">&lt;<span class="name">S</span>&gt;</span> S createService(Class<span class="tag">&lt;<span class="name">S</span>&gt;</span> serviceClass) &#123;</div><div class="line">        String baseUrl = "";</div><div class="line">        try &#123;</div><div class="line">            Field field1 = serviceClass.getField("BASE_URL");</div><div class="line">            baseUrl = (String) field1.get(serviceClass);</div><div class="line">        &#125; catch (NoSuchFieldException e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">        &#125; catch (IllegalAccessException e) &#123;</div><div class="line">            e.getMessage();</div><div class="line">            e.printStackTrace();</div><div class="line">        &#125;</div><div class="line">        Retrofit retrofit = new Retrofit.Builder()</div><div class="line">                .baseUrl(baseUrl)</div><div class="line">                .client(getOkHttpClient())</div><div class="line">                .addConverterFactory(GsonConverterFactory.create(mGsonDateFormat))</div><div class="line">                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())</div><div class="line">                .build();</div><div class="line">        return retrofit.create(serviceClass);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    private final static long DEFAULT_TIMEOUT = 10;</div><div class="line"></div><div class="line">    private OkHttpClient getOkHttpClient() &#123;</div><div class="line">        //定制OkHttp</div><div class="line">        OkHttpClient.Builder httpClientBuilder = new OkHttpClient.Builder();</div><div class="line">        //设置超时时间</div><div class="line">        httpClientBuilder.connectTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS);</div><div class="line">        httpClientBuilder.writeTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS);</div><div class="line">        httpClientBuilder.readTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS);</div><div class="line">        //设置缓存</div><div class="line">        File httpCacheDirectory = new File(FileUtils.getCacheDir(SolidApplication.getInstance()), "OkHttpCache");</div><div class="line">        httpClientBuilder.cache(new Cache(httpCacheDirectory, 10 * 1024 * 1024));</div><div class="line">        return httpClientBuilder.build();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>其他的代码我就不做说明了，这里我只对createService方法做一个简单的说明：对于baseUrl是用反射去获取我们自定义Service中的BASE_URL字段，所以在使用的时候就有了一个约定，当我们新建一个Service的时候一定要有BASE_URL字段并赋值。也就是说我们在新建的Service大致是这样的<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">public interface GankService &#123;</div><div class="line"></div><div class="line">    String BASE_URL = "http://www.gank.io/api/";</div><div class="line"></div><div class="line">   @GET("data/all/20/&#123;page&#125;") Observable<span class="tag">&lt;<span class="name">GankResultBean</span>&gt;</span> getAndroidData(@Path("page") int page);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>现在我们应该怎样去使用呢<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">GankService gankService = ServiceFactory.getInstance().createService(GankService.class);</div></pre></td></tr></table></figure></p>
+<p>是不是一下感觉创建一个Service的代码一下简洁了很多。这里还没完，我们只是解决了Service的创建，还没有对结果去做处理。</p>
+<p>我以 <em><a href="http://gank.io/api/data/Android/10/1" target="_blank" rel="external">http://gank.io/api/data/Android/10/1</a></em> 这个接口为例：<br>他返回的结果的格式是这样的：<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">  "error": false, </div><div class="line">  "results": []</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>所以这里我定义了这样的一个泛型类（T 是返回结果results的类型）<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">public class HttpResult<span class="tag">&lt;<span class="name">T</span>&gt;</span> &#123;</div><div class="line">    public boolean error;</div><div class="line">    public T results;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>在处理结果的时候，其实用户只关心的是T，对其他数据可以统一处理下就比如这里的error字段，有了这个我们就可以再封装一下Subscriber了。<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line">public abstract class HttpResultSubscriber&lt;T&gt; extends Subscriber&lt;HttpResult&lt;T&gt;&gt; &#123;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public void onCompleted() &#123;</div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public void onError(Throwable e) &#123;</div><div class="line">        Logger.e(this,e.getMessage());</div><div class="line">        e.printStackTrace();</div><div class="line">        //在这里做全局的错误处理</div><div class="line">        if (e instanceof HttpException) &#123;</div><div class="line">            // ToastUtils.getInstance().showToast(e.getMessage());</div><div class="line">        &#125;</div><div class="line">        _onError(e);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public void onNext(HttpResult&lt;T&gt; t) &#123;</div><div class="line">        if (!t.error)</div><div class="line">            onSuccess(t.results);</div><div class="line">        else</div><div class="line">            _onError(new Throwable("error=" + t.error));</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public abstract void onSuccess(T t);</div><div class="line"></div><div class="line">    public abstract void _onError(Throwable e);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>我们来看看现在怎么使用吧：<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">ServiceFactory.getInstance()</div><div class="line">                .createService(GankService.class)</div><div class="line">                .getAndroidData(1)</div><div class="line">                .observeOn(AndroidSchedulers.mainThread())</div><div class="line">                .subscribeOn(Schedulers.io())</div><div class="line">                .subscribe(new HttpResultSubscriber&lt;List&lt;GanHuoDataBean&gt;&gt;() &#123;</div><div class="line">                    @Override</div><div class="line">                    public void onSuccess(List&lt;GanHuoDataBean&gt; list) &#123;</div><div class="line"></div><div class="line">                    &#125;</div><div class="line"></div><div class="line">                    @Override</div><div class="line">                    public void _onError(Throwable e) &#123;</div><div class="line"></div><div class="line">                    &#125;</div><div class="line">                &#125;);</div></pre></td></tr></table></figure></p>
+<p>把这段代码与文章开始那段代码比较一下，是不是神清气爽了很多，并且这里还做了错误处理的。</p>
+<p>细心的同学肯定注意到了这段代码，这段代码每次都是在重复的使用<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">observeOn(AndroidSchedulers.mainThread())</div><div class="line">.subscribeOn(Schedulers.io())</div></pre></td></tr></table></figure></p>
+<p>这里我们可以创建一个TransformUtils类去处理一下<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">public class TransformUtils &#123;</div><div class="line"></div><div class="line">    public static <span class="tag">&lt;<span class="name">T</span>&gt;</span> Observable.Transformer<span class="tag">&lt;<span class="name">T,</span> <span class="attr">T</span>&gt;</span> defaultSchedulers() &#123;</div><div class="line">        return new Observable.Transformer<span class="tag">&lt;<span class="name">T,</span> <span class="attr">T</span>&gt;</span>() &#123;</div><div class="line">            @Override</div><div class="line">            public Observable<span class="tag">&lt;<span class="name">T</span>&gt;</span> call(Observable<span class="tag">&lt;<span class="name">T</span>&gt;</span> tObservable) &#123;</div><div class="line">                return tObservable.observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io());</div><div class="line">            &#125;</div><div class="line">        &#125;;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public static <span class="tag">&lt;<span class="name">T</span>&gt;</span> Observable.Transformer<span class="tag">&lt;<span class="name">T,</span> <span class="attr">T</span>&gt;</span> all_io() &#123;</div><div class="line">        return new Observable.Transformer<span class="tag">&lt;<span class="name">T,</span> <span class="attr">T</span>&gt;</span>() &#123;</div><div class="line">            @Override</div><div class="line">            public Observable<span class="tag">&lt;<span class="name">T</span>&gt;</span> call(Observable<span class="tag">&lt;<span class="name">T</span>&gt;</span> tObservable) &#123;</div><div class="line">                return tObservable.observeOn(Schedulers.io()).subscribeOn(Schedulers.io());</div><div class="line">            &#125;</div><div class="line">        &#125;;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>然后在使用的时候使用compose操作符就可以了<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">.compose(TransformUtils.&lt;HttpResult&lt;List&lt;GanHuoDataBean&gt;&gt;&gt;defaultSchedulers())</div></pre></td></tr></table></figure></p>
+<p>我们都知道对于网络请求肯定会有不成功的情况，有没有一种方案能够处理一下？其实RxJava已经为我们提供了这样的一个操作符<code>RetryWhen</code>可以用来实现重试机制，我这里有一个实现好的一个机制，默认情况下，最多重试3次，第一次会等3s，第二次会等6s，第三次会等9s。<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div></pre></td><td class="code"><pre><div class="line">public class RetryWhenNetworkException implements Func1&lt;Observable&lt;? extends Throwable&gt;, Observable&lt;?&gt;&gt; &#123;</div><div class="line">    private int count = 3;//retry count</div><div class="line">    private long delay = 3000;//delay time</div><div class="line"></div><div class="line">    public RetryWhenNetworkException() &#123;</div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public RetryWhenNetworkException(int count) &#123;</div><div class="line">        this.count = count;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public RetryWhenNetworkException(int count, long delay) &#123;</div><div class="line">        this.count = count;</div><div class="line">        this.delay = delay;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public Observable&lt;?&gt; call(Observable&lt;? extends Throwable&gt; observable) &#123;</div><div class="line">        return observable</div><div class="line">                .zipWith(Observable.range(1, count + 1), new Func2&lt;Throwable, Integer, Wrapper&gt;() &#123;</div><div class="line">                    @Override</div><div class="line">                    public Wrapper call(Throwable throwable, Integer integer) &#123;</div><div class="line">                        return new Wrapper(throwable, integer);</div><div class="line">                    &#125;</div><div class="line">                &#125;).flatMap(new Func1&lt;Wrapper, Observable&lt;?&gt;&gt;() &#123;</div><div class="line">                    @Override</div><div class="line">                    public Observable&lt;?&gt; call(Wrapper wrapper) &#123;</div><div class="line">                        if ((wrapper.throwable instanceof ConnectException</div><div class="line">                                || wrapper.throwable instanceof SocketTimeoutException</div><div class="line">                                || wrapper.throwable instanceof TimeoutException)</div><div class="line">                                &amp;&amp; wrapper.index &lt; count + 1) &#123;</div><div class="line">                            return Observable.timer(delay + (wrapper.index - 1) * delay, TimeUnit.MILLISECONDS);</div><div class="line">                        &#125;</div><div class="line">                        return Observable.error(wrapper.throwable);</div><div class="line">                    &#125;</div><div class="line">                &#125;);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    private class Wrapper &#123;</div><div class="line">        private int index;</div><div class="line">        private Throwable throwable;</div><div class="line"></div><div class="line">        public Wrapper(Throwable throwable, int index) &#123;</div><div class="line">            this.index = index;</div><div class="line">            this.throwable = throwable;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<hr>
+<p>到这里对于RxJava与Retrofit的封装的基本封装就差不多了，也能适用于大部分的项目中去了，一般情况下改改HttpResult和HttpResultSubscriber这两个类就可以了。<br>但是实际开发中有可能会遇到这样的一种情况：直接去访问一个完整的Url，还有用Retrofit去做下载该怎么做呢？</p>
+<p>其实解决方案是有的，这里我们可以去定义一个CommonService<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">public interface CommonService &#123;</div><div class="line">    String BASE_URL = "http://www.example.com/";//这个不重要，可以随便写，但是必须有</div><div class="line"></div><div class="line">    @GET</div><div class="line">    Observable<span class="tag">&lt;<span class="name">ResponseBody</span>&gt;</span> loadString(@Url String url);</div><div class="line"></div><div class="line">    @GET</div><div class="line">    @Streaming</div><div class="line">    Observable<span class="tag">&lt;<span class="name">ResponseBody</span>&gt;</span> download(@Url String url);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>其实就是把参数的注解换成@Url就可以了，关于实现的细节可以参考文末给出的源码。</p>
+<p>本文源码地址:<a href="https://github.com/burgessjp/GanHuoIO/tree/v3.1.0/library/src/main/java/ren/solid/library/rx/retrofit" target="_blank" rel="external">源码</a></p>
+<p>参考资料可以去我管理的专题查看：<br><a href="http://www.jianshu.com/collection/d79a6385bded" target="_blank" rel="external">RxJava系列专题（Android方向）</a></p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    最後更新時間：<time datetime="2017-04-25T03:40:20.000Z" itemprop="dateUpdated">2017-04-25 11:40:20</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/2017/04/25/聊聊对RxJava与Retrofit的封装/" target="_blank" rel="external">http://yoursite.com/2017/04/25/聊聊对RxJava与Retrofit的封装/</a>
+        
+    </div>
+    <footer>
+        <a href="http://yoursite.com">
+            <img src="/img/avatar.jpg" alt="_SOLID">
+            _SOLID
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/2017/04/25/聊聊对RxJava与Retrofit的封装/&title=《聊聊对RxJava与Retrofit的封装》 — 技术分享会&pic=http://yoursite.com/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2017/04/25/聊聊对RxJava与Retrofit的封装/&title=《聊聊对RxJava与Retrofit的封装》 — 技术分享会&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2017/04/25/聊聊对RxJava与Retrofit的封装/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《聊聊对RxJava与Retrofit的封装》 — 技术分享会&url=http://yoursite.com/2017/04/25/聊聊对RxJava与Retrofit的封装/&via=http://yoursite.com" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://yoursite.com/2017/04/25/聊聊对RxJava与Retrofit的封装/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2017/04/25/比系统自带的更好用的SnackBar/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">比系统自带的更好用的SnackBar</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2017/04/25/自动抢红包，自动安装原理之AccessibilityService/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">自动抢红包，自动安装原理之AccessibilityService</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+<div class="comments" id="comments">
+    <div class="ds-thread" data-thread-key="聊聊对RxJava与Retrofit的封装" data-title="聊聊对RxJava与Retrofit的封装" data-url="http://yoursite.com/2017/04/25/聊聊对RxJava与Retrofit的封装/"></div>
+</div>
+<script>
+lazyScripts.push('//cdn.bootcss.com/marked/0.3.6/marked.min.js');
+
+var duoshuoQuery = {short_name:'ysblog', theme: 'none'};
+lazyScripts.push('//unpkg.com/hexo-theme-material-indigo@latest/js/embed.min.js');
+
+
+</script>
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <ul class="reward-items">
+        
+        <li>
+            <img src="/img/wechat.jpg" title="微信打赏二维码" alt="微信打赏二维码">
+            <p>微信</p>
+        </li>
+        
+
+        
+        <li>
+            <img src="/img/alipay.jpg" title="支付宝打赏二维码" alt="支付宝打赏二维码">
+            <p>支付宝</p>
+        </li>
+        
+    </ul>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+            <span>本部落格係採用<a rel="license" href="https://creativecommons.org/licenses/by/4.0/deed.zh_TW">創用 CC 姓名標示 4.0 國際 授權條款授權</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p>
+            <span>Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a></span>
+            <span>_SOLID &copy; 2017</span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/2017/04/25/聊聊对RxJava与Retrofit的封装/&title=《聊聊对RxJava与Retrofit的封装》 — 技术分享会&pic=http://yoursite.com/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2017/04/25/聊聊对RxJava与Retrofit的封装/&title=《聊聊对RxJava与Retrofit的封装》 — 技术分享会&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2017/04/25/聊聊对RxJava与Retrofit的封装/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《聊聊对RxJava与Retrofit的封装》 — 技术分享会&url=http://yoursite.com/2017/04/25/聊聊对RxJava与Retrofit的封装/&via=http://yoursite.com" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://yoursite.com/2017/04/25/聊聊对RxJava与Retrofit的封装/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=http://yoursite.com/2017/04/25/聊聊对RxJava与Retrofit的封装/" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>
