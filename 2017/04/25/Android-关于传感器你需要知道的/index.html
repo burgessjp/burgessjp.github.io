@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    <title>No title | 技术分享会</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="">
+    <meta name="description" content="最近在搞一个自己的App，突发一个想法，给App加一个摇一摇随机查看图片的功能，这样可以使得用户在使用App的时候有更多的乐趣。实现摇一摇肯定少不了传感器，在使用之余，索性总结一下在Android中关于传感器的使用。  本文目录：1.什么是传感器2.常用传感器介绍与用法3.实现图片摇一摇  ##1.什么是传感器 维基百科是这样定义的：传感器是一种物理装置或生物器官，能够探测、感受外界的信号、物理条">
+<meta name="keywords">
+<meta property="og:type" content="article">
+<meta property="og:title" content="No title">
+<meta property="og:url" content="http://yoursite.com/2017/04/25/Android-关于传感器你需要知道的/index.html">
+<meta property="og:site_name" content="技术分享会">
+<meta property="og:description" content="最近在搞一个自己的App，突发一个想法，给App加一个摇一摇随机查看图片的功能，这样可以使得用户在使用App的时候有更多的乐趣。实现摇一摇肯定少不了传感器，在使用之余，索性总结一下在Android中关于传感器的使用。  本文目录：1.什么是传感器2.常用传感器介绍与用法3.实现图片摇一摇  ##1.什么是传感器 维基百科是这样定义的：传感器是一种物理装置或生物器官，能够探测、感受外界的信号、物理条">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/623504-11cb13cb313621ef.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/623504-8e6bcf68406ee6e8.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2017-04-25T03:05:25.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="No title">
+<meta name="twitter:description" content="最近在搞一个自己的App，突发一个想法，给App加一个摇一摇随机查看图片的功能，这样可以使得用户在使用App的时候有更多的乐趣。实现摇一摇肯定少不了传感器，在使用之余，索性总结一下在Android中关于传感器的使用。  本文目录：1.什么是传感器2.常用传感器介绍与用法3.实现图片摇一摇  ##1.什么是传感器 维基百科是这样定义的：传感器是一种物理装置或生物器官，能够探测、感受外界的信号、物理条">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/623504-11cb13cb313621ef.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">_SOLID</h5>
+          <a href="mailto:jiapeng1818@gmail.com" title="jiapeng1818@gmail.com" class="mail">jiapeng1818@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/burgessjp" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.weibo.com" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis"></div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title"></h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2017-04-25T03:05:53.578Z" itemprop="datePublished" class="page-time">
+  2017-04-25
+</time>
+
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+<article id="post-Android-关于传感器你需要知道的"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title"></h1>
+        <div class="post-meta">
+            <time class="post-time" title="2017-04-25 11:05:53" datetime="2017-04-25T03:05:53.578Z"  itemprop="datePublished">2017-04-25</time>
+
+            
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>最近在搞一个自己的App，突发一个想法，给App加一个摇一摇随机查看图片的功能，这样可以使得用户在使用App的时候有更多的乐趣。实现摇一摇肯定少不了传感器，在使用之余，索性总结一下在Android中关于传感器的使用。</p>
+<blockquote>
+<p>本文目录：<br>1.什么是传感器<br>2.常用传感器介绍与用法<br>3.实现图片摇一摇</p>
+</blockquote>
+<p>##1.什么是传感器</p>
+<p>维基百科是这样定义的：<em>传感器是一种物理装置或生物器官，能够探测、感受外界的信号、物理条件（如光、热、湿度）或化学组成（如烟雾），并将探知的信息传递给其他装置或器官。</em></p>
+<p>在Android中传感器可以展示当前手机状态的应用，包括硬件信息、当前位置、加速计、陀螺仪、光感、磁场、定向、电池窗台，声压，同时还可以进行多点触控的测试。只要你的想象力足够丰富，完全可以利用这些信息做出一些很新奇得应用。</p>
+<p>##2.常用传感器介绍与用法</p>
+<p>Android平台支持三个大类的传感器</p>
+<ul>
+<li>Motion sensors（运动传感器）<br> 这些传感器测量加速力，并沿三个轴的旋转力。此类别包括加速度计，重力感应器， 陀螺仪和旋转矢量传感器。</li>
+<li>Environmental sensors （环境传感器）<br>这些传感器测量各种环境参数，例如环境空气温度和压力，照明和湿度。此类别包括气压计，光度计，和温度计。</li>
+<li>Position sensors （位置传感器）<br>这些传感器测量设备的物理位置。这个类别包括方向传感器和磁力计。</li>
+</ul>
+<p>好。下面来看看Android中怎么去使用传感器。</p>
+<p>第一步：得到SensorManager<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">SensorManager mSensorManager = (SensorManager) mContext</div><div class="line">                .getSystemService(Context.SENSOR_SERVICE);</div></pre></td></tr></table></figure></p>
+<p>第二步:注册传感器</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">Sensor sensor = mSensorManager</div><div class="line">               .getDefaultSensor(Sensor.TYPE_ACCELEROMETER);</div><div class="line">       if (null != sensor)</div><div class="line">           mSensorManager.registerListener(this, sensor,</div><div class="line">                   SensorManager.SENSOR_DELAY_NORMAL);</div></pre></td></tr></table></figure>
+<p>嗯。然后就可以监听传感器数据的变化了。</p>
+<p>我相信第一步大家都能看懂，这里主要说一下第二步。</p>
+<p>registerListener这个方法有三个参数。</p>
+<ul>
+<li><p>第一个参数是传感器数据变化的监听器<br>我们需要去实现SensorEventListener接口，他里面有两个回调方法</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">@Override</div><div class="line">   public void onSensorChanged(SensorEvent event) &#123;</div><div class="line">    //当传感器的数值发生变化时调用</div><div class="line">   &#125;</div><div class="line"></div><div class="line">   @Override</div><div class="line">   public void onAccuracyChanged(Sensor sensor, int accuracy) &#123;</div><div class="line">    //传感器的精度发生变化时调用</div><div class="line">   &#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>第二个参数是我们需要监听的传感器<br>我们得到传感器用的是下面这种方法：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Sensor sensor = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>TYPE_ACCELEROMETER代表的就是加速度传感器。Android定义了很多的常量来代表支持的传感器，我们来看看Android平台支持的传感器类型。</p>
+<ul>
+<li>加速度传感器：TYPE_ACCELEROMETER<br> 以m/s2测量它设备所有三个物理轴线方向（x,y,和z）加速度。</li>
+<li>周围温度传感器：TYPE_AMBIENT_TEMPERATURE<br>检测周围空气温度。</li>
+<li>重力传感器：TYPE_GRAVITY<br>  测量重力</li>
+<li>陀螺仪传感器：TYPE_GYROSCOPE<br> 以rad/s测量设备三个物理轴线方向（x,y,和z)。旋转速度。</li>
+<li>光照传感器：TYPE_LIGHT<br>  以lx测量周围的光线级别。 </li>
+<li>线性加速度传感器：TYPE_LINEAR_ACCELERATION<br>检测沿着一个轴向的加速度。</li>
+<li>磁力传感器：TYPE_MAGNETIC_FIELD<br> 测量周围的三个物理轴线方向的磁场。</li>
+<li>方向传感器： TYPE_ORIENTATION<br> 测量设备所有三个物理轴线方向（x,y和x）的旋转角度。</li>
+<li>压力传感器：TYPE_PRESSURE<br> 测量周围空气气压</li>
+<li>接近传感器：TYPE_PROXIMITY<br>检测物体与手机的距离</li>
+<li>相对湿度传感器：TYPE_RELATIVE_HUMIDITY<br> 检测周围空气相对湿度</li>
+<li>旋转矢量传感器：TYPE_ROTATION_VECTOR<br> 用于检测运动和检测旋转。 </li>
+<li>温度传感器： TYPE_TEMPERATURE<br> 检测设备的温度</li>
+</ul>
+<p>下面再来看看传感器的平台的可用性</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://upload-images.jianshu.io/upload_images/623504-11cb13cb313621ef.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="来源于官网" title="">
+                </div>
+                <div class="image-caption">来源于官网</div>
+            </figure>
+<p>注意到图中Yes右上角有个上标：1这个类型的传感器在Android1.5（API Level 3）被添加，但是直到Android2.3（API Level 9）也不可用。 2这个传感器是可用的，但是它被弃用。 </p>
+<ul>
+<li>第三个参数是传感器数据更新数据的速度<br>有以下四个值可选，他们的速度是递增的<ul>
+<li>SENSOR_DELAY_UI</li>
+<li>SENSOR_DELAY_NORMAL</li>
+<li>SENSOR_DELAY_GAME </li>
+<li>SENSOR_DELAY_FASTEST</li>
+</ul>
+</li>
+</ul>
+<p>传感器的基本使用和介绍截差不多就这些，下面来看看，怎么去实现一个图片摇一摇的功能。</p>
+<p>##3.实现图片摇一摇</p>
+<p>要实现摇一摇，主要就是去监听手机加速度的变化，当达到一个值的时候就出发摇一摇这个事件。</p>
+<p>说到这，你肯定就知道我们要用的就是<strong>加速度传感器</strong>去实现这个功能。</p>
+<p>先来看看效果图：</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://upload-images.jianshu.io/upload_images/623504-8e6bcf68406ee6e8.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<p>废话不多说了，下面直接上代码，经过前面的知识储备，我相信你肯定能看懂的<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line"> * Created by _SOLID</div><div class="line"> * Date:2016/6/3</div><div class="line"> * Time:9:55</div><div class="line"> */</div><div class="line">public class ShakePictureUtils implements SensorEventListener &#123;</div><div class="line"></div><div class="line">    // 两次检测的时间间隔</div><div class="line">    private static final int UPTATE_INTERVAL_TIME = 100;</div><div class="line">    // 加速度变化阈值，当摇晃速度达到这值后产生作用</div><div class="line">    private static final int SPEED_THRESHOLD = 2000;</div><div class="line"></div><div class="line">    private Context mContext;</div><div class="line">    private SensorManager mSensorManager = null;</div><div class="line">    private Vibrator mVibrator = null;</div><div class="line">    private PictureDialog mPictureDialog = null;</div><div class="line"></div><div class="line"></div><div class="line">    public ShakePictureUtils(Context context) &#123;</div><div class="line">        mContext = context;</div><div class="line">        mSensorManager = (SensorManager) mContext</div><div class="line">                .getSystemService(Context.SENSOR_SERVICE);</div><div class="line">        mVibrator = (Vibrator) mContext.getSystemService(Context.VIBRATOR_SERVICE);</div><div class="line">        mPictureDialog = new PictureDialog(mContext, R.style.PictureDialog);</div><div class="line">        mPictureDialog.setOnDismissListener(new DialogInterface.OnDismissListener() &#123;</div><div class="line">            @Override</div><div class="line">            public void onDismiss(DialogInterface dialog) &#123;</div><div class="line">                registerSensor();</div><div class="line">            &#125;</div><div class="line">        &#125;);</div><div class="line">    &#125;</div><div class="line"></div><div class="line"></div><div class="line">    private long lastUpdateTime;</div><div class="line">    private float lastX;</div><div class="line">    private float lastY;</div><div class="line">    private float lastZ;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public void onSensorChanged(SensorEvent event) &#123;</div><div class="line">        long currentUpdateTime = System.currentTimeMillis();</div><div class="line"></div><div class="line">        long timeInterval = currentUpdateTime - lastUpdateTime;</div><div class="line"></div><div class="line">        if (timeInterval <span class="tag">&lt; <span class="attr">UPTATE_INTERVAL_TIME</span>) &#123;</span></div><div class="line">            <span class="attr">return</span>;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="attr">lastUpdateTime</span> = <span class="string">currentUpdateTime;</span></div><div class="line">        <span class="attr">float</span>[] <span class="attr">values</span> = <span class="string">event.values;</span></div><div class="line"></div><div class="line">        // 获得<span class="attr">x</span>,<span class="attr">y</span>,<span class="attr">z</span>加速度</div><div class="line">        <span class="attr">float</span> <span class="attr">x</span> = <span class="string">values[0];</span></div><div class="line">        <span class="attr">float</span> <span class="attr">y</span> = <span class="string">values[1];</span></div><div class="line">        <span class="attr">float</span> <span class="attr">z</span> = <span class="string">values[2];</span></div><div class="line"></div><div class="line">        // 获得<span class="attr">x</span>,<span class="attr">y</span>,<span class="attr">z</span>加速度的变化值</div><div class="line">        <span class="attr">float</span> <span class="attr">deltaX</span> = <span class="string">x</span> <span class="attr">-</span> <span class="attr">lastX</span>;</div><div class="line">        <span class="attr">float</span> <span class="attr">deltaY</span> = <span class="string">y</span> <span class="attr">-</span> <span class="attr">lastY</span>;</div><div class="line">        <span class="attr">float</span> <span class="attr">deltaZ</span> = <span class="string">z</span> <span class="attr">-</span> <span class="attr">lastZ</span>;</div><div class="line"></div><div class="line">        // 将现在的坐标变成<span class="attr">last</span>坐标</div><div class="line">        <span class="attr">lastX</span> = <span class="string">x;</span></div><div class="line">        <span class="attr">lastY</span> = <span class="string">y;</span></div><div class="line">        <span class="attr">lastZ</span> = <span class="string">z;</span></div><div class="line"></div><div class="line"></div><div class="line">        <span class="attr">Logger.i</span>("<span class="attr">values</span>[<span class="attr">0</span>] = <span class="string">" + values[0]);</span></div><div class="line">        Logger.i("<span class="attr">values</span>[<span class="attr">1</span>] = <span class="string">" + values[1]);</span></div><div class="line">        Logger.i("<span class="attr">values</span>[<span class="attr">2</span>] = <span class="string">" + values[2]);</span></div><div class="line"></div><div class="line">        double speed = Math.sqrt(deltaX * deltaX + deltaY * deltaY + deltaZ</div><div class="line">                * deltaZ)</div><div class="line">                / timeInterval * 10000;</div><div class="line">        Logger.i("<span class="attr">speed:</span>" + <span class="attr">speed</span>);</div><div class="line">        <span class="attr">if</span> (<span class="attr">speed</span> &gt; SPEED_THRESHOLD) &#123;</div><div class="line">            //在这里可以提供一个回调</div><div class="line">            mVibrator.vibrate(300);</div><div class="line">            requestPicture();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public void onAccuracyChanged(Sensor sensor, int accuracy) &#123;</div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void registerSensor() &#123;</div><div class="line">        Sensor sensor = mSensorManager</div><div class="line">                .getDefaultSensor(Sensor.TYPE_ACCELEROMETER);</div><div class="line">        if (null != sensor)</div><div class="line">            mSensorManager.registerListener(this, sensor,</div><div class="line">                    SensorManager.SENSOR_DELAY_NORMAL);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void unRegisterSensor() &#123;</div><div class="line"></div><div class="line">        lastX = 0;</div><div class="line">        lastY = 0;</div><div class="line">        lastZ = 0;</div><div class="line">        mSensorManager.unregisterListener(this);</div><div class="line">    &#125;</div><div class="line"></div><div class="line"></div><div class="line">    private void requestPicture() &#123;</div><div class="line">        HttpClientManager.getData(Apis.Urls.RandomPicture, new JsonHttpCallBack<span class="tag">&lt;<span class="name">RandomPictureBean</span>&gt;</span>() &#123;</div><div class="line">            @Override</div><div class="line">            public void onStart() &#123;</div><div class="line">                unRegisterSensor();</div><div class="line">                ToastUtils.getInstance().showToast("图片获取中...");</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            @Override</div><div class="line">            public void onSuccess(RandomPictureBean result) &#123;</div><div class="line">                mPictureDialog.setPicture(result.getP_ori());</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            @Override</div><div class="line">            public void onError(Exception e) &#123;</div><div class="line">                registerSensor();</div><div class="line">            &#125;</div><div class="line">        &#125;);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>我是讲=将摇一摇这个功能做了一下封装，方便以后的使用。代码的实现思想就是去判断三个坐标轴加速度的变化值，当其达到一个阈值的时候则触发摇一摇。<br>最后来看看在Activity中怎么去使用</p>
+<ol>
+<li><p>在onCreate方法中去初始化摇一摇</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ShakePictureUtils mShakePictureUtils = new ShakePictureUtils(this);</div></pre></td></tr></table></figure>
+</li>
+<li><p>在onResume方法中去注册</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">@Override</div><div class="line">protected void onResume() &#123;</div><div class="line">    super.onResume();</div><div class="line">    mShakePictureUtils.registerSensor();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>在onPause方法中去解注册</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">@Override</div><div class="line">protected void onPause() &#123;</div><div class="line">    super.onPause();</div><div class="line">    mShakePictureUtils.unRegisterSensor();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>源码地址：<a href="https://github.com/burgessjp/GanHuoIO/blob/master/app/src/main/java/ren/solid/ganhuoio/utils/ShakePictureUtils.java" target="_blank" rel="external">ShakePictureUtils</a></p>
+<p>也请大家也关注下我的一个开源项目<a href="https://github.com/burgessjp/GanHuoIO" target="_blank" rel="external">GanHuoIO</a>。这是基于gank.io提供的api写的一个Android客户端，谢谢。</p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2017-04-25T03:05:25.000Z" itemprop="dateUpdated">2017-04-25 11:05:25</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/2017/04/25/Android-关于传感器你需要知道的/" target="_blank" rel="external">http://yoursite.com/2017/04/25/Android-关于传感器你需要知道的/</a>
+        
+    </div>
+    <footer>
+        <a href="http://yoursite.com">
+            <img src="/img/avatar.jpg" alt="_SOLID">
+            _SOLID
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/2017/04/25/Android-关于传感器你需要知道的/&title=技术分享会&pic=http://yoursite.com/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2017/04/25/Android-关于传感器你需要知道的/&title=技术分享会&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2017/04/25/Android-关于传感器你需要知道的/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=技术分享会&url=http://yoursite.com/2017/04/25/Android-关于传感器你需要知道的/&via=http://yoursite.com" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://yoursite.com/2017/04/25/Android-关于传感器你需要知道的/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2017/04/25/Android-Material-Design-兼容库的使用详解/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">[no title]</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2017/04/25/Android-多媒体之Camera/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">[no title]</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+<div class="comments" id="comments">
+    <div class="ds-thread" data-thread-key="Android-关于传感器你需要知道的" data-title="" data-url="http://yoursite.com/2017/04/25/Android-关于传感器你需要知道的/"></div>
+</div>
+<script>
+lazyScripts.push('//cdn.bootcss.com/marked/0.3.6/marked.min.js');
+
+var duoshuoQuery = {short_name:'ysblog', theme: 'none'};
+lazyScripts.push('//unpkg.com/hexo-theme-material-indigo@latest/js/embed.min.js');
+
+
+</script>
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <ul class="reward-items">
+        
+        <li>
+            <img src="/img/wechat.jpg" title="微信打赏二维码" alt="微信打赏二维码">
+            <p>微信</p>
+        </li>
+        
+
+        
+        <li>
+            <img src="/img/alipay.jpg" title="支付宝打赏二维码" alt="支付宝打赏二维码">
+            <p>支付宝</p>
+        </li>
+        
+    </ul>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+            <span>博客内容遵循<a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p>
+            <span>Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a></span>
+            <span>_SOLID &copy; 2017</span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/2017/04/25/Android-关于传感器你需要知道的/&title=《No title》 — 技术分享会&pic=http://yoursite.com/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2017/04/25/Android-关于传感器你需要知道的/&title=《No title》 — 技术分享会&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2017/04/25/Android-关于传感器你需要知道的/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《No title》 — 技术分享会&url=http://yoursite.com/2017/04/25/Android-关于传感器你需要知道的/&via=http://yoursite.com" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://yoursite.com/2017/04/25/Android-关于传感器你需要知道的/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=http://yoursite.com/2017/04/25/Android-关于传感器你需要知道的/" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>

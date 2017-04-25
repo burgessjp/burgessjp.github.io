@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    <title>No title | 技术分享会</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="">
+    <meta name="description" content="关于SnackBar我相信不用我多说，我相信大部分的同学肯定都知道。他是在Android5.0之后才推出的，可以为一个操作提供了一个轻量级的反馈，用来代替Toast的。如果有不太了解的同学或者还不太清楚可以直接定位到 这篇文章 的Snackbar去看看。 对于SnackBar我们通常是这样使用的，1Snackbar.make(mDrawerLayout,&quot;再按一次退出&quot;,Snackbar.LENG">
+<meta name="keywords">
+<meta property="og:type" content="article">
+<meta property="og:title" content="No title">
+<meta property="og:url" content="http://yoursite.com/2017/04/25/比系统自带的更好用的SnackBar/index.html">
+<meta property="og:site_name" content="技术分享会">
+<meta property="og:description" content="关于SnackBar我相信不用我多说，我相信大部分的同学肯定都知道。他是在Android5.0之后才推出的，可以为一个操作提供了一个轻量级的反馈，用来代替Toast的。如果有不太了解的同学或者还不太清楚可以直接定位到 这篇文章 的Snackbar去看看。 对于SnackBar我们通常是这样使用的，1Snackbar.make(mDrawerLayout,&quot;再按一次退出&quot;,Snackbar.LENG">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/623504-64c26a8d8fa7bfab.gif?imageMogr2/auto-orient/strip">
+<meta property="og:updated_time" content="2017-04-25T03:05:25.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="No title">
+<meta name="twitter:description" content="关于SnackBar我相信不用我多说，我相信大部分的同学肯定都知道。他是在Android5.0之后才推出的，可以为一个操作提供了一个轻量级的反馈，用来代替Toast的。如果有不太了解的同学或者还不太清楚可以直接定位到 这篇文章 的Snackbar去看看。 对于SnackBar我们通常是这样使用的，1Snackbar.make(mDrawerLayout,&quot;再按一次退出&quot;,Snackbar.LENG">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/623504-64c26a8d8fa7bfab.gif?imageMogr2/auto-orient/strip">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">_SOLID</h5>
+          <a href="mailto:jiapeng1818@gmail.com" title="jiapeng1818@gmail.com" class="mail">jiapeng1818@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/burgessjp" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.weibo.com" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis"></div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title"></h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2017-04-25T03:05:53.623Z" itemprop="datePublished" class="page-time">
+  2017-04-25
+</time>
+
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+<article id="post-比系统自带的更好用的SnackBar"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title"></h1>
+        <div class="post-meta">
+            <time class="post-time" title="2017-04-25 11:05:53" datetime="2017-04-25T03:05:53.623Z"  itemprop="datePublished">2017-04-25</time>
+
+            
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>关于SnackBar我相信不用我多说，我相信大部分的同学肯定都知道。他是在Android5.0之后才推出的，可以为一个操作提供了一个轻量级的反馈，用来代替Toast的。如果有不太了解的同学或者还不太清楚可以直接定位到 <a href="http://www.jianshu.com/p/1e6eed09d48b" target="_blank" rel="external">这篇文章</a> 的Snackbar去看看。</p>
+<p>对于SnackBar我们通常是这样使用的，<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Snackbar.make(mDrawerLayout,"再按一次退出",Snackbar.LENGTH_SHORT).show();</div></pre></td></tr></table></figure></p>
+<p>他的展示效果比较单一，就只有一个黑色的背景。我们能不能每一种类型的提示都有不同的样式呢，答案是:肯定可以。<br>下面我就来简单介绍下今天要介绍的这个关于SnackBar的扩展，其实这个扩展我也参考了一些博客，发现一些博客只提供了方法，没有具体的去封装，还有一些的确封装了，但是个人感觉提供的Api不太好用，于是决定自己再去做一下。</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://upload-images.jianshu.io/upload_images/623504-64c26a8d8fa7bfab.gif?imageMogr2/auto-orient/strip" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<p>来看看最后的效果图。</p>
+<p>关于这个扩展的使用，和原始api基本一致，但比原生的更好用。<br>先来看看怎么使用。</p>
+<ul>
+<li><p>不带Action的</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">SnackBarUtils.makeShort(v, "TEXT").show();</div><div class="line">SnackBarUtils.makeShort(v, "TEXT").danger();</div><div class="line">SnackBarUtils.makeShort(v, "TEXT").confirm();</div><div class="line">SnackBarUtils.makeShort(v, "TEXT").info();</div><div class="line">SnackBarUtils.makeShort(v, "TEXT").warning();</div></pre></td></tr></table></figure>
+</li>
+<li><p>带有Action的</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">SnackBarUtils.makeShort(v, "TEXT").info("action", new View.OnClickListener() &#123;</div><div class="line">                   @Override</div><div class="line">                   public void onClick(View v) &#123;</div><div class="line">                       SnackBarUtils.makeShort(v, "TEXT").show();</div><div class="line">                   &#125;</div><div class="line">               &#125;);</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>是不是很简洁，也很方便！ 如果你想让Snackbar显示的时间稍微长一点，可以调用<code>SnackBarUtils.makeLong()</code>方法，使用方法与上面一样。</p>
+<p>其实代码的实现很简单，全部代码也没没到100行。（ps：在做这个封装的时候，我刚开始想过用构造者模式，最后在实现的时候发现不仅api使用不方便，还有点杀鸡用宰牛刀的感觉）。好了下面来看看代码实现。<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line"> * Created by _SOLID</div><div class="line"> * Date:2016/5/9</div><div class="line"> * Time:11:30</div><div class="line"> */</div><div class="line">public class SnackBarUtils &#123;</div><div class="line">    private static final int color_danger = 0xffa94442;</div><div class="line">    private static final int color_success = 0xff3c763d;</div><div class="line">    private static final int color_info = 0xff31708f;</div><div class="line">    private static final int color_warning = 0xff8a6d3b;</div><div class="line"></div><div class="line">    private static final int action_color = 0xffCDC5BF;</div><div class="line"></div><div class="line">    private Snackbar mSnackbar;</div><div class="line"></div><div class="line">    private SnackBarUtils(Snackbar snackbar) &#123;</div><div class="line">        mSnackbar = snackbar;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public static SnackBarUtils makeShort(View view, String text) &#123;</div><div class="line">        Snackbar snackbar = Snackbar.make(view, text, Snackbar.LENGTH_SHORT);</div><div class="line">        return new SnackBarUtils(snackbar);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public static SnackBarUtils makeLong(View view, String text) &#123;</div><div class="line">        Snackbar snackbar = Snackbar.make(view, text, Snackbar.LENGTH_LONG);</div><div class="line">        return new SnackBarUtils(snackbar);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    private View getSnackBarLayout(Snackbar snackbar) &#123;</div><div class="line">        if (snackbar != null) &#123;</div><div class="line">            return snackbar.getView();</div><div class="line">        &#125;</div><div class="line">        return null;</div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line"></div><div class="line">    private Snackbar setSnackBarBackColor(int colorId) &#123;</div><div class="line">        View snackBarView = getSnackBarLayout(mSnackbar);</div><div class="line">        if (snackBarView != null) &#123;</div><div class="line">            snackBarView.setBackgroundColor(colorId);</div><div class="line">        &#125;</div><div class="line">        return mSnackbar;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void info() &#123;</div><div class="line">        setSnackBarBackColor(color_info);</div><div class="line">        show();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void info(String actionText, View.OnClickListener listener) &#123;</div><div class="line">        setSnackBarBackColor(color_info);</div><div class="line">        show(actionText, listener);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void warning() &#123;</div><div class="line">        setSnackBarBackColor(color_warning);</div><div class="line">        show();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void warning(String actionText, View.OnClickListener listener) &#123;</div><div class="line">        setSnackBarBackColor(color_warning);</div><div class="line">        show(actionText, listener);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void danger() &#123;</div><div class="line">        setSnackBarBackColor(color_danger);</div><div class="line">        show();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void danger(String actionText, View.OnClickListener listener) &#123;</div><div class="line">        setSnackBarBackColor(color_danger);</div><div class="line">        show(actionText, listener);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void confirm() &#123;</div><div class="line">        setSnackBarBackColor(color_success);</div><div class="line">        show();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void confirm(String actionText, View.OnClickListener listener) &#123;</div><div class="line">        setSnackBarBackColor(color_success);</div><div class="line">        show(actionText, listener);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void show() &#123;</div><div class="line">        mSnackbar.show();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void show(String actionText, View.OnClickListener listener) &#123;</div><div class="line">        mSnackbar.setActionTextColor(action_color);</div><div class="line">        mSnackbar.setAction(actionText, listener).show();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>如果感觉好用可直接拿走。因为相对而言比较简单，所以代码里面就没给注释了。我相信正在阅读的你肯定能看懂，真看不懂的可留言。如果感觉字体颜色不太搭，可以修改代码为每一种样式提供一种字体颜色，或者如果感觉api不够用，还可以为这个扩展类带来更多的灵活的api。</p>
+<p>参考文章：</p>
+<ul>
+<li><a href="http://www.jcodecraeer.com/a/anzhuokaifa/androidkaifa/2015/0714/3186.html" target="_blank" rel="external">Design Support Library第三部分：Snackbar样式</a></li>
+<li><a href="http://mp.weixin.qq.com/s?__biz=MzAxMTI4MTkwNQ==&amp;mid=2650820083&amp;idx=1&amp;sn=1cd6b3d66b9d0054054df548c5b4afbb&amp;scene=23&amp;srcid=05090VutW25mPtOHU6HqozkR#rd" target="_blank" rel="external">没时间解释了，快使用SnackBar! </a></li>
+</ul>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2017-04-25T03:05:25.000Z" itemprop="dateUpdated">2017-04-25 11:05:25</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/2017/04/25/比系统自带的更好用的SnackBar/" target="_blank" rel="external">http://yoursite.com/2017/04/25/比系统自带的更好用的SnackBar/</a>
+        
+    </div>
+    <footer>
+        <a href="http://yoursite.com">
+            <img src="/img/avatar.jpg" alt="_SOLID">
+            _SOLID
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/2017/04/25/比系统自带的更好用的SnackBar/&title=技术分享会&pic=http://yoursite.com/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2017/04/25/比系统自带的更好用的SnackBar/&title=技术分享会&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2017/04/25/比系统自带的更好用的SnackBar/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=技术分享会&url=http://yoursite.com/2017/04/25/比系统自带的更好用的SnackBar/&via=http://yoursite.com" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://yoursite.com/2017/04/25/比系统自带的更好用的SnackBar/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2017/04/25/是时候学习RxJava了/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">[no title]</h4>
+      </a>
+    </div>
+  
+
+  
+</nav>
+
+
+
+    
+
+<div class="comments" id="comments">
+    <div class="ds-thread" data-thread-key="比系统自带的更好用的SnackBar" data-title="" data-url="http://yoursite.com/2017/04/25/比系统自带的更好用的SnackBar/"></div>
+</div>
+<script>
+lazyScripts.push('//cdn.bootcss.com/marked/0.3.6/marked.min.js');
+
+var duoshuoQuery = {short_name:'ysblog', theme: 'none'};
+lazyScripts.push('//unpkg.com/hexo-theme-material-indigo@latest/js/embed.min.js');
+
+
+</script>
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <ul class="reward-items">
+        
+        <li>
+            <img src="/img/wechat.jpg" title="微信打赏二维码" alt="微信打赏二维码">
+            <p>微信</p>
+        </li>
+        
+
+        
+        <li>
+            <img src="/img/alipay.jpg" title="支付宝打赏二维码" alt="支付宝打赏二维码">
+            <p>支付宝</p>
+        </li>
+        
+    </ul>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+            <span>博客内容遵循<a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p>
+            <span>Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a></span>
+            <span>_SOLID &copy; 2017</span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/2017/04/25/比系统自带的更好用的SnackBar/&title=《No title》 — 技术分享会&pic=http://yoursite.com/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2017/04/25/比系统自带的更好用的SnackBar/&title=《No title》 — 技术分享会&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2017/04/25/比系统自带的更好用的SnackBar/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《No title》 — 技术分享会&url=http://yoursite.com/2017/04/25/比系统自带的更好用的SnackBar/&via=http://yoursite.com" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://yoursite.com/2017/04/25/比系统自带的更好用的SnackBar/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=http://yoursite.com/2017/04/25/比系统自带的更好用的SnackBar/" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>

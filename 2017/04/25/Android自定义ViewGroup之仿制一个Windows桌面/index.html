@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    <title>No title | 技术分享会</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="">
+    <meta name="description" content="前段时间写过一个Android自定义View的文章，是高仿的QQ健康，还没有看过的可以去看看，所以一直都计划着在写个自定义ViewGroup相关的文章。我知道网上关于这方面的文章已经是一搜一大堆的那种了，所以我想一定要找个与网上的不同的来做Demo，还是要稍微有点新意，由于一直找不到所以就一直拖着了，最近也是突然间想到Windows的桌面不错，我可以拿这个作为一个自定ViewGroup的Demo啊">
+<meta name="keywords">
+<meta property="og:type" content="article">
+<meta property="og:title" content="No title">
+<meta property="og:url" content="http://yoursite.com/2017/04/25/Android自定义ViewGroup之仿制一个Windows桌面/index.html">
+<meta property="og:site_name" content="技术分享会">
+<meta property="og:description" content="前段时间写过一个Android自定义View的文章，是高仿的QQ健康，还没有看过的可以去看看，所以一直都计划着在写个自定义ViewGroup相关的文章。我知道网上关于这方面的文章已经是一搜一大堆的那种了，所以我想一定要找个与网上的不同的来做Demo，还是要稍微有点新意，由于一直找不到所以就一直拖着了，最近也是突然间想到Windows的桌面不错，我可以拿这个作为一个自定ViewGroup的Demo啊">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/623504-7263db4919b58b08.gif?imageMogr2/auto-orient/strip">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/623504-2591f4bfacc2602c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/623504-4fa8631f16bf23a5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2017-04-25T03:05:25.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="No title">
+<meta name="twitter:description" content="前段时间写过一个Android自定义View的文章，是高仿的QQ健康，还没有看过的可以去看看，所以一直都计划着在写个自定义ViewGroup相关的文章。我知道网上关于这方面的文章已经是一搜一大堆的那种了，所以我想一定要找个与网上的不同的来做Demo，还是要稍微有点新意，由于一直找不到所以就一直拖着了，最近也是突然间想到Windows的桌面不错，我可以拿这个作为一个自定ViewGroup的Demo啊">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/623504-7263db4919b58b08.gif?imageMogr2/auto-orient/strip">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">_SOLID</h5>
+          <a href="mailto:jiapeng1818@gmail.com" title="jiapeng1818@gmail.com" class="mail">jiapeng1818@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/burgessjp" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.weibo.com" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis"></div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title"></h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2017-04-25T03:05:53.595Z" itemprop="datePublished" class="page-time">
+  2017-04-25
+</time>
+
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+<article id="post-Android自定义ViewGroup之仿制一个Windows桌面"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title"></h1>
+        <div class="post-meta">
+            <time class="post-time" title="2017-04-25 11:05:53" datetime="2017-04-25T03:05:53.595Z"  itemprop="datePublished">2017-04-25</time>
+
+            
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>前段时间写过一个<a href="http://www.jianshu.com/p/740c64ba15ac" target="_blank" rel="external">Android自定义View的文章</a>，是高仿的QQ健康，还没有看过的可以去看看，所以一直都计划着在写个自定义ViewGroup相关的文章。我知道网上关于这方面的文章已经是一搜一大堆的那种了，所以我想一定要找个与网上的不同的来做Demo，还是要稍微有点新意，由于一直找不到所以就一直拖着了，最近也是突然间想到Windows的桌面不错，我可以拿这个作为一个自定ViewGroup的Demo啊，于是就着手写了这么一个。本文比较简单，适合那些还不太会自定义ViewGroup的同学看看。先来看看最后的效果图<br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://upload-images.jianshu.io/upload_images/623504-7263db4919b58b08.gif?imageMogr2/auto-orient/strip" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure></p>
+<p>自定义一个ViewGroup，其实真的并不太难，主要就在onMeasure和onLayout这两个方法上下功夫，无非就是去把子View的大小测量出来然后再把子View按照一定的规则放置到相应的位置上，只要把测量和布局的逻辑和思想弄懂了，自定义ViewGroup就是小Case了。</p>
+<p>下面就来说说上面的这个自定义ViewGroup怎么做吧。<br>先来说说思路，整个ViewGroup分为两个区域，上面是内容区，下面是底部状态栏，我这个自定义ViewGroup的做法就是默认的把最后添加的那一个View来作为底部状态栏。至于弹出来的那个就是个PopWondow，与自定义ViewGroup是没有什么关系的，是在使用的时候添加的。</p>
+<p>来看看代码实现</p>
+<p>##1.onMeasure方法</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/623504-2591f4bfacc2602c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="onMeasure"></p>
+<p>与自定义View唯一不同的就是，在ViewGroup的onMeasure方法里还需对他所包含的View的大小进行测量，里面的measureChildren是调用的系统的测量方法，他是将父布局的测量规格作为参数传递到这个方法中，然后根据父布局的测量规格去测量子View的大小（感兴趣可以去源码查看，还是比较简单的，这里我们完全可以自己去做这个测量，既然系统已经提供了，就不用去那些重复的事了）。最后就是setMeasuredDimension设置ViewGroup本身的大小，这里我对ViewGroup是大小是wrap_content的情况，就直接将其大小设置为0了，在这个自定义ViewGroup中wrap_content也没多大的意义。</p>
+<p>##2.onLayout方法</p>
+<p>当测量完成之后就是对ViewGroup中的子View进行放置了，View的layout方法就是用来去将View放到某个位置用的，来看看onLayout方法的实现。<br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://upload-images.jianshu.io/upload_images/623504-4fa8631f16bf23a5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="onLayout" title="">
+                </div>
+                <div class="image-caption">onLayout</div>
+            </figure></p>
+<p>这里简单说一下，onLayout方法中的那几个参数的含义</p>
+<ul>
+<li>changed:默认这个值都是为false，如果这个ViewGroup的位置改变了，导致了被重新布局，这个值就为true，</li>
+<li>l:ViewGroup left的位置</li>
+<li>t:ViewGroup top的位置</li>
+<li>r:ViewGroup right的位置</li>
+<li>b:ViewGroup bottom的位置</li>
+</ul>
+<p>我们都知道，一般知道了一个View的left，top，right，bottom就决定了这个View的位置。</p>
+<p>代码中大部分我注释的还是比较清楚了，这里只来看看for循环里面的实现,里面的逻辑就是去计算将要放置的View的位置的。<br>注意到，if(cb&gt;contentHeight) 这句，就是如果当前将要放置的View的bottom位置已经超过了内容区的高度，那么我们就将列数加1，将之放到下一列中去。</p>
+<p>整个自定义ViewGroup就完了，就是这么简单。我们来看看怎么在布局文件中去使用。<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">ren.solid.materialdesigndemo.view.WindowsLayout</span></span></div><div class="line">       <span class="attr">android:id</span>=<span class="string">"@+id/windows_layout"</span></div><div class="line">       <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></div><div class="line">       <span class="attr">android:layout_height</span>=<span class="string">"match_parent"</span></div><div class="line">       <span class="attr">android:background</span>=<span class="string">"#6b6b6b"</span>&gt;</div><div class="line"></div><div class="line">       <span class="tag">&lt;<span class="name">LinearLayout</span></span></div><div class="line">           <span class="attr">android:layout_width</span>=<span class="string">"100dp"</span></div><div class="line">           <span class="attr">android:layout_height</span>=<span class="string">"100dp"</span></div><div class="line">           <span class="attr">android:gravity</span>=<span class="string">"center"</span></div><div class="line">           <span class="attr">android:orientation</span>=<span class="string">"vertical"</span>&gt;</div><div class="line"></div><div class="line">           <span class="tag">&lt;<span class="name">ImageView</span></span></div><div class="line">               <span class="attr">android:layout_width</span>=<span class="string">"50dp"</span></div><div class="line">               <span class="attr">android:layout_height</span>=<span class="string">"50dp"</span></div><div class="line">               <span class="attr">android:src</span>=<span class="string">"@drawable/icon_folder"</span> /&gt;</div><div class="line"></div><div class="line">           <span class="tag">&lt;<span class="name">TextView</span></span></div><div class="line">               <span class="attr">android:layout_width</span>=<span class="string">"wrap_content"</span></div><div class="line">               <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></div><div class="line">               <span class="attr">android:text</span>=<span class="string">"文件夹"</span> /&gt;</div><div class="line">       <span class="tag">&lt;/<span class="name">LinearLayout</span>&gt;</span></div><div class="line"></div><div class="line">       <span class="tag">&lt;<span class="name">LinearLayout</span></span></div><div class="line">           <span class="attr">android:layout_width</span>=<span class="string">"100dp"</span></div><div class="line">           <span class="attr">android:layout_height</span>=<span class="string">"100dp"</span></div><div class="line">           <span class="attr">android:gravity</span>=<span class="string">"center"</span></div><div class="line">           <span class="attr">android:orientation</span>=<span class="string">"vertical"</span>&gt;</div><div class="line"></div><div class="line">           <span class="tag">&lt;<span class="name">ImageView</span></span></div><div class="line">               <span class="attr">android:layout_width</span>=<span class="string">"50dp"</span></div><div class="line">               <span class="attr">android:layout_height</span>=<span class="string">"50dp"</span></div><div class="line">               <span class="attr">android:src</span>=<span class="string">"@drawable/icon_folder"</span> /&gt;</div><div class="line"></div><div class="line">           <span class="tag">&lt;<span class="name">TextView</span></span></div><div class="line">               <span class="attr">android:layout_width</span>=<span class="string">"wrap_content"</span></div><div class="line">               <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></div><div class="line">               <span class="attr">android:text</span>=<span class="string">"文件夹"</span> /&gt;</div><div class="line">       <span class="tag">&lt;/<span class="name">LinearLayout</span>&gt;</span></div><div class="line"></div><div class="line">       <span class="tag">&lt;<span class="name">LinearLayout</span></span></div><div class="line">           <span class="attr">android:layout_width</span>=<span class="string">"100dp"</span></div><div class="line">           <span class="attr">android:layout_height</span>=<span class="string">"100dp"</span></div><div class="line">           <span class="attr">android:gravity</span>=<span class="string">"center"</span></div><div class="line">           <span class="attr">android:orientation</span>=<span class="string">"vertical"</span>&gt;</div><div class="line"></div><div class="line">           <span class="tag">&lt;<span class="name">ImageView</span></span></div><div class="line">               <span class="attr">android:layout_width</span>=<span class="string">"50dp"</span></div><div class="line">               <span class="attr">android:layout_height</span>=<span class="string">"50dp"</span></div><div class="line">               <span class="attr">android:src</span>=<span class="string">"@drawable/icon_folder"</span> /&gt;</div><div class="line"></div><div class="line">           <span class="tag">&lt;<span class="name">TextView</span></span></div><div class="line">               <span class="attr">android:layout_width</span>=<span class="string">"wrap_content"</span></div><div class="line">               <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></div><div class="line">               <span class="attr">android:text</span>=<span class="string">"文件夹"</span> /&gt;</div><div class="line">       <span class="tag">&lt;/<span class="name">LinearLayout</span>&gt;</span></div><div class="line"></div><div class="line">       <span class="tag">&lt;<span class="name">LinearLayout</span></span></div><div class="line">           <span class="attr">android:layout_width</span>=<span class="string">"100dp"</span></div><div class="line">           <span class="attr">android:layout_height</span>=<span class="string">"100dp"</span></div><div class="line">           <span class="attr">android:gravity</span>=<span class="string">"center"</span></div><div class="line">           <span class="attr">android:orientation</span>=<span class="string">"vertical"</span>&gt;</div><div class="line"></div><div class="line">           <span class="tag">&lt;<span class="name">ImageView</span></span></div><div class="line">               <span class="attr">android:layout_width</span>=<span class="string">"50dp"</span></div><div class="line">               <span class="attr">android:layout_height</span>=<span class="string">"50dp"</span></div><div class="line">               <span class="attr">android:src</span>=<span class="string">"@drawable/icon_folder"</span> /&gt;</div><div class="line"></div><div class="line">           <span class="tag">&lt;<span class="name">TextView</span></span></div><div class="line">               <span class="attr">android:layout_width</span>=<span class="string">"wrap_content"</span></div><div class="line">               <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></div><div class="line">               <span class="attr">android:text</span>=<span class="string">"文件夹"</span> /&gt;</div><div class="line">       <span class="tag">&lt;/<span class="name">LinearLayout</span>&gt;</span></div><div class="line"></div><div class="line">       <span class="tag">&lt;<span class="name">LinearLayout</span></span></div><div class="line">           <span class="attr">android:layout_width</span>=<span class="string">"100dp"</span></div><div class="line">           <span class="attr">android:layout_height</span>=<span class="string">"100dp"</span></div><div class="line">           <span class="attr">android:gravity</span>=<span class="string">"center"</span></div><div class="line">           <span class="attr">android:orientation</span>=<span class="string">"vertical"</span>&gt;</div><div class="line"></div><div class="line">           <span class="tag">&lt;<span class="name">ImageView</span></span></div><div class="line">               <span class="attr">android:layout_width</span>=<span class="string">"50dp"</span></div><div class="line">               <span class="attr">android:layout_height</span>=<span class="string">"50dp"</span></div><div class="line">               <span class="attr">android:src</span>=<span class="string">"@drawable/icon_folder"</span> /&gt;</div><div class="line"></div><div class="line">           <span class="tag">&lt;<span class="name">TextView</span></span></div><div class="line">               <span class="attr">android:layout_width</span>=<span class="string">"wrap_content"</span></div><div class="line">               <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></div><div class="line">               <span class="attr">android:text</span>=<span class="string">"文件夹"</span> /&gt;</div><div class="line">       <span class="tag">&lt;/<span class="name">LinearLayout</span>&gt;</span></div><div class="line"></div><div class="line">       <span class="tag">&lt;<span class="name">LinearLayout</span></span></div><div class="line">           <span class="attr">android:layout_width</span>=<span class="string">"100dp"</span></div><div class="line">           <span class="attr">android:layout_height</span>=<span class="string">"100dp"</span></div><div class="line">           <span class="attr">android:gravity</span>=<span class="string">"center"</span></div><div class="line">           <span class="attr">android:orientation</span>=<span class="string">"vertical"</span>&gt;</div><div class="line"></div><div class="line">           <span class="tag">&lt;<span class="name">ImageView</span></span></div><div class="line">               <span class="attr">android:layout_width</span>=<span class="string">"50dp"</span></div><div class="line">               <span class="attr">android:layout_height</span>=<span class="string">"50dp"</span></div><div class="line">               <span class="attr">android:src</span>=<span class="string">"@drawable/icon_folder"</span> /&gt;</div><div class="line"></div><div class="line">           <span class="tag">&lt;<span class="name">TextView</span></span></div><div class="line">               <span class="attr">android:layout_width</span>=<span class="string">"wrap_content"</span></div><div class="line">               <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></div><div class="line">               <span class="attr">android:text</span>=<span class="string">"文件夹"</span> /&gt;</div><div class="line">       <span class="tag">&lt;/<span class="name">LinearLayout</span>&gt;</span></div><div class="line"></div><div class="line"></div><div class="line">       <span class="tag">&lt;<span class="name">LinearLayout</span></span></div><div class="line">           <span class="attr">android:id</span>=<span class="string">"@+id/ll_bottom"</span></div><div class="line">           <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></div><div class="line">           <span class="attr">android:layout_height</span>=<span class="string">"50dp"</span></div><div class="line">           <span class="attr">android:background</span>=<span class="string">"#e0000000"</span></div><div class="line">           <span class="attr">android:gravity</span>=<span class="string">"center_vertical"</span></div><div class="line">           <span class="attr">android:orientation</span>=<span class="string">"horizontal"</span></div><div class="line">           <span class="attr">android:paddingLeft</span>=<span class="string">"10dp"</span>&gt;</div><div class="line"></div><div class="line">           <span class="tag">&lt;<span class="name">ImageView</span></span></div><div class="line">               <span class="attr">android:layout_width</span>=<span class="string">"30dp"</span></div><div class="line">               <span class="attr">android:layout_height</span>=<span class="string">"30dp"</span></div><div class="line">               <span class="attr">android:src</span>=<span class="string">"@drawable/icon_windows"</span> /&gt;</div><div class="line">       <span class="tag">&lt;/<span class="name">LinearLayout</span>&gt;</span></div><div class="line"></div><div class="line"></div><div class="line">   <span class="tag">&lt;/<span class="name">ren.solid.materialdesigndemo.view.WindowsLayout</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<p>在这个自定义的ViewGroup中，前面放置的都是内容区的，最后一个是底部状态栏。就这样就可以实现最开始那个动态图中的效果。对于点击左下角的徽标，可以弹出一个层，我使用的是PopWindow，代码如下：<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">LinearLayout ll_bottom = customFindViewById(R.id.ll_bottom);</div><div class="line">        ll_bottom.setOnClickListener(new View.OnClickListener() &#123;</div><div class="line">            @Override</div><div class="line">            public void onClick(View v) &#123;</div><div class="line"></div><div class="line">                int[] location = new int[2];</div><div class="line">                v.getLocationOnScreen(location);</div><div class="line"></div><div class="line">                View popupView = LayoutInflater.from(getMContext()).inflate(R.layout.pop_windows, null);</div><div class="line">                PopupWindow popupWindow = new PopupWindow(popupView, ViewGroup.LayoutParams.WRAP_CONTENT,</div><div class="line">                        ViewGroup.LayoutParams.WRAP_CONTENT, true);</div><div class="line">                popupView.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);</div><div class="line">                popupWindow.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#e0000000")));</div><div class="line">                popupWindow.setOutsideTouchable(true);</div><div class="line">                popupWindow.setFocusable(true);</div><div class="line">                int height=popupView.getMeasuredHeight();</div><div class="line">                popupWindow.showAtLocation(v, Gravity.NO_GRAVITY, location[0], location[1]-height);</div><div class="line">            &#125;</div><div class="line">        &#125;);</div></pre></td></tr></table></figure></p>
+<p>源码附上：<a href="https://github.com/burgessjp/MaterialDesignDemo/blob/master/app/src/main/java/ren/solid/materialdesigndemo/view/WindowsLayout.java" target="_blank" rel="external">源码</a></p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2017-04-25T03:05:25.000Z" itemprop="dateUpdated">2017-04-25 11:05:25</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/2017/04/25/Android自定义ViewGroup之仿制一个Windows桌面/" target="_blank" rel="external">http://yoursite.com/2017/04/25/Android自定义ViewGroup之仿制一个Windows桌面/</a>
+        
+    </div>
+    <footer>
+        <a href="http://yoursite.com">
+            <img src="/img/avatar.jpg" alt="_SOLID">
+            _SOLID
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/2017/04/25/Android自定义ViewGroup之仿制一个Windows桌面/&title=技术分享会&pic=http://yoursite.com/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2017/04/25/Android自定义ViewGroup之仿制一个Windows桌面/&title=技术分享会&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2017/04/25/Android自定义ViewGroup之仿制一个Windows桌面/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=技术分享会&url=http://yoursite.com/2017/04/25/Android自定义ViewGroup之仿制一个Windows桌面/&via=http://yoursite.com" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://yoursite.com/2017/04/25/Android自定义ViewGroup之仿制一个Windows桌面/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2017/04/25/Android主题换肤-无缝切换/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">[no title]</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2017/04/25/Android自定义View之高仿QQ健康/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">[no title]</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+<div class="comments" id="comments">
+    <div class="ds-thread" data-thread-key="Android自定义ViewGroup之仿制一个Windows桌面" data-title="" data-url="http://yoursite.com/2017/04/25/Android自定义ViewGroup之仿制一个Windows桌面/"></div>
+</div>
+<script>
+lazyScripts.push('//cdn.bootcss.com/marked/0.3.6/marked.min.js');
+
+var duoshuoQuery = {short_name:'ysblog', theme: 'none'};
+lazyScripts.push('//unpkg.com/hexo-theme-material-indigo@latest/js/embed.min.js');
+
+
+</script>
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <ul class="reward-items">
+        
+        <li>
+            <img src="/img/wechat.jpg" title="微信打赏二维码" alt="微信打赏二维码">
+            <p>微信</p>
+        </li>
+        
+
+        
+        <li>
+            <img src="/img/alipay.jpg" title="支付宝打赏二维码" alt="支付宝打赏二维码">
+            <p>支付宝</p>
+        </li>
+        
+    </ul>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+            <span>博客内容遵循<a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p>
+            <span>Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a></span>
+            <span>_SOLID &copy; 2017</span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/2017/04/25/Android自定义ViewGroup之仿制一个Windows桌面/&title=《No title》 — 技术分享会&pic=http://yoursite.com/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2017/04/25/Android自定义ViewGroup之仿制一个Windows桌面/&title=《No title》 — 技术分享会&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2017/04/25/Android自定义ViewGroup之仿制一个Windows桌面/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《No title》 — 技术分享会&url=http://yoursite.com/2017/04/25/Android自定义ViewGroup之仿制一个Windows桌面/&via=http://yoursite.com" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://yoursite.com/2017/04/25/Android自定义ViewGroup之仿制一个Windows桌面/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=http://yoursite.com/2017/04/25/Android自定义ViewGroup之仿制一个Windows桌面/" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>

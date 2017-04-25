@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    <title>干货IO 3.0一个完全开源的App | 技术分享会</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="">
+    <meta name="description" content="之前写过一篇关于介绍[干货IO]的文章基于Gank.IO提供的API的第三方客户端，可以在线收藏[项目开源]，大致介绍了用到了什么，有哪些功能，一句话就是让大家知道了这个app的存在，之后了一段时间对app也在一直维护，有过好几次的更新，但是改动程度都不是太大，改的最大的一次就是重构底层的网络请求，但并不是太彻底，所以也遗留下了一些问题，其他的就是一些小功能的增增改改。之所以再次写关于[干货IO]">
+<meta name="keywords">
+<meta property="og:type" content="article">
+<meta property="og:title" content="干货IO 3.0一个完全开源的App">
+<meta property="og:url" content="http://yoursite.com/2017/04/25/[干货IO-3-0]-一个完全开源的App/index.html">
+<meta property="og:site_name" content="技术分享会">
+<meta property="og:description" content="之前写过一篇关于介绍[干货IO]的文章基于Gank.IO提供的API的第三方客户端，可以在线收藏[项目开源]，大致介绍了用到了什么，有哪些功能，一句话就是让大家知道了这个app的存在，之后了一段时间对app也在一直维护，有过好几次的更新，但是改动程度都不是太大，改的最大的一次就是重构底层的网络请求，但并不是太彻底，所以也遗留下了一些问题，其他的就是一些小功能的增增改改。之所以再次写关于[干货IO]">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/623504-b825a653dee193d7.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/300">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/623504-430e5c355e524eca.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/300">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/623504-a0a8c1ba87cc46c6.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/300">
+<meta property="og:updated_time" content="2017-04-25T03:22:43.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="干货IO 3.0一个完全开源的App">
+<meta name="twitter:description" content="之前写过一篇关于介绍[干货IO]的文章基于Gank.IO提供的API的第三方客户端，可以在线收藏[项目开源]，大致介绍了用到了什么，有哪些功能，一句话就是让大家知道了这个app的存在，之后了一段时间对app也在一直维护，有过好几次的更新，但是改动程度都不是太大，改的最大的一次就是重构底层的网络请求，但并不是太彻底，所以也遗留下了一些问题，其他的就是一些小功能的增增改改。之所以再次写关于[干货IO]">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/623504-b825a653dee193d7.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/300">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">_SOLID</h5>
+          <a href="mailto:jiapeng1818@gmail.com" title="jiapeng1818@gmail.com" class="mail">jiapeng1818@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/burgessjp" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.weibo.com" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">干货IO 3.0一个完全开源的App</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">干货IO 3.0一个完全开源的App</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2017-04-25T03:05:53.608Z" itemprop="datePublished" class="page-time">
+  2017-04-25
+</time>
+
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+<article id="post-[干货IO-3-0]-一个完全开源的App"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">干货IO 3.0一个完全开源的App</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2017-04-25 11:05:53" datetime="2017-04-25T03:05:53.608Z"  itemprop="datePublished">2017-04-25</time>
+
+            
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>之前写过一篇关于介绍[干货IO]的文章<a href="http://www.jianshu.com/p/3f137269a942" target="_blank" rel="external">基于Gank.IO提供的API的第三方客户端，可以在线收藏[项目开源]</a>，大致介绍了用到了什么，有哪些功能，一句话就是让大家知道了这个app的存在，之后了一段时间对app也在一直维护，有过好几次的更新，但是改动程度都不是太大，改的最大的一次就是重构底层的网络请求，但并不是太彻底，所以也遗留下了一些问题，其他的就是一些小功能的增增改改。<br>之所以再次写关于<strong>[干货IO]</strong>的文章，就是想纪录一下做这个app的心路历程，以及介绍一下里面的技术实现。</p>
+<p><strong>在这里再次感谢一下<a href="https://github.com/daimajia" target="_blank" rel="external">daimajia</a>，没有<a href="http://gank.io/" target="_blank" rel="external">gank.io</a>就不会有这个app的存在，如果还有不知道的可以每天都去这个网站看看，除了周六周末两天不更新之外，每天都会有技术干货的推送更新。</strong></p>
+<p>先说下这个3.0版本更新的主要内容吧</p>
+<ul>
+<li>1.UI风格大调整，全新的 UI 风格</li>
+<li>2.支持干货配图</li>
+<li>3.新增 gank 最近推出的闲读</li>
+<li>4.新增搜索</li>
+<li>5.修复仅Wifi加载图片的bug</li>
+<li>6.行为更改：长按干货收藏</li>
+</ul>
+<p>下面是应用部分截图：<br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://upload-images.jianshu.io/upload_images/623504-b825a653dee193d7.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/300" alt="p1" title="">
+                </div>
+                <div class="image-caption">p1</div>
+            </figure></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://upload-images.jianshu.io/upload_images/623504-430e5c355e524eca.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/300" alt="p2.jpg" title="">
+                </div>
+                <div class="image-caption">p2.jpg</div>
+            </figure>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://upload-images.jianshu.io/upload_images/623504-a0a8c1ba87cc46c6.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/300" alt="p3.jpg" title="">
+                </div>
+                <div class="image-caption">p3.jpg</div>
+            </figure>
+<p>为了不影响文章的可读性，这里就不放太多的截图了，感兴趣的可以去安装体验。</p>
+<hr>
+<p>好了，开始正题。</p>
+<p>###干货IO 1.0</p>
+<p>大概是今年3月份的时候关注了gan.io这个网站，这上面每天都会提供很多的技术干货，后面的时间我也是受益良多，与此同时也知道了drakeet为之做的一个 App <a href="https://github.com/drakeet/Meizhi" target="_blank" rel="external">Meizhi</a>，这个App最近好像有更新，非常好的一个开源项目，从这个项目中我也学到了很多。众所周知，gan.io是客户端最多的一个网站，应用市场一搜索就可以搜到很多关于gank的应用，但这些应用都有一个共同点，没有收藏功能，我个人感觉收藏功能还是比较重要的，他可以防止以后想回过来再看的时候不用花太多的时间去一页一页的找，这个就是我最开始想做这个App的的主要动机。于是就有了 <strong>干货IO 1.0</strong> 的出现，也是一个完全开源项目，在今年五月份就提交到了github，只有查看最新干货，分类浏览和收藏三个功能，只能说达到了预期目标，做的相对而言也比较的粗糙，App并不是那么流畅。</p>
+<p>1.0系列版本有过好几次更新，大多改动都不太大，基本上都是些bug的修复和一些小功能的增加，最大的一次改动就是使用 RxJava + Retrofit + MVP重构这个项目了，底层的代码改动算是比较大的，由于时间上的原因这次重构并不是太彻底，也因此造成了代码的混乱。说到这里我们来简单说说RxJava 、 Retrofit 、 MVP这三个技术吧，我相信大家对这三个技术肯定也不陌生。</p>
+<p>RxJava可以以流的方式去处理我们的数据，线程的切换上也是十分的方便，可以大大减少代码量，网络上也涌现出了相关的库，很大程度上方便了我们的开发，RxJava相关的文章可以去我管理的专题看看 <a href="http://www.jianshu.com/collection/d79a6385bded" target="_blank" rel="external">RxJava系列专题（Android方向）</a>，这个专题基本上收录完了简书上关于RxJava最好的文章，当然，你有相关的比较好的文章也可以往这个专题投稿。</p>
+<p>Retrofit是Square公司出品的又一大神器，一个高质量的http库，现在十分流行，网上关于他的文章也是多不胜数，他极大化的简化了我们的网络请求，使得我们的代码更加可读，以及方便后期的维护，加上RxJava简直就是完美 。</p>
+<p>MVP是Android目前比较受欢迎的一种设计模式，个人感觉这个库比较适合于多人共同维护开发的大项目，一般的项目用MVP开发，会多出很多的类文件，有点影响开发效率，1.0版本就试过用MVP去重构项目，最后发现大大增大了我们的工作量，本来很快就能完成的一个功能，增加了很多的类文件，最后到了3.0版本我果断去掉了MVP（还残留了一部分）。项目开发的时候应该实际情况去选择设计模式，而不是盲目的套用现在十分流行的。</p>
+<p>###干货IO 2.0<br>这个版本在功能上其实没什么改变，只是调整了一下UI，把侧滑菜单中的部门功能放到了底部选项卡中，加入了谷歌最新推出的<strong>BottomNavigationBar</strong>。</p>
+<p>###干货IO 3.0</p>
+<p>这个版本变化时比较大的，断断续续的花了我一周的时间去做，基本上是完全重构之前所有的代码，这次的重构是的代码更加的干净，比较有学习的价值，网络请求完全采用Retrofit+RxJava，网络请求也更加的清晰可控，新增了搜索和闲读，干货有了Gif配图，应用也更具MD的风格，在这里必须感谢下<a href="https://github.com/ryanhoo/Android-Proficiency-Exercise" target="_blank" rel="external">Android-Proficiency-Exercise</a>，分类列表的UI样式就来源于他。刚开始在做gif图加载的时候，加载十分的慢，并且内存使用也十分的大，最后经过查阅资料把Glide的缓存策略改为<code>DiskCacheStrategy.SOURCE</code>就可以了。列表的Adapter使用的是drakeet的<a href="https://github.com/drakeet/MultiType" target="_blank" rel="external">MultiType</a>，这个库处理含有多种itemType的RecyclerView非常的棒！如果还不知道这个库的，我强烈推荐使用。同时我基于<a href="https://github.com/drakeet/MultiType" target="_blank" rel="external">MultiType</a>也封装了一个通用列表的抽象类，很简单的就能实现一个列表，添加头部这个都不是事，最简单的列表只需实现loadData方法。<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">@Override</div><div class="line">public void loadData(final int pageIndex) &#123;</div><div class="line">    ServiceFactory.getInstance().createService(GankService.class)</div><div class="line">            .getGanHuo(mType, pageIndex)</div><div class="line">            .compose(TransformUtils.&lt;HttpResult&lt;List&lt;GanHuoDataBean&gt;&gt;&gt;defaultSchedulers())</div><div class="line">            .subscribe(new Subscriber&lt;HttpResult&lt;List&lt;GanHuoDataBean&gt;&gt;&gt;() &#123;</div><div class="line">                @Override</div><div class="line">                public void onCompleted() &#123;</div><div class="line"></div><div class="line">                &#125;</div><div class="line"></div><div class="line">                @Override</div><div class="line">                public void onError(Throwable e) &#123;</div><div class="line">                    showError(new Exception(e));</div><div class="line">                &#125;</div><div class="line"></div><div class="line">                @Override</div><div class="line">                public void onNext(HttpResult&lt;List&lt;GanHuoDataBean&gt;&gt; listHttpResult) &#123;</div><div class="line">                    onDataSuccessReceived(pageIndex, listHttpResult.results);</div><div class="line">                &#125;</div><div class="line">            &#125;);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>上面的代码来源于分类列表Fragment，具体的实现可以去看文章末尾的源码。好了差不多就是这些了，这里贴代码也没有什么意义，反而影响文章的可阅读性，用到了哪些技术文章中也提到了，这个App综合了我前面好几篇博客的内容，也算是对之前讲解的技术的一个综合应用，并且应用是完全开源的，阅读源码可以看到更多的技术细节实现，反而更直接有效。如果在使用过程中发现有bug，非常欢迎反馈，我会继续维护这个项目。<br>写到这里突然感觉自己逼逼了好多的废话，轻喷~~~</p>
+<p>###特别感谢<br><a href="https://github.com/daimajia" target="_blank" rel="external">daimajia</a>、<a href="https://github.com/drakeet" target="_blank" rel="external">drakeet</a>、<a href="https://github.com/ryanhoo/Android-Proficiency-Exercise" target="_blank" rel="external">Android-Proficiency-Exercise</a></p>
+<p>应用体验下载地址:<a href="http://android.myapp.com/myapp/detail.htm?apkName=ren.solid.ganhuoio" target="_blank" rel="external">点击下载</a><br>源码传送门：<a href="https://github.com/burgessjp/GanHuoIO" target="_blank" rel="external">GanHuoIO</a></p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2017-04-25T03:22:43.000Z" itemprop="dateUpdated">2017-04-25 11:22:43</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/2017/04/25/[干货IO-3-0]-一个完全开源的App/" target="_blank" rel="external">http://yoursite.com/2017/04/25/[干货IO-3-0]-一个完全开源的App/</a>
+        
+    </div>
+    <footer>
+        <a href="http://yoursite.com">
+            <img src="/img/avatar.jpg" alt="_SOLID">
+            _SOLID
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/2017/04/25/[干货IO-3-0]-一个完全开源的App/&title=《干货IO 3.0一个完全开源的App》 — 技术分享会&pic=http://yoursite.com/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2017/04/25/[干货IO-3-0]-一个完全开源的App/&title=《干货IO 3.0一个完全开源的App》 — 技术分享会&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2017/04/25/[干货IO-3-0]-一个完全开源的App/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《干货IO 3.0一个完全开源的App》 — 技术分享会&url=http://yoursite.com/2017/04/25/[干货IO-3-0]-一个完全开源的App/&via=http://yoursite.com" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://yoursite.com/2017/04/25/[干货IO-3-0]-一个完全开源的App/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2017/04/25/ThinDownloadManager源码解析/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">[no title]</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2017/04/25/仿魅族手机消息通知效果/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">[no title]</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+<div class="comments" id="comments">
+    <div class="ds-thread" data-thread-key="[干货IO-3-0]-一个完全开源的App" data-title="干货IO 3.0一个完全开源的App" data-url="http://yoursite.com/2017/04/25/[干货IO-3-0]-一个完全开源的App/"></div>
+</div>
+<script>
+lazyScripts.push('//cdn.bootcss.com/marked/0.3.6/marked.min.js');
+
+var duoshuoQuery = {short_name:'ysblog', theme: 'none'};
+lazyScripts.push('//unpkg.com/hexo-theme-material-indigo@latest/js/embed.min.js');
+
+
+</script>
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <ul class="reward-items">
+        
+        <li>
+            <img src="/img/wechat.jpg" title="微信打赏二维码" alt="微信打赏二维码">
+            <p>微信</p>
+        </li>
+        
+
+        
+        <li>
+            <img src="/img/alipay.jpg" title="支付宝打赏二维码" alt="支付宝打赏二维码">
+            <p>支付宝</p>
+        </li>
+        
+    </ul>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+            <span>博客内容遵循<a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p>
+            <span>Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a></span>
+            <span>_SOLID &copy; 2017</span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/2017/04/25/[干货IO-3-0]-一个完全开源的App/&title=《干货IO 3.0一个完全开源的App》 — 技术分享会&pic=http://yoursite.com/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2017/04/25/[干货IO-3-0]-一个完全开源的App/&title=《干货IO 3.0一个完全开源的App》 — 技术分享会&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2017/04/25/[干货IO-3-0]-一个完全开源的App/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《干货IO 3.0一个完全开源的App》 — 技术分享会&url=http://yoursite.com/2017/04/25/[干货IO-3-0]-一个完全开源的App/&via=http://yoursite.com" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://yoursite.com/2017/04/25/[干货IO-3-0]-一个完全开源的App/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=http://yoursite.com/2017/04/25/[干货IO-3-0]-一个完全开源的App/" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>

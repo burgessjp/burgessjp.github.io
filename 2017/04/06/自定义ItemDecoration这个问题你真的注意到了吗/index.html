@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    <title>自定义ItemDecoration这个问题你真的注意到了吗 | 技术分享会</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="">
+    <meta name="description" content="本文讨论的是关于自定义ItemDecoration容易被忽略的问题，此文适合有过自定义ItemDecoration经验的同学阅读，还没有学习过的可以先去看看相关文章再来看本文。  ItemDecoration 我相信只要使用过RecyclerView的同学肯定都比较熟悉了，我们在使用 RecyclerView 的时候一般都是用这个来画分隔线的，不得不说十分的好用。但是在最近发现在使用自定义的It">
+<meta name="keywords">
+<meta property="og:type" content="article">
+<meta property="og:title" content="自定义ItemDecoration这个问题你真的注意到了吗">
+<meta property="og:url" content="http://yoursite.com/2017/04/06/自定义ItemDecoration这个问题你真的注意到了吗/index.html">
+<meta property="og:site_name" content="技术分享会">
+<meta property="og:description" content="本文讨论的是关于自定义ItemDecoration容易被忽略的问题，此文适合有过自定义ItemDecoration经验的同学阅读，还没有学习过的可以先去看看相关文章再来看本文。  ItemDecoration 我相信只要使用过RecyclerView的同学肯定都比较熟悉了，我们在使用 RecyclerView 的时候一般都是用这个来画分隔线的，不得不说十分的好用。但是在最近发现在使用自定义的It">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/623504-79211e4d8ae74ee9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/623504-622640741f5eba50.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/623504-36ce8945af500155.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2017-04-25T03:19:44.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="自定义ItemDecoration这个问题你真的注意到了吗">
+<meta name="twitter:description" content="本文讨论的是关于自定义ItemDecoration容易被忽略的问题，此文适合有过自定义ItemDecoration经验的同学阅读，还没有学习过的可以先去看看相关文章再来看本文。  ItemDecoration 我相信只要使用过RecyclerView的同学肯定都比较熟悉了，我们在使用 RecyclerView 的时候一般都是用这个来画分隔线的，不得不说十分的好用。但是在最近发现在使用自定义的It">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/623504-79211e4d8ae74ee9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">_SOLID</h5>
+          <a href="mailto:jiapeng1818@gmail.com" title="jiapeng1818@gmail.com" class="mail">jiapeng1818@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/burgessjp" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.weibo.com" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">自定义ItemDecoration这个问题你真的注意到了吗</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">自定义ItemDecoration这个问题你真的注意到了吗</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2017-04-06T08:14:00.000Z" itemprop="datePublished" class="page-time">
+  2017-04-06
+</time>
+
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+<article id="post-自定义ItemDecoration这个问题你真的注意到了吗"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">自定义ItemDecoration这个问题你真的注意到了吗</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2017-04-06 16:14:00" datetime="2017-04-06T08:14:00.000Z"  itemprop="datePublished">2017-04-06</time>
+
+            
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <blockquote>
+<p>本文讨论的是关于自定义ItemDecoration容易被忽略的问题，此文适合有过自定义ItemDecoration经验的同学阅读，还没有学习过的可以先去看看相关文章再来看本文。</p>
+</blockquote>
+<p><strong>ItemDecoration</strong> 我相信只要使用过RecyclerView的同学肯定都比较熟悉了，我们在使用 <strong>RecyclerView</strong> 的时候一般都是用这个来画分隔线的，不得不说十分的好用。但是在最近发现在使用自定义的<strong>ItemDecoration</strong>上遇到了一些细节上的问题，我这里自定义了一个<strong>GridDividerItemDecoration</strong> ，用于网格布局的分隔，大概效果如下图所示：</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://upload-images.jianshu.io/upload_images/623504-79211e4d8ae74ee9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<p><strong>绘制的逻辑大概是这样的：当 itemView 不是最后一列或者最后一行的时候就绘制右侧和底部分隔线，如果是最后一列时则不绘制右侧分隔线，如果是最后一行则不绘制底部分隔线。</strong></p>
+<p>代码大概是这样的<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">if (isLastRow &amp;&amp; isLastColumn) &#123;//最后一行最后一列什么都不绘制</div><div class="line">    outRect.set(0, 0, 0, 0);</div><div class="line">&#125; else if (isLastRow) &#123;// 如果是最后一行，则不需要绘制底部</div><div class="line">    outRect.set(0, 0, mDividerHeight, 0);</div><div class="line">&#125; else if (isLastColumn) &#123;// 如果是最后一列，则不需要绘制右边</div><div class="line">    outRect.set(0, 0, 0, mDividerHeight);</div><div class="line">&#125; else &#123;</div><div class="line">    outRect.set(0, 0, mDividerHeight,</div><div class="line">            mDividerHeight);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>这里的分割线设置的宽度只有1dp，看起来似乎没有什么问题，但是如果把分隔线的宽度设置为20dp效果如下图所示：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/623504-622640741f5eba50.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p>会明显的感觉到最后一列itemView的宽度会比前几列宽一些，具体的数值就是我们设置的 dividerWidth （也就是分隔线的宽度），正常情况下我们在自定义的 ItemDocration 设置 ItemOffsets 不会影响 itemView 的的大小，然而这里却出现了这个问题（其实网上绝大部分流行的关于网格的ItemDocration都存在这个问题），什么原因呢，看看下面两段源码就会知道了<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">private void measureChild(View view, int otherDirParentSpecMode, boolean alreadyMeasured) &#123;</div><div class="line">       final LayoutParams lp = (LayoutParams) view.getLayoutParams();</div><div class="line">       final Rect decorInsets = lp.mDecorInsets;</div><div class="line">       final int verticalInsets = decorInsets.top + decorInsets.bottom</div><div class="line">               + lp.topMargin + lp.bottomMargin;</div><div class="line">       final int horizontalInsets = decorInsets.left + decorInsets.right</div><div class="line">               + lp.leftMargin + lp.rightMargin;</div><div class="line">       final int availableSpaceInOther = getSpaceForSpanRange(lp.mSpanIndex, lp.mSpanSize);</div><div class="line">       final int wSpec;</div><div class="line">       final int hSpec;</div><div class="line">       if (mOrientation == VERTICAL) &#123;</div><div class="line">           //最后一个参数用来标识在当前的mOrientation 下是否可以滚动，</div><div class="line">           //当mOrientation 是VERTICAL的时候水平方向肯定是不能滚动的</div><div class="line">           wSpec = getChildMeasureSpec(availableSpaceInOther, otherDirParentSpecMode,</div><div class="line">                   horizontalInsets, lp.width, false);</div><div class="line">           hSpec = getChildMeasureSpec(mOrientationHelper.getTotalSpace(), getHeightMode(),</div><div class="line">                   verticalInsets, lp.height, true);</div><div class="line">       &#125; else &#123;</div><div class="line">           hSpec = getChildMeasureSpec(availableSpaceInOther, otherDirParentSpecMode,</div><div class="line">                   verticalInsets, lp.height, false);</div><div class="line">           wSpec = getChildMeasureSpec(mOrientationHelper.getTotalSpace(), getWidthMode(),</div><div class="line">                   horizontalInsets, lp.width, true);</div><div class="line">       &#125;</div><div class="line">       measureChildWithDecorationsAndMargin(view, wSpec, hSpec, alreadyMeasured);</div><div class="line">   &#125;</div></pre></td></tr></table></figure></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div></pre></td><td class="code"><pre><div class="line">public static int getChildMeasureSpec(int parentSize, int parentMode, int padding,</div><div class="line">                int childDimension, boolean canScroll) &#123;</div><div class="line">            int size = Math.max(0, parentSize - padding);</div><div class="line">            int resultSize = 0;</div><div class="line">            int resultMode = 0;</div><div class="line">            if (canScroll) &#123;</div><div class="line">                if (childDimension &gt;= 0) &#123;</div><div class="line">                    resultSize = childDimension;</div><div class="line">                    resultMode = MeasureSpec.EXACTLY;</div><div class="line">                &#125; else if (childDimension == LayoutParams.MATCH_PARENT) &#123;</div><div class="line">                    switch (parentMode) &#123;</div><div class="line">                        case MeasureSpec.AT_MOST:</div><div class="line">                        case MeasureSpec.EXACTLY:</div><div class="line">                            resultSize = size;</div><div class="line">                            resultMode = parentMode;</div><div class="line">                            break;</div><div class="line">                        case MeasureSpec.UNSPECIFIED:</div><div class="line">                            resultSize = 0;</div><div class="line">                            resultMode = MeasureSpec.UNSPECIFIED;</div><div class="line">                            break;</div><div class="line">                    &#125;</div><div class="line">                &#125; else if (childDimension == LayoutParams.WRAP_CONTENT) &#123;</div><div class="line">                    resultSize = 0;</div><div class="line">                    resultMode = MeasureSpec.UNSPECIFIED;</div><div class="line">                &#125;</div><div class="line">            &#125; else &#123;</div><div class="line">                if (childDimension &gt;= 0) &#123;</div><div class="line">                    resultSize = childDimension;</div><div class="line">                    resultMode = MeasureSpec.EXACTLY;</div><div class="line">                &#125; else if (childDimension == LayoutParams.MATCH_PARENT) &#123;</div><div class="line">                    resultSize = size;</div><div class="line">                    resultMode = parentMode;</div><div class="line">                &#125; else if (childDimension == LayoutParams.WRAP_CONTENT) &#123;</div><div class="line">                    resultSize = size;</div><div class="line">                    if (parentMode == MeasureSpec.AT_MOST || parentMode == MeasureSpec.EXACTLY) &#123;</div><div class="line">                        resultMode = MeasureSpec.AT_MOST;</div><div class="line">                    &#125; else &#123;</div><div class="line">                        resultMode = MeasureSpec.UNSPECIFIED;</div><div class="line">                    &#125;</div><div class="line"></div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">            //noinspection WrongConstant</div><div class="line">            return MeasureSpec.makeMeasureSpec(resultSize, resultMode);</div><div class="line">        &#125;</div></pre></td></tr></table></figure>
+<p>由于我们这里讨论的是垂直方向上的Grid，所以 <strong>mOrientation == VERTICA</strong>，从上面的代码可以看出当我们的itemView宽度不是精确数值的时候，然后测量出的宽度就为 <strong> Math.max(0, parentSize - padding)</strong>（这里的 padding 就是 <code>horizontalInsets = decorInsets.left + decorInsets.right + lp.leftMargin + lp.rightMargin</code>），原来这里在实际的宽度下还减去了ItemDecoration的左右偏移量，这也就解释了上面的那个问题。有人会问我们可不可以把宽度设置为固定值呢？可以当然是可以的，但是又会出现其他问题，下来你可以去尝试一下，这里我就不再去细究了。</p>
+<p>一般情况下当 mOrientation == VERTICA 的时候itemView的宽度是 match_parent的，当 mOrientation == HORIZONTAL的时候itemView的高度就是 match_parent的，这样才能更好的去适配各种屏幕的手机。</p>
+<p>这里我们找到了问题的原因所在，应该怎样去解决呢？  其实也很简单，就是均匀的分配offset给每一个itemView。</p>
+<p>下面我们来计算一下偏移量。</p>
+<p>// 每一个itemView的总偏移量（left+right）<br>eachOffset =（spanCount-1）* dividerWidth / spanCount;</p>
+<p>L0=0 , R0=eachOffset;<br>L1=dividerWidth-R0 , R1=eachOffset-L1;<br>L2=dividerWidth-R1 , R2=eachOffset-L2;</p>
+<p>其中：<br>L<sub>n</sub>:表示第n列itemView  left 偏移量。<br>R<sub>n</sub>:表示第n列itemView  right 偏移量。</p>
+<p>可能有些同学看到上面式子会有点凌乱，这里我直接告诉你最后推算出的结论好了，L<sub>n</sub> 是一个以 <strong>dividerWidth-eachOffset</strong> 为差值的一个等差数列，R<sub>n</sub>就等于 <strong>eachWidth-L<sub>n</sub></strong>。所以我们最后对 getItemOffsets 做了改进，代码如下：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">int left = 0;</div><div class="line">int top = 0;</div><div class="line">int right = 0;</div><div class="line">int bottom = 0;</div><div class="line">int eachWidth = (spanCount - 1) * mDividerHeight / spanCount;</div><div class="line">int dl = mDividerHeight - eachWidth;</div><div class="line"></div><div class="line">left = itemPosition % spanCount * dl;</div><div class="line">right = eachWidth - left;</div><div class="line">bottom = mDividerHeight;</div><div class="line"></div><div class="line">if (isLastRow) &#123;</div><div class="line">    bottom = 0;</div><div class="line">&#125;</div><div class="line">outRect.set(left, top, right, bottom);</div></pre></td></tr></table></figure>
+<p>最后的效果图如下：</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://upload-images.jianshu.io/upload_images/623504-36ce8945af500155.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<p>完美的解决了上面出现的问题，这都是些细节上的问题，如果不怎么注意，还真的很难去注意到，以后如果遇到其他类似的问题也可以很容易的解决了。本文只是讨论了在使用ItemDecoration其中的一个问题，并不算难，但是也很重要，所以大家在平时的开发中还是应该多多注意细节上的问题。</p>
+<p>最后送上本文源码地址:</p>
+<ol>
+<li><a href="https://github.com/burgessjp/QuickDevLib/blob/master/library/src/main/java/me/solidev/library/ui/recyclerview/GridDividerItemDecoration.java" target="_blank" rel="external">GridDividerItemDecoration</a></li>
+</ol>
+<ul>
+<li><a href="https://github.com/burgessjp/QuickDevLib/blob/master/library/src/main/java/me/solidev/library/ui/recyclerview/GridDividerItemDecorationBug.java" target="_blank" rel="external">GridDividerItemDecorationBug</a></li>
+</ul>
+<p>顺便给大家推荐一个十分强大的开源自定义的ItemDecoration ，适用于 <strong>LinearLayoutManager</strong>作为布局管理器的RecyclerView : <a href="https://github.com/yqritc/RecyclerView-FlexibleDivider" target="_blank" rel="external">RecyclerView-FlexibleDivider</a></p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2017-04-25T03:19:44.000Z" itemprop="dateUpdated">2017-04-25 11:19:44</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/2017/04/06/自定义ItemDecoration这个问题你真的注意到了吗/" target="_blank" rel="external">http://yoursite.com/2017/04/06/自定义ItemDecoration这个问题你真的注意到了吗/</a>
+        
+    </div>
+    <footer>
+        <a href="http://yoursite.com">
+            <img src="/img/avatar.jpg" alt="_SOLID">
+            _SOLID
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/2017/04/06/自定义ItemDecoration这个问题你真的注意到了吗/&title=《自定义ItemDecoration这个问题你真的注意到了吗》 — 技术分享会&pic=http://yoursite.com/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2017/04/06/自定义ItemDecoration这个问题你真的注意到了吗/&title=《自定义ItemDecoration这个问题你真的注意到了吗》 — 技术分享会&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2017/04/06/自定义ItemDecoration这个问题你真的注意到了吗/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《自定义ItemDecoration这个问题你真的注意到了吗》 — 技术分享会&url=http://yoursite.com/2017/04/06/自定义ItemDecoration这个问题你真的注意到了吗/&via=http://yoursite.com" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://yoursite.com/2017/04/06/自定义ItemDecoration这个问题你真的注意到了吗/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between flex-row-reverse">
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2017/04/25/hello-world/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Hello World</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+<div class="comments" id="comments">
+    <div class="ds-thread" data-thread-key="自定义ItemDecoration这个问题你真的注意到了吗" data-title="自定义ItemDecoration这个问题你真的注意到了吗" data-url="http://yoursite.com/2017/04/06/自定义ItemDecoration这个问题你真的注意到了吗/"></div>
+</div>
+<script>
+lazyScripts.push('//cdn.bootcss.com/marked/0.3.6/marked.min.js');
+
+var duoshuoQuery = {short_name:'ysblog', theme: 'none'};
+lazyScripts.push('//unpkg.com/hexo-theme-material-indigo@latest/js/embed.min.js');
+
+
+</script>
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <ul class="reward-items">
+        
+        <li>
+            <img src="/img/wechat.jpg" title="微信打赏二维码" alt="微信打赏二维码">
+            <p>微信</p>
+        </li>
+        
+
+        
+        <li>
+            <img src="/img/alipay.jpg" title="支付宝打赏二维码" alt="支付宝打赏二维码">
+            <p>支付宝</p>
+        </li>
+        
+    </ul>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+            <span>博客内容遵循<a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p>
+            <span>Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a></span>
+            <span>_SOLID &copy; 2017</span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/2017/04/06/自定义ItemDecoration这个问题你真的注意到了吗/&title=《自定义ItemDecoration这个问题你真的注意到了吗》 — 技术分享会&pic=http://yoursite.com/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2017/04/06/自定义ItemDecoration这个问题你真的注意到了吗/&title=《自定义ItemDecoration这个问题你真的注意到了吗》 — 技术分享会&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2017/04/06/自定义ItemDecoration这个问题你真的注意到了吗/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《自定义ItemDecoration这个问题你真的注意到了吗》 — 技术分享会&url=http://yoursite.com/2017/04/06/自定义ItemDecoration这个问题你真的注意到了吗/&via=http://yoursite.com" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://yoursite.com/2017/04/06/自定义ItemDecoration这个问题你真的注意到了吗/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=http://yoursite.com/2017/04/06/自定义ItemDecoration这个问题你真的注意到了吗/" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>

@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    <title>No title | 技术分享会</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="">
+    <meta name="description" content="以前学了很多东西，都没怎么做记录，慢慢的时间长了也就给忘了，当初踩过的坑翻来覆去的踩，由于这些血淋林的教训，所以从现在开始，每次学了新的东西都要来写个博客做个记录总结一下了。 最近在学习Android多媒体这一块，现在刚好学到了MediaRecorder和MediaPlayer。今天也就介绍下这两个类吧，也有利于以后初学者的学习。 本文一共分3个部分：第一和第二部分用来介绍这两个类，第3部分做一个">
+<meta name="keywords">
+<meta property="og:type" content="article">
+<meta property="og:title" content="No title">
+<meta property="og:url" content="http://yoursite.com/2017/04/25/Android-多媒体之MediaRecorder-MediaPlayer/index.html">
+<meta property="og:site_name" content="技术分享会">
+<meta property="og:description" content="以前学了很多东西，都没怎么做记录，慢慢的时间长了也就给忘了，当初踩过的坑翻来覆去的踩，由于这些血淋林的教训，所以从现在开始，每次学了新的东西都要来写个博客做个记录总结一下了。 最近在学习Android多媒体这一块，现在刚好学到了MediaRecorder和MediaPlayer。今天也就介绍下这两个类吧，也有利于以后初学者的学习。 本文一共分3个部分：第一和第二部分用来介绍这两个类，第3部分做一个">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/623504-3a1d33e478561a59.gif?imageMogr2/auto-orient/strip">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/623504-1ac220628a50a719.gif?imageMogr2/auto-orient/strip">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/623504-131c0f6370d6ff0b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2017-04-25T03:05:25.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="No title">
+<meta name="twitter:description" content="以前学了很多东西，都没怎么做记录，慢慢的时间长了也就给忘了，当初踩过的坑翻来覆去的踩，由于这些血淋林的教训，所以从现在开始，每次学了新的东西都要来写个博客做个记录总结一下了。 最近在学习Android多媒体这一块，现在刚好学到了MediaRecorder和MediaPlayer。今天也就介绍下这两个类吧，也有利于以后初学者的学习。 本文一共分3个部分：第一和第二部分用来介绍这两个类，第3部分做一个">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/623504-3a1d33e478561a59.gif?imageMogr2/auto-orient/strip">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">_SOLID</h5>
+          <a href="mailto:jiapeng1818@gmail.com" title="jiapeng1818@gmail.com" class="mail">jiapeng1818@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/burgessjp" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.weibo.com" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis"></div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title"></h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2017-04-25T03:05:53.585Z" itemprop="datePublished" class="page-time">
+  2017-04-25
+</time>
+
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+<article id="post-Android-多媒体之MediaRecorder-MediaPlayer"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title"></h1>
+        <div class="post-meta">
+            <time class="post-time" title="2017-04-25 11:05:53" datetime="2017-04-25T03:05:53.585Z"  itemprop="datePublished">2017-04-25</time>
+
+            
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>以前学了很多东西，都没怎么做记录，慢慢的时间长了也就给忘了，当初踩过的坑翻来覆去的踩，由于这些血淋林的教训，所以从现在开始，每次学了新的东西都要来写个博客做个记录总结一下了。</p>
+<p>最近在学习Android多媒体这一块，现在刚好学到了MediaRecorder和MediaPlayer。今天也就介绍下这两个类吧，也有利于以后初学者的学习。</p>
+<p>本文一共分3个部分：第一和第二部分用来介绍这两个类，第3部分做一个录音的小Demo（附源码）</p>
+<p>##1.MediaRecorder<br>关于MediaRecorder 官网给的解释是</p>
+<blockquote>
+<p>Used to record audio and video. The recording control is based on a simple state machine </p>
+</blockquote>
+<p>大致意思就是，这个类是用来去录制音频和视频的。录制基于一种简单的状态机制。<br>这个状态机制是什么呢？Google给了一张图</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://upload-images.jianshu.io/upload_images/623504-3a1d33e478561a59.gif?imageMogr2/auto-orient/strip" alt="mediarecorder_state_diagram.gif" title="">
+                </div>
+                <div class="image-caption">mediarecorder_state_diagram.gif</div>
+            </figure>
+<p>从图中可以看出MediaRecorder 有这么几种状态：<br><strong>Initial</strong>：初始化。也就是MediaRecorder 刚被创建的时候。在这个时候我们去设置音频或者视频的来源了，可能这个时候就有人问了 音频或者视频的来源是什么意思，举个例子吧，比如当我们在录音的时候，这个声音的来源就可以设置成手机的麦克风。<br><strong>Initialized</strong>：初始化完成。这里我们已经知道音频或者视频的来源了，在这里我们就可以设置一些输出的属性了，比如输出文件的保存格式，编码什么的。由于水平有限还有很多关于媒体文件属性，我也不是太理解。<br><strong>DataSourceConfigured</strong>:数据源配置改变。也就是我们改变了一些输出的属性，就会进入到这个状态。<br><strong>Prepered</strong>：处于这个状态就说明了我们的配置已经完成了，现在就等去录制了。<br><strong>Recordeing</strong>：这个不用我说也应该明白了。<br><strong>Released</strong>：资源被释放了。<br><strong>Error</strong>：录制的时候发生了错误。</p>
+<p>图中已经把状态之间是怎么切换的已经描述的非常清楚了，我也不过多介绍了。</p>
+<p>##2.MediaPlayer<br>关于MediaPlayer官网给的解释是：</p>
+<blockquote>
+<p>MediaPlayer class can be used to control playback of audio/video files and streams.</p>
+</blockquote>
+<p>简单翻译过来就是：这个类是用来去播放音频，视频文件和流文件的。</p>
+<p>他也对应了一个状态图：</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://upload-images.jianshu.io/upload_images/623504-1ac220628a50a719.gif?imageMogr2/auto-orient/strip" alt="mediaplayer_state_diagram.gif" title="">
+                </div>
+                <div class="image-caption">mediaplayer_state_diagram.gif</div>
+            </figure>
+<p>其实他的大致流程和MediaRecorder差不多，这里我就略过了。</p>
+<p>你以为到这就结束了吗？肯定不是的，上面的也就为下面我要做的做个铺垫而已，有了上面的基础，后面的肯定就轻松了。</p>
+<p>##3.做一个录音的小Demo<br>先来看一看效果图吧</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/623504-131c0f6370d6ff0b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="未标题-1.png"></p>
+<p>看起来还是很简单吧。<br>开始是初始状态，然后是录制状态（中间有个波浪形的自定义控件），在这个状态下会显示当前的录制时长，波浪形控件会显示，最后就是录制完成，可以点击播放了。<br>最下面是保存和删除按钮，可以删除当前的录音。PS：保存按钮没有任何实现，录音文件会自动保存。</p>
+<p>知道了这个效果现在就来介绍是怎么做的吧。</p>
+<p>这个小Demo我对MediaRecorder和MediaPlayer做了一下封装，方便以后使用调用方便。</p>
+<p>MediaRecorderHelper代码如下：</p>
+<pre>
+public class MediaRecorderHelper {
+
+    private MediaRecorder mMediaRecorder;
+    private String mSavePath;
+    private String mCurrentFilePath;
+
+
+    public MediaRecorderHelper(String savePath) {
+        mSavePath = savePath;
+        File file = new File(mSavePath);
+        if (!file.exists()) file.mkdirs();
+
+    }
+
+
+    /**
+     * 开始录音
+     */
+    public void startRecord() {
+        try {
+            mMediaRecorder = new MediaRecorder();
+            File file = new File(mSavePath, generateFileName());
+            mCurrentFilePath = file.getAbsolutePath();
+            // 设置录音文件的保存位置
+            mMediaRecorder.setOutputFile(mCurrentFilePath);
+            // 设置录音的来源（从哪里录音）
+            mMediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
+            // 设置录音的保存格式
+            mMediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.AMR_NB);
+            // 设置录音的编码
+            mMediaRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
+            mMediaRecorder.prepare();
+            mMediaRecorder.start();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * 停止录音
+     */
+    public void stopAndRelease() {
+        if (mMediaRecorder == null) return;
+        mMediaRecorder.stop();
+        mMediaRecorder.release();
+        mMediaRecorder = null;
+    }
+
+    /***
+     * 取消本次录音操作
+     */
+    public void cancel() {
+        this.stopAndRelease();
+        if (mCurrentFilePath != null) {
+            File file = new File(mCurrentFilePath);
+            file.delete();
+            mCurrentFilePath = null;
+
+
+        }
+    }
+
+    private String generateFileName() {
+        return UUID.randomUUID().toString() + ".amr";
+    }
+
+    /**
+     * 得到录音文件的路径
+     *
+     * @return
+     */
+    public String getCurrentFilePath() {
+        return mCurrentFilePath;
+    }
+
+}
+
+</pre>
+MediaPlayerHelper代码如下：
+<pre>
+public class MediaPlayerHelper {
+
+    private static MediaPlayer mMediaPlayer;
+    private static boolean isPause = false;
+
+    public static void playSound(String filePath) {
+        playSound(filePath, null);
+    }
+
+    public static void playSound(String filePath, MediaPlayer.OnCompletionListener onCompletionListener) {
+        if (mMediaPlayer == null) {
+            mMediaPlayer = new MediaPlayer();
+            mMediaPlayer.setOnErrorListener(new MediaPlayer.OnErrorListener() {
+                @Override
+                public boolean onError(MediaPlayer mp, int what, int extra) {
+                    mMediaPlayer.reset();
+                    return false;
+                }
+            });
+        } else {
+            mMediaPlayer.reset();
+        }
+        try {
+            mMediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+            if (onCompletionListener != null) {
+                mMediaPlayer.setOnCompletionListener(onCompletionListener);
+            }
+
+
+            mMediaPlayer.setDataSource(filePath);
+            mMediaPlayer.prepare();
+            mMediaPlayer.start();
+        } catch (IllegalArgumentException e) {
+            e.printStackTrace();
+        } catch (SecurityException e) {
+            e.printStackTrace();
+        } catch (IllegalStateException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+    }
+
+    /**
+     * 暂停播放
+     */
+    public static void pause() {
+        if (mMediaPlayer != null && mMediaPlayer.isPlaying()) {
+            mMediaPlayer.pause();
+            isPause = true;
+        }
+    }
+
+
+    /**
+     * 继续播放
+     */
+    public static void resume() {
+        if (mMediaPlayer != null && isPause) {
+            mMediaPlayer.start();
+            isPause = false;
+        }
+    }
+
+    /**
+     * 释放资源
+     */
+    public static void realese() {
+        if (mMediaPlayer != null) {
+            mMediaPlayer.release();
+            mMediaPlayer = null;
+            isPause = true;
+        }
+    }
+}
+
+</pre>
+
+<p>这两个类的代码注释的已经非常详细了，我再在这里介绍也就显得有点多余了。如果还是又不懂或者有问题需要提出的，欢迎留言。</p>
+<p>到这里我们的核心东西已经准备好了，现在就剩下一个Activity让我们去实现刚才效果图上的小Demo了。</p>
+<p>我们来分析一下我们的小Demo会有哪些状态：<br>1.正常状态，也就是没有录制的状态<br>2.录制中<br>3.录制完成<br>4.播放状态<br>5.暂停状态</p>
+<p>对于这几种状态我定义了对应的五个常量来表示。</p>
+<pre>
+private static final int ACTION_NORMAL = 0;
+private static final int ACTION_RECORDING = 1;
+private static final int ACTION_COMMPLETE = 2;
+private static final int ACTION_PLAYING = 3;
+private static final int ACTION_PAUSE = 4;
+</pre>
+
+
+<p>在中间的录制按钮在点击的时候，我们要根据当前的状态来进行状态之间的切换：<br>依然是附代码，就是这么任性~~~~</p>
+<pre>
+  /**
+     * 切换ACTION状态
+     */
+    private void switchActionState() {
+        mIsRecorder = false;
+        if (mCurrentActionState == ACTION_NORMAL) {
+            mCurrentActionState = ACTION_RECORDING;
+            mIvAction.setImageResource(R.drawable.pause);
+
+            //开始录音
+            mMediaRecorderHelper.startRecord();
+            mWaveView.setVisibility(View.VISIBLE);
+            mIsRecorder = true;
+            //开启计时线程
+            mCountTimeThread = new Thread(this);
+            mCountTimeThread.start();
+
+        } else if (mCurrentActionState == ACTION_RECORDING) {//录制中
+            mCurrentActionState = ACTION_COMMPLETE;
+            mIvAction.setImageResource(R.drawable.icon_audio_state_uploaded);
+            //停止录音
+            mMediaRecorderHelper.stopAndRelease();
+            mRlBottom.setVisibility(View.VISIBLE);
+            mWaveView.setVisibility(View.INVISIBLE);
+
+        } else if (mCurrentActionState == ACTION_COMMPLETE) {//录制完成
+            mCurrentActionState = ACTION_PLAYING;
+            mIvAction.setImageResource(R.drawable.icon_audio_state_uploaded_play);
+
+            //播放录音
+            MediaPlayerHelper.playSound(mMediaRecorderHelper.getCurrentFilePath(), new MediaPlayer.OnCompletionListener() {
+                @Override
+                public void onCompletion(MediaPlayer mp) {
+                    //当播放完了之后切换到录制完成的状态
+                    mCurrentActionState = ACTION_COMMPLETE;
+                    mIvAction.setImageResource(R.drawable.icon_audio_state_uploaded);
+                }
+            });
+
+        } else if (mCurrentActionState == ACTION_PLAYING) {//播放中
+            mCurrentActionState = ACTION_PAUSE;
+            mIvAction.setImageResource(R.drawable.icon_audio_state_uploaded);
+            //暂停播放
+            MediaPlayerHelper.pause();
+        } else if (mCurrentActionState == ACTION_PAUSE) {//暂停
+            mCurrentActionState = ACTION_PLAYING;
+            mIvAction.setImageResource(R.drawable.icon_audio_state_uploaded_play);
+            //继续播放
+            MediaPlayerHelper.resume();
+        }
+    }
+</pre>
+
+<p>上面的就是整个Demo的核心思想。</p>
+<p>需要源码的可以点击下面的链接下载。<br><a href="https://github.com/burgessjp/MediaRecorderDemo" target="_blank" rel="external">MediaRecorderDemo</a></p>
+<p>如果在阅读的过程中又发现错误，也欢迎留言纠错。</p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2017-04-25T03:05:25.000Z" itemprop="dateUpdated">2017-04-25 11:05:25</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/2017/04/25/Android-多媒体之MediaRecorder-MediaPlayer/" target="_blank" rel="external">http://yoursite.com/2017/04/25/Android-多媒体之MediaRecorder-MediaPlayer/</a>
+        
+    </div>
+    <footer>
+        <a href="http://yoursite.com">
+            <img src="/img/avatar.jpg" alt="_SOLID">
+            _SOLID
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/2017/04/25/Android-多媒体之MediaRecorder-MediaPlayer/&title=技术分享会&pic=http://yoursite.com/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2017/04/25/Android-多媒体之MediaRecorder-MediaPlayer/&title=技术分享会&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2017/04/25/Android-多媒体之MediaRecorder-MediaPlayer/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=技术分享会&url=http://yoursite.com/2017/04/25/Android-多媒体之MediaRecorder-MediaPlayer/&via=http://yoursite.com" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://yoursite.com/2017/04/25/Android-多媒体之MediaRecorder-MediaPlayer/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2017/04/25/Android-多媒体之Camera/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">[no title]</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2017/04/25/Android主题换肤-无缝切换/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">[no title]</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+<div class="comments" id="comments">
+    <div class="ds-thread" data-thread-key="Android-多媒体之MediaRecorder-MediaPlayer" data-title="" data-url="http://yoursite.com/2017/04/25/Android-多媒体之MediaRecorder-MediaPlayer/"></div>
+</div>
+<script>
+lazyScripts.push('//cdn.bootcss.com/marked/0.3.6/marked.min.js');
+
+var duoshuoQuery = {short_name:'ysblog', theme: 'none'};
+lazyScripts.push('//unpkg.com/hexo-theme-material-indigo@latest/js/embed.min.js');
+
+
+</script>
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <ul class="reward-items">
+        
+        <li>
+            <img src="/img/wechat.jpg" title="微信打赏二维码" alt="微信打赏二维码">
+            <p>微信</p>
+        </li>
+        
+
+        
+        <li>
+            <img src="/img/alipay.jpg" title="支付宝打赏二维码" alt="支付宝打赏二维码">
+            <p>支付宝</p>
+        </li>
+        
+    </ul>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+            <span>博客内容遵循<a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p>
+            <span>Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a></span>
+            <span>_SOLID &copy; 2017</span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/2017/04/25/Android-多媒体之MediaRecorder-MediaPlayer/&title=《No title》 — 技术分享会&pic=http://yoursite.com/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2017/04/25/Android-多媒体之MediaRecorder-MediaPlayer/&title=《No title》 — 技术分享会&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2017/04/25/Android-多媒体之MediaRecorder-MediaPlayer/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《No title》 — 技术分享会&url=http://yoursite.com/2017/04/25/Android-多媒体之MediaRecorder-MediaPlayer/&via=http://yoursite.com" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://yoursite.com/2017/04/25/Android-多媒体之MediaRecorder-MediaPlayer/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=http://yoursite.com/2017/04/25/Android-多媒体之MediaRecorder-MediaPlayer/" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>

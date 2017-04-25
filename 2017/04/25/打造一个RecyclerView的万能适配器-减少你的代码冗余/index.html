@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    <title>No title | 技术分享会</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="">
+    <meta name="description" content="我们都知道每次在我们使用RecyclerView这样的列表组件的时候，我们都会先去创建一个Adapter，对于RecyclerView的Adapter我们已经不需要对itemView的复用操心了，使用过ListView，GridView的肯定知道，对于ItemView的复用需要我们自己去做。但是对于这个RecyclerView的Adapter我们还是会写很多重复的代码，在ViewHolder中也会">
+<meta name="keywords">
+<meta property="og:type" content="article">
+<meta property="og:title" content="No title">
+<meta property="og:url" content="http://yoursite.com/2017/04/25/打造一个RecyclerView的万能适配器-减少你的代码冗余/index.html">
+<meta property="og:site_name" content="技术分享会">
+<meta property="og:description" content="我们都知道每次在我们使用RecyclerView这样的列表组件的时候，我们都会先去创建一个Adapter，对于RecyclerView的Adapter我们已经不需要对itemView的复用操心了，使用过ListView，GridView的肯定知道，对于ItemView的复用需要我们自己去做。但是对于这个RecyclerView的Adapter我们还是会写很多重复的代码，在ViewHolder中也会">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/623504-8f8b053b0926b6f2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2017-04-25T03:05:25.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="No title">
+<meta name="twitter:description" content="我们都知道每次在我们使用RecyclerView这样的列表组件的时候，我们都会先去创建一个Adapter，对于RecyclerView的Adapter我们已经不需要对itemView的复用操心了，使用过ListView，GridView的肯定知道，对于ItemView的复用需要我们自己去做。但是对于这个RecyclerView的Adapter我们还是会写很多重复的代码，在ViewHolder中也会">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/623504-8f8b053b0926b6f2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">_SOLID</h5>
+          <a href="mailto:jiapeng1818@gmail.com" title="jiapeng1818@gmail.com" class="mail">jiapeng1818@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/burgessjp" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.weibo.com" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis"></div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title"></h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2017-04-25T03:05:53.619Z" itemprop="datePublished" class="page-time">
+  2017-04-25
+</time>
+
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+<article id="post-打造一个RecyclerView的万能适配器-减少你的代码冗余"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title"></h1>
+        <div class="post-meta">
+            <time class="post-time" title="2017-04-25 11:05:53" datetime="2017-04-25T03:05:53.619Z"  itemprop="datePublished">2017-04-25</time>
+
+            
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>我们都知道每次在我们使用RecyclerView这样的列表组件的时候，我们都会先去创建一个Adapter，对于RecyclerView的Adapter我们已经不需要对itemView的复用操心了，使用过ListView，GridView的肯定知道，对于ItemView的复用需要我们自己去做。但是对于这个RecyclerView的Adapter我们还是会写很多重复的代码，在ViewHolder中也会有很多的FindViewById()这样的代码在里面，写一次无所谓，但是如果我们的项目里面需要写很多个这样的Adapter的时候呢？如果“不偷下懒”，我相信你会写的醉生梦死。</p>
+<p>先说明下：本文的思想是基于HongYang的这篇博客：<a href="http://blog.csdn.net/lmj623565791/article/details/38902805" target="_blank" rel="external">Android 快速开发系列 打造万能的ListView GridView 适配器 </a>，他的是基于ListView，GridView的。本文并没有什么技术含量，只是一种简单的封装而已。<br>我们来看看怎么去实现这个适配器吧（下面代码可直接拷贝使用）：</p>
+<pre>
+/**
+ * Created by _SOLID
+ * Date:2016/4/5
+ * Time:11:18
+ * <p>
+ * 通用的RecyclerView的适配器
+ * </p><p>
+ * 思想上参考了Hongyang的 http://blog.csdn.net/lmj623565791/article/details/38902805这篇博客
+ */
+public abstract class SolidRVBaseAdapter<t> extends RecyclerView.Adapter<solidrvbaseadapter.solidcommonviewholder> {
+
+    protected List<t> mBeans;
+    protected Context mContext;
+    protected boolean mAnimateItems = true;
+    protected int mLastAnimatedPosition = -1;
+
+    public SolidRVBaseAdapter(Context context, List<t> beans) {
+        mContext = context;
+        mBeans = beans;
+    }
+
+    @Override
+    public SolidRVBaseAdapter.SolidCommonViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        LayoutInflater inflater = LayoutInflater.from(mContext);
+        View view = inflater.inflate(getItemLayoutID(viewType), parent, false);
+        SolidCommonViewHolder holder = new SolidCommonViewHolder(view);
+        return holder;
+    }
+
+
+    @Override
+    public void onBindViewHolder(SolidRVBaseAdapter.SolidCommonViewHolder holder, int position) {
+        runEnterAnimation(holder.itemView, position);
+        onBindDataToView(holder, mBeans.get(position));
+
+    }
+
+    /**
+     * 绑定数据到Item的控件中去     *
+     * @param holder
+     * @param bean
+     */
+    protected abstract void onBindDataToView(SolidCommonViewHolder holder, T bean);
+
+    /**
+     * 取得ItemView的布局文件     *
+     * @return
+     */
+    public abstract int getItemLayoutID(int viewType);
+
+
+    @Override
+    public int getItemCount() {
+        return mBeans.size();
+    }
+
+    public void add(T bean) {
+        mBeans.add(bean);
+        notifyDataSetChanged();
+    }
+
+    public void addAll(List<t> beans) {
+        mBeans.addAll(beans);
+        notifyDataSetChanged();
+    }
+
+    public void clear() {
+        mBeans.clear();
+        notifyDataSetChanged();
+    }
+
+    /***
+     * item的加载动画
+     * @param view
+     * @param position
+     */
+    private void runEnterAnimation(View view, int position) {
+        if (!mAnimateItems) {
+            return;
+        }
+        if (position > mLastAnimatedPosition) {
+            mLastAnimatedPosition = position;
+            view.setTranslationY(ViewUtils.getScreenHeight(mContext));
+            view.animate()
+                    .translationY(50)
+                    .setStartDelay(100)
+                    .setInterpolator(new DecelerateInterpolator(3.f))
+                    .setDuration(300)
+                    .start();
+        }
+    }
+
+
+    public class SolidCommonViewHolder extends
+            RecyclerView.ViewHolder {
+        private final SparseArray<view> mViews;
+        private View itemView;
+
+        public SolidCommonViewHolder(View itemView) {
+            super(itemView);
+            this.mViews = new SparseArray<>();
+            this.itemView = itemView;
+            //添加Item的点击事件
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onItemClick(getAdapterPosition());
+                }
+            });
+        }
+
+
+        public <t extends="" view=""> T getView(int viewId) {
+
+            View view = mViews.get(viewId);
+            if (view == null) {
+                view = itemView.findViewById(viewId);
+                mViews.put(viewId, view);
+            }
+            return (T) view;
+        }
+
+        public void setText(int viewId, String text) {
+            TextView tv = getView(viewId);
+            tv.setText(text);
+        }
+
+        /**
+         * 加载drawable中的图片
+         *
+         * @param viewId
+         * @param resId
+         */
+        public void setImage(int viewId, int resId) {
+            ImageView iv = getView(viewId);
+            iv.setImageResource(resId);
+        }
+
+        /**
+         * 加载网络上的图片
+         *
+         * @param viewId
+         * @param url
+         */
+        public void setImageFromInternet(int viewId, String url) {
+            ImageView iv = getView(viewId);
+            SolidHttpUtils.getInstance().loadImage(url, iv);//这里可根据自己的需要变更
+        }
+    }
+
+    /**
+     * ItemView的单击事件(如果需要，重写此方法就行)
+     *
+     * @param position
+     */
+    protected void onItemClick(int position) {
+
+    }
+}
+</t></view></t></t></t></solidrvbaseadapter.solidcommonviewholder></t></p></pre>
+
+<p>这里我们用到了泛型，如果还有不知道泛型的同学那就赶快去补补泛型这方面的基本知识吧，在面向对象程序设计中泛型这个点还是很重要的。细心的肯定注意到了这是个抽象类，里面有getItemLayoutID和onBindDataToView两个抽象方法，getItemLayoutID是用来设置itemView的布局文件的，onBindDataToView是用来绑定数据到itemView中的控件中去。分别在<strong>onCreateViewHolder</strong>和<strong>onBindViewHolder</strong>中使用到了。这两个方法里面的代码其实并不复杂，我就不多说了，此外我还添加了add、addAll、clear这三个方法用来对数据进行操作。其中<strong>runEnterAnimation</strong>是用来添加ItemView的进入动画的（动画的具体效果可根据需求或者自己的喜欢调整）</p>
+<p>比较重要的还是<strong>SolidCommonViewHolder </strong>这个类，这里是我们减少冗余代码的关键。这里使用到了<strong>SparseArray</strong>来保存View（不要问我为什么，这个是Google推荐使用的，和HashMap有点类似，但是在Android中性能要稍微好一些）。我们知道在我们的ItemView中无非是TextView，ImageView这些控件，所以在这里我提供了setText、setImage、setImageFromInternet这几个方法。如果你有更多的控件在ItemView中，请自行添加相关方法。</p>
+<p>我们来看看怎么去使用吧</p>
+<pre>
+/**
+ * Created by _SOLID
+ * Date:2016/4/5
+ * Time:11:34
+ */
+public class BookAdapter extends SolidRVBaseAdapter<bookbean> {
+
+    public BookAdapter(Context context, List<bookbean> beans) {
+        super(context, beans);
+    }
+
+    @Override
+    public int getItemLayoutID(int vieWType) {
+        return R.layout.item_book;
+    }
+
+    @Override
+    protected void onItemClick(int position) {
+        Intent intent = new Intent(mContext, BookDetailActivity.class);
+        intent.putExtra("url", mBeans.get(position - 1).getUrl());
+        mContext.startActivity(intent);
+    }
+    @Override
+    protected void onBindDataToView(SolidCommonViewHolder holder, BookBean bean) {
+        holder.setText(R.id.tv_title, bean.getTitle());
+        holder.setText(R.id.tv_price, "￥" + bean.getPrice());
+        holder.setText(R.id.tv_author, "作者:" + bean.getAuthor() + "");
+        holder.setText(R.id.tv_date, "出版日期:" + bean.getPubdate());
+        holder.setText(R.id.tv_publisher, "出版社:" + bean.getPublisher());
+        holder.setText(R.id.tv_num_rating, bean.getRating().getNumRaters() + "人评分");
+        holder.setImageFromInternet(R.id.iv_image, bean.getImage());
+    }
+}
+</bookbean></bookbean></pre>
+
+<p>是不是很简单，我们只需去设置一个ItemLayoutID然后绑定数据到控件中去就OK了，再也不用去各种FindViewById了。</p>
+<p>到这里可能有的同学肯定会问了，你这个只支持只有一个ViewType的RecyclerView啊，要是我有多个改怎么办呢。其实也不难，请看下面代码：</p>
+<pre>
+
+/**
+ * Created by _SOLID
+ * Date:2016/4/5
+ * Time:17:36
+ * <p>
+ * 支持多种ItemType的Adapter（适用于RecyclerView）
+ */
+public abstract class SolidMultiItemTypeRVBaseAdapter1<t> extends SolidRVBaseAdapter<t> {
+
+
+    public SolidMultiItemTypeRVBaseAdapter1(Context context, List<t> beans) {
+        super(context, beans);
+    }
+    @Override
+    public abstract int getItemViewType(int position);
+
+
+}
+
+</t></t></t></p></pre>
+
+<p>这个类就是继承于之前写的那个类，在这里我只将RecyclerView.Adapter的getItemViewType这个方法变成了抽象方法。目的是强迫子类根据自己的需求去实现即可,实现类中的onBindDataToView方法根据holder.getItemViewType()去绑定数据即可（这里我没有实际去测试过，就不贴测试代码了）。只要你知道之前那个类中的这个方法，我相信你肯定就会懂了。<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://upload-images.jianshu.io/upload_images/623504-8f8b053b0926b6f2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure></p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2017-04-25T03:05:25.000Z" itemprop="dateUpdated">2017-04-25 11:05:25</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/2017/04/25/打造一个RecyclerView的万能适配器-减少你的代码冗余/" target="_blank" rel="external">http://yoursite.com/2017/04/25/打造一个RecyclerView的万能适配器-减少你的代码冗余/</a>
+        
+    </div>
+    <footer>
+        <a href="http://yoursite.com">
+            <img src="/img/avatar.jpg" alt="_SOLID">
+            _SOLID
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/2017/04/25/打造一个RecyclerView的万能适配器-减少你的代码冗余/&title=技术分享会&pic=http://yoursite.com/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2017/04/25/打造一个RecyclerView的万能适配器-减少你的代码冗余/&title=技术分享会&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2017/04/25/打造一个RecyclerView的万能适配器-减少你的代码冗余/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=技术分享会&url=http://yoursite.com/2017/04/25/打造一个RecyclerView的万能适配器-减少你的代码冗余/&via=http://yoursite.com" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://yoursite.com/2017/04/25/打造一个RecyclerView的万能适配器-减少你的代码冗余/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2017/04/25/基于Gank-IO提供的API的第三方客户端，可以在线收藏[项目开源]/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">[no title]</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2017/04/25/是时候学习RxJava了/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">[no title]</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+<div class="comments" id="comments">
+    <div class="ds-thread" data-thread-key="打造一个RecyclerView的万能适配器-减少你的代码冗余" data-title="" data-url="http://yoursite.com/2017/04/25/打造一个RecyclerView的万能适配器-减少你的代码冗余/"></div>
+</div>
+<script>
+lazyScripts.push('//cdn.bootcss.com/marked/0.3.6/marked.min.js');
+
+var duoshuoQuery = {short_name:'ysblog', theme: 'none'};
+lazyScripts.push('//unpkg.com/hexo-theme-material-indigo@latest/js/embed.min.js');
+
+
+</script>
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <ul class="reward-items">
+        
+        <li>
+            <img src="/img/wechat.jpg" title="微信打赏二维码" alt="微信打赏二维码">
+            <p>微信</p>
+        </li>
+        
+
+        
+        <li>
+            <img src="/img/alipay.jpg" title="支付宝打赏二维码" alt="支付宝打赏二维码">
+            <p>支付宝</p>
+        </li>
+        
+    </ul>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+            <span>博客内容遵循<a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p>
+            <span>Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a></span>
+            <span>_SOLID &copy; 2017</span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/2017/04/25/打造一个RecyclerView的万能适配器-减少你的代码冗余/&title=《No title》 — 技术分享会&pic=http://yoursite.com/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2017/04/25/打造一个RecyclerView的万能适配器-减少你的代码冗余/&title=《No title》 — 技术分享会&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2017/04/25/打造一个RecyclerView的万能适配器-减少你的代码冗余/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《No title》 — 技术分享会&url=http://yoursite.com/2017/04/25/打造一个RecyclerView的万能适配器-减少你的代码冗余/&via=http://yoursite.com" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://yoursite.com/2017/04/25/打造一个RecyclerView的万能适配器-减少你的代码冗余/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=http://yoursite.com/2017/04/25/打造一个RecyclerView的万能适配器-减少你的代码冗余/" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>

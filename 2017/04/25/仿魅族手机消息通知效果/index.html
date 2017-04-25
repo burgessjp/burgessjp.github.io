@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    <title>No title | 技术分享会</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="">
+    <meta name="description" content="用了一年多的魅族手机了，先不说手机性能怎么样，个人是非常喜欢魅族的UI，各方面都比较符合我的审美，感觉魅族在UI的设计上在国内还是听超前的吧。这不是广告，这只是一条华丽的分割线123456789101112131415161718---下面就进入今天的正题吧。今天我要实现的是一个魅族的通知效果，先来看看魅族原生的效果吧。![](http://upload-images.jianshu.io/upl">
+<meta name="keywords">
+<meta property="og:type" content="article">
+<meta property="og:title" content="No title">
+<meta property="og:url" content="http://yoursite.com/2017/04/25/仿魅族手机消息通知效果/index.html">
+<meta property="og:site_name" content="技术分享会">
+<meta property="og:description" content="用了一年多的魅族手机了，先不说手机性能怎么样，个人是非常喜欢魅族的UI，各方面都比较符合我的审美，感觉魅族在UI的设计上在国内还是听超前的吧。这不是广告，这只是一条华丽的分割线123456789101112131415161718---下面就进入今天的正题吧。今天我要实现的是一个魅族的通知效果，先来看看魅族原生的效果吧。![](http://upload-images.jianshu.io/upl">
+<meta property="og:updated_time" content="2017-04-25T03:05:25.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="No title">
+<meta name="twitter:description" content="用了一年多的魅族手机了，先不说手机性能怎么样，个人是非常喜欢魅族的UI，各方面都比较符合我的审美，感觉魅族在UI的设计上在国内还是听超前的吧。这不是广告，这只是一条华丽的分割线123456789101112131415161718---下面就进入今天的正题吧。今天我要实现的是一个魅族的通知效果，先来看看魅族原生的效果吧。![](http://upload-images.jianshu.io/upl">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">_SOLID</h5>
+          <a href="mailto:jiapeng1818@gmail.com" title="jiapeng1818@gmail.com" class="mail">jiapeng1818@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/burgessjp" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.weibo.com" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis"></div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title"></h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2017-04-25T03:05:53.610Z" itemprop="datePublished" class="page-time">
+  2017-04-25
+</time>
+
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+<article id="post-仿魅族手机消息通知效果"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title"></h1>
+        <div class="post-meta">
+            <time class="post-time" title="2017-04-25 11:05:53" datetime="2017-04-25T03:05:53.610Z"  itemprop="datePublished">2017-04-25</time>
+
+            
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>用了一年多的魅族手机了，先不说手机性能怎么样，个人是非常喜欢魅族的UI，各方面都比较符合我的审美，感觉魅族在UI的设计上在国内还是听超前的吧。这不是广告，这只是一条华丽的分割线<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">---</div><div class="line"></div><div class="line">下面就进入今天的正题吧。今天我要实现的是一个魅族的通知效果，先来看看魅族原生的效果吧。</div><div class="line"></div><div class="line">![](http://upload-images.jianshu.io/upload_images/623504-62c7658ba7ace254.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">最上面的那个区域就是魅族魅族的通知，在一段时间后会自动消失，并且可以滑动删除。这样做给用户的体验还是挺不错的。</div><div class="line"></div><div class="line">既然要能脱离应用显示，第一个想到的肯定是WindowManager，当然只是为了在应用内显示PopupWindow也可以，但是PopupWindow内部也是用的WindowManager实现的，所以最后我选择了WindowManager去在实现这个效果。</div><div class="line"></div><div class="line">那么来看看最终做出来的效果吧。</div><div class="line"></div><div class="line">![](http://upload-images.jianshu.io/upload_images/623504-ad326cabb19e671a.gif?imageMogr2/auto-orient/strip)</div><div class="line"></div><div class="line">和原生的还是有那么一些的差别，最重要的一点就是我的这个没做到覆盖状态栏，在其中我也想了很多办法，始终还是没能实现，当然如果有知道的也望你的指点</div></pre></td></tr></table></figure></p>
+<p>如果还有不太了解WindowManager的同学，推荐去看看<strong>码农小阿飞</strong>的这篇文章<a href="http://www.jianshu.com/p/95ceb0a2ed27" target="_blank" rel="external">像360悬浮窗那样，用WindowManager实现炫酷的悬浮迷你音乐盒（上）</a></p>
+<p>###下面来看看具体的实现<br>代码我就不全文贴了，这样做比较影响阅读，文末会有源码链接。</p>
+<p>先来看看WindowManager创建的这一块<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">      mWindowManager = (WindowManager) </div><div class="line">mContext.getSystemService(Context.WINDOW_SERVICE);</div><div class="line">      mWindowParams = new WindowManager.LayoutParams();</div><div class="line">      mWindowParams.type = WindowManager.LayoutParams.TYPE_TOAST;// 系统提示window</div><div class="line">      mWindowParams.gravity = Gravity.LEFT | Gravity.TOP;</div><div class="line">      mWindowParams.width = WindowManager.LayoutParams.MATCH_PARENT;</div><div class="line">      mWindowParams.height = WindowManager.LayoutParams.WRAP_CONTENT;</div><div class="line">      mWindowParams.flags = </div><div class="line">              WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL |</div><div class="line">              WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS;</div><div class="line">      //设置进入和退出动画</div><div class="line">      mWindowParams.windowAnimations = R.style.NotificationAnim;</div><div class="line">      mWindowParams.x = 0;</div><div class="line">      mWindowParams.y = -mStatusBarHeight;</div></pre></td></tr></table></figure></p>
+<p>这里设置了很多的flag，<br>FLAG_LAYOUT_NO_LIMITS：让Window能全屏显示，能延伸至状态栏<br>FLAG_NOT_TOUCH_MODAL: 不阻塞事件传递到后面的窗口,如果不设置这个flag，当我们的Window显示出来的时候，Window之外的地方就接收不到任何的事件。<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">mWindowParams.windowAnimations = R.style.NotificationAnim;</div></pre></td></tr></table></figure></p>
+<p>这句就是设置Window显示和消失的默认动画。</p>
+<p>由于这个通知窗口是全屏显示，如果不做任何的处理，状态栏就会遮挡住通知窗口的一部分（ps：不知道怎么解决让通知窗口覆盖状态栏的办法）。我的解决方案是，在布局文件中添加一个占位的View然后在代码中动态得到状态栏的高度，然后对这个占位View的高度赋值，还是很好的解决了这个问题。</p>
+<p>到这里就差不多可以将通知窗口给显示出来了。接着来看下怎么实现滑动功能。</p>
+<p>滑动的实现其实也还是比较的简单，就是对内容视图添加一个OnTouch事件。然后在OnTouch事件里面做一些处理。下面看代码的详细实现：<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line">private int downX = 0;</div><div class="line"> private int direction = DIRECTION_NONE;</div><div class="line"></div><div class="line"> @Override</div><div class="line"> public boolean onTouch(View v, MotionEvent event) &#123;</div><div class="line">     if (isAnimatorRunning()) &#123;</div><div class="line">         return false;</div><div class="line">     &#125;</div><div class="line">     switch (event.getAction()) &#123;</div><div class="line">         case MotionEvent.ACTION_DOWN:</div><div class="line">             downX = (int) event.getRawX();//记录下相对于屏幕的坐标</div><div class="line">             break;</div><div class="line">         case MotionEvent.ACTION_MOVE:</div><div class="line">             //处于滑动状态就取消自动消失</div><div class="line">             mHandler.removeMessages(HIDE_WINDOW);</div><div class="line">             int moveX = (int) event.getRawX() - downX;</div><div class="line">             //判断滑动方向</div><div class="line">             if (moveX &gt; 0) &#123;</div><div class="line">                 direction = DIRECTION_RIGHT;</div><div class="line">             &#125; else &#123;</div><div class="line">                 direction = DIRECTION_LEFT;</div><div class="line">             &#125;</div><div class="line">             updateWindowLocation(moveX, mWindowParams.y);//更新窗口的位置</div><div class="line">             break;</div><div class="line">         case MotionEvent.ACTION_UP:</div><div class="line">             if (Math.abs(mWindowParams.x) &gt; mScreenWidth / 2) &#123;</div><div class="line">                 startDismissAnimator(direction);//开始消失动画</div><div class="line">             &#125; else &#123;</div><div class="line">                 startRestoreAnimator();//开始恢复动画</div><div class="line">             &#125;</div><div class="line">             break;</div><div class="line">     &#125;</div><div class="line">     return true;</div><div class="line"> &#125;</div></pre></td></tr></table></figure></p>
+<p>这段代码其实并不复杂，只要仔细看看就会懂了。</p>
+<p>关于对通知窗体里面的赋值，我用的是构造者模式。比较重要的就是这些了，更详细的代码实现可以去看源码。</p>
+<p>来看看怎么去使用:<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">MeiZhuNotification notification =</div><div class="line">               new MeiZhuNotification.Builder().setContext(this)</div><div class="line">                       .setTime(System.currentTimeMillis())</div><div class="line">                       .setImgRes(R.drawable.notify)</div><div class="line">                       .setTitle("你收到了一条消息")</div><div class="line">                       .setContent("人丑就得多读书").build();</div><div class="line"></div><div class="line">notification.show();</div></pre></td></tr></table></figure></p>
+<p>如果没设置图标和标题就相当于一条普通的消息，也还是比较实用的。</p>
+<p>最后，源码链接：<a href="https://github.com/burgessjp/MeiZhuNotification" target="_blank" rel="external">MeiZhuNotification</a></p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2017-04-25T03:05:25.000Z" itemprop="dateUpdated">2017-04-25 11:05:25</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/2017/04/25/仿魅族手机消息通知效果/" target="_blank" rel="external">http://yoursite.com/2017/04/25/仿魅族手机消息通知效果/</a>
+        
+    </div>
+    <footer>
+        <a href="http://yoursite.com">
+            <img src="/img/avatar.jpg" alt="_SOLID">
+            _SOLID
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/2017/04/25/仿魅族手机消息通知效果/&title=技术分享会&pic=http://yoursite.com/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2017/04/25/仿魅族手机消息通知效果/&title=技术分享会&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2017/04/25/仿魅族手机消息通知效果/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=技术分享会&url=http://yoursite.com/2017/04/25/仿魅族手机消息通知效果/&via=http://yoursite.com" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://yoursite.com/2017/04/25/仿魅族手机消息通知效果/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2017/04/25/[干货IO-3-0]-一个完全开源的App/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">干货IO 3.0一个完全开源的App</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2017/04/25/分享一种RecyclerView滑动到底部自动加载的实现方案/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">[no title]</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+<div class="comments" id="comments">
+    <div class="ds-thread" data-thread-key="仿魅族手机消息通知效果" data-title="" data-url="http://yoursite.com/2017/04/25/仿魅族手机消息通知效果/"></div>
+</div>
+<script>
+lazyScripts.push('//cdn.bootcss.com/marked/0.3.6/marked.min.js');
+
+var duoshuoQuery = {short_name:'ysblog', theme: 'none'};
+lazyScripts.push('//unpkg.com/hexo-theme-material-indigo@latest/js/embed.min.js');
+
+
+</script>
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <ul class="reward-items">
+        
+        <li>
+            <img src="/img/wechat.jpg" title="微信打赏二维码" alt="微信打赏二维码">
+            <p>微信</p>
+        </li>
+        
+
+        
+        <li>
+            <img src="/img/alipay.jpg" title="支付宝打赏二维码" alt="支付宝打赏二维码">
+            <p>支付宝</p>
+        </li>
+        
+    </ul>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+            <span>博客内容遵循<a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p>
+            <span>Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a></span>
+            <span>_SOLID &copy; 2017</span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/2017/04/25/仿魅族手机消息通知效果/&title=《No title》 — 技术分享会&pic=http://yoursite.com/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2017/04/25/仿魅族手机消息通知效果/&title=《No title》 — 技术分享会&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2017/04/25/仿魅族手机消息通知效果/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《No title》 — 技术分享会&url=http://yoursite.com/2017/04/25/仿魅族手机消息通知效果/&via=http://yoursite.com" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://yoursite.com/2017/04/25/仿魅族手机消息通知效果/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=http://yoursite.com/2017/04/25/仿魅族手机消息通知效果/" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>

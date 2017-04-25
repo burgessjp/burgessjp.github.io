@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    <title>No title | 技术分享会</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="">
+    <meta name="description" content="RxJava              从开始最开始学习RxJava到现在也有一段时间了，还记得去年第一次看RxJava的文章就是扔物线的的这篇文章给 Android 开发者的 RxJava 详解，那一次我看了整整">
+<meta name="keywords">
+<meta property="og:type" content="article">
+<meta property="og:title" content="No title">
+<meta property="og:url" content="http://yoursite.com/2017/04/25/是时候学习RxJava了/index.html">
+<meta property="og:site_name" content="技术分享会">
+<meta property="og:description" content="RxJava              从开始最开始学习RxJava到现在也有一段时间了，还记得去年第一次看RxJava的文章就是扔物线的的这篇文章给 Android 开发者的 RxJava 详解，那一次我看了整整">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/623504-95ab3050919a97ab.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/623504-c57385da15b90d9a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/623504-0605a63e05ab2f33.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/623504-62967f0fabf00980.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2017-04-25T03:05:25.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="No title">
+<meta name="twitter:description" content="RxJava              从开始最开始学习RxJava到现在也有一段时间了，还记得去年第一次看RxJava的文章就是扔物线的的这篇文章给 Android 开发者的 RxJava 详解，那一次我看了整整">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/623504-95ab3050919a97ab.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">_SOLID</h5>
+          <a href="mailto:jiapeng1818@gmail.com" title="jiapeng1818@gmail.com" class="mail">jiapeng1818@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/burgessjp" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.weibo.com" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis"></div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title"></h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2017-04-25T03:05:53.621Z" itemprop="datePublished" class="page-time">
+  2017-04-25
+</time>
+
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#本文的学习目录"><span class="post-toc-number">1.</span> <span class="post-toc-text">###本文的学习目录</span></a></li></ol>
+        </nav>
+    </aside>
+    
+<article id="post-是时候学习RxJava了"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title"></h1>
+        <div class="post-meta">
+            <time class="post-time" title="2017-04-25 11:05:53" datetime="2017-04-25T03:05:53.621Z"  itemprop="datePublished">2017-04-25</time>
+
+            
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://upload-images.jianshu.io/upload_images/623504-95ab3050919a97ab.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="RxJava" title="">
+                </div>
+                <div class="image-caption">RxJava</div>
+            </figure>
+<p>从开始最开始学习RxJava到现在也有一段时间了，还记得去年第一次看RxJava的文章就是<a href="https://github.com/rengwuxian" target="_blank" rel="external">扔物线</a>的的这篇文章<a href="http://gank.io/post/560e15be2dca930e00da1083#toc_1" target="_blank" rel="external">给 Android 开发者的 RxJava 详解</a>，那一次我看了整整一个下午，由于在那之前我完全没接触过RxJava，也不知道那是个什么，看完很多地方都还不是很理解，整个人都是晕晕的，当然收获也还是有的，至少对RxJava有了一个初步的概念。那次之后我就没再去碰过RxJava了，当时心里想的是，如果后面需要这方面的东西我再来学习也不迟。<br>时间差不多过了半年，RxJava也越来越火了，使用RxJava的开发者也是越来越多，github上关于的开源库中使用RxJava的也越来越多。当我再去看一些开源库的时候，由于很多地方都用到了RxJava，就发现很多代码都看不懂了，这也就激起了再次去学习RxJava的动力，随后就在网上各种的查找RxJava相关的学习资料，从头学习，我又去看了一遍<a href="http://gank.io/post/560e15be2dca930e00da1083#toc_1" target="_blank" rel="external">给 Android 开发者的 RxJava 详解</a>，收获还是很多的，本文也是对这段时间我学习RxJava的一个小结，以下知识点主要针对于Android开发者。</p>
+<blockquote>
+<h2 id="本文的学习目录"><a href="#本文的学习目录" class="headerlink" title="###本文的学习目录"></a>###本文的学习目录</h2><p>1.RxJava是什么<br>2.在Android中怎么去使用RxJava<br>3.RxJava操作符的介绍<br>4.RxJava在生产环境中的使用<br>5.RxJava学习的参考资料</p>
+</blockquote>
+<p>##1.RxJava是什么<br>要知道RxJava是什么，那么你应该先去了解一下Rx。Rx的全称是Reactive Extensions，直译过来就是响应式扩展。Rx基于观察者模式，他是一种编程模型，目标是提供一致的编程接口，帮助开发者更方便的处理异步数据流。<em>ReactiveX.io给的定义是，Rx是一个使用可观察数据流进行异步编程的编程接口，ReactiveX结合了观察者模式、迭代器模式和函数式编程的精华。</em>Rx已经渗透到了各个语言中，有了Rx所以才有了 RxJava，Rx.NET、RxJS、RxSwift、Rx.rb、RxPHP等等，更详细的可以去这里看看<a href="http://reactivex.io/languages.html" target="_blank" rel="external">languages</a></p>
+<p>那么RxJava到底是什么，我对于他的理解就针对于Java语言的一个异步的响应式编程库。</p>
+<p>##2.怎么去使用RxJava</p>
+<p>在gradle文件的dependencies中加入以下代码即可（以下版本可能不是最新的，需要最新的可到<a href="https://github.com/ReactiveX/RxAndroid" target="_blank" rel="external">RxAndroid</a>查看）<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">compile 'io.reactivex:rxandroid:1.2.0'</div><div class="line">compile 'io.reactivex:rxjava:1.1.5'</div></pre></td></tr></table></figure></p>
+<p>##3.RxJava操作符的介绍<br>有了以上的配置，我们就可以在Android中使用RxJava了。对于RxJava的使用，最重要的还是对于操作符的学习，熟悉了操作符才能更好的使用RxJava。RxJava中的操作符是非常丰富的，关于RxJava操作符介绍的文章已经是属于一搜就是一大堆的那种了，所以本文就不多做介绍了，在这里给大家推荐一个学习操作符比较好的地方<a href="https://mcxiaoke.gitbooks.io/rxdocs/content/Operators.html" target="_blank" rel="external">Operaters</a></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://upload-images.jianshu.io/upload_images/623504-c57385da15b90d9a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<p>##4.RxJava在生产环境中的使用<br>想必学习RxJava的同学，在学习完操作符之后，最想知道的是怎么将其用在我们平时的开发当中去，本节就带大家去了解一下怎么去应用RxJava。</p>
+<blockquote>
+<p>RxBinding<br>节流(防止按钮的重复点击)<br>轮询，定时操作<br>RxPermissions<br>RxBus<br>RxJava与Retrofit<br>等待你们的补充~~~</p>
+</blockquote>
+<p><strong>(1) RxBinding</strong></p>
+<p><a href="https://github.com/JakeWharton/RxBinding" target="_blank" rel="external">RxBinding</a>是<a href="https://github.com/JakeWharton" target="_blank" rel="external">JakeWharton</a>大牛用RxJava为Android控件编写的一个控件绑定库，并且为各个包下的控件都编写相应的库，如下所示<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">Platform bindings:</div><div class="line">compile 'com.jakewharton.rxbinding:rxbinding:0.4.0'</div><div class="line"></div><div class="line">'support-v4' library bindings:</div><div class="line">compile 'com.jakewharton.rxbinding:rxbinding-support-v4:0.4.0'</div><div class="line"></div><div class="line">'appcompat-v7' library bindings:</div><div class="line">compile 'com.jakewharton.rxbinding:rxbinding-appcompat-v7:0.4.0'</div><div class="line"></div><div class="line">'design' library bindings:</div><div class="line">compile 'com.jakewharton.rxbinding:rxbinding-design:0.4.0'</div><div class="line"></div><div class="line">'recyclerview-v7' library bindings:</div><div class="line">compile 'com.jakewharton.rxbinding:rxbinding-recyclerview-v7:0.4.0'</div><div class="line"></div><div class="line">'leanback-v17' library bindings:</div><div class="line">compile 'com.jakewharton.rxbinding:rxbinding-leanback-v17:0.4.0'</div></pre></td></tr></table></figure></p>
+<p>我们只需引入对应地库就可以使用了。</p>
+<p>比如我们对Button添加一个单击事件就可以这样做了<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">Button button = (Button) findViewById(R.id.button);</div><div class="line"></div><div class="line">      RxView.clicks(button).subscribe(new Action1<span class="tag">&lt;<span class="name">Void</span>&gt;</span>() &#123;</div><div class="line">          @Override</div><div class="line">          public void call(Void aVoid) &#123;</div><div class="line">            Log.i("test", "clicked");</div><div class="line">          &#125;</div><div class="line">      &#125;);</div></pre></td></tr></table></figure></p>
+<p>到这里，你肯定会说，这并没有没什么卵用，还不如直接设置一个setOnClickListener来的方便，直接。继续往下看</p>
+<p>通常情况下，如果我们要防止一个按钮重复点击会怎么做？设置一个第一次按下的时间，然后在第二次点击的时候去判断？NO NO NO，这样做都太low了，我们来看看用RxBing怎样去实现</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">RxView.clicks(button).debounce(300, TimeUnit.MILLISECONDS).subscribe(new Action1<span class="tag">&lt;<span class="name">Void</span>&gt;</span>() &#123;</div><div class="line">            @Override</div><div class="line">            public void call(Void aVoid) &#123;</div><div class="line">                Log.i("test", "clicked");</div><div class="line">            &#125;</div><div class="line">        &#125;);</div></pre></td></tr></table></figure>
+<p>很爽吧，这里过滤掉了在300ms内的重复点击，只需加一个操作符就可以了，而不用我们去编写一大堆并且还容易出错的逻辑代码了。</p>
+<p>这里使用最多的一个地方就是在我们做搜索的时候，再结合filter操作，去过滤掉那些没必要的查询操作，来减小服务器的压力和客户端的流量输出。</p>
+<p><strong>(2) 轮询，定时操作</strong><br>在做App的时候，有些地方我们可能会时不时的去请求服务器，以至于客户端的数据是最新的，在RxJava中可以这样做<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">//每隔两秒执行一次</div><div class="line">Observable.interval(2, 2, TimeUnit.SECONDS).subscribe(new Action1<span class="tag">&lt;<span class="name">Long</span>&gt;</span>() &#123;</div><div class="line">         @Override</div><div class="line">         public void call(Long aLong) &#123;</div><div class="line">             //TODO WHAT YOU WANT</div><div class="line">         &#125;</div><div class="line">     &#125;);</div></pre></td></tr></table></figure></p>
+<p>在两秒后去执行一些操作（比如启动页跳转到主页面）<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">Observable.timer(2, TimeUnit.SECONDS).subscribe(new Action1<span class="tag">&lt;<span class="name">Long</span>&gt;</span>() &#123;</div><div class="line">           @Override</div><div class="line">           public void call(Long aLong) &#123;</div><div class="line">               //TODO WHAT YOU WANT</div><div class="line">           &#125;</div><div class="line">       &#125;);</div></pre></td></tr></table></figure></p>
+<p><strong>(3) RxPermissions</strong><br><a href="https://github.com/tbruyelle/RxPermissions" target="_blank" rel="external">RxPermissions</a>也是国外的大牛开发的基于RxJava的Android权限管理库，他让6.0以上的权限管理更加的简单，如果有适配6.0以上的手机的需求，这个库是个不错的选择。下面我们来看看基本的用法。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">// 请求相机权限</div><div class="line"> RxPermissions.getInstance(this)</div><div class="line"> .request(Manifest.permission.CAMERA)</div><div class="line"> .subscribe(granted -&gt; &#123;</div><div class="line">     if (granted) &#123; // 用户同意了（在6.0之前的手机始终都为true）</div><div class="line">       //可以拍照了</div><div class="line">     &#125; else &#123;</div><div class="line">        //可以在这里提示用户，或者再次请求</div><div class="line">     &#125;</div><div class="line"> &#125;);</div></pre></td></tr></table></figure>
+<p>当然，如果我想一次请求多个权限呢，每次都去写上面的代码肯定是个不好的做法，RxPermissions的作者也考虑到了这一点，在Api里提供了一个多参数的重载<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">//取得相机权限和读取手机状态</div><div class="line">RxPermissions.getInstance(this)</div><div class="line">    .request(Manifest.permission.CAMERA,</div><div class="line">             Manifest.permission.READ_PHONE_STATE)</div><div class="line">    .subscribe(granted -&gt; &#123;</div><div class="line">        if (granted) &#123;</div><div class="line">          </div><div class="line">        &#125; else &#123;</div><div class="line">           </div><div class="line">        &#125;</div><div class="line">    &#125;);</div></pre></td></tr></table></figure></p>
+<p>更多的资料还请去github上去查看。<br><strong>(4) RxBus</strong><br>有了RxJava，EventBus、Otto什么的都可以靠边了，因为RxJava本身就自带了这个功能，我们只需做一下简单的封装就可以使用了，也顺便减少了我们项目的体积。<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">public class RxBus &#123;</div><div class="line"></div><div class="line">    private final Subject<span class="tag">&lt;<span class="name">Object,</span> <span class="attr">Object</span>&gt;</span> _bus;</div><div class="line"></div><div class="line">    private static class RxBusHolder &#123;</div><div class="line">        private static final RxBus instance = new RxBus();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    private RxBus() &#123;</div><div class="line">        _bus = new SerializedSubject<span class="tag">&lt;&gt;</span>(PublishSubject.create());</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public static synchronized RxBus getInstance() &#123;</div><div class="line">        return RxBusHolder.instance;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void post(Object o) &#123;</div><div class="line">        _bus.onNext(o);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public <span class="tag">&lt;<span class="name">T</span>&gt;</span> Observable<span class="tag">&lt;<span class="name">T</span>&gt;</span> toObserverable(Class<span class="tag">&lt;<span class="name">T</span>&gt;</span> eventType) &#123;</div><div class="line">        return _bus.ofType(eventType);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>怎么去使用？<br>在需要发送消息的地方<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">RxBus.getInstance().post("SomeChange");</div></pre></td></tr></table></figure></p>
+<p>在需要接收消息的地方<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"> Subscription mSubscription = RxBus.getInstance().toObserverable(String.class).subscribe(new Action1<span class="tag">&lt;<span class="name">String</span>&gt;</span>() &#123;</div><div class="line">            @Override</div><div class="line">            public void call(String s) &#123;</div><div class="line">                handleRxMsg(s);</div><div class="line">            &#125;</div><div class="line">&#125;);</div></pre></td></tr></table></figure></p>
+<p>不要忘了在适当的地方去取消这个订阅（以免发生内存泄漏）<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">mSubscription.unsubscribe();</div></pre></td></tr></table></figure></p>
+<p>到这里可能你有个疑问，Subject是个什么鬼！<br>其实Subject同时充当了Observer和Observable的角色，他可以发射数据也可以接收数据，有AsyncSubject、BehaviorSubject、PublishSubject、ReplaySubject四种，详细的介绍请看<a href="https://mcxiaoke.gitbooks.io/rxdocs/content/Subject.html" target="_blank" rel="external">Subject</a></p>
+<p><strong>(5) RxJava与Retrofit</strong></p>
+<p>Retrofit可能大家都不太陌生了，如果你还不知道的话，那么赶紧去学习吧，这么强大的框架怎么能不知道呢！</p>
+<p>后面的讲解是基于了解过Retrofit的同学</p>
+<p>关于Retrofit的基本使用可能我们都不是太陌生，对于请求后的结果都是在一个回调接口里接收，对于结果的处理并不是太灵活，一大堆的回调会让你以后回过来看代码的时候看的醉生梦死。<br>RxJava很好的解决了这个问题，我们来看看Retrofit的怎么去适配RxJava吧。</p>
+<p>gradle文件的引用<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">compile 'com.squareup.retrofit2:retrofit:2.0.2'</div><div class="line">compile 'com.squareup.retrofit2:converter-gson:2.0.2'</div><div class="line">compile 'com.squareup.retrofit2:adapter-rxjava:2.0.2'//RxJava与Retrofit的适配器</div></pre></td></tr></table></figure></p>
+<p>这里我以请求 <a href="http://gank.io/api/data/Android/10/1" target="_blank" rel="external">http://gank.io/api/data/Android/10/1</a> 为例。</p>
+<p>返回的结果大致是这样的<br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://upload-images.jianshu.io/upload_images/623504-0605a63e05ab2f33.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure></p>
+<p>于是我定义了一个GankResultBean去接收这个结果。<br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://upload-images.jianshu.io/upload_images/623504-62967f0fabf00980.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure></p>
+<p>其中ResultsBean就是results中的每一个条目。<br>好了，下面我们来看看适配了RxJava的Retrofit怎么去使用吧<br>首先我们定义一个接口<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">public interface RxGankService &#123;</div><div class="line">       @GET("all/20/&#123;page&#125;")</div><div class="line">       Observable<span class="tag">&lt;<span class="name">GankResultBean</span>&gt;</span> getAndroidData(@Path("page") int page);</div><div class="line">   &#125;</div></pre></td></tr></table></figure></p>
+<p>值得注意的是这里返回的是<code>Observable<gankresultbean></gankresultbean></code>而不是常规的<code> Call<gankresultbean></gankresultbean></code></p>
+<p>接着就可以做请求了<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div></pre></td><td class="code"><pre><div class="line"> Retrofit retrofit = new Retrofit.Builder()</div><div class="line">                .baseUrl("http://gank.io/api/data/")</div><div class="line">                .addConverterFactory(GsonConverterFactory.create())</div><div class="line">                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())//这个就是用来适配RxJava的</div><div class="line">                .build();</div><div class="line"></div><div class="line">RxGankService rxGankService = retrofit.create(RxGankService.class);</div><div class="line">        final Observable&lt;GankResultBean&gt; observable = rxGankService.getAndroidData(1);</div><div class="line">        observable</div><div class="line">                .subscribeOn(Schedulers.io())</div><div class="line">                .observeOn(AndroidSchedulers.mainThread())</div><div class="line">                .map(new Func1&lt;GankResultBean, List&lt;GankResultBean.ResultsBean&gt;&gt;() &#123;</div><div class="line">                    @Override</div><div class="line">                    public List&lt;GankResultBean.ResultsBean&gt; call(GankResultBean gankResultBean) &#123;</div><div class="line">                        return gankResultBean.getResults();</div><div class="line">                    &#125;</div><div class="line">                &#125;)</div><div class="line">                .flatMap(new Func1&lt;List&lt;GankResultBean.ResultsBean&gt;, Observable&lt;GankResultBean.ResultsBean&gt;&gt;() &#123;</div><div class="line">                    @Override</div><div class="line">                    public Observable&lt;GankResultBean.ResultsBean&gt; call(List&lt;GankResultBean.ResultsBean&gt; resultsBeen) &#123;</div><div class="line">                        return Observable.from(resultsBeen);</div><div class="line">                    &#125;</div><div class="line">                &#125;)</div><div class="line">                .filter(new Func1&lt;GankResultBean.ResultsBean, Boolean&gt;() &#123;</div><div class="line">                    @Override</div><div class="line">                    public Boolean call(GankResultBean.ResultsBean resultsBean) &#123;</div><div class="line">                        return "Android".equals(resultsBean.getType());</div><div class="line">                    &#125;</div><div class="line">                &#125;)</div><div class="line">                .subscribe(new Subscriber&lt;GankResultBean.ResultsBean&gt;() &#123;</div><div class="line">                    @Override</div><div class="line">                    public void onCompleted() &#123;</div><div class="line">                        Log.i("test", "onCompleted");</div><div class="line">                    &#125;</div><div class="line"></div><div class="line">                    @Override</div><div class="line">                    public void onError(Throwable e) &#123;</div><div class="line">                        e.printStackTrace();</div><div class="line">                    &#125;</div><div class="line"></div><div class="line">                    @Override</div><div class="line">                    public void onNext(GankResultBean.ResultsBean resultsBean) &#123;</div><div class="line">                        textView.append(resultsBean + "\n");</div><div class="line">                    &#125;</div><div class="line">                &#125;);</div></pre></td></tr></table></figure></p>
+<p>这里是为了演示才使用了这么多的操作符，在实际使用的时候根据具体情况而定。<br>下面简单解释下上面这段代码<br>observeOn(AndroidSchedulers.mainThread())：订阅者的回调在主线程<br>subscribeOn(Schedulers.io())：订阅发生在io线程<br>map:一般我们不会关心error字段，我们关心的只是results，所以在这里做了一个映射让用户接收的是List<gankresultbean.resultsbean>而不是包含有error的GankResultBean<br>flatMap:让结果一条一条的发射出去，而不是一个集合<br>filter：只接收Type为Android的数据</gankresultbean.resultsbean></p>
+<p>以上的例子用流的方式是不是很好的解决了对请求结果的处理，对结果的处理可以做到随心所欲，并且逻辑还很清晰。</p>
+<p>以上几个点就是我了解的关于RxJava的应用。如果你还有其他方面的应用，还望补充。</p>
+<p>##5.RxJava学习的参考资料</p>
+<p>这里我将我学习RxJava以来收集的关于RxJava分享出来，以方便大家的查阅。</p>
+<p>学习RxJava的第一手资料,官方的wiki:<a href="https://github.com/ReactiveX/RxJava/wiki" target="_blank" rel="external">wiki</a><br>我学习RxJava看的第一篇文章：<a href="http://gank.io/post/560e15be2dca930e00da1083#toc_1" target="_blank" rel="external">给 Android 开发者的 RxJava 详解</a>(这个大家肯定都知道)<br>大头鬼总结的RxJava学习资料：<strong><a href="https://github.com/lzyzsd/Awesome-RxJava" target="_blank" rel="external">Awesome-RxJava</a></strong><br>RxJava文档中文翻译：<a href="https://github.com/mcxiaoke/RxDocs" target="_blank" rel="external">Rx和RxJava文档中文翻译项目</a></p>
+<p>其他：<br><a href="http://rxmarbles.com" target="_blank" rel="external">RxJava操作符图解</a>（需科学上网）<br><a href="http://www.jianshu.com/p/7e28c8216c7d" target="_blank" rel="external">RxJava处理网络连接失败和timer()、interval()、delay()之间的区别</a><br><a href="http://www.jianshu.com/p/943ceaccfdff" target="_blank" rel="external">Architecting Android with RxJava</a><br><a href="http://www.jianshu.com/p/33c548bce571" target="_blank" rel="external">使用RxJava 提升用户体验</a><br><a href="http://www.jianshu.com/p/ca090f6e2fe2" target="_blank" rel="external">用RxJava实现事件总线(Event Bus)</a><br><a href="http://www.introtorx.com/Content/v1.0.10621.0/02_KeyTypes.html" target="_blank" rel="external">Intro to Rx</a><br><a href="http://nerds.weddingpartyapp.com/tech/2014/12/24/implementing-an-event-bus-with-rxjava-rxbus/" target="_blank" rel="external">Implementing an Event Bus With RxJava - RxBus</a><br><a href="http://blog.csdn.net/theone10211024/article/details/50435325" target="_blank" rel="external">可能是东半球最全的RxJava使用场景小结 </a><br><a href="http://www.jianshu.com/p/ce228f517586?utm_campaign=haruki&amp;utm_content=note&amp;utm_medium=reader_share&amp;utm_source=qq" target="_blank" rel="external">RxWeekend——RxJava周末狂欢</a></p>
+<p>最后：为了跟上时代的步伐，是时候学习RxJava了</p>
+<p>欢迎关注我的专题：<a href="http://www.jianshu.com/collection/d79a6385bded" target="_blank" rel="external">RxJava系列专题（Android方向）</a></p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2017-04-25T03:05:25.000Z" itemprop="dateUpdated">2017-04-25 11:05:25</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/2017/04/25/是时候学习RxJava了/" target="_blank" rel="external">http://yoursite.com/2017/04/25/是时候学习RxJava了/</a>
+        
+    </div>
+    <footer>
+        <a href="http://yoursite.com">
+            <img src="/img/avatar.jpg" alt="_SOLID">
+            _SOLID
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/2017/04/25/是时候学习RxJava了/&title=技术分享会&pic=http://yoursite.com/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2017/04/25/是时候学习RxJava了/&title=技术分享会&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2017/04/25/是时候学习RxJava了/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=技术分享会&url=http://yoursite.com/2017/04/25/是时候学习RxJava了/&via=http://yoursite.com" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://yoursite.com/2017/04/25/是时候学习RxJava了/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2017/04/25/打造一个RecyclerView的万能适配器-减少你的代码冗余/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">[no title]</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2017/04/25/比系统自带的更好用的SnackBar/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">[no title]</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+<div class="comments" id="comments">
+    <div class="ds-thread" data-thread-key="是时候学习RxJava了" data-title="" data-url="http://yoursite.com/2017/04/25/是时候学习RxJava了/"></div>
+</div>
+<script>
+lazyScripts.push('//cdn.bootcss.com/marked/0.3.6/marked.min.js');
+
+var duoshuoQuery = {short_name:'ysblog', theme: 'none'};
+lazyScripts.push('//unpkg.com/hexo-theme-material-indigo@latest/js/embed.min.js');
+
+
+</script>
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <ul class="reward-items">
+        
+        <li>
+            <img src="/img/wechat.jpg" title="微信打赏二维码" alt="微信打赏二维码">
+            <p>微信</p>
+        </li>
+        
+
+        
+        <li>
+            <img src="/img/alipay.jpg" title="支付宝打赏二维码" alt="支付宝打赏二维码">
+            <p>支付宝</p>
+        </li>
+        
+    </ul>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+            <span>博客内容遵循<a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p>
+            <span>Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a></span>
+            <span>_SOLID &copy; 2017</span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/2017/04/25/是时候学习RxJava了/&title=《No title》 — 技术分享会&pic=http://yoursite.com/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2017/04/25/是时候学习RxJava了/&title=《No title》 — 技术分享会&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2017/04/25/是时候学习RxJava了/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《No title》 — 技术分享会&url=http://yoursite.com/2017/04/25/是时候学习RxJava了/&via=http://yoursite.com" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://yoursite.com/2017/04/25/是时候学习RxJava了/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=http://yoursite.com/2017/04/25/是时候学习RxJava了/" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>
