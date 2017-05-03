@@ -1,540 +1,1164 @@
 <!DOCTYPE html>
-<html>
-<head>
+<html lang="zh-CN">
+  <head>
     
-
-    
-
-    
-
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 
 
-    <meta charset="utf-8">
-    
-    
-    
-    <title>技术分享会</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    
-    <meta name="theme-color" content="#3F51B5">
-    
-    
-    <meta name="keywords" content="undefined">
-    <meta property="og:type" content="website">
-<meta property="og:title" content="技术分享会">
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+  <link rel="alternate" href="/default" title="_SOLID的个人博客">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.4.x" />
+
+
+
+<link rel="canonical" href="http://yoursite.com/page/3/"/>
+
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="_SOLID的个人博客">
 <meta property="og:url" content="http://yoursite.com/page/3/index.html">
-<meta property="og:site_name" content="技术分享会">
+<meta property="og:site_name" content="_SOLID的个人博客">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="技术分享会">
-    
-    <link rel="shortcut icon" href="/favicon.ico">
-    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
-    <script>window.lazyScripts=[]</script>
-</head>
+<meta name="twitter:title" content="_SOLID的个人博客">
 
-<body>
-    <div id="loading" class="active"></div>
 
-    <aside id="menu"  >
-  <div class="inner flex-row-vertical">
-    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
-        <i class="icon icon-lg icon-close"></i>
-    </a>
-    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
-      <div class="brand">
-        <a href="/" class="avatar waves-effect waves-circle waves-light">
-          <img src="/img/avatar.jpg">
-        </a>
-        <hgroup class="introduce">
-          <h5 class="nickname">_SOLID</h5>
-          <a href="mailto:jiapeng1818@gmail.com" title="jiapeng1818@gmail.com" class="mail">jiapeng1818@gmail.com</a>
-        </hgroup>
-      </div>
-    </div>
-    <div class="scroll-wrap flex-col">
-      <ul class="nav">
-        
-            <li class="waves-block waves-effect">
-              <a href="/"  >
-                <i class="icon icon-lg icon-home"></i>
-                主页
-              </a>
-            </li>
-        
-            <li class="waves-block waves-effect">
-              <a href="/archives"  >
-                <i class="icon icon-lg icon-archives"></i>
-                Archives
-              </a>
-            </li>
-        
-            <li class="waves-block waves-effect">
-              <a href="/tags"  >
-                <i class="icon icon-lg icon-tags"></i>
-                Tags
-              </a>
-            </li>
-        
-            <li class="waves-block waves-effect">
-              <a href="/categories"  >
-                <i class="icon icon-lg icon-th-list"></i>
-                Categories
-              </a>
-            </li>
-        
-            <li class="waves-block waves-effect">
-              <a href="https://github.com/burgessjp" target="_blank" >
-                <i class="icon icon-lg icon-github"></i>
-                Github
-              </a>
-            </li>
-        
-            <li class="waves-block waves-effect">
-              <a href="http://weibo.com/xljiepeng" target="_blank" >
-                <i class="icon icon-lg icon-weibo"></i>
-                Weibo
-              </a>
-            </li>
-        
-      </ul>
-    </div>
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.4.x" />
+
+
+
+
+
+
+
+<script>
+  var CONFIG = {
+    search: false,
+    searchPath: "/search.xml",
+    fancybox: false,
+    toc: true,
+  }
+</script>
+
+
+
+
+  
+
+
+
+    <title> _SOLID的个人博客 </title>
+  </head>
+
+  <body><div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/." class="logo">_SOLID的个人博客</a>
   </div>
-</aside>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
 
-    <main id="main">
-        <header class="top-header" id="header">
-    <div class="flex-row">
-        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
-          <i class="icon icon-lg icon-navicon"></i>
-        </a>
-        <div class="flex-col header-title ellipsis">技术分享会</div>
-        
-        <div class="search-wrap" id="search-wrap">
-            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
-                <i class="icon icon-lg icon-chevron-left"></i>
-            </a>
-            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
-            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
-                <i class="icon icon-lg icon-search"></i>
-            </a>
-        </div>
-        
-        
-        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
-            <i class="icon icon-lg icon-share-alt"></i>
-        </a>
-        
-    </div>
-</header>
-<header class="content-header index-header">
-
-    <div class="container fade-scale">
-        <h1 class="title">技术分享会</h1>
-        <h5 class="subtitle">
-            
-                
-            
-        </h5>
-    </div>
-
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
     
-
-
-</header>
-
-<div class="container body-wrap">
-
-    <ul class="post-list">
-    
-        <li class="post-list-item fade">
-            <article id="post-ThinDownloadManager源码解析"
-  class="article-card article-type-post" itemprop="blogPost">
-
-    <div class="post-meta">
-        <time class="post-time" title="2017-04-25 11:05:53" datetime="2017-04-25T03:05:53.606Z"  itemprop="datePublished">2017-04-25</time>
-
-        
-
-
-        
-
-    </div>
-
-    
-
-
-  
-    <h3 class="post-title" itemprop="name">
-      <a class="post-title-link" href="/2017/04/25/ThinDownloadManager源码解析/">ThinDownloadManager源码解析</a>
-    </h3>
-  
-
-
-
-
-    <div class="post-content" id="post-content" itemprop="postContent">
-
-    
-        关于Android自带的DownloadManager可能大家都知道，使用自带的DownloadManager可以很方便的就实现文件下载。还不知道的也没关系，看看下面的示例代码你就知道怎么去使用了。
-1234567891011DownloadManager manager = (DownloadManager) getSystemService(DOWNLOAD_SERVICE);//下载请...
-    
-
-        <a href="/2017/04/25/ThinDownloadManager源码解析/" class="post-more waves-effect waves-button">
-            阅读全文…
-        </a>
-    </div>
-    
-    <div class="post-footer">
-        
-	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/源码分析/">源码分析</a></li></ul>
-
-    </div>
-    
-</article>
-
+      <a href="/">
+        <li class="mobile-menu-item">
+          
+          
+            Home
+          
         </li>
+      </a>
     
-        <li class="post-list-item fade">
-            <article id="post-Android自定义View之高仿QQ健康"
-  class="article-card article-type-post" itemprop="blogPost">
-
-    <div class="post-meta">
-        <time class="post-time" title="2017-04-25 11:05:53" datetime="2017-04-25T03:05:53.600Z"  itemprop="datePublished">2017-04-25</time>
-
-        
-
-
-        
-
-    </div>
-
-    
-
-
-  
-    <h3 class="post-title" itemprop="name">
-      <a class="post-title-link" href="/2017/04/25/Android自定义View之高仿QQ健康/">Android自定义View之高仿QQ健康</a>
-    </h3>
-  
-
-
-
-
-    <div class="post-content" id="post-content" itemprop="postContent">
-
-    
-        源码有更新：加入动画，动画由简书网友xsfelvis提供
-
-我们都知道自定义View一般有三种直接继承View、继承原有的控件对控件的进行修改、重新拼装组合，最后一种主要针对于ViewGroup。具体的怎么做不是本文的所涉及的内容（本文是基于第一种方式实现的），还不太了解的请自行查询相关资料。这次这篇文章主要给大家带来一个高仿QQ健康的自定义View的实现，在介绍的过程中会对涉及到的自定义V...
-    
-
-        <a href="/2017/04/25/Android自定义View之高仿QQ健康/" class="post-more waves-effect waves-button">
-            阅读全文…
-        </a>
-    </div>
-    
-    <div class="post-footer">
-        
-	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li></ul>
-
-    </div>
-    
-</article>
-
+      <a href="/archives/">
+        <li class="mobile-menu-item">
+          
+          
+            Archives
+          
         </li>
+      </a>
     
-        <li class="post-list-item fade">
-            <article id="post-Android自定义ViewGroup之仿制一个Windows桌面"
-  class="article-card article-type-post" itemprop="blogPost">
-
-    <div class="post-meta">
-        <time class="post-time" title="2017-04-25 11:05:53" datetime="2017-04-25T03:05:53.595Z"  itemprop="datePublished">2017-04-25</time>
-
-        
-
-
-        
-
-    </div>
-
-    
-
-
-  
-    <h3 class="post-title" itemprop="name">
-      <a class="post-title-link" href="/2017/04/25/Android自定义ViewGroup之仿制一个Windows桌面/">Android自定义ViewGroup之仿制一个Windows桌面</a>
-    </h3>
-  
-
-
-
-
-    <div class="post-content" id="post-content" itemprop="postContent">
-
-    
-        前段时间写过一个Android自定义View的文章，是高仿的QQ健康，还没有看过的可以去看看，所以一直都计划着在写个自定义ViewGroup相关的文章。我知道网上关于这方面的文章已经是一搜一大堆的那种了，所以我想一定要找个与网上的不同的来做Demo，还是要稍微有点新意，由于一直找不到所以就一直拖着了，最近也是突然间想到Windows的桌面不错，我可以拿这个作为一个自定ViewGroup的De...
-    
-
-        <a href="/2017/04/25/Android自定义ViewGroup之仿制一个Windows桌面/" class="post-more waves-effect waves-button">
-            阅读全文…
-        </a>
-    </div>
-    
-    <div class="post-footer">
-        
-	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li></ul>
-
-    </div>
-    
-</article>
-
-        </li>
-    
-        <li class="post-list-item fade">
-            <article id="post-Android主题换肤-无缝切换"
-  class="article-card article-type-post" itemprop="blogPost">
-
-    <div class="post-meta">
-        <time class="post-time" title="2017-04-25 11:05:53" datetime="2017-04-25T03:05:53.591Z"  itemprop="datePublished">2017-04-25</time>
-
-        
-
-
-        
-
-    </div>
-
-    
-
-
-  
-    <h3 class="post-title" itemprop="name">
-      <a class="post-title-link" href="/2017/04/25/Android主题换肤-无缝切换/">Android主题换肤-无缝切换</a>
-    </h3>
-  
-
-
-
-
-    <div class="post-content" id="post-content" itemprop="postContent">
-
-    
-        今天再给大家带来一篇干货。 Android的主题换肤 ，可插件化提供皮肤包，无需Activity的重启直接实现无缝切换,可高仿网易云音乐的主题换肤。
-这个链接是本次的Demo打包出来的样本SkinChangeDemo，可以去下载下来先试试效果，皮肤文件需放到存储卡的根目录下。
-
-关于Android的主题换肤都是个老生常谈的问题了。网上给出的方案也是层出不穷，最近我也是很想去了解这方面的知识，...
-    
-
-        <a href="/2017/04/25/Android主题换肤-无缝切换/" class="post-more waves-effect waves-button">
-            阅读全文…
-        </a>
-    </div>
-    
-    <div class="post-footer">
-        
-	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/插件化换肤/">插件化换肤</a></li></ul>
-
-    </div>
-    
-</article>
-
-        </li>
-    
-        <li class="post-list-item fade">
-            <article id="post-Android-多媒体之MediaRecorder-MediaPlayer"
-  class="article-card article-type-post" itemprop="blogPost">
-
-    <div class="post-meta">
-        <time class="post-time" title="2017-04-25 11:05:53" datetime="2017-04-25T03:05:53.585Z"  itemprop="datePublished">2017-04-25</time>
-
-        
-
-
-        
-
-    </div>
-
-    
-
-
-  
-    <h3 class="post-title" itemprop="name">
-      <a class="post-title-link" href="/2017/04/25/Android-多媒体之MediaRecorder-MediaPlayer/">Android-多媒体之MediaRecorder-MediaPlayer</a>
-    </h3>
-  
-
-
-
-
-    <div class="post-content" id="post-content" itemprop="postContent">
-
-    
-        以前学了很多东西，都没怎么做记录，慢慢的时间长了也就给忘了，当初踩过的坑翻来覆去的踩，由于这些血淋林的教训，所以从现在开始，每次学了新的东西都要来写个博客做个记录总结一下了。
-最近在学习Android多媒体这一块，现在刚好学到了MediaRecorder和MediaPlayer。今天也就介绍下这两个类吧，也有利于以后初学者的学习。
-本文一共分3个部分：第一和第二部分用来介绍这两个类，第3部分...
-    
-
-        <a href="/2017/04/25/Android-多媒体之MediaRecorder-MediaPlayer/" class="post-more waves-effect waves-button">
-            阅读全文…
-        </a>
-    </div>
-    
-    <div class="post-footer">
-        
-	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li></ul>
-
-    </div>
-    
-</article>
-
-        </li>
-    
-    </ul>
-
-    
-<nav id="page-nav">
-    <div class="inner">
-    <a class="extend prev" rel="prev" href="/page/2/">上一页</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/4/">下一页</a>
-    </div>
+  </ul>
 </nav>
 
-
+    <div class="container" id="mobile-panel">
+      <header id="header" class="header"><div class="logo-wrapper">
+  <a href="/." class="logo">_SOLID的个人博客</a>
 </div>
 
-        <footer class="footer">
-    <div class="top">
-        
-<p>
-    <span id="busuanzi_container_site_uv" style='display:none'>
-        总访客数：<span id="busuanzi_value_site_uv"></span>
-    </span>
-    <span id="busuanzi_container_site_pv" style='display:none'>
-        总访问量：<span id="busuanzi_value_site_pv"></span>
-    </span>
-</p>
-
-
-        <p>
+<nav class="site-navbar">
+  
+    <ul id="menu" class="menu">
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/">
             
-            <span>博客内容遵循<a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
-        </p>
-    </div>
-    <div class="bottom">
-        <p>
-            <span>Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a></span>
-            <span>_SOLID &copy; 2017</span>
-        </p>
-    </div>
-</footer>
-
-    </main>
-    <div class="mask" id="mask"></div>
-<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
-
-
-
-<div class="global-share" id="globalShare">
-    <ul class="reset share-icons">
-      <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/page/3/&title=技术分享会&pic=http://yoursite.com/img/avatar.jpg" data-title="微博">
-          <i class="icon icon-weibo"></i>
-        </a>
-      </li>
-      <li>
-        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
-          <i class="icon icon-weixin"></i>
-        </a>
-      </li>
-      <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/page/3/&title=技术分享会&source=" data-title=" QQ">
-          <i class="icon icon-qq"></i>
-        </a>
-      </li>
-      <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/page/3/" data-title=" Facebook">
-          <i class="icon icon-facebook"></i>
-        </a>
-      </li>
-      <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=技术分享会&url=http://yoursite.com/page/3/&via=http://yoursite.com" data-title=" Twitter">
-          <i class="icon icon-twitter"></i>
-        </a>
-      </li>
-      <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://yoursite.com/page/3/" data-title=" Google+">
-          <i class="icon icon-google-plus"></i>
-        </a>
-      </li>
+            
+              首页
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/archives/">
+            
+            
+              归档
+            
+          </a>
+        </li>
+      
+      
     </ul>
- </div>
+  
+</nav>
 
+      </header>
 
-<div class="page-modal wx-share" id="wxShare">
-    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
-    <p>扫一扫，分享到微信</p>
-    <img src="//api.qrserver.com/v1/create-qr-code/?data=http://yoursite.com/page/3/" alt="微信分享二维码">
-</div>
+      <main id="main" class="main">
+        <div class="content-wrapper">
+          <div id="content" class="content">
+            
+  <section id="posts" class="posts">
+    
+      
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          <a class="post-link" href="/2017/04/25/ThinDownloadManager源码解析/">ThinDownloadManager源码解析</a>
+        
+      </h1>
 
+      <div class="post-meta">
+        <span class="post-time">
+          2017年4月25日
+        </span>
+      </div>
+    </header>
 
+    
+    
 
+    <div class="post-content">
+      
+        
+        
 
-    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
-<script>
-var BLOG = { ROOT: '/', SHARE: true, REWARD: false };
-
-
-
-</script>
-
-<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
-
-
-<div class="search-panel" id="search-panel">
-    <ul class="search-result" id="search-result"></ul>
-</div>
-<template id="search-tpl">
-<li class="item">
-    <a href="{path}" class="waves-block waves-effect">
-        <div class="title ellipsis" title="{title}">{title}</div>
-        <div class="flex-row flex-middle">
-            <div class="tags ellipsis">
-                {tags}
-            </div>
-            <time class="flex-col time">{date}</time>
-        </div>
-    </a>
+        
+          <p>关于Android自带的DownloadManager可能大家都知道，使用自带的DownloadManager可以很方便的就实现文件下载。还不知道的也没关系，看看下面的示例代码你就知道怎么去使用了。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">DownloadManager manager = (DownloadManager) getSystemService(DOWNLOAD_SERVICE);</div><div class="line">//下载请求</div><div class="line">DownloadManager.Request down = new DownloadManager.Request(Uri.parse("https://ss0.bdstatic.com/5aV1bjqh_Q23odCf/static/superman/img/logo_top_ca79a146.png"));</div><div class="line">//设置允许使用的网络类型</div><div class="line">down.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_MOBILE | DownloadManager.Request.NETWORK_WIFI);</div><div class="line">//禁止发出通知，既后台下载</div><div class="line">down.setNotificationVisibility(DownloadManager.Request.VISIBILITY_HIDDEN);</div><div class="line">//下载完成文件存放的位置</div><div class="line">down.setDestinationInExternalFilesDir(MainActivity.this, null, "logo.png");</div><div class="line">//将下载请求放入队列中,开始下载</div><div class="line">manager.enqueue(down);</div></pre></td></tr></table></figure>
+<p>是不是很简单，直接使用系统自带的，几行代码就搞定了一个下载。使用这种方法，默认的会在系统的通知栏告诉用户有个下载的任务正在进行，如果不想让用户知道有任务正在进行你就必须加上<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">down.setNotificationVisibility(DownloadManager.Request.VISIBILITY_HIDDEN);`</div></pre></td></tr></table></figure></p>
+<p>但是单单加这个还是不行的，你不信可以运行一次试试，应用会直接Crash掉。我们还需要在清单文件声明下面这个权限：<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">uses-permission</span> <span class="attr">android:name</span>=<span class="string">"android.permission.DOWNLOAD_WITHOUT_NOTIFICATION"</span> /&gt;</span></div></pre></td></tr></table></figure></p>
+<p>如果不再在意这些直接使用系统自带的DownloadManager 就足够了，但是很多人不想声明权限，就想让任务在后台运行（ps：不要问我为什么，我什么都不知道），这样就需要自己去实现下载功能了。</p>
+<p>该说说ThinDownloadManager了，其实我也是无意中发现这个的，因为我想在我的开源项目<a href="https://github.com/burgessjp/MaterialDesignDemo" target="_blank" rel="external">MaterialDesignDemo</a>中实现一个图片下载的功能，但是又不想自己去造轮子，我就想有一个下载功能而已，也不想使用那些很笨重的网络框架，所以就去到处找，最后发现了这个东东，比较轻量级，使用起来也还是比较的方便。因为我自己之前本来也计划自己去撸一个网络相关的框架，但是如果想写一个网络框架涉及的东西太多了，而我现在也还没有达到那个层次，所以就放弃了，平时使用的也就是对一些开源框架的再封装而已。</p>
+<p>现在发现了这个，也还是对他的源码比较好奇，所以就决定去研究一下他的源码，看完了之后，我发现这个框架的结构比较简单不算复杂，于是就决定把我怎么去分析ThinDownloadManager这个框架源码的过程记录下来，给那些还不知道怎么去分析源码的同学一点经验。虽然这个库在现在已经有点过时了，但是他的一些思想还是值得我们去学习的。<strong>学习Android一定要学会看源码，不要一遇到问题就一昧的去网上搜，这个怎么实现，那个怎么实现，其实你只要先看看源码，可能问题很容易的就解决了，看源码对自己的提升也是显而易见的，就算以后Android不火了，但是他的很多编程思想是值得借鉴的</strong><br>ThinDownloadManager的GitHub地址：<a href="https://github.com/smanikandan14/ThinDownloadManager" target="_blank" rel="external">ThinDownloadManager</a></p>
+<p>在分析源码之前我们先来看看ThinDownloadManager怎么去使用吧，如果连怎么使用都不会，分析源码也就是纸上谈兵了<br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://upload-images.jianshu.io/upload_images/623504-49339e5afd524ee9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure><br>ThinDownloadManager的使用也还是比较简单的，和系统自带的差不多，我这里是为了我以后使用的方便所以就做了一次再封装，只需传入下载地址，保存地址，还有下载时的回调就可以了。</p>
+<ol>
+<li><p>根据使用的顺序，我们就先来看看<strong>DownloadRequest</strong>，其实根据单词意思我们都能大概知道这里面是封装的肯定是下载请求的一些参数。<br>先来看看他的构造方法</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">public DownloadRequest(Uri uri) &#123;</div><div class="line">        if (uri == null) &#123;</div><div class="line">            throw new NullPointerException();</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        String scheme = uri.getScheme();</div><div class="line">        if (scheme == null || (!scheme.equals("http") &amp;&amp; !scheme.equals("https"))) &#123;</div><div class="line">            throw new IllegalArgumentException("Can only download HTTP/HTTPS URIs: " + uri);</div><div class="line">        &#125;</div><div class="line">        mCustomHeader = new HashMap<span class="tag">&lt;&gt;</span>();</div><div class="line">        mDownloadState = DownloadManager.STATUS_PENDING;</div><div class="line">        mUri = uri;</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<p>在构造方法中对传入的uri做了校验，以及一些初始化的操作。<br>在示例代码中我们在使用<strong>DownloadRequest</strong>的时候，我们用到了setRetryPolicy和setDestinationURI以及setStatusListener，所以现在我们定位到这几个方法的源码中去。<br>看看setRetryPolicy（关于RetryPolicy 就是重试策略而已，在第一次看的时候，需先走一遍的流程，不需要去在意部分细节）</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">public DownloadRequest setRetryPolicy(RetryPolicy mRetryPolicy) &#123;</div><div class="line">        this.mRetryPolicy = mRetryPolicy;</div><div class="line">        return this;</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
 </li>
-</template>
+</ol>
+<p>这里的实现就是一个简单的赋值操作而已，既然有赋值方法，那么应该就有对应的取值方法，我Ctrl+F找了一下果然有getRetryPolicy这么一个方法。<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">public RetryPolicy getRetryPolicy() &#123;</div><div class="line">        return mRetryPolicy == null ? new DefaultRetryPolicy() : mRetryPolicy;</div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
+<p>从这里看出如果mRetryPolicy 设置了，我们就返回mRetryPolicy ，如果没有被设置我们就返回默认的。从这里可见在示例代码中的那句<code>setRetryPolicy(new DefaultRetryPolicy())</code><br>是可以不用设置的，因为默认的就是DefaultRetryPolicy。<br>再来看看setDestinationURI这个方法<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">public DownloadRequest setDestinationURI(Uri destinationURI) &#123;</div><div class="line">       this.mDestinationURI = destinationURI;</div><div class="line">       return this;</div><div class="line">   &#125;</div></pre></td></tr></table></figure></p>
+<p>和setRetryPolicy方法一样，就是一个简单的赋值操作而已。<br>setStatusListener同理，我就不再做多余的解释了。</p>
+<ol>
+<li>当<strong>DownloadRequest</strong>配置完成之后，我们就使用到了ThinDownloadManager，也还是先进他的构造方法里面去看看。ThinDownloadManager的构造方法就不只一个了，我们就直接来看看他默认的吧<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">public ThinDownloadManager() &#123;</div><div class="line">       mRequestQueue = new DownloadRequestQueue();</div><div class="line">       mRequestQueue.start();</div><div class="line">   &#125;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>在这里他新建了一个下载的请求队列DownloadRequestQueue，然后调用了DownloadRequestQueue的start方法。<br>再来看看ThinDownloadManager的add方法都干了些什么<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">public int add(DownloadRequest request) throws IllegalArgumentException &#123;</div><div class="line">        if(request == null) &#123;</div><div class="line">            throw new IllegalArgumentException("DownloadRequest cannot be null");</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        return mRequestQueue.add(request);</div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
+<p>从源码中可以看到add方法就是把我们的下载请求添加到DownloadRequestQueue这个请求队列中去。</p>
+<ol>
+<li>在分析ThinDownloadManager这个类的时候，我们发现DownloadRequestQueue用到的比较多，并且也比较重要，现在我们就定位到DownloadRequestQueue这个类中去。一样我们还是先来看看其构造方法，一般在使用一个类的时候，我们都需要先初始化他，所以先看构造方法也还是有必要的。</li>
+</ol>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">   /**</div><div class="line"> * Default constructor.</div><div class="line"> */</div><div class="line">    public DownloadRequestQueue() &#123;</div><div class="line">	initialize(new Handler(Looper.getMainLooper()));</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>在这里他调用了 initialize方法，所以我们就来看看initialize的实现<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">private void initialize(Handler callbackHandler) &#123;</div><div class="line">		int processors = Runtime.getRuntime().availableProcessors();</div><div class="line">		mDownloadDispatchers = new DownloadDispatcher[processors];</div><div class="line">		mDelivery = new CallBackDelivery(callbackHandler);</div><div class="line">	&#125;</div></pre></td></tr></table></figure></p>
+<p>在这里processors 就是java虚拟机可用的处理器个数，最初的时候我也不知道这是啥，最后去查了一下才知道，所以看源码还是能学到很多东西的，废话不多说，我们继续。从代码中可以看出在initialize中新建了一个processors 大小的DownloadDispatcher数组，以及CallBackDelivery。</p>
+<p>在ThinDownloadManager的构造方法中调用了DownloadRequestQueue的start方法，所以这里我们就先来看看start方法<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">public void start() &#123;</div><div class="line">		stop(); // Make sure any currently running dispatchers are stopped.</div><div class="line">		// Create download dispatchers (and corresponding threads) up to the pool size.</div><div class="line">		for (int i = 0; i <span class="tag">&lt; <span class="attr">mDownloadDispatchers.length</span>; <span class="attr">i</span>++) &#123;</span></div><div class="line">			<span class="attr">DownloadDispatcher</span> <span class="attr">downloadDispatcher</span> = <span class="string">new</span> <span class="attr">DownloadDispatcher</span>(<span class="attr">mDownloadQueue</span>, <span class="attr">mDelivery</span>);</div><div class="line">			<span class="attr">mDownloadDispatchers</span>[<span class="attr">i</span>] = <span class="string">downloadDispatcher;</span></div><div class="line">			<span class="attr">downloadDispatcher.start</span>();</div><div class="line">		&#125;</div><div class="line">	&#125;</div></pre></td></tr></table></figure></p>
+<p>stop可以先不用去看他，直接来看for循环里面都干了些什么，可以看到在for循环里就是对mDownloadDispatchers中的每一个DownloadDispatcher 做了一次初始化操作<br>随后就调用了DownloadDispatcher 的start方法。</p>
+<p>4.上面这么多的代码都涉及到了DownloadDispatcher ，下面我们就来看看DownloadDispatcher 的实现吧。<br>其构造方法如下：<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">/** Constructor take the dependency (DownloadRequest queue) that all the Dispatcher needs */</div><div class="line">    public DownloadDispatcher(BlockingQueue<span class="tag">&lt;<span class="name">DownloadRequest</span>&gt;</span> queue,</div><div class="line">                              DownloadRequestQueue.CallBackDelivery delivery) &#123;</div><div class="line">        mQueue = queue;</div><div class="line">        mDelivery = delivery;</div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
+<p>在这里就传了一个下载请求的队列和CallBackDelivery（CallBackDelivery是用来进行回调的分发用的，是DownloadRequestQueue的一个内部类，后面自己去看源码就知道了，第一次走流程的时候不需要太在意这个） 进来并给成员变量赋值。在DownloadRequestQueue使用到了downloadDispatcher.start()，所以我就点进start去看看，结果发现怎么进了Thread的start方法了，仔细看了一下DownloadDispatcher 源码，发现原来DownloadDispatcher 继承了Thread，也就是说DownloadDispatcher 其实就是一个线程，所以之前调用了start方法就是让这个线程开始执行，既然继承了Thread那么肯定得有run方法吧，于是我就定位到了run方法:<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">public void run() &#123;</div><div class="line">       Process.setThreadPriority(Process.THREAD_PRIORITY_BACKGROUND);</div><div class="line">       mTimer = new Timer();</div><div class="line">   	while(true) &#123;</div><div class="line">   		try &#123;</div><div class="line">               mRequest = mQueue.take();</div><div class="line">               mRedirectionCount = 0;</div><div class="line">               Log.v(TAG, "Download initiated for " + mRequest.getDownloadId());</div><div class="line">               updateDownloadState(DownloadManager.STATUS_STARTED);</div><div class="line">               executeDownload(mRequest.getUri().toString());</div><div class="line">   		&#125; catch (InterruptedException e) &#123;</div><div class="line">               // We may have been interrupted because it was time to quit.</div><div class="line">               if (mQuit) &#123;</div><div class="line">                   if(mRequest != null) &#123;</div><div class="line">                       mRequest.finish();</div><div class="line">                       updateDownloadFailed(DownloadManager.ERROR_DOWNLOAD_CANCELLED, "Download cancelled");</div><div class="line">                       mTimer.cancel();</div><div class="line">                   &#125;</div><div class="line">                   return;</div><div class="line">               &#125;</div><div class="line">               continue;    			</div><div class="line">   		&#125;</div><div class="line">   	&#125;</div><div class="line">   &#125;</div></pre></td></tr></table></figure></p>
+<p>可见在run方法中有一个while的无限循环，里面的最主要的事的就是从当前的请求队列中取出一个请求然后调用executeDownload去执行下载。<strong>（PS：因为这个队列是可阻塞的队列，所以当队列里没有任何请求的话，就会阻塞在mQueue.take()，直到队列中有请求的时候，才会继续向下执行，这个是Java并发编程相关的知识点）</strong><br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div></pre></td><td class="code"><pre><div class="line">private void executeDownload(String downloadUrl) &#123;</div><div class="line">        URL url;</div><div class="line">        try &#123;</div><div class="line">            url = new URL(downloadUrl);</div><div class="line">        &#125; catch (MalformedURLException e) &#123;</div><div class="line">            updateDownloadFailed(DownloadManager.ERROR_MALFORMED_URI,"MalformedURLException: URI passed is malformed.");</div><div class="line">            return;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        HttpURLConnection conn = null;</div><div class="line"></div><div class="line">        try &#123;</div><div class="line">            conn = (HttpURLConnection) url.openConnection();</div><div class="line">            conn.setInstanceFollowRedirects(false);</div><div class="line">            conn.setConnectTimeout(mRequest.getRetryPolicy().getCurrentTimeout());</div><div class="line">            conn.setReadTimeout(mRequest.getRetryPolicy().getCurrentTimeout());</div><div class="line"></div><div class="line">            HashMap<span class="tag">&lt;<span class="name">String,</span> <span class="attr">String</span>&gt;</span> customHeaders = mRequest.getCustomHeaders();</div><div class="line">            if (customHeaders != null) &#123;</div><div class="line">            	for (String headerName : customHeaders.keySet()) &#123;</div><div class="line">            		conn.addRequestProperty(headerName, customHeaders.get(headerName));</div><div class="line">            	&#125;</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            // Status Connecting is set here before</div><div class="line">            // urlConnection is trying to connect to destination.</div><div class="line">         	updateDownloadState(DownloadManager.STATUS_CONNECTING);</div><div class="line">         	</div><div class="line">            final int responseCode = conn.getResponseCode();</div><div class="line">            </div><div class="line">            Log.v(TAG, "Response code obtained for downloaded Id "</div><div class="line">                + mRequest.getDownloadId()</div><div class="line">                + " : httpResponse Code "</div><div class="line">                + responseCode);</div><div class="line">            </div><div class="line">            switch (responseCode) &#123;</div><div class="line">                case HTTP_PARTIAL:</div><div class="line">                case HTTP_OK:</div><div class="line">                    shouldAllowRedirects = false;</div><div class="line">                    if (readResponseHeaders(conn) == 1) &#123;</div><div class="line">                        transferData(conn);</div><div class="line">                    &#125; else &#123;</div><div class="line">                        updateDownloadFailed(DownloadManager.ERROR_DOWNLOAD_SIZE_UNKNOWN, "Transfer-Encoding not found as well as can't know size of download, giving up");</div><div class="line">                    &#125;</div><div class="line">                    return;</div><div class="line">                case HTTP_MOVED_PERM:</div><div class="line">                case HTTP_MOVED_TEMP:</div><div class="line">                case HTTP_SEE_OTHER:</div><div class="line">                case HTTP_TEMP_REDIRECT:</div><div class="line">                    // Take redirect url and call executeDownload recursively until</div><div class="line">                    // MAX_REDIRECT is reached.</div><div class="line">                    while (mRedirectionCount++ <span class="tag">&lt; <span class="attr">MAX_REDIRECTS</span> &amp;&amp; <span class="attr">shouldAllowRedirects</span>) &#123;</span></div><div class="line">                        <span class="attr">Log.v</span>(<span class="attr">TAG</span>, "<span class="attr">Redirect</span> <span class="attr">for</span> <span class="attr">downloaded</span> <span class="attr">Id</span> "+<span class="attr">mRequest.getDownloadId</span>());</div><div class="line">                        <span class="attr">final</span> <span class="attr">String</span> <span class="attr">location</span> = <span class="string">conn.getHeaderField(</span>"<span class="attr">Location</span>");</div><div class="line">                        <span class="attr">executeDownload</span>(<span class="attr">location</span>);</div><div class="line">                        <span class="attr">continue</span>;</div><div class="line">                    &#125;</div><div class="line"></div><div class="line">                    <span class="attr">if</span> (<span class="attr">mRedirectionCount</span> &gt; MAX_REDIRECTS) &#123;</div><div class="line">                        updateDownloadFailed(DownloadManager.ERROR_TOO_MANY_REDIRECTS, "Too many redirects, giving up");</div><div class="line">                        return;</div><div class="line">                    &#125;</div><div class="line">                    break;</div><div class="line">                case HTTP_REQUESTED_RANGE_NOT_SATISFIABLE:</div><div class="line">                    updateDownloadFailed(HTTP_REQUESTED_RANGE_NOT_SATISFIABLE, conn.getResponseMessage());</div><div class="line">                    break;</div><div class="line">                case HTTP_UNAVAILABLE:</div><div class="line">                    updateDownloadFailed(HTTP_UNAVAILABLE, conn.getResponseMessage());</div><div class="line">                    break;</div><div class="line">                case HTTP_INTERNAL_ERROR:</div><div class="line">                    updateDownloadFailed(HTTP_INTERNAL_ERROR, conn.getResponseMessage());</div><div class="line">                    break;</div><div class="line">                default:</div><div class="line">                    updateDownloadFailed(DownloadManager.ERROR_UNHANDLED_HTTP_CODE, "Unhandled HTTP response:" + responseCode +" message:" +conn.getResponseMessage());</div><div class="line">                    break;</div><div class="line">            &#125;</div><div class="line">        &#125; catch(SocketTimeoutException e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">            // Retry.</div><div class="line">            attemptRetryOnTimeOutException();</div><div class="line">        &#125; catch (ConnectTimeoutException e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">            attemptRetryOnTimeOutException();</div><div class="line">        &#125; catch(IOException e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">            updateDownloadFailed(DownloadManager.ERROR_HTTP_DATA_ERROR, "Trouble with low-level sockets");</div><div class="line">        &#125; finally &#123;</div><div class="line">            if (conn != null) &#123;</div><div class="line">                conn.disconnect();</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">	&#125;</div></pre></td></tr></table></figure></p>
+<p>学习过Android网络编程的同学肯定对这里面的代码很熟悉了，从代码中可以看到其实ThinDownloadManager的底层就是用HttpURLConnection去实现的，其他的代码其实就是去更新当前下载的状态，还有网络连接超时的重试等等。</p>
+<p>到这里整个过程就分析的差不多了，更详细的实现可以去下载<a href="https://github.com/smanikandan14/ThinDownloadManager" target="_blank" rel="external">ThinDownloadManager</a>源码自己详看。</p>
+<p>通过上面的分析大致流可以总结为：先创建一个下载请求DownloadRequest，随后再新建一个请求队列DownloadRequestQueue和下载器DownloadDispatcher，下载器DownloadDispatcher随即开始执行，然后再将请求加入到下载请求队列中由下载器去从请求队列中取出下载请求，然后下载。</p>
+<p>ThinDownloadManager的源码的层次结构还是比较清晰的，所以看起来相对也比较容易，看源码一般都是从我们使用的地方进去，一步一步的跟进，刚开始注重流程，不要太去部分在意细节的实现，流程走通了，然后再来看实现，我相信你会收获的更多，本文主要介绍了看源码的其中一种方法，仅供参考，可以让你看源码的时候多一种思路，希望能给正在阅读的你带来帮助。</p>
 
-<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+        
+      
+    </div>
+
+    
+
+    
+
+  </article>
+
+    
+      
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          <a class="post-link" href="/2017/04/25/Android自定义View之高仿QQ健康/">Android自定义View之高仿QQ健康</a>
+        
+      </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          2017年4月25日
+        </span>
+      </div>
+    </header>
+
+    
+    
+
+    <div class="post-content">
+      
+        
+        
+
+        
+          <p>源码有更新：加入动画，动画由简书网友xsfelvis提供</p>
+<blockquote>
+<p>我们都知道自定义View一般有三种<strong>直接继承View</strong>、<strong>继承原有的控件对控件的进行修改</strong>、<strong>重新拼装组合</strong>，最后一种主要针对于ViewGroup。具体的怎么做不是本文的所涉及的内容（本文是基于第一种方式实现的），还不太了解的请自行查询相关资料。这次这篇文章主要给大家带来一个高仿QQ健康的自定义View的实现，在介绍的过程中会对涉及到的自定义View相关知识点进行简单的说明，着重点还是在怎么是实现这个自定义View上。</p>
+</blockquote>
+<p>好了，话不多说。我们来看看QQ健康页面的这个View吧。下面就是给大家讲解这个View怎么去实现。<br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://upload-images.jianshu.io/upload_images/623504-c9055114e1633799.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="QQ健康" title="">
+                </div>
+                <div class="image-caption">QQ健康</div>
+            </figure></p>
+<p>来分析下这个View，最上面有一个圆弧，圆弧里面包含了一些文字，在圆弧的下面有几根竖条，很容易会想到这些竖条的长度是根据每天的步数来计算的。左下方是自己的头像，右下方可以点击查看。<br>我是使用的第一种方式，了解自定义View的同学肯定知道，第一种方式一般就是重写OnDraw方法利用Paint在Canvas中一笔一笔的画。</p>
+<p>这个View的宽和高是有一定比例的。如果我们随意的给宽高，然后又没有一定的比例最后渲染出来的View肯定是很混乱的。所以我首先重写了下onMeasure方法</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://upload-images.jianshu.io/upload_images/623504-30892374cc2e5b46.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<blockquote>
+<p>在初始化方法中有个mRatio是宽高的比例，是我根据截图用像素尺亮出来的，这个因人而异，可能每个人都会有不一样的度量结果，只要记住这个的作用是用来按照一定的比例绘制这个View的就OK了，这样做的好处就是不管这个View多大多小里面的内容都能够自适应，包括后面可能会会出现的一大堆数字，看到可能会有点晕，不用去管他。</p>
+</blockquote>
+<p>知识点扫盲之<strong>MeasureSpec</strong>：他代表一个32位的int值，前两位代表SpecMode，后30位代表SpecSize。一个MeasureSpec封装了父布局传递给子布局的布局要求，每个MeasureSpec代表了一组宽度和高度的要求。</p>
+<p>从代码中可以看到如果widthMode 是EXACTLY 或者AT_MOST，我们就将父布局传递过来的测量宽度作为View的宽度。如果不是这两种就将前面定义的默认的宽度来作为View宽度（这个一般不会用到）。宽度测量完了之后，就按照一定的比例计算出高度，然后就将这个高度作为我们View的高度，这样做，View的高度都是按照宽度来计算的，这样做的好处是我们在使用这个View的时候不会导致变形。<br>值得注意的是测量完了之后一定要调用 setMeasuredDimension这个方法。</p>
+<p>下面我们再来看看onSizeChanged方法，这里是自适应的关键</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://upload-images.jianshu.io/upload_images/623504-58e2b66f6ae021c4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<p>mArcCenterX 和mArcCenterY 是最上面那个圆弧的中心。我们都知道在Android中画一个圆弧需要一个这个圆弧的外接矩形，mArcRect就是这个外接矩形，mArcWidth和mBarWidth是对应画笔的宽度，在这个方法中我们对这些值作了初始化的工作。如果在构造函数里面取调用这个方法，宽和高是未知的。</p>
+<p>到这里我们的初始化工作做得差不多了。下面来看看最重要的onDraw方法中都干了些什么，下面代码都是onDraw方法里面的（代码较长一次性截不完）</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/623504-0ce87cd7b50c2149.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://upload-images.jianshu.io/upload_images/623504-6fe50f733534a453.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://upload-images.jianshu.io/upload_images/623504-a5fe9bc9b8daccbf.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://upload-images.jianshu.io/upload_images/623504-6361b545aabc8639.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<p>我注释的还是比较详细了，步骤也已经标明了，我相信仔细看肯定能看懂。对于绘制背景那里我多说两句，绘制背景的圆角我用的是贝塞尔曲线画的，当然你也可以直接使用canvas.drawRoundRect去画，但是对于这样一种需求：一个矩形上面两个角是圆角，下面的就是正常的方角，canvas.drawRoundRect显然办不到，然而贝塞尔曲线可以很容易办到，当然贝塞尔曲线的作用不仅仅是这个，它是非常强大的，只要是你能想到的他基本上都是能办到。这里有一篇关于贝塞尔曲线比较好的文章，感兴趣的可以去看看。<br><a href="http://mp.weixin.qq.com/s?__biz=MjM5NDkxMTgyNw==&amp;mid=405545611&amp;idx=1&amp;sn=6f59bb10a31c520aae2c6fbef382053e&amp;scene=0#wechat_redirect" target="_blank" rel="external">Android 自定义View高级特效，神奇的贝塞尔曲线 </a></p>
+<p>最后我们来看看怎么对右下角的那个查看添加点击事件吧<br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://upload-images.jianshu.io/upload_images/623504-834e3287e7252674.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure><br>其实还是很简单，我们找到右下角对应的一个矩形区域，然后判断当前点击的坐标在不在这个矩形区域内就可以了。</p>
+<p><strong>值得注意的是要记得在初始化方法中加上这句代码<br><code>setLayerType(View.LAYER_TYPE_SOFTWARE, null);</code><br>这句是关闭硬件加速，防止某些4.0的设备虚线显示为实线的问题，可以在AndroidManifest.xml时的Application标签加上android:hardwareAccelerated=”false”,这样整件应用都关闭了硬件加速，虚线可以正常显示，但是关闭硬件加速对性能有些影响，所以这里我们只对当前这个View关闭硬件加速就行了。</strong></p>
+<p>我们来看看最后我们实现的效果吧。</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://upload-images.jianshu.io/upload_images/623504-b7b0bd4982e2d151.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://upload-images.jianshu.io/upload_images/623504-bb924a232b8f1127.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://upload-images.jianshu.io/upload_images/623504-f41852622a8a8d73.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<p>是不是还是挺不错的，并且还能自适应大小，和QQ的基本上一模一样。</p>
+<p>由于代码量还是比较大，完整的贴出来比较 ，就不贴到这篇文章中了，需要完整版代码的请点击：<br><a href="https://github.com/burgessjp/MaterialDesignDemo/blob/master/app/src/main/java/ren/solid/materialdesigndemo/view/QQHealthView.java" target="_blank" rel="external">完整代码</a></p>
+
+        
+      
+    </div>
+
+    
+
+    
+
+  </article>
+
+    
+      
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          <a class="post-link" href="/2017/04/25/Android自定义ViewGroup之仿制一个Windows桌面/">Android自定义ViewGroup之仿制一个Windows桌面</a>
+        
+      </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          2017年4月25日
+        </span>
+      </div>
+    </header>
+
+    
+    
+
+    <div class="post-content">
+      
+        
+        
+
+        
+          <p>前段时间写过一个<a href="http://www.jianshu.com/p/740c64ba15ac" target="_blank" rel="external">Android自定义View的文章</a>，是高仿的QQ健康，还没有看过的可以去看看，所以一直都计划着在写个自定义ViewGroup相关的文章。我知道网上关于这方面的文章已经是一搜一大堆的那种了，所以我想一定要找个与网上的不同的来做Demo，还是要稍微有点新意，由于一直找不到所以就一直拖着了，最近也是突然间想到Windows的桌面不错，我可以拿这个作为一个自定ViewGroup的Demo啊，于是就着手写了这么一个。本文比较简单，适合那些还不太会自定义ViewGroup的同学看看。先来看看最后的效果图<br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://upload-images.jianshu.io/upload_images/623504-7263db4919b58b08.gif?imageMogr2/auto-orient/strip" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure></p>
+<p>自定义一个ViewGroup，其实真的并不太难，主要就在onMeasure和onLayout这两个方法上下功夫，无非就是去把子View的大小测量出来然后再把子View按照一定的规则放置到相应的位置上，只要把测量和布局的逻辑和思想弄懂了，自定义ViewGroup就是小Case了。</p>
+<p>下面就来说说上面的这个自定义ViewGroup怎么做吧。<br>先来说说思路，整个ViewGroup分为两个区域，上面是内容区，下面是底部状态栏，我这个自定义ViewGroup的做法就是默认的把最后添加的那一个View来作为底部状态栏。至于弹出来的那个就是个PopWondow，与自定义ViewGroup是没有什么关系的，是在使用的时候添加的。</p>
+<p>来看看代码实现</p>
+<p>##1.onMeasure方法</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/623504-2591f4bfacc2602c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="onMeasure"></p>
+<p>与自定义View唯一不同的就是，在ViewGroup的onMeasure方法里还需对他所包含的View的大小进行测量，里面的measureChildren是调用的系统的测量方法，他是将父布局的测量规格作为参数传递到这个方法中，然后根据父布局的测量规格去测量子View的大小（感兴趣可以去源码查看，还是比较简单的，这里我们完全可以自己去做这个测量，既然系统已经提供了，就不用去那些重复的事了）。最后就是setMeasuredDimension设置ViewGroup本身的大小，这里我对ViewGroup是大小是wrap_content的情况，就直接将其大小设置为0了，在这个自定义ViewGroup中wrap_content也没多大的意义。</p>
+<p>##2.onLayout方法</p>
+<p>当测量完成之后就是对ViewGroup中的子View进行放置了，View的layout方法就是用来去将View放到某个位置用的，来看看onLayout方法的实现。<br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://upload-images.jianshu.io/upload_images/623504-4fa8631f16bf23a5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="onLayout" title="">
+                </div>
+                <div class="image-caption">onLayout</div>
+            </figure></p>
+<p>这里简单说一下，onLayout方法中的那几个参数的含义</p>
+<ul>
+<li>changed:默认这个值都是为false，如果这个ViewGroup的位置改变了，导致了被重新布局，这个值就为true，</li>
+<li>l:ViewGroup left的位置</li>
+<li>t:ViewGroup top的位置</li>
+<li>r:ViewGroup right的位置</li>
+<li>b:ViewGroup bottom的位置</li>
+</ul>
+<p>我们都知道，一般知道了一个View的left，top，right，bottom就决定了这个View的位置。</p>
+<p>代码中大部分我注释的还是比较清楚了，这里只来看看for循环里面的实现,里面的逻辑就是去计算将要放置的View的位置的。<br>注意到，if(cb&gt;contentHeight) 这句，就是如果当前将要放置的View的bottom位置已经超过了内容区的高度，那么我们就将列数加1，将之放到下一列中去。</p>
+<p>整个自定义ViewGroup就完了，就是这么简单。我们来看看怎么在布局文件中去使用。<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">ren.solid.materialdesigndemo.view.WindowsLayout</span></span></div><div class="line">       <span class="attr">android:id</span>=<span class="string">"@+id/windows_layout"</span></div><div class="line">       <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></div><div class="line">       <span class="attr">android:layout_height</span>=<span class="string">"match_parent"</span></div><div class="line">       <span class="attr">android:background</span>=<span class="string">"#6b6b6b"</span>&gt;</div><div class="line"></div><div class="line">       <span class="tag">&lt;<span class="name">LinearLayout</span></span></div><div class="line">           <span class="attr">android:layout_width</span>=<span class="string">"100dp"</span></div><div class="line">           <span class="attr">android:layout_height</span>=<span class="string">"100dp"</span></div><div class="line">           <span class="attr">android:gravity</span>=<span class="string">"center"</span></div><div class="line">           <span class="attr">android:orientation</span>=<span class="string">"vertical"</span>&gt;</div><div class="line"></div><div class="line">           <span class="tag">&lt;<span class="name">ImageView</span></span></div><div class="line">               <span class="attr">android:layout_width</span>=<span class="string">"50dp"</span></div><div class="line">               <span class="attr">android:layout_height</span>=<span class="string">"50dp"</span></div><div class="line">               <span class="attr">android:src</span>=<span class="string">"@drawable/icon_folder"</span> /&gt;</div><div class="line"></div><div class="line">           <span class="tag">&lt;<span class="name">TextView</span></span></div><div class="line">               <span class="attr">android:layout_width</span>=<span class="string">"wrap_content"</span></div><div class="line">               <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></div><div class="line">               <span class="attr">android:text</span>=<span class="string">"文件夹"</span> /&gt;</div><div class="line">       <span class="tag">&lt;/<span class="name">LinearLayout</span>&gt;</span></div><div class="line"></div><div class="line">       <span class="tag">&lt;<span class="name">LinearLayout</span></span></div><div class="line">           <span class="attr">android:layout_width</span>=<span class="string">"100dp"</span></div><div class="line">           <span class="attr">android:layout_height</span>=<span class="string">"100dp"</span></div><div class="line">           <span class="attr">android:gravity</span>=<span class="string">"center"</span></div><div class="line">           <span class="attr">android:orientation</span>=<span class="string">"vertical"</span>&gt;</div><div class="line"></div><div class="line">           <span class="tag">&lt;<span class="name">ImageView</span></span></div><div class="line">               <span class="attr">android:layout_width</span>=<span class="string">"50dp"</span></div><div class="line">               <span class="attr">android:layout_height</span>=<span class="string">"50dp"</span></div><div class="line">               <span class="attr">android:src</span>=<span class="string">"@drawable/icon_folder"</span> /&gt;</div><div class="line"></div><div class="line">           <span class="tag">&lt;<span class="name">TextView</span></span></div><div class="line">               <span class="attr">android:layout_width</span>=<span class="string">"wrap_content"</span></div><div class="line">               <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></div><div class="line">               <span class="attr">android:text</span>=<span class="string">"文件夹"</span> /&gt;</div><div class="line">       <span class="tag">&lt;/<span class="name">LinearLayout</span>&gt;</span></div><div class="line"></div><div class="line">       <span class="tag">&lt;<span class="name">LinearLayout</span></span></div><div class="line">           <span class="attr">android:layout_width</span>=<span class="string">"100dp"</span></div><div class="line">           <span class="attr">android:layout_height</span>=<span class="string">"100dp"</span></div><div class="line">           <span class="attr">android:gravity</span>=<span class="string">"center"</span></div><div class="line">           <span class="attr">android:orientation</span>=<span class="string">"vertical"</span>&gt;</div><div class="line"></div><div class="line">           <span class="tag">&lt;<span class="name">ImageView</span></span></div><div class="line">               <span class="attr">android:layout_width</span>=<span class="string">"50dp"</span></div><div class="line">               <span class="attr">android:layout_height</span>=<span class="string">"50dp"</span></div><div class="line">               <span class="attr">android:src</span>=<span class="string">"@drawable/icon_folder"</span> /&gt;</div><div class="line"></div><div class="line">           <span class="tag">&lt;<span class="name">TextView</span></span></div><div class="line">               <span class="attr">android:layout_width</span>=<span class="string">"wrap_content"</span></div><div class="line">               <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></div><div class="line">               <span class="attr">android:text</span>=<span class="string">"文件夹"</span> /&gt;</div><div class="line">       <span class="tag">&lt;/<span class="name">LinearLayout</span>&gt;</span></div><div class="line"></div><div class="line">       <span class="tag">&lt;<span class="name">LinearLayout</span></span></div><div class="line">           <span class="attr">android:layout_width</span>=<span class="string">"100dp"</span></div><div class="line">           <span class="attr">android:layout_height</span>=<span class="string">"100dp"</span></div><div class="line">           <span class="attr">android:gravity</span>=<span class="string">"center"</span></div><div class="line">           <span class="attr">android:orientation</span>=<span class="string">"vertical"</span>&gt;</div><div class="line"></div><div class="line">           <span class="tag">&lt;<span class="name">ImageView</span></span></div><div class="line">               <span class="attr">android:layout_width</span>=<span class="string">"50dp"</span></div><div class="line">               <span class="attr">android:layout_height</span>=<span class="string">"50dp"</span></div><div class="line">               <span class="attr">android:src</span>=<span class="string">"@drawable/icon_folder"</span> /&gt;</div><div class="line"></div><div class="line">           <span class="tag">&lt;<span class="name">TextView</span></span></div><div class="line">               <span class="attr">android:layout_width</span>=<span class="string">"wrap_content"</span></div><div class="line">               <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></div><div class="line">               <span class="attr">android:text</span>=<span class="string">"文件夹"</span> /&gt;</div><div class="line">       <span class="tag">&lt;/<span class="name">LinearLayout</span>&gt;</span></div><div class="line"></div><div class="line">       <span class="tag">&lt;<span class="name">LinearLayout</span></span></div><div class="line">           <span class="attr">android:layout_width</span>=<span class="string">"100dp"</span></div><div class="line">           <span class="attr">android:layout_height</span>=<span class="string">"100dp"</span></div><div class="line">           <span class="attr">android:gravity</span>=<span class="string">"center"</span></div><div class="line">           <span class="attr">android:orientation</span>=<span class="string">"vertical"</span>&gt;</div><div class="line"></div><div class="line">           <span class="tag">&lt;<span class="name">ImageView</span></span></div><div class="line">               <span class="attr">android:layout_width</span>=<span class="string">"50dp"</span></div><div class="line">               <span class="attr">android:layout_height</span>=<span class="string">"50dp"</span></div><div class="line">               <span class="attr">android:src</span>=<span class="string">"@drawable/icon_folder"</span> /&gt;</div><div class="line"></div><div class="line">           <span class="tag">&lt;<span class="name">TextView</span></span></div><div class="line">               <span class="attr">android:layout_width</span>=<span class="string">"wrap_content"</span></div><div class="line">               <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></div><div class="line">               <span class="attr">android:text</span>=<span class="string">"文件夹"</span> /&gt;</div><div class="line">       <span class="tag">&lt;/<span class="name">LinearLayout</span>&gt;</span></div><div class="line"></div><div class="line">       <span class="tag">&lt;<span class="name">LinearLayout</span></span></div><div class="line">           <span class="attr">android:layout_width</span>=<span class="string">"100dp"</span></div><div class="line">           <span class="attr">android:layout_height</span>=<span class="string">"100dp"</span></div><div class="line">           <span class="attr">android:gravity</span>=<span class="string">"center"</span></div><div class="line">           <span class="attr">android:orientation</span>=<span class="string">"vertical"</span>&gt;</div><div class="line"></div><div class="line">           <span class="tag">&lt;<span class="name">ImageView</span></span></div><div class="line">               <span class="attr">android:layout_width</span>=<span class="string">"50dp"</span></div><div class="line">               <span class="attr">android:layout_height</span>=<span class="string">"50dp"</span></div><div class="line">               <span class="attr">android:src</span>=<span class="string">"@drawable/icon_folder"</span> /&gt;</div><div class="line"></div><div class="line">           <span class="tag">&lt;<span class="name">TextView</span></span></div><div class="line">               <span class="attr">android:layout_width</span>=<span class="string">"wrap_content"</span></div><div class="line">               <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></div><div class="line">               <span class="attr">android:text</span>=<span class="string">"文件夹"</span> /&gt;</div><div class="line">       <span class="tag">&lt;/<span class="name">LinearLayout</span>&gt;</span></div><div class="line"></div><div class="line"></div><div class="line">       <span class="tag">&lt;<span class="name">LinearLayout</span></span></div><div class="line">           <span class="attr">android:id</span>=<span class="string">"@+id/ll_bottom"</span></div><div class="line">           <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></div><div class="line">           <span class="attr">android:layout_height</span>=<span class="string">"50dp"</span></div><div class="line">           <span class="attr">android:background</span>=<span class="string">"#e0000000"</span></div><div class="line">           <span class="attr">android:gravity</span>=<span class="string">"center_vertical"</span></div><div class="line">           <span class="attr">android:orientation</span>=<span class="string">"horizontal"</span></div><div class="line">           <span class="attr">android:paddingLeft</span>=<span class="string">"10dp"</span>&gt;</div><div class="line"></div><div class="line">           <span class="tag">&lt;<span class="name">ImageView</span></span></div><div class="line">               <span class="attr">android:layout_width</span>=<span class="string">"30dp"</span></div><div class="line">               <span class="attr">android:layout_height</span>=<span class="string">"30dp"</span></div><div class="line">               <span class="attr">android:src</span>=<span class="string">"@drawable/icon_windows"</span> /&gt;</div><div class="line">       <span class="tag">&lt;/<span class="name">LinearLayout</span>&gt;</span></div><div class="line"></div><div class="line"></div><div class="line">   <span class="tag">&lt;/<span class="name">ren.solid.materialdesigndemo.view.WindowsLayout</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<p>在这个自定义的ViewGroup中，前面放置的都是内容区的，最后一个是底部状态栏。就这样就可以实现最开始那个动态图中的效果。对于点击左下角的徽标，可以弹出一个层，我使用的是PopWindow，代码如下：<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">LinearLayout ll_bottom = customFindViewById(R.id.ll_bottom);</div><div class="line">        ll_bottom.setOnClickListener(new View.OnClickListener() &#123;</div><div class="line">            @Override</div><div class="line">            public void onClick(View v) &#123;</div><div class="line"></div><div class="line">                int[] location = new int[2];</div><div class="line">                v.getLocationOnScreen(location);</div><div class="line"></div><div class="line">                View popupView = LayoutInflater.from(getMContext()).inflate(R.layout.pop_windows, null);</div><div class="line">                PopupWindow popupWindow = new PopupWindow(popupView, ViewGroup.LayoutParams.WRAP_CONTENT,</div><div class="line">                        ViewGroup.LayoutParams.WRAP_CONTENT, true);</div><div class="line">                popupView.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);</div><div class="line">                popupWindow.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#e0000000")));</div><div class="line">                popupWindow.setOutsideTouchable(true);</div><div class="line">                popupWindow.setFocusable(true);</div><div class="line">                int height=popupView.getMeasuredHeight();</div><div class="line">                popupWindow.showAtLocation(v, Gravity.NO_GRAVITY, location[0], location[1]-height);</div><div class="line">            &#125;</div><div class="line">        &#125;);</div></pre></td></tr></table></figure></p>
+<p>源码附上：<a href="https://github.com/burgessjp/MaterialDesignDemo/blob/master/app/src/main/java/ren/solid/materialdesigndemo/view/WindowsLayout.java" target="_blank" rel="external">源码</a></p>
+
+        
+      
+    </div>
+
+    
+
+    
+
+  </article>
+
+    
+      
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          <a class="post-link" href="/2017/04/25/Android主题换肤-无缝切换/">Android主题换肤-无缝切换</a>
+        
+      </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          2017年4月25日
+        </span>
+      </div>
+    </header>
+
+    
+    
+
+    <div class="post-content">
+      
+        
+        
+
+        
+          <p>今天再给大家带来一篇干货。 Android的主题换肤 ，可插件化提供皮肤包，无需Activity的重启直接实现无缝切换,可高仿网易云音乐的主题换肤。</p>
+<p>这个链接是本次的Demo打包出来的样本<a href="http://download.csdn.net/detail/u012814963/9493559" target="_blank" rel="external">SkinChangeDemo</a>，可以去下载下来先试试效果，皮肤文件需放到存储卡的根目录下。</p>
+<blockquote>
+<p>关于Android的主题换肤都是个老生常谈的问题了。网上给出的方案也是层出不穷，最近我也是很想去了解这方面的知识，所以我去搜一下就会有一大堆介绍这方面的文章，但是最后的结果都是不尽人意的，有的确实是给出了一些比较好的解决方案，但是没有一个实质性的Demo可以参考，所以也只能是纸上谈兵罢了，有的呢，确实是给出了一个参考的Demo但是最后的结果不是我想要的。关于Android的换肤方案技术的总结，这篇文章还是挺有参考价值的<a href="http://blog.zhaiyifan.cn/2015/09/10/Android%E6%8D%A2%E8%82%A4%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/" target="_blank" rel="external">Android换肤技术总结</a>。感兴趣的同学可以去了解下，就当做是一个知识的普及。</p>
+</blockquote>
+<p>今天我要实现的一个换肤方案是基于github上的这个开源框架<a href="https://github.com/fengjundev/Android-Skin-Loader" target="_blank" rel="external">Android-Skin-Loader</a>。<strong>这个框架的换肤机制是使用动态加载的机制去加载皮肤包里面的内容，无需Acitvity重启即可实现皮肤的实时更换，皮肤包是可以与原安装包相分离的，需要自己定做（这个皮肤包其实也就是一个普通的Android项目，只是只有资源文件没有类文件而已），这样做的好处就是可以在线提供皮肤包供用户去下载，也可以大大的减少安装包的体积，同时也很好的实现了插件化。</strong>其实这个框架是可以拿来直接来用的，直接几行代码基本上就可以解决Android的主题换肤，但是作为一个程序员怎么可以只是简单的知道怎么用就行了吗？如果真是这样就真的太low了。遇到一个好的开源项目我们至少需要把他的源码大致看一下，走一下基本的流程，了解一下他的基本原理，这样我们在技术上才会有所提升。本文实现的Demo是基于在我前段时间发布的<a href="http://www.jianshu.com/p/1e6eed09d48b" target="_blank" rel="external">Android Material Design 兼容库的使用详解</a>一文中的Demo改进的。最后实现的App也是MaterialDesign的设计风格。</p>
+<p>好了说了这么多，通过本文你可以学到什么，这个可能是大家比较关心的一点</p>
+<ul>
+<li>设计出一个基于MaterialDesign风格的App</li>
+<li>自己实现一个主题换肤的框架</li>
+<li>高仿网易云音乐的主题换肤（ps：其实本来我想以这个作为标题的，这样做也可以增加流量，可我不想单纯的做个标题党，给大家带来干货才是最重要的） </li>
+<li>让你的技术更上一层楼（这个说了也是白说）</li>
+</ul>
+<p>说了这么久可能就会有人按捺不住了：我是来看干货的，不是来这听你瞎BB的。不要急干货马上来。如果实在感觉枯燥可以直接跳到文末去看源码。下面先来几张效果图来爽一下</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://upload-images.jianshu.io/upload_images/623504-54d19d5e3b6e7f8b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="网易云音乐换肤界面" title="">
+                </div>
+                <div class="image-caption">网易云音乐换肤界面</div>
+            </figure>
+<p>这个是网易云音乐的换肤界面，他提供了几个默认的，也提供了可以在线下载的主题，他的切换效果还是非常赞的，用过这个软件的同学肯定是知道的。学习完本文后就可以做出类似于这个换肤效果。<br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://upload-images.jianshu.io/upload_images/623504-0c8a0c72d3a173ed.gif?imageMogr2/auto-orient/strip" alt="Demo最终效果图" title="">
+                </div>
+                <div class="image-caption">Demo最终效果图</div>
+            </figure></p>
+<p>这个动态图是最终我们这个Demo实现的效果，这个Demo总体来说还是比较简单的，只提供了三种皮肤。实现了一个基本的换肤效果，主要还是用于拿来学习使用。当然更复杂的换肤基于这个Demo也是可以办到的，这里主要还是去讲解原理。</p>
+<p>在介绍之前还需要先给大家普及一下<strong>LayoutInflaterFactory</strong>相关的知识。如果已经知道了这方面的知识点，下面这一段可以直接略过。</p>
+<p>对于LayoutInflater大家可能都不太陌生，当你需要把xml文件转化成对应View的时候就必须用到它，我想对于他怎么使用的就不用我介绍了。LayoutInflater 提供了setFactory(LayoutInflater.Factory factory)和setFactory2(LayoutInflater.Factory2 factory)两个方法可以让你去自定义布局的填充（有点类似于过滤器，我们在填充这个View之前可以做一些额外的事，但不完全是），Factory2 是在API 11才添加的。<br>他们提供了下面的方法让你去重写。在这里面你完全可以自己去定义去创建你所想要的View，如果在你在重写的方法中返回null的话，就会以系统默认的方式去创建View。</p>
+<pre>
+View onCreateView(String name, Context context, AttributeSet attrs)//LayoutInflater.Factory
+</pre>
+<pre>
+View onCreateView(View parent, String name, Context context, AttributeSet attrs)//LayoutInflater.Factory2
+</pre>
+
+<p>LayoutInflater都被设置了一个默认的Factory，Activity 是实现了LayoutInflater.Factory接口的,因此在你的Activity中直接重写onCreateView就可以自定义View的填充了。</p>
+<p>下面这句是对LayoutInflater.Factory一个比较好的理解</p>
+<blockquote>
+<p>Inflating your own custom views, instead of letting the system do it</p>
+</blockquote>
+<p>这个也是这个Demo其中的一个比较重要技术点。如果有想更详细了解的文末会有参考链接。</p>
+<hr>
+<p>下面就正式开始介绍怎么去做这个主题换肤吧。</p>
+<p>先来看看这个Demo的项目结构：</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://upload-images.jianshu.io/upload_images/623504-7d6658b3b547110d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="项目结构图" title="">
+                </div>
+                <div class="image-caption">项目结构图</div>
+            </figure>
+<p>至于xRecyclerView可以不用管，这里我们用不到（这是之前用到的，与本次无关），他只是一个RecyclerView的一个扩展框架，支持下拉刷新和上拉加载，是一个在github上的一个开源项目。</p>
+<p>这里我们直接来看看lib_skinloader这个库吧（这里面的内容大部分是来源于<a href="https://github.com/fengjundev/Android-Skin-Loader" target="_blank" rel="external">Android-Skin-Loader</a>这个框架，我只做了部分修改，主要是适配AppCompatActivity，原框架是基于最初的Activty开发的，在这里再次感谢开源作者），这个库就是今天所讲的核心内容</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://upload-images.jianshu.io/upload_images/623504-6c7a433f22c235d0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="lib_skinloader包结构图" title="">
+                </div>
+                <div class="image-caption">lib_skinloader包结构图</div>
+            </figure>
+<p><strong>我们都知道在Android中如果想去获取资源文件都必须通过Resources去获取。这个库的核心思想就是动态的去加载第三方包里面的包，获取到其Resources然后以获取到的这个Resources去获取第三方包里面的资源内容，最后设置到我们有需响应皮肤更改的View上。</strong></p>
+<p>这里我就只介绍load和base两个包，其他包的内容在讲解的时候会涉及到</p>
+<p>##<strong>1.load包</strong></p>
+<p>我们先来看看这个load包里面的内容（其实这里就是今天核心内容的核心）。</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://upload-images.jianshu.io/upload_images/623504-e890ec9fe4604f33.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="load包" title="">
+                </div>
+                <div class="image-caption">load包</div>
+            </figure>
+<p>里面有两个类文件：SkinInflaterFactory、SkinManager</p>
+<p>我们先来看看SkinManager的实现，直接跳到load方法</p>
+<pre>
+ public void load(String skinPackagePath, final ILoaderListener callback) {
+
+        new AsyncTask<string, void,="" resources="">() {
+
+            protected void onPreExecute() {
+                if (callback != null) {
+                    callback.onStart();
+                }
+            }
+
+            @Override
+            protected Resources doInBackground(String... params) {
+                try {
+                    if (params.length == 1) {
+                        String skinPkgPath = params[0];
+                        Log.i("loadSkin", skinPkgPath);
+                        File file = new File(skinPkgPath);
+                        if (file == null || !file.exists()) {
+                            return null;
+                        }
+
+                        PackageManager mPm = context.getPackageManager();
+                        PackageInfo mInfo = mPm.getPackageArchiveInfo(skinPkgPath, PackageManager.GET_ACTIVITIES);
+                        skinPackageName = mInfo.packageName;
+
+                        AssetManager assetManager = AssetManager.class.newInstance();
+                        Method addAssetPath = assetManager.getClass().getMethod("addAssetPath", String.class);
+                        addAssetPath.invoke(assetManager, skinPkgPath);
 
 
+                        Resources superRes = context.getResources();
+                        Resources skinResource = new Resources(assetManager, superRes.getDisplayMetrics(), superRes.getConfiguration());
+
+                        SkinConfig.saveSkinPath(context, skinPkgPath);
+
+                        skinPath = skinPkgPath;
+                        isDefaultSkin = false;
+                        return skinResource;
+                    }
+                    return null;
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    return null;
+                }
+            }
+
+            protected void onPostExecute(Resources result) {
+                mResources = result;
+
+                if (mResources != null) {
+                    if (callback != null) callback.onSuccess();
+                    notifySkinUpdate();
+                } else {
+                    isDefaultSkin = true;
+                    if (callback != null) callback.onFailed();
+                }
+            }
+
+        }.execute(skinPackagePath);
+    }
+</string,></pre>
+
+<p>这个方法有两个参数，第一个是皮肤包的路径，第二个就是一个简单的回调</p>
+<p>其中doInBackground方法里面就实现了动态的去获取皮肤包的Resources，当获取成功之后，在onPostExecute方法中就将这个Resources赋值到我们定义好的变量中去，以方便我们之后的使用，注意到当获取到的这个Resources不为空时，也就是我们已经获取到了皮肤包里面的资源，我们就调用notifySkinUpdate()这个方法来通知界面去更改皮肤，如果为空就还是使用默认的皮肤。</p>
+<p>我们来看看notifySkinUpdate()的实现<br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://upload-images.jianshu.io/upload_images/623504-36df0803095cfbf2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="notifySkinUpdate" title="">
+                </div>
+                <div class="image-caption">notifySkinUpdate</div>
+            </figure></p>
+<p>这里很简单，就是去遍历mSkinObservers这个集合，然后去通知更新。对于ISkinUpdate是一个接口，每个需要皮肤更新的Activity都需要去实现这个接口。</p>
+<p>SkinManager这个类里面还有诸如getColor(int resId)、getDrawable(int resId)这样的方法，就是去获取第三方包对应的资源文件，值得注意的是如果你的第三方包里没有对应的资源文件，那么就会使用默认的资源文件，如果你有需求，你完全可以去添加一些类似getMipmap(int resID)这样的方法。</p>
+<p>对了，还有一个比较重要的方法忘了讲<br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://upload-images.jianshu.io/upload_images/623504-c4fb56b3a089cfcf.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="restoreDefaultTheme" title="">
+                </div>
+                <div class="image-caption">restoreDefaultTheme</div>
+            </figure><br>这个方法就是恢复到系统的默认主题，原理和load都差不多，实现还简单了很多。SkinManager这个类就说这么多，详细实现请到源码中去查看，很多地方我都给了注释。</p>
+<p>我们再来看看SkinInflaterFactory，在这里面主要就是做一些填充View相关的一些工作。我实现的是LayoutInflaterFactory这个接口而不是文章之前提到的LayoutInflater.Factory这个接口是因为这里需要与AppCompatActivity兼容，如果你还是用之前的那个就会出现一些错误，反正我刚弄的时候是折腾了很久的。不管怎么样原理始终是一样的。SkinInflaterFactory的作用就是去搜集那些有需要响应皮肤更改的View。<br>我们来看看onCreateView的实现</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://upload-images.jianshu.io/upload_images/623504-b07cb84eaa29f5ec.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="onCreateView" title="">
+                </div>
+                <div class="image-caption">onCreateView</div>
+            </figure>
+<p>首先我们先去判断这个当前将要View是否有更改皮肤的需求，如果没有我们就返回默认的实现。如果有，我们就自己去处理<br>来看看createView方法的实现</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://upload-images.jianshu.io/upload_images/623504-2cc1b6f7da64a1ef.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="createView" title="">
+                </div>
+                <div class="image-caption">createView</div>
+            </figure>
+<p>看起来很多，其实这个方法就是去动态的去创建View。</p>
+<p>下面来看看parseSkinAttr的实现：</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://upload-images.jianshu.io/upload_images/623504-87569e73740f7e01.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="parseSkinAttr" title="">
+                </div>
+                <div class="image-caption">parseSkinAttr</div>
+            </figure>
+<p>这个方法其实就是去搜集View中换肤的时候可以更改的属性，当我们换肤的时候就是去更改的这些属性的值，这里你必须要注意一点，这个属性的值一定要是引用类型的（例如:@color/red），千万不能写死，第二个if的判断就是这个作用。<strong>到这里可能你就会有个疑问，我怎么知道哪些属性在换肤的时候需要更改。</strong>如果你细心一点肯定注意到了这行代码</p>
+<pre>
+SkinAttr mSkinAttr = AttrFactory.get(attrName, id, entryName, typeName);
+</pre>
+
+<p>这里有个AttrFacory他的作用就是根据属性名，动态的去创建SkinAttr。在AttrFacory中定义了一些类似于这样的常量：<br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://upload-images.jianshu.io/upload_images/623504-92f533bb4d46f783.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure><br>这就是我们换肤的时候可以更改的那些属性。SkinAttr是一个抽象类，比如background就会去创建一个BackgroundAttr,本项目所用到的属性全都在attr包中。SkinAttr是比较灵活的一个地方,如果你有哪个属性在换肤的时候需要更改，你就去实现一个对应的SkinAttr。</p>
+<p>在parseSkinAttr这个方法的最后我们将View和SkinAttr封装成了一个SkinItem然后添加到一个集合中去，最后还需注意的是，如果当前皮肤不是默认皮肤，一定要去apply一下，这样做主要是防止换了皮肤启动一些新的页面有可能导致换肤不及时的问题。SkinInflaterFactory这个类里面还提供了动态的添加SkinItem的方法，原理都和这里差不多，我就不过多的去说了。</p>
+<p>load包里面的这两个类讲的差不多了，这里看懂了后面的内容也就是小菜一碟了，我相信你看了这里再去看源码一定会轻松地多。</p>
+<p>##<strong>2.base包</strong></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://upload-images.jianshu.io/upload_images/623504-1320d39677c4a386.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="base包结构" title="">
+                </div>
+                <div class="image-caption">base包结构</div>
+            </figure>
+<p>可以看见这个包里面肯定就是Activity、Fragment、Application的实现，作用肯定就是封装一些公用的方法和属性在里面。</p>
+<p>下面我们一个一个来分析</p>
+<ul>
+<li>SkinBaseApplication：<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://upload-images.jianshu.io/upload_images/623504-586331307882de9a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="SkinBaseApplication" title="">
+                </div>
+                <div class="image-caption">SkinBaseApplication</div>
+            </figure>
+</li>
+</ul>
+<p>可以看到这里我们对SkinManager做了一些初始化的操作。以后我们有需要皮肤更改需求的应用一定要记得一定要继承于SkinBaseApplication。</p>
+<ul>
+<li>SkinBaseActivity<br>我们来看看其onCreate方法<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://upload-images.jianshu.io/upload_images/623504-dd54781b73df90fc.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="SkinBaseActivity" title="">
+                </div>
+                <div class="image-caption">SkinBaseActivity</div>
+            </figure>
+在这里使用了我们之前自定义的View的InflaterFactory，来替换默认的Factory。记住一定要在super.onCreate(savedInstanceState);这个方法之前调用。SkinBaseActivity里面还提供了动态添加可以响应皮肤更改需求的View的相关方法。当然需要响应换肤更改的Activity都需要继承SkinBaseActivity。详细实现请看源码。</li>
+<li>SkinBaseFragment<br>这个和SkinBaseActivity的思想差不多。具体实现看源码，这里我只是给大家提供这个换肤框架的思想，让大家在看源码的时候更轻松。</li>
+</ul>
+<p>这个框架就介绍到这，下面我们来看看怎么去使用。</p>
+<p>在使用的时候一定要记得要Activity要去继承于SkinBaseActivity，Fragment要继承于SkinBaseFragment，Application要继承于SkinBaseApplication。当然把这个框架做为你的项目依赖项肯定是必不可少的。为了Demo的简单，这里我只使用了下面三个颜色作为可以换肤的资源，当然如果你想要使用drawable文件也是可以办到的，前提是你一定要把这个Demo看懂。<br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://upload-images.jianshu.io/upload_images/623504-08dec49645f73d4a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure></p>
+<p>来看一个布局文件<br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://upload-images.jianshu.io/upload_images/623504-24783a75958a40d7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure><br>其中<br><code>xmlns:skin=”<a href="http://schemas.android.com/android/skin" target="_blank" rel="external">http://schemas.android.com/android/skin</a>“</code><br>是我们自定义的，在SkinConfig有。<br>我们只需在有皮肤更改需求的View中加入skin:enable=”true” 就OK了。</p>
+<p>再来看看MainActicvity的部分代码</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://upload-images.jianshu.io/upload_images/623504-da99c73eca73106a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<p>这里就是动态的添加有皮肤更改需求的View。</p>
+<p>上面就介绍完了在布局文件中使用方法和在代码中使用方法。</p>
+<p>我们应该怎么去换肤呢？很简单，只需调用SkinManager的load方法就可以了，把皮肤路径传进去就可以了，我的这个Demo为了简单起见，没有做在线换肤的功能，只是在本地提供了可以更换的皮肤，看到这里我相信你对怎样在线换肤已经有想法了。</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://upload-images.jianshu.io/upload_images/623504-8818a549a834dc96.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="怎样去换肤" title="">
+                </div>
+                <div class="image-caption">怎样去换肤</div>
+            </figure>
+<p>最最后我们来看看怎么去开发皮肤包。其实这个是最简单的，皮肤包实际上就是一个基本的Android项目，里面不包含类文件，只有资源文件。<strong>这里只需注意 这里的资源文件名字一定要和原项目中的相同，并且只用包含那些在皮肤更改时需要改变的那些就行了！</strong>例如我的这个Demo就只是简单对上面的三种颜色做了简单的切换。开发了棕色和黑色两款皮肤，所以资源文件中只有三个color的值，开发完成之后我们需要将其打包成apk文件，为防止用户点击安装，我们将其后缀改成了skin，这样做也具有标识性。如果还是不太清楚可以直接去源码中查看。</p>
+<p>这下再来看一看文章开头效果图是不是突然变得有思路了,快动起你的小手指去敲一个主题换肤的框架吧~~~<br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://upload-images.jianshu.io/upload_images/623504-0c8a0c72d3a173ed.gif?imageMogr2/auto-orient/strip" alt="Demo最终效果图" title="">
+                </div>
+                <div class="image-caption">Demo最终效果图</div>
+            </figure></p>
+<p>好了，本文到此结束。很感谢你的耐心看完！</p>
+<p>源码传送：<a href="https://github.com/burgessjp/MaterialDesignDemo" target="_blank" rel="external">MaterialDesignDemo</a> 欢迎大家Star和Fork，bug肯定是在所难免的，有问题多多讨论。</p>
+<p>参考链接:</p>
+<ol>
+<li><a href="http://blog.bradcampbell.nz/layoutinflater-factories/" target="_blank" rel="external">LayoutInflater Factories</a>（需梯子）</li>
+<li><a href="http://willowtreeapps.com/blog/app-development-how-to-get-the-right-layoutinflater/" target="_blank" rel="external">How to Get the Right LayoutInflater</a></li>
+<li><a href="http://blog.csdn.net/singwhatiwanna/article/details/22597587" target="_blank" rel="external">Android apk动态加载机制的研究 </a></li>
+<li><a href="http://blog.zhaiyifan.cn/2015/09/10/Android%E6%8D%A2%E8%82%A4%E6%8A%80%E6%9C%AF%E6%80%BB%E7%BB%93/" target="_blank" rel="external">Android换肤技术总结 </a></li>
+</ol>
+<p>###<strong>文章更新 2017-03-15</strong></p>
+<p>这篇文章已经写了有一段时间了，文中的Demo也是完全可用的，之前的这个Demo只是提供了一个大概的思路，在实际的使用中还是存在很多的问题，所以在写文章后的不久我就将换肤这个模块从Demo提取出来了，并且一直在改进当中，现在已经有了一个比较稳定的版本，可以直接gradle引用，库子项目地址：<a href="https://github.com/burgessjp/ThemeSkinning" target="_blank" rel="external">ThemeSkinning</a>。有很读者提出各种各样的问题，其实这些问题大部分在这个库的Readme文档中都是有说明的，没找到的可以去已经关闭的 <a href="https://github.com/burgessjp/ThemeSkinning/issues?q=is%3Aissue+is%3Aclosed" target="_blank" rel="external">issue</a> 里面看看有没有想要的答案，都是早已经解决了的。当然如果还有其他问题，欢迎提 issue，有你们的支持这个库才越来越完善！</p>
+
+        
+      
+    </div>
+
+    
+
+    
+
+  </article>
+
+    
+      
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          <a class="post-link" href="/2017/04/25/Android-多媒体之MediaRecorder-MediaPlayer/">Android-多媒体之MediaRecorder-MediaPlayer</a>
+        
+      </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          2017年4月25日
+        </span>
+      </div>
+    </header>
+
+    
+    
+
+    <div class="post-content">
+      
+        
+        
+
+        
+          <p>以前学了很多东西，都没怎么做记录，慢慢的时间长了也就给忘了，当初踩过的坑翻来覆去<br>的踩，由于这些血淋林的教训，所以从现在开始，每次学了新的东西都要来写个博客做个记录总结一下了。</p>
+<p>最近在学习Android多媒体这一块，现在刚好学到了MediaRecorder和MediaPlayer。今天也就介绍下这两个类吧，也有利于以后初学者的学习。</p>
+<p>本文一共分3个部分：第一和第二部分用来介绍这两个类，第3部分做一个录音的小Demo（附源码）</p>
+<p>##1.MediaRecorder<br>关于MediaRecorder 官网给的解释是</p>
+<blockquote>
+<p>Used to record audio and video. The recording control is based on a simple state machine </p>
+</blockquote>
+<p>大致意思就是，这个类是用来去录制音频和视频的。录制基于一种简单的状态机制。<br>这个状态机制是什么呢？Google给了一张图</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://upload-images.jianshu.io/upload_images/623504-3a1d33e478561a59.gif?imageMogr2/auto-orient/strip" alt="mediarecorder_state_diagram.gif" title="">
+                </div>
+                <div class="image-caption">mediarecorder_state_diagram.gif</div>
+            </figure>
+<p>从图中可以看出MediaRecorder 有这么几种状态：<br><strong>Initial</strong>：初始化。也就是MediaRecorder 刚被创建的时候。在这个时候我们去设置音频或者视频的来源了，可能这个时候就有人问了 音频或者视频的来源是什么意思，举个例子吧，比如当我们在录音的时候，这个声音的来源就可以设置成手机的麦克风。<br><strong>Initialized</strong>：初始化完成。这里我们已经知道音频或者视频的来源了，在这里我们就可以设置一些输出的属性了，比如输出文件的保存格式，编码什么的。由于水平有限还有很多关于媒体文件属性，我也不是太理解。<br><strong>DataSourceConfigured</strong>:数据源配置改变。也就是我们改变了一些输出的属性，就会进入到这个状态。<br><strong>Prepered</strong>：处于这个状态就说明了我们的配置已经完成了，现在就等去录制了。<br><strong>Recordeing</strong>：这个不用我说也应该明白了。<br><strong>Released</strong>：资源被释放了。<br><strong>Error</strong>：录制的时候发生了错误。</p>
+<p>图中已经把状态之间是怎么切换的已经描述的非常清楚了，我也不过多介绍了。</p>
+<p>##2.MediaPlayer<br>关于MediaPlayer官网给的解释是：</p>
+<blockquote>
+<p>MediaPlayer class can be used to control playback of audio/video files and streams.</p>
+</blockquote>
+<p>简单翻译过来就是：这个类是用来去播放音频，视频文件和流文件的。</p>
+<p>他也对应了一个状态图：</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://upload-images.jianshu.io/upload_images/623504-1ac220628a50a719.gif?imageMogr2/auto-orient/strip" alt="mediaplayer_state_diagram.gif" title="">
+                </div>
+                <div class="image-caption">mediaplayer_state_diagram.gif</div>
+            </figure>
+<p>其实他的大致流程和MediaRecorder差不多，这里我就略过了。</p>
+<p>你以为到这就结束了吗？肯定不是的，上面的也就为下面我要做的做个铺垫而已，有了上面的基础，后面的肯定就轻松了。</p>
+<p>##3.做一个录音的小Demo<br>先来看一看效果图吧</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/623504-131c0f6370d6ff0b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="未标题-1.png"></p>
+<p>看起来还是很简单吧。<br>开始是初始状态，然后是录制状态（中间有个波浪形的自定义控件），在这个状态下会显示当前的录制时长，波浪形控件会显示，最后就是录制完成，可以点击播放了。<br>最下面是保存和删除按钮，可以删除当前的录音。PS：保存按钮没有任何实现，录音文件会自动保存。</p>
+<p>知道了这个效果现在就来介绍是怎么做的吧。</p>
+<p>这个小Demo我对MediaRecorder和MediaPlayer做了一下封装，方便以后使用调用方便。</p>
+<p>MediaRecorderHelper代码如下：</p>
+<pre>
+public class MediaRecorderHelper {
+
+    private MediaRecorder mMediaRecorder;
+    private String mSavePath;
+    private String mCurrentFilePath;
 
 
+    public MediaRecorderHelper(String savePath) {
+        mSavePath = savePath;
+        File file = new File(mSavePath);
+        if (!file.exists()) file.mkdirs();
+
+    }
 
 
-<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    /**
+     * 开始录音
+     */
+    public void startRecord() {
+        try {
+            mMediaRecorder = new MediaRecorder();
+            File file = new File(mSavePath, generateFileName());
+            mCurrentFilePath = file.getAbsolutePath();
+            // 设置录音文件的保存位置
+            mMediaRecorder.setOutputFile(mCurrentFilePath);
+            // 设置录音的来源（从哪里录音）
+            mMediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
+            // 设置录音的保存格式
+            mMediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.AMR_NB);
+            // 设置录音的编码
+            mMediaRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
+            mMediaRecorder.prepare();
+            mMediaRecorder.start();
 
-
-
-<script>
-(function() {
-    var OriginTitile = document.title, titleTime;
-    document.addEventListener('visibilitychange', function() {
-        if (document.hidden) {
-            document.title = '';
-            clearTimeout(titleTime);
-        } else {
-            document.title = '';
-            titleTime = setTimeout(function() {
-                document.title = OriginTitile;
-            },2000);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-    });
-})();
-</script>
+    }
+
+    /**
+     * 停止录音
+     */
+    public void stopAndRelease() {
+        if (mMediaRecorder == null) return;
+        mMediaRecorder.stop();
+        mMediaRecorder.release();
+        mMediaRecorder = null;
+    }
+
+    /***
+     * 取消本次录音操作
+     */
+    public void cancel() {
+        this.stopAndRelease();
+        if (mCurrentFilePath != null) {
+            File file = new File(mCurrentFilePath);
+            file.delete();
+            mCurrentFilePath = null;
+
+
+        }
+    }
+
+    private String generateFileName() {
+        return UUID.randomUUID().toString() + ".amr";
+    }
+
+    /**
+     * 得到录音文件的路径
+     *
+     * @return
+     */
+    public String getCurrentFilePath() {
+        return mCurrentFilePath;
+    }
+
+}
+
+</pre>
+MediaPlayerHelper代码如下：
+<pre>
+public class MediaPlayerHelper {
+
+    private static MediaPlayer mMediaPlayer;
+    private static boolean isPause = false;
+
+    public static void playSound(String filePath) {
+        playSound(filePath, null);
+    }
+
+    public static void playSound(String filePath, MediaPlayer.OnCompletionListener onCompletionListener) {
+        if (mMediaPlayer == null) {
+            mMediaPlayer = new MediaPlayer();
+            mMediaPlayer.setOnErrorListener(new MediaPlayer.OnErrorListener() {
+                @Override
+                public boolean onError(MediaPlayer mp, int what, int extra) {
+                    mMediaPlayer.reset();
+                    return false;
+                }
+            });
+        } else {
+            mMediaPlayer.reset();
+        }
+        try {
+            mMediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+            if (onCompletionListener != null) {
+                mMediaPlayer.setOnCompletionListener(onCompletionListener);
+            }
+
+
+            mMediaPlayer.setDataSource(filePath);
+            mMediaPlayer.prepare();
+            mMediaPlayer.start();
+        } catch (IllegalArgumentException e) {
+            e.printStackTrace();
+        } catch (SecurityException e) {
+            e.printStackTrace();
+        } catch (IllegalStateException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+    }
+
+    /**
+     * 暂停播放
+     */
+    public static void pause() {
+        if (mMediaPlayer != null && mMediaPlayer.isPlaying()) {
+            mMediaPlayer.pause();
+            isPause = true;
+        }
+    }
+
+
+    /**
+     * 继续播放
+     */
+    public static void resume() {
+        if (mMediaPlayer != null && isPause) {
+            mMediaPlayer.start();
+            isPause = false;
+        }
+    }
+
+    /**
+     * 释放资源
+     */
+    public static void realese() {
+        if (mMediaPlayer != null) {
+            mMediaPlayer.release();
+            mMediaPlayer = null;
+            isPause = true;
+        }
+    }
+}
+
+</pre>
+
+<p>这两个类的代码注释的已经非常详细了，我再在这里介绍也就显得有点多余了。如果还是又不懂或者有问题需要提出的，欢迎留言。</p>
+<p>到这里我们的核心东西已经准备好了，现在就剩下一个Activity让我们去实现刚才效果图上的小Demo了。</p>
+<p>我们来分析一下我们的小Demo会有哪些状态：<br>1.正常状态，也就是没有录制的状态<br>2.录制中<br>3.录制完成<br>4.播放状态<br>5.暂停状态</p>
+<p>对于这几种状态我定义了对应的五个常量来表示。</p>
+<pre>
+private static final int ACTION_NORMAL = 0;
+private static final int ACTION_RECORDING = 1;
+private static final int ACTION_COMMPLETE = 2;
+private static final int ACTION_PLAYING = 3;
+private static final int ACTION_PAUSE = 4;
+</pre>
+
+
+<p>在中间的录制按钮在点击的时候，我们要根据当前的状态来进行状态之间的切换：<br>依然是附代码，就是这么任性~~~~</p>
+<pre>
+  /**
+     * 切换ACTION状态
+     */
+    private void switchActionState() {
+        mIsRecorder = false;
+        if (mCurrentActionState == ACTION_NORMAL) {
+            mCurrentActionState = ACTION_RECORDING;
+            mIvAction.setImageResource(R.drawable.pause);
+
+            //开始录音
+            mMediaRecorderHelper.startRecord();
+            mWaveView.setVisibility(View.VISIBLE);
+            mIsRecorder = true;
+            //开启计时线程
+            mCountTimeThread = new Thread(this);
+            mCountTimeThread.start();
+
+        } else if (mCurrentActionState == ACTION_RECORDING) {//录制中
+            mCurrentActionState = ACTION_COMMPLETE;
+            mIvAction.setImageResource(R.drawable.icon_audio_state_uploaded);
+            //停止录音
+            mMediaRecorderHelper.stopAndRelease();
+            mRlBottom.setVisibility(View.VISIBLE);
+            mWaveView.setVisibility(View.INVISIBLE);
+
+        } else if (mCurrentActionState == ACTION_COMMPLETE) {//录制完成
+            mCurrentActionState = ACTION_PLAYING;
+            mIvAction.setImageResource(R.drawable.icon_audio_state_uploaded_play);
+
+            //播放录音
+            MediaPlayerHelper.playSound(mMediaRecorderHelper.getCurrentFilePath(), new MediaPlayer.OnCompletionListener() {
+                @Override
+                public void onCompletion(MediaPlayer mp) {
+                    //当播放完了之后切换到录制完成的状态
+                    mCurrentActionState = ACTION_COMMPLETE;
+                    mIvAction.setImageResource(R.drawable.icon_audio_state_uploaded);
+                }
+            });
+
+        } else if (mCurrentActionState == ACTION_PLAYING) {//播放中
+            mCurrentActionState = ACTION_PAUSE;
+            mIvAction.setImageResource(R.drawable.icon_audio_state_uploaded);
+            //暂停播放
+            MediaPlayerHelper.pause();
+        } else if (mCurrentActionState == ACTION_PAUSE) {//暂停
+            mCurrentActionState = ACTION_PLAYING;
+            mIvAction.setImageResource(R.drawable.icon_audio_state_uploaded_play);
+            //继续播放
+            MediaPlayerHelper.resume();
+        }
+    }
+</pre>
+
+<p>上面的就是整个Demo的核心思想。</p>
+<p>需要源码的可以点击下面的链接下载。<br><a href="https://github.com/burgessjp/MediaRecorderDemo" target="_blank" rel="external">MediaRecorderDemo</a></p>
+<p>如果在阅读的过程中又发现错误，也欢迎留言纠错。</p>
+
+        
+      
+    </div>
+
+    
+
+    
+
+  </article>
+
+    
+  </section>
+
+  
+  <nav class="pagination">
+    
+      <a class="prev" href="/page/2/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text">上一页</span>
+      </a>
+    
+    
+      <a class="next" href="/page/4/">
+        <span class="next-text">下一页</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+
+          </div>
+          
+
+        </div>  
+      </main>
+
+      <footer id="footer" class="footer">
+
+  <div class="social-links">
+    
+      
+        
+          <a href="mailto:your@email.com" class="iconfont icon-email" title="email"></a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+    
+    
+      
+      <a href="/atom.xml" class="iconfont icon-rss" title="rss"></a>
+    
+  </div>
+
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://hexo.io/">Hexo</a> 强力驱动
+  </span>
+  
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/ahonn/hexo-theme-even">Even</a>
+  </span>
+
+  <span class="copyright-year">
+    
+    &copy; 
+     
+      2015 - 
+    
+    2017
+
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">_SOLID</span>
+  </span>
+</div>
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+
+    
+
+
+    
 
 
 
-</body>
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/slideout/slideout.js"></script>
+  
+
+  
+
+
+    <script type="text/javascript" src="/js/src/even.js?v=2.4.x"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=2.4.x"></script>
+
+    
+  </body>
 </html>

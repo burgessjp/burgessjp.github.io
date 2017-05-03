@@ -1,534 +1,615 @@
 <!DOCTYPE html>
-<html>
-<head>
+<html lang="zh-CN">
+  <head>
     
-
-    
-
-    
-
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 
 
-    <meta charset="utf-8">
-    
-    
-    
-    <title>技术分享会</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    
-    <meta name="theme-color" content="#3F51B5">
-    
-    
-    <meta name="keywords" content="undefined">
-    <meta property="og:type" content="website">
-<meta property="og:title" content="技术分享会">
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+  <link rel="alternate" href="/default" title="_SOLID的个人博客">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.4.x" />
+
+
+
+<link rel="canonical" href="http://yoursite.com/page/2/"/>
+
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="_SOLID的个人博客">
 <meta property="og:url" content="http://yoursite.com/page/2/index.html">
-<meta property="og:site_name" content="技术分享会">
+<meta property="og:site_name" content="_SOLID的个人博客">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="技术分享会">
-    
-    <link rel="shortcut icon" href="/favicon.ico">
-    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
-    <script>window.lazyScripts=[]</script>
-</head>
+<meta name="twitter:title" content="_SOLID的个人博客">
 
-<body>
-    <div id="loading" class="active"></div>
 
-    <aside id="menu"  >
-  <div class="inner flex-row-vertical">
-    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
-        <i class="icon icon-lg icon-close"></i>
-    </a>
-    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
-      <div class="brand">
-        <a href="/" class="avatar waves-effect waves-circle waves-light">
-          <img src="/img/avatar.jpg">
-        </a>
-        <hgroup class="introduce">
-          <h5 class="nickname">_SOLID</h5>
-          <a href="mailto:jiapeng1818@gmail.com" title="jiapeng1818@gmail.com" class="mail">jiapeng1818@gmail.com</a>
-        </hgroup>
-      </div>
-    </div>
-    <div class="scroll-wrap flex-col">
-      <ul class="nav">
-        
-            <li class="waves-block waves-effect">
-              <a href="/"  >
-                <i class="icon icon-lg icon-home"></i>
-                主页
-              </a>
-            </li>
-        
-            <li class="waves-block waves-effect">
-              <a href="/archives"  >
-                <i class="icon icon-lg icon-archives"></i>
-                Archives
-              </a>
-            </li>
-        
-            <li class="waves-block waves-effect">
-              <a href="/tags"  >
-                <i class="icon icon-lg icon-tags"></i>
-                Tags
-              </a>
-            </li>
-        
-            <li class="waves-block waves-effect">
-              <a href="/categories"  >
-                <i class="icon icon-lg icon-th-list"></i>
-                Categories
-              </a>
-            </li>
-        
-            <li class="waves-block waves-effect">
-              <a href="https://github.com/burgessjp" target="_blank" >
-                <i class="icon icon-lg icon-github"></i>
-                Github
-              </a>
-            </li>
-        
-            <li class="waves-block waves-effect">
-              <a href="http://weibo.com/xljiepeng" target="_blank" >
-                <i class="icon icon-lg icon-weibo"></i>
-                Weibo
-              </a>
-            </li>
-        
-      </ul>
-    </div>
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.4.x" />
+
+
+
+
+
+
+
+<script>
+  var CONFIG = {
+    search: false,
+    searchPath: "/search.xml",
+    fancybox: false,
+    toc: true,
+  }
+</script>
+
+
+
+
+  
+
+
+
+    <title> _SOLID的个人博客 </title>
+  </head>
+
+  <body><div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/." class="logo">_SOLID的个人博客</a>
   </div>
-</aside>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
 
-    <main id="main">
-        <header class="top-header" id="header">
-    <div class="flex-row">
-        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
-          <i class="icon icon-lg icon-navicon"></i>
-        </a>
-        <div class="flex-col header-title ellipsis">技术分享会</div>
-        
-        <div class="search-wrap" id="search-wrap">
-            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
-                <i class="icon icon-lg icon-chevron-left"></i>
-            </a>
-            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
-            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
-                <i class="icon icon-lg icon-search"></i>
-            </a>
-        </div>
-        
-        
-        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
-            <i class="icon icon-lg icon-share-alt"></i>
-        </a>
-        
-    </div>
-</header>
-<header class="content-header index-header">
-
-    <div class="container fade-scale">
-        <h1 class="title">技术分享会</h1>
-        <h5 class="subtitle">
-            
-                
-            
-        </h5>
-    </div>
-
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
     
-
-
-</header>
-
-<div class="container body-wrap">
-
-    <ul class="post-list">
-    
-        <li class="post-list-item fade">
-            <article id="post-基于Gank-IO提供的API的第三方客户端，可以在线收藏[项目开源]"
-  class="article-card article-type-post" itemprop="blogPost">
-
-    <div class="post-meta">
-        <time class="post-time" title="2017-04-25 11:05:53" datetime="2017-04-25T03:05:53.616Z"  itemprop="datePublished">2017-04-25</time>
-
-        
-
-
-        
-
-    </div>
-
-    
-
-
-  
-    <h3 class="post-title" itemprop="name">
-      <a class="post-title-link" href="/2017/04/25/基于Gank-IO提供的API的第三方客户端，可以在线收藏[项目开源]/">基于Gank-IO提供的API的第三方客户端，可以在线收藏</a>
-    </h3>
-  
-
-
-
-
-    <div class="post-content" id="post-content" itemprop="postContent">
-
-    
-        
-最近也是因为准备毕业设计的事，很久没更新博客了，但是在这段时间我也不是没有准备这方面的东西。知道gank.io的同学肯定知道，代码家在上面提供了一个免费开放的api供大家去玩，这个接口的信息每天也在更新，发布的内容也是很有质量的，不仅有技术类的文章，还有我们喜欢的福利图。之前我也是看到很多比较好的链接由于时间问题，没来的及看，每次回去找都得花很多的时间。也是正因为这个原因激发了我做一个基于...
-    
-
-        <a href="/2017/04/25/基于Gank-IO提供的API的第三方客户端，可以在线收藏[项目开源]/" class="post-more waves-effect waves-button">
-            阅读全文…
-        </a>
-    </div>
-    
-    <div class="post-footer">
-        
-	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/项目/">项目</a></li></ul>
-
-    </div>
-    
-</article>
-
+      <a href="/">
+        <li class="mobile-menu-item">
+          
+          
+            Home
+          
         </li>
+      </a>
     
-        <li class="post-list-item fade">
-            <article id="post-在Android中使用Realm作本地存储"
-  class="article-card article-type-post" itemprop="blogPost">
-
-    <div class="post-meta">
-        <time class="post-time" title="2017-04-25 11:05:53" datetime="2017-04-25T03:05:53.614Z"  itemprop="datePublished">2017-04-25</time>
-
-        
-
-
-        
-
-    </div>
-
-    
-
-
-  
-    <h3 class="post-title" itemprop="name">
-      <a class="post-title-link" href="/2017/04/25/在Android中使用Realm作本地存储/">在Android中使用Realm作本地存储</a>
-    </h3>
-  
-
-
-
-
-    <div class="post-content" id="post-content" itemprop="postContent">
-
-    
-        Android平台有很多的orm框架可以对数据作本地存储，比如ormlite、greenDao、SugarORM等等，这些orm框架基本都是基于sqlite的。今天我要介绍的这个数据库Realm，是用来替代sqlite的一种解决方案，它有一套自己的数据库存储引擎，比sqlite更轻量级，拥有更快的速度，最重要的是跨平台，目前已有Java，Objective C，Swift，React-Nat...
-    
-
-        <a href="/2017/04/25/在Android中使用Realm作本地存储/" class="post-more waves-effect waves-button">
-            阅读全文…
-        </a>
-    </div>
-    
-    <div class="post-footer">
-        
-	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ORM/">ORM</a></li></ul>
-
-    </div>
-    
-</article>
-
+      <a href="/archives/">
+        <li class="mobile-menu-item">
+          
+          
+            Archives
+          
         </li>
+      </a>
     
-        <li class="post-list-item fade">
-            <article id="post-分享一种RecyclerView滑动到底部自动加载的实现方案"
-  class="article-card article-type-post" itemprop="blogPost">
-
-    <div class="post-meta">
-        <time class="post-time" title="2017-04-25 11:05:53" datetime="2017-04-25T03:05:53.612Z"  itemprop="datePublished">2017-04-25</time>
-
-        
-
-
-        
-
-    </div>
-
-    
-
-
-  
-    <h3 class="post-title" itemprop="name">
-      <a class="post-title-link" href="/2017/04/25/分享一种RecyclerView滑动到底部自动加载的实现方案/">分享一种RecyclerView滑动到底部自动加载的实现方案</a>
-    </h3>
-  
-
-
-
-
-    <div class="post-content" id="post-content" itemprop="postContent">
-
-    
-        在我们开发app的时候，列表组件总是最常用的。目前下拉刷新和上拉加载的组件有很多。Github一搜索，大部分的开源项目都只实现了下拉刷新而没有上拉加载，也有部分项目把上拉加载更多实现了，但是这样做其实并不好，因为在app实际的运行中当户滑动到底部就应该自动加载下一页的内容（决大部分app都是这样做的），而不是要让用户手动去上拉才会去加载，这样会严重影响到用户体验，当然，个别特殊情况除外。
-今...
-    
-
-        <a href="/2017/04/25/分享一种RecyclerView滑动到底部自动加载的实现方案/" class="post-more waves-effect waves-button">
-            阅读全文…
-        </a>
-    </div>
-    
-    <div class="post-footer">
-        
-	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li></ul>
-
-    </div>
-    
-</article>
-
-        </li>
-    
-        <li class="post-list-item fade">
-            <article id="post-仿魅族手机消息通知效果"
-  class="article-card article-type-post" itemprop="blogPost">
-
-    <div class="post-meta">
-        <time class="post-time" title="2017-04-25 11:05:53" datetime="2017-04-25T03:05:53.610Z"  itemprop="datePublished">2017-04-25</time>
-
-        
-
-
-        
-
-    </div>
-
-    
-
-
-  
-    <h3 class="post-title" itemprop="name">
-      <a class="post-title-link" href="/2017/04/25/仿魅族手机消息通知效果/">仿魅族手机消息通知效果</a>
-    </h3>
-  
-
-
-
-
-    <div class="post-content" id="post-content" itemprop="postContent">
-
-    
-        用了一年多的魅族手机了，先不说手机性能怎么样，个人是非常喜欢魅族的UI，各方面都比较符合我的审美，感觉魅族在UI的设计上在国内还是听超前的吧。这不是广告，这只是一条华丽的分割线123456789101112131415161718---下面就进入今天的正题吧。今天我要实现的是一个魅族的通知效果，先来看看魅族原生的效果吧。![](http://upload-images.jianshu.io/...
-    
-
-        <a href="/2017/04/25/仿魅族手机消息通知效果/" class="post-more waves-effect waves-button">
-            阅读全文…
-        </a>
-    </div>
-    
-    <div class="post-footer">
-        
-	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li></ul>
-
-    </div>
-    
-</article>
-
-        </li>
-    
-        <li class="post-list-item fade">
-            <article id="post-[干货IO-3-0]-一个完全开源的App"
-  class="article-card article-type-post" itemprop="blogPost">
-
-    <div class="post-meta">
-        <time class="post-time" title="2017-04-25 11:05:53" datetime="2017-04-25T03:05:53.608Z"  itemprop="datePublished">2017-04-25</time>
-
-        
-
-
-        
-
-    </div>
-
-    
-
-
-  
-    <h3 class="post-title" itemprop="name">
-      <a class="post-title-link" href="/2017/04/25/[干货IO-3-0]-一个完全开源的App/">干货IO 3.0一个完全开源的App</a>
-    </h3>
-  
-
-
-
-
-    <div class="post-content" id="post-content" itemprop="postContent">
-
-    
-        之前写过一篇关于介绍[干货IO]的文章基于Gank.IO提供的API的第三方客户端，可以在线收藏[项目开源]，大致介绍了用到了什么，有哪些功能，一句话就是让大家知道了这个app的存在，之后了一段时间对app也在一直维护，有过好几次的更新，但是改动程度都不是太大，改的最大的一次就是重构底层的网络请求，但并不是太彻底，所以也遗留下了一些问题，其他的就是一些小功能的增增改改。之所以再次写关于[干货...
-    
-
-        <a href="/2017/04/25/[干货IO-3-0]-一个完全开源的App/" class="post-more waves-effect waves-button">
-            阅读全文…
-        </a>
-    </div>
-    
-    <div class="post-footer">
-        
-	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/项目/">项目</a></li></ul>
-
-    </div>
-    
-</article>
-
-        </li>
-    
-    </ul>
-
-    
-<nav id="page-nav">
-    <div class="inner">
-    <a class="extend prev" rel="prev" href="/">上一页</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/3/">下一页</a>
-    </div>
+  </ul>
 </nav>
 
-
+    <div class="container" id="mobile-panel">
+      <header id="header" class="header"><div class="logo-wrapper">
+  <a href="/." class="logo">_SOLID的个人博客</a>
 </div>
 
-        <footer class="footer">
-    <div class="top">
-        
-<p>
-    <span id="busuanzi_container_site_uv" style='display:none'>
-        总访客数：<span id="busuanzi_value_site_uv"></span>
-    </span>
-    <span id="busuanzi_container_site_pv" style='display:none'>
-        总访问量：<span id="busuanzi_value_site_pv"></span>
-    </span>
-</p>
-
-
-        <p>
+<nav class="site-navbar">
+  
+    <ul id="menu" class="menu">
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/">
             
-            <span>博客内容遵循<a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
-        </p>
-    </div>
-    <div class="bottom">
-        <p>
-            <span>Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a></span>
-            <span>_SOLID &copy; 2017</span>
-        </p>
-    </div>
-</footer>
-
-    </main>
-    <div class="mask" id="mask"></div>
-<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
-
-
-
-<div class="global-share" id="globalShare">
-    <ul class="reset share-icons">
-      <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/page/2/&title=技术分享会&pic=http://yoursite.com/img/avatar.jpg" data-title="微博">
-          <i class="icon icon-weibo"></i>
-        </a>
-      </li>
-      <li>
-        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
-          <i class="icon icon-weixin"></i>
-        </a>
-      </li>
-      <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/page/2/&title=技术分享会&source=" data-title=" QQ">
-          <i class="icon icon-qq"></i>
-        </a>
-      </li>
-      <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/page/2/" data-title=" Facebook">
-          <i class="icon icon-facebook"></i>
-        </a>
-      </li>
-      <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=技术分享会&url=http://yoursite.com/page/2/&via=http://yoursite.com" data-title=" Twitter">
-          <i class="icon icon-twitter"></i>
-        </a>
-      </li>
-      <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://yoursite.com/page/2/" data-title=" Google+">
-          <i class="icon icon-google-plus"></i>
-        </a>
-      </li>
+            
+              首页
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/archives/">
+            
+            
+              归档
+            
+          </a>
+        </li>
+      
+      
     </ul>
- </div>
+  
+</nav>
 
+      </header>
 
-<div class="page-modal wx-share" id="wxShare">
-    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
-    <p>扫一扫，分享到微信</p>
-    <img src="//api.qrserver.com/v1/create-qr-code/?data=http://yoursite.com/page/2/" alt="微信分享二维码">
-</div>
+      <main id="main" class="main">
+        <div class="content-wrapper">
+          <div id="content" class="content">
+            
+  <section id="posts" class="posts">
+    
+      
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          <a class="post-link" href="/2017/04/25/基于Gank-IO提供的API的第三方客户端，可以在线收藏[项目开源]/">基于Gank-IO提供的API的第三方客户端，可以在线收藏</a>
+        
+      </h1>
 
+      <div class="post-meta">
+        <span class="post-time">
+          2017年4月25日
+        </span>
+      </div>
+    </header>
 
+    
+    
 
+    <div class="post-content">
+      
+        
+        
 
-    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
-<script>
-var BLOG = { ROOT: '/', SHARE: true, REWARD: false };
+        
+          <blockquote>
+<p>最近也是因为准备毕业设计的事，很久没更新博客了，但是在这段时间我也不是没有准备这方面的东西。知道gank.io的同学肯定知道，代码家在上面提供了一个免费开放的api供大家去玩，这个接口的信息每天也在更新，发布的内容也是很有质量的，不仅有技术类的文章，还有我们喜欢的福利图。<br>之前我也是看到很多比较好的链接由于时间问题，没来的及看，每次回去找都得花很多的时间。也是正因为这个原因激发了我做一个基于Gank.IO提供的API的第三方客户端，最初计划的两个重要功能是可以对信息进行在线收藏和离线缓存，因为时间原因后者暂时没有实现，后面的更新我肯定会实现的。重要的是本项目完全开源，项目已经上传至Github,项目中覆盖了MVP、RxJava、第三方登录以及很多第三方库的使用，我相信本项目的源码对那些正在自学的同学还是有价值的。(ps:这个应用其实都做完一段时间了，微博那边一直没给审核通过，没法正式发布，所以一直没发布出来)</p>
+</blockquote>
+<p>APP下载地址（fir.im）：<a href="http://fir.im/ganhuoio" target="_blank" rel="external">干货IO</a><br>也欢迎大家去应用商店下载:<a href="http://android.myapp.com/myapp/detail.htm?apkName=ren.solid.ganhuoio" target="_blank" rel="external">干货IO</a><br>源码地址：<a href="https://github.com/burgessjp/GanHuoIO" target="_blank" rel="external">GanHuoIO</a>  欢迎Star和Fork，提交问题到 Issues</p>
+<p>先来两张App的截图</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://upload-images.jianshu.io/upload_images/623504-b273dd5d2e63fc4b.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://upload-images.jianshu.io/upload_images/623504-3a7543e4e650cd4a.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="S60521-211246.jpg" title="">
+                </div>
+                <div class="image-caption">S60521-211246.jpg</div>
+            </figure>
+<p>下面就来简单的介绍一下这个项目吧</p>
+<p>App是MD风格的，后端服务是用的bomb，由于涉及到了收藏肯定会有登录，对于登录目前只能使用新浪微博（我也借助新浪微博ID是唯一的这一点），用到了MVP，RxJava，这里我也只是单纯的把RxJava来当做EventBus来使用的，最初我本来是计划把最近很火的Retrofit也加上的，但是这次这个项目的最底层是基于我之前自己开发的一个快速开发库的，里面对网络层做了封装，因为Retrofit是基于注解的，我改动的还是比较多，所以最后就放弃了，对于侧滑菜单，我用的是<a href="https://github.com/mikepenz/MaterialDrawer" target="_blank" rel="external">MaterialDrawer</a>，而不是系统自带的那个NavigationView，MaterialDrawer比系统自带的更加的强大和灵活。</p>
+<p>来看看App的基本操作</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://upload-images.jianshu.io/upload_images/623504-272e96a7ee176af9.gif?imageMogr2/auto-orient/strip" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<p>我们可以对信息进行收藏，也可以对类别进行拖动排序（对于RecyclerView的拖动排序十分的简单，只需一个ItemTouchHelper就可以实现）</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://upload-images.jianshu.io/upload_images/623504-43c90c49394c2b3d.gif?imageMogr2/auto-orient/strip" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<p>里面还有更多的操作等着你的使用。</p>
+<p>如果你感觉还不错就赶紧去下载使用吧，非常欢迎大家提供在使用过程中的bug（我没对5.0以下的手机进行适配，我相信作为开发者的你，应该不可能还会在使用5.0以下的系统）。</p>
 
+        
+      
+    </div>
 
+    
 
-</script>
+    
 
-<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+  </article>
 
+    
+      
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          <a class="post-link" href="/2017/04/25/在Android中使用Realm作本地存储/">在Android中使用Realm作本地存储</a>
+        
+      </h1>
 
-<div class="search-panel" id="search-panel">
-    <ul class="search-result" id="search-result"></ul>
-</div>
-<template id="search-tpl">
-<li class="item">
-    <a href="{path}" class="waves-block waves-effect">
-        <div class="title ellipsis" title="{title}">{title}</div>
-        <div class="flex-row flex-middle">
-            <div class="tags ellipsis">
-                {tags}
-            </div>
-            <time class="flex-col time">{date}</time>
-        </div>
-    </a>
+      <div class="post-meta">
+        <span class="post-time">
+          2017年4月25日
+        </span>
+      </div>
+    </header>
+
+    
+    
+
+    <div class="post-content">
+      
+        
+        
+
+        
+          <p>Android平台有很多的orm框架可以对数据作本地存储，比如ormlite、greenDao、SugarORM等等，这些orm框架基本都是基于sqlite的。今天我要介绍的这个数据库Realm，是用来替代sqlite的一种解决方案，它有一套自己的数据库存储引擎，比sqlite更轻量级，拥有更快的速度，最重要的是跨平台，目前已有Java，Objective C，Swift，React-Native，Xamarin这五种实现。<br>本文是Realm数据库在Android中使用的一个入门级的教程，这里不对Realm与其他的orm框架的优缺点作讨论（这些网上已是一搜一大把）。</p>
+<blockquote>
+<p>本文学习目录<br>一.环境配置<br>二.创建实体<br>三.CRUD（增删改查操作）<br>四.进阶用法</p>
+</blockquote>
+<p>###一.环境配置</p>
+<ol>
+<li><p>在项目的build文件加上</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">buildscript &#123;</div><div class="line">    repositories &#123;</div><div class="line">        jcenter()</div><div class="line">    &#125;</div><div class="line">    dependencies &#123;</div><div class="line">        ...</div><div class="line">        classpath "io.realm:realm-gradle-plugin:1.2.0"</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
 </li>
-</template>
+<li><p>在 app 的 build文件中加入</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">apply plugin: 'realm-android'</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>###二.创建实体<br>Realm 支持的字段类型，除了Java提供的基本类型之外，Realm还支持<code>继承了RealmObject 的对象</code>和<code>RealmList&lt;? extends RealmObject&gt;</code></p>
+<p>这里为了方便直接使用了示例项目中的对象了。</p>
+<p>创建一个User实体<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div></pre></td><td class="code"><pre><div class="line">public class User extends RealmObject &#123;</div><div class="line">    @PrimaryKey</div><div class="line">    private String id;</div><div class="line">    private String name;</div><div class="line">    private int age;</div><div class="line">    private RealmList<span class="tag">&lt;<span class="name">User</span>&gt;</span> friends;</div><div class="line"></div><div class="line">    public String getName() &#123;</div><div class="line">        return name;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void setName(String name) &#123;</div><div class="line">        this.name = name;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public int getAge() &#123;</div><div class="line">        return age;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void setAge(int age) &#123;</div><div class="line">        this.age = age;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public String getId() &#123;</div><div class="line">        return id;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void setId(String id) &#123;</div><div class="line">        this.id = id;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public RealmList<span class="tag">&lt;<span class="name">User</span>&gt;</span> getFriends() &#123;</div><div class="line">        return friends;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void setFriends(RealmList<span class="tag">&lt;<span class="name">User</span>&gt;</span> friends) &#123;</div><div class="line">        this.friends = friends;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>细心的同学已经注意到了，我们上面创建的实体对象继承于RealmObject ，Realm 数据实体定义需要继承自 RealmObject类。</p>
+<p>这里需要知道的几点：</p>
+<ul>
+<li><code>@PrimaryKey</code>用来标识主键</li>
+<li>默认的所有的字段都会被存储</li>
+<li>如果某个字段不需要被存储到本地，则需在在这个字段上面加上<code>@Ignore</code>注解</li>
+</ul>
+<p>###三.CRUD（增删改查操作）<br>数据库的使用无非上就是增删改查这四种操作，其中查是重点，在写原生sql语句中这也是个难点。下面我们就来看看Realm的CRUD是怎样的</p>
+<p>####1.添加数据<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">RealmConfiguration realmConfig = new RealmConfiguration</div><div class="line">                .Builder(this)</div><div class="line">                .build();</div><div class="line">Realm realm = Realm.getInstance(realmConfig);</div></pre></td></tr></table></figure></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">public void testAdd() &#123;</div><div class="line">       initRealm();</div><div class="line">       realm.executeTransaction(new Realm.Transaction() &#123;</div><div class="line">           @Override</div><div class="line">           public void execute(Realm realm) &#123;</div><div class="line">               for (int i = 0; i <span class="tag">&lt; <span class="attr">10</span>; <span class="attr">i</span>++) &#123;</span></div><div class="line">                   <span class="attr">User</span> <span class="attr">user</span> = <span class="string">realm.createObject(User.class);</span></div><div class="line">                   <span class="attr">user.setName</span>("<span class="attr">user</span>" + <span class="attr">i</span>);</div><div class="line">                   <span class="attr">user.setAge</span>(<span class="attr">10</span> + <span class="attr">i</span>);</div><div class="line">                   <span class="attr">user.setId</span>(<span class="attr">UUID.randomUUID</span>()<span class="attr">.toString</span>());</div><div class="line">               &#125;</div><div class="line">               <span class="attr">showInTextView</span>("<span class="attr">10</span>条数据添加成功");</div><div class="line">           &#125;</div><div class="line">       &#125;);</div><div class="line">   &#125;</div></pre></td></tr></table></figure>
+<p>在用Realm进行操作之前需要对Realm作相关的配置操作，Realm中所有的写操作都必须在事务中进行，不然就会报错，<strong>记得在Activity的onDestory中调用realm.close()释放资源</strong>。上面的代码片段就创建了10个User对象。</p>
+<p>####2.查询数据</p>
+<ul>
+<li><p>查询全部</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">public void testQuery() &#123;</div><div class="line">       List<span class="tag">&lt;<span class="name">User</span>&gt;</span> users= realm.where(User.class).findAll();</div><div class="line">       for (User user: users) &#123;</div><div class="line">           showInTextView("id:" + user.getId() + " name:" + user.getName() + " age:" + user.getAge());</div><div class="line">       &#125;</div><div class="line">   &#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>条件查询，Realm 支持以下查询条件（来源于官网）：</p>
+<ul>
+<li>between()、greaterThan()、lessThan()、greaterThanOrEqualTo() 和 lessThanOrEqualTo()</li>
+<li>equalTo() 和 notEqualTo()</li>
+<li>contains()、beginsWith() 和 endsWith()</li>
+<li>isNull() 和 isNotNull()</li>
+<li>isEmpty() 和 isNotEmpty()</li>
+</ul>
+</li>
+</ul>
+<p>以下代码片段查询年龄小于15的User<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">public void testQueryAgeLessThan15() &#123;</div><div class="line">       List<span class="tag">&lt;<span class="name">User</span>&gt;</span> users= realm.where(User.class).lessThan("age", 15).findAll();</div><div class="line">       for (User user: users) &#123;</div><div class="line">           showInTextView("id:" + user.getId() + " name:" + user.getName() + " age:" + user.getAge());</div><div class="line">       &#125;</div><div class="line">   &#125;</div></pre></td></tr></table></figure></p>
+<ul>
+<li>聚合查询，支持的聚合操作有sum，min，max，average<br>以下代码片段得到所有人的平均年龄<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">public void testQueryAverageAge() &#123;</div><div class="line">        double age = realm.where(User.class).findAll().average("age");</div><div class="line">        textView.setText("average age:" + age);</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>####3.更新数据<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">public void testUpdate() &#123;</div><div class="line">       realm.executeTransaction(new Realm.Transaction() &#123;</div><div class="line">           @Override</div><div class="line">           public void execute(Realm realm) &#123;</div><div class="line">               User user = realm.where(User.class).equalTo("name", "user9").findFirst();</div><div class="line">               if (user != null) &#123;</div><div class="line">                   user.setAge(99);</div><div class="line">                   user.setName("二逼青年");</div><div class="line">               &#125;</div><div class="line">               textView.setText("更新成功");</div><div class="line">           &#125;</div><div class="line">       &#125;);</div><div class="line">   &#125;</div></pre></td></tr></table></figure></p>
+<p>####4.删除数据</p>
+<p>以下代码片段展示了如何删除指定的对象<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">public void testDelete() &#123;</div><div class="line">       realm.executeTransaction(new Realm.Transaction() &#123;</div><div class="line">           @Override</div><div class="line">           public void execute(Realm realm) &#123;</div><div class="line">               User user = realm.where(User.class).equalTo("name", "user0").findFirst();</div><div class="line">               if (user != null)</div><div class="line">                   user.deleteFromRealm();</div><div class="line">               textView.setText("删除成功");</div><div class="line">           &#125;</div><div class="line">       &#125;);</div><div class="line">   &#125;</div></pre></td></tr></table></figure></p>
+<p>###四.进阶用法<br>通过前面一节的学习，我们基本学会了Realm数据库基本的增删改查操作。<br>本节来看看Realm还有什么其他用法</p>
+<p>####1.用json创建对象<br>在实际开发中我们和json打交道的机会比较多，所以直接从json去创建对象是十分有用的，下面的代码片段展示了怎么去用。<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line">private void testAddFromJson() &#123;</div><div class="line">        realm.executeTransaction(new Realm.Transaction() &#123;</div><div class="line">            @Override</div><div class="line">            public void execute(Realm realm) &#123;</div><div class="line">                String json = "&#123;\n" +</div><div class="line">                        "    \"id\": \"uuid1\",\n" +</div><div class="line">                        "    \"name\": \"solid\",\n" +</div><div class="line">                        "    \"age\": 20\n" +</div><div class="line">                        "&#125;";</div><div class="line">                String jsons = "[\n" +</div><div class="line">                        "    &#123;\n" +</div><div class="line">                        "        \"id\": \"uuid1\",\n" +</div><div class="line">                        "        \"name\": \"solid\",\n" +</div><div class="line">                        "        \"age\": 20\n" +</div><div class="line">                        "    &#125;,\n" +</div><div class="line">                        "    &#123;\n" +</div><div class="line">                        "        \"id\": \"uuid2\",\n" +</div><div class="line">                        "        \"name\": \"jhack\",\n" +</div><div class="line">                        "        \"age\": 21\n" +</div><div class="line">                        "    &#125;,\n" +</div><div class="line">                        "    &#123;\n" +</div><div class="line">                        "        \"id\": \"uuid3\",\n" +</div><div class="line">                        "        \"name\": \"tom\",\n" +</div><div class="line">                        "        \"age\": 22\n" +</div><div class="line">                        "    &#125;\n" +</div><div class="line">                        "]";</div><div class="line">                //realm.createObjectFromJson(User.class, json);</div><div class="line">                realm.createAllFromJson(User.class, jsons);</div><div class="line">            &#125;</div><div class="line">        &#125;);</div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
+<p>####2.数据模型改变的处理<br> 开发中数据模型不可能从一开始创建了，就保证后面的开发过程中不会更改，对于Realm如果其中的某个实体类改变了，而我们没有做任何的处理，就会报错，如果还处于应用的开发的初期，这无所谓，直接清空数据即可，但是如果应用已经发布了，我们就需要去寻找一种解决方案了。</p>
+<p>这里的解决方案如下：<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">public class MyMigration implements RealmMigration &#123;</div><div class="line">    @Override</div><div class="line">    public void migrate(DynamicRealm realm, long oldVersion, long newVersion) &#123;</div><div class="line">        Log.e(MainActivity.TAG, "oldVersion:" + oldVersion + " newVersion:" + newVersion);</div><div class="line"></div><div class="line">        RealmSchema schema = realm.getSchema();</div><div class="line"></div><div class="line">        if (newVersion == 2) &#123;</div><div class="line">            schema.get("User")</div><div class="line">                    .addField("desc", String.class);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public boolean equals(Object obj) &#123;</div><div class="line">        return obj instanceof MyMigration;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public int hashCode() &#123;</div><div class="line">        return super.hashCode();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">realmConfig = new RealmConfiguration</div><div class="line">               .Builder(this)</div><div class="line">               .schemaVersion(2)</div><div class="line">               .migration(new MyMigration())</div><div class="line">               .build();</div></pre></td></tr></table></figure>
+<p>####3.与RxJava的结合<br>Realm原生是支持Rxjava的，由于RxJava 是可选依赖，所以在使用的时候需要在app的build文件中添加RxJava库的依赖，下面是使用的代码片段。<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">public void testRxJava() &#123;</div><div class="line">        realm.where(User.class).findAll()</div><div class="line">                .asObservable()</div><div class="line">                .flatMap(new Func1&lt;RealmResults&lt;User&gt;, Observable&lt;User&gt;&gt;() &#123;</div><div class="line">                    @Override</div><div class="line">                    public Observable&lt;User&gt; call(RealmResults&lt;User&gt; users) &#123;</div><div class="line">                        return Observable.from(users);</div><div class="line">                    &#125;</div><div class="line">                &#125;)</div><div class="line">                .subscribe(new Action1&lt;User&gt;() &#123;</div><div class="line">                    @Override</div><div class="line">                    public void call(User user) &#123;</div><div class="line">                        showInTextView("id:" + user.getId() + " name:" + user.getName() + " age:" + user.getAge() + " desc:" + user.getDesc());</div><div class="line"></div><div class="line">                    &#125;</div><div class="line">                &#125;);</div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
+<p>这篇文章接到这了，遗憾的是Realm在Windows中没有相关的查看器，只有Mac版的，所以不能直接在Windows中查看Realm数据库中的数据，希望官方后面会有支持吧。更多的资料请查看官方文档。<br>参考文档：<a href="https://realm.io/docs/java/latest/" target="_blank" rel="external">realm-java</a></p>
 
-<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+        
+      
+    </div>
+
+    
+
+    
+
+  </article>
+
+    
+      
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          <a class="post-link" href="/2017/04/25/分享一种RecyclerView滑动到底部自动加载的实现方案/">分享一种RecyclerView滑动到底部自动加载的实现方案</a>
+        
+      </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          2017年4月25日
+        </span>
+      </div>
+    </header>
+
+    
+    
+
+    <div class="post-content">
+      
+        
+        
+
+        
+          <p>在我们开发app的时候，列表组件总是最常用的。目前<strong>下拉刷新</strong>和<strong>上拉加载</strong>的组件有很多。Github一搜索，大部分的开源项目都只实现了<strong>下拉刷新</strong>而没有<strong>上拉加载</strong>，也有部分项目把<strong>上拉加载</strong>更多实现了，但是这样做其实并不好，因为在app实际的运行中当户滑动到底部就应该自动加载下一页的内容（决大部分app都是这样做的），而不是要让用户手动去上拉才会去加载，这样会严重影响到用户体验，当然，个别特殊情况除外。</p>
+<p>今天我要讲的内容可能很多人都知道怎么做，搜一搜也会出现很多相应的内容。我这次分享主要的目的是聊聊实现方案和在其中遇到的一些问题，如果有更好的实现方案，望不吝赐教。</p>
+<p>###1.常规版</p>
+<p>我们都知道RecyclerView可以监听滚动事件的Listener：我们只需实现里面对应的事件就可以实现滑动到底部加载更多了<br>代码实现大概是这样的（这里只考虑了布局管理器是LinearLayoutManager的情况，其他的也类似）：<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() &#123;</div><div class="line">            @Override</div><div class="line">            public void onScrollStateChanged(RecyclerView recyclerView, int newState) &#123;</div><div class="line">                LinearLayoutManager lm = (LinearLayoutManager) recyclerView.getLayoutManager();</div><div class="line">                int totalItemCount = recyclerView.getAdapter().getItemCount();</div><div class="line">                int lastVisibleItemPosition = lm.findLastVisibleItemPosition();</div><div class="line">                int visibleItemCount = recyclerView.getChildCount();</div><div class="line"></div><div class="line">                if (newState == RecyclerView.SCROLL_STATE_IDLE</div><div class="line">                        &amp;&amp; lastVisibleItemPosition == totalItemCount - 1</div><div class="line">                        &amp;&amp; visibleItemCount &gt; 0) &#123;</div><div class="line">                    //加载更多</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;);</div></pre></td></tr></table></figure></p>
+<p>上面的代码我相信做过自动加载的朋友都很熟悉， 这样做确实能做到自动加载更多，但是如果我们想显示加载的状态（<strong>加载中，加载出错，没有更多了</strong>）怎么办呢？只是用这种方案肯定是不能解决的。</p>
+<p>###2.进阶版<br>我们也都知道RecyclerView不能像ListView那样直接就有addHeadView和addFooterView之类的方法，要想实现加载状态的显示必须要在Adapter上动手脚才行。洋神对此也有了一种实现<a href="https://github.com/hongyangAndroid/baseAdapter/blob/master/baseadapter-recyclerview/src/main/java/com/zhy/adapter/recyclerview/wrapper/LoadmoreWrapper.java" target="_blank" rel="external">LoadmoreWrapper</a>(只是单纯的加载更多，并没有状态的处理)，代码大概是这样的（我只留下了关键部分的代码，想看代码完整实现的请直接点击上面的链接。）：<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div></pre></td><td class="code"><pre><div class="line">public class LoadMoreWrapper<span class="tag">&lt;<span class="name">T</span>&gt;</span> extends RecyclerView.Adapter<span class="tag">&lt;<span class="name">RecyclerView.ViewHolder</span>&gt;</span></div><div class="line">&#123;</div><div class="line">    public static final int ITEM_TYPE_LOAD_MORE = Integer.MAX_VALUE - 2;</div><div class="line"></div><div class="line">    private RecyclerView.Adapter mInnerAdapter;</div><div class="line">    private View mLoadMoreView;</div><div class="line">    private int mLoadMoreLayoutId;</div><div class="line"></div><div class="line">    public LoadMoreWrapper(RecyclerView.Adapter adapter)</div><div class="line">    &#123;</div><div class="line">        mInnerAdapter = adapter;</div><div class="line">    &#125;</div><div class="line">    ...</div><div class="line">    @Override</div><div class="line">    public int getItemViewType(int position)</div><div class="line">    &#123;</div><div class="line">        if (isShowLoadMore(position))</div><div class="line">        &#123;</div><div class="line">            return ITEM_TYPE_LOAD_MORE;</div><div class="line">        &#125;</div><div class="line">        return mInnerAdapter.getItemViewType(position);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType)</div><div class="line">    &#123;</div><div class="line">        if (viewType == ITEM_TYPE_LOAD_MORE)</div><div class="line">        &#123;</div><div class="line">            ViewHolder holder;</div><div class="line">            if (mLoadMoreView != null)</div><div class="line">            &#123;</div><div class="line">                holder = ViewHolder.createViewHolder(parent.getContext(), mLoadMoreView);</div><div class="line">            &#125; else</div><div class="line">            &#123;</div><div class="line">                holder = ViewHolder.createViewHolder(parent.getContext(), parent, mLoadMoreLayoutId);</div><div class="line">            &#125;</div><div class="line">            return holder;</div><div class="line">        &#125;</div><div class="line">        return mInnerAdapter.onCreateViewHolder(parent, viewType);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position)</div><div class="line">    &#123;</div><div class="line">        if (isShowLoadMore(position))</div><div class="line">        &#123;</div><div class="line">            if (mOnLoadMoreListener != null)</div><div class="line">            &#123;</div><div class="line">                mOnLoadMoreListener.onLoadMoreRequested();</div><div class="line">            &#125;</div><div class="line">            return;</div><div class="line">        &#125;</div><div class="line">        mInnerAdapter.onBindViewHolder(holder, position);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    ...</div><div class="line"></div><div class="line">    private OnLoadMoreListener mOnLoadMoreListener;</div><div class="line"></div><div class="line">    public LoadMoreWrapper setOnLoadMoreListener(OnLoadMoreListener loadMoreListener)</div><div class="line">    &#123;</div><div class="line">        if (loadMoreListener != null)</div><div class="line">        &#123;</div><div class="line">            mOnLoadMoreListener = loadMoreListener;</div><div class="line">        &#125;</div><div class="line">        return this;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    ...</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>可以看到这里巧妙的用到了装饰者模式，完全与数据展示的逻辑分隔，在相应的方法里做了对应判断。加载更多的调用就在<strong>onBindViewHolder</strong>这个方法中，意思就是当这个View显示出来了，我们就触发加载更多这个方法。</p>
+<p>但是这里还是没有实现状态的处理。这确实是一个好的方案这样做还是有点不能满足实际开发中的一些需求。并且这样做还有一个潜在的问题：如果你的请求没有延时，也就是说我们直接add的一批数据，然后直接调用了notifyDataSetChanged()方法，就会出下下面的错误：<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">java.lang.IllegalStateException: Cannot call this method while RecyclerView is computing a layout or scrolling</div></pre></td></tr></table></figure></p>
+<p>###3.综合版<br>上面两种方式各有各的优点，如果我们能将这两种方式结合在一起，那就好了。第一种方式服务加载更多，第二种方式负责状态的显示。下面来看看代码的实现（有省略）：<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div><div class="line">146</div><div class="line">147</div><div class="line">148</div><div class="line">149</div><div class="line">150</div></pre></td><td class="code"><pre><div class="line">public class LoadMoreWrapper extends RecyclerView.Adapter<span class="tag">&lt;<span class="name">RecyclerView.ViewHolder</span>&gt;</span> &#123;</div><div class="line"></div><div class="line">    public static final int ITEM_TYPE_LOAD_FAILED_VIEW = Integer.MAX_VALUE - 1;</div><div class="line">    public static final int ITEM_TYPE_NO_MORE_VIEW = Integer.MAX_VALUE - 2;</div><div class="line">    public static final int ITEM_TYPE_LOAD_MORE_VIEW = Integer.MAX_VALUE - 3;</div><div class="line">    public static final int ITEM_TYPE_NO_VIEW = Integer.MAX_VALUE - 4;//不展示footer view</div><div class="line"></div><div class="line">    private Context mContext;</div><div class="line">    private RecyclerView.Adapter mInnerAdapter;</div><div class="line"></div><div class="line">    private View mLoadMoreView;</div><div class="line">    private View mLoadMoreFailedView;</div><div class="line">    private View mNoMoreView;</div><div class="line"></div><div class="line">    private int mCurrentItemType = ITEM_TYPE_LOAD_MORE_VIEW;</div><div class="line">    private LoadMoreScrollListener mLoadMoreScrollListener;</div><div class="line"></div><div class="line"></div><div class="line">    private boolean isLoadError = false;//标记是否加载出错</div><div class="line">    private boolean isHaveStatesView = true;</div><div class="line"></div><div class="line">    public LoadMoreWrapper(Context context, RecyclerView.Adapter adapter) &#123;</div><div class="line">        this.mContext = context;</div><div class="line">        this.mInnerAdapter = adapter;</div><div class="line">        mLoadMoreScrollListener = new LoadMoreScrollListener() &#123;</div><div class="line">            @Override</div><div class="line">            public void loadMore() &#123;</div><div class="line">                if (mOnLoadListener != null &amp;&amp; isHaveStatesView) &#123;</div><div class="line">                    if (!isLoadError) &#123;</div><div class="line">                        showLoadMore();</div><div class="line">                        mOnLoadListener.onLoadMore();</div><div class="line">                    &#125;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void showLoadMore() &#123;</div><div class="line">        mCurrentItemType = ITEM_TYPE_LOAD_MORE_VIEW;</div><div class="line">        isLoadError = false;</div><div class="line">        isHaveStatesView = true;</div><div class="line">        notifyItemChanged(getItemCount());</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void showLoadError() &#123;</div><div class="line">        mCurrentItemType = ITEM_TYPE_LOAD_FAILED_VIEW;</div><div class="line">        isLoadError = true;</div><div class="line">        isHaveStatesView = true;</div><div class="line">        notifyItemChanged(getItemCount());</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void showLoadComplete() &#123;</div><div class="line">        mCurrentItemType = ITEM_TYPE_NO_MORE_VIEW;</div><div class="line">        isLoadError = false;</div><div class="line">        isHaveStatesView = true;</div><div class="line">        notifyItemChanged(getItemCount());</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void disableLoadMore() &#123;</div><div class="line">        mCurrentItemType = ITEM_TYPE_NO_VIEW;</div><div class="line">        isHaveStatesView = false;</div><div class="line">        notifyDataSetChanged();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    //region Get ViewHolder</div><div class="line">    private ViewHolder getLoadMoreViewHolder() &#123;</div><div class="line">        if (mLoadMoreView == null) &#123;</div><div class="line">            mLoadMoreView = new TextView(mContext);</div><div class="line">            mLoadMoreView.setLayoutParams(new ViewGroup.LayoutParams(MATCH_PARENT, WRAP_CONTENT));</div><div class="line">            mLoadMoreView.setPadding(20, 20, 20, 20);</div><div class="line">            ((TextView) mLoadMoreView).setText("正在加载中");</div><div class="line">            ((TextView) mLoadMoreView).setGravity(Gravity.CENTER);</div><div class="line">        &#125;</div><div class="line">        return ViewHolder.createViewHolder(mContext, mLoadMoreView);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    private ViewHolder getLoadFailedViewHolder() &#123;</div><div class="line">        if (mLoadMoreFailedView == null) &#123;</div><div class="line">            mLoadMoreFailedView = new TextView(mContext);</div><div class="line">            mLoadMoreFailedView.setPadding(20, 20, 20, 20);</div><div class="line">            mLoadMoreFailedView.setLayoutParams(new ViewGroup.LayoutParams(MATCH_PARENT, WRAP_CONTENT));</div><div class="line">            ((TextView) mLoadMoreFailedView).setText("加载失败，请点我重试");</div><div class="line">            ((TextView) mLoadMoreFailedView).setGravity(Gravity.CENTER);</div><div class="line">        &#125;</div><div class="line">        return ViewHolder.createViewHolder(mContext, mLoadMoreFailedView);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    private ViewHolder getNoMoreViewHolder() &#123;</div><div class="line">        if (mNoMoreView == null) &#123;</div><div class="line">            mNoMoreView = new TextView(mContext);</div><div class="line">            mNoMoreView.setPadding(20, 20, 20, 20);</div><div class="line">            mNoMoreView.setLayoutParams(new ViewGroup.LayoutParams(MATCH_PARENT, WRAP_CONTENT));</div><div class="line">            ((TextView) mNoMoreView).setText("--end--");</div><div class="line">            ((TextView) mNoMoreView).setGravity(Gravity.CENTER);</div><div class="line">        &#125;</div><div class="line">        return ViewHolder.createViewHolder(mContext, mNoMoreView);</div><div class="line">    &#125;</div><div class="line">    //endregion</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public int getItemViewType(int position) &#123;</div><div class="line">        if (position == getItemCount() - 1 &amp;&amp; isHaveStatesView) &#123;</div><div class="line">            return mCurrentItemType;</div><div class="line">        &#125;</div><div class="line">        return mInnerAdapter.getItemViewType(position);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) &#123;</div><div class="line">        if (viewType == ITEM_TYPE_NO_MORE_VIEW) &#123;</div><div class="line">            return getNoMoreViewHolder();</div><div class="line">        &#125; else if (viewType == ITEM_TYPE_LOAD_MORE_VIEW) &#123;</div><div class="line">            return getLoadMoreViewHolder();</div><div class="line">        &#125; else if (viewType == ITEM_TYPE_LOAD_FAILED_VIEW) &#123;</div><div class="line">            return getLoadFailedViewHolder();</div><div class="line">        &#125;</div><div class="line">        return mInnerAdapter.onCreateViewHolder(parent, viewType);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) &#123;</div><div class="line">        if (holder.getItemViewType() == ITEM_TYPE_LOAD_FAILED_VIEW) &#123;</div><div class="line">            mLoadMoreFailedView.setOnClickListener(new View.OnClickListener() &#123;</div><div class="line">                @Override</div><div class="line">                public void onClick(View v) &#123;</div><div class="line">                    if (mOnLoadListener != null) &#123;</div><div class="line">                        mOnLoadListener.onRetry();</div><div class="line">                        showLoadMore();</div><div class="line">                    &#125;</div><div class="line">                &#125;</div><div class="line">            &#125;);</div><div class="line">            return;</div><div class="line">        &#125;</div><div class="line">        mInnerAdapter.onBindViewHolder(holder, position);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public void onAttachedToRecyclerView(RecyclerView recyclerView) &#123;</div><div class="line">         ...</div><div class="line">         recyclerView.addOnScrollListener(mLoadMoreScrollListener);</div><div class="line">    &#125;</div><div class="line">   ...</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public int getItemCount() &#123;</div><div class="line">        return mInnerAdapter.getItemCount() + (isHaveStatesView ? 1 : 0);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    ...</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>代码的实现也还是很简单，定义了四种itemType，分别对应<strong>加载失败</strong>、<strong>没有更多了</strong>、<strong>加载中</strong>、<strong>不显示</strong>四种状态，同时也实现了错误重试的处理。在<strong>onAttachedToRecyclerView</strong>回调中去添加LoadMoreScrollListener。<br>完整版代码地址:<a href="https://github.com/burgessjp/QuickDevLib/blob/master/library/src/main/java/me/solidev/library/ui/adapter/wrapper/LoadMoreWrapper.java" target="_blank" rel="external">LoadMoreWrapper</a></p>
+<p>说了这么多，怎么用？<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">//把你用的adapter传进去</div><div class="line">LoadMoreWrapper mLoadMoreWrapper=new LoadMoreWrapper (mAdapter);</div><div class="line">mLoadMoreWrapper.setOnLoadListener(new LoadMoreWrapper.OnLoadListener() &#123;</div><div class="line">            @Override</div><div class="line">            public void onRetry() &#123;</div><div class="line">              //重试处理</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            @Override</div><div class="line">            public void onLoadMore() &#123;</div><div class="line">               //加载更多</div><div class="line">            &#125;</div><div class="line">        &#125;);</div><div class="line">mRecyclerView.setAdapter(mLoadMoreWrapper);</div></pre></td></tr></table></figure></p>
+<p>在刷新数据的时候调用一下showLoadMore()，数据加载出错的时候调用一下showLoadError()，数据加载完成的时候调用showLoadComplete()。</p>
+<p>想看Demo的请看这里:<a href="https://github.com/burgessjp/QuickDevLib/blob/master/library/src/main/java/me/solidev/library/ui/fragment/AbsListFragment.java" target="_blank" rel="external">AbsListFragment</a>，这是我封装了一个通用的列表展示Fragment。</p>
+<p>Over.</p>
+
+        
+      
+    </div>
+
+    
+
+    
+
+  </article>
+
+    
+      
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          <a class="post-link" href="/2017/04/25/仿魅族手机消息通知效果/">仿魅族手机消息通知效果</a>
+        
+      </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          2017年4月25日
+        </span>
+      </div>
+    </header>
+
+    
+    
+
+    <div class="post-content">
+      
+        
+        
+
+        
+          <p>用了一年多的魅族手机了，先不说手机性能怎么样，个人是非常喜欢魅族的UI，各方面都比较符合我的审美，感觉魅族在UI的设计上在国内还是听超前的吧。这不是广告，这只是一条华丽的分割线<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">---</div><div class="line"></div><div class="line">下面就进入今天的正题吧。今天我要实现的是一个魅族的通知效果，先来看看魅族原生的效果吧。</div><div class="line"></div><div class="line">![](http://upload-images.jianshu.io/upload_images/623504-62c7658ba7ace254.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">最上面的那个区域就是魅族魅族的通知，在一段时间后会自动消失，并且可以滑动删除。这样做给用户的体验还是挺不错的。</div><div class="line"></div><div class="line">既然要能脱离应用显示，第一个想到的肯定是WindowManager，当然只是为了在应用内显示PopupWindow也可以，但是PopupWindow内部也是用的WindowManager实现的，所以最后我选择了WindowManager去在实现这个效果。</div><div class="line"></div><div class="line">那么来看看最终做出来的效果吧。</div><div class="line"></div><div class="line">![](http://upload-images.jianshu.io/upload_images/623504-ad326cabb19e671a.gif?imageMogr2/auto-orient/strip)</div><div class="line"></div><div class="line">和原生的还是有那么一些的差别，最重要的一点就是我的这个没做到覆盖状态栏，在其中我也想了很多办法，始终还是没能实现，当然如果有知道的也望你的指点</div></pre></td></tr></table></figure></p>
+<p>如果还有不太了解WindowManager的同学，推荐去看看<strong>码农小阿飞</strong>的这篇文章<a href="http://www.jianshu.com/p/95ceb0a2ed27" target="_blank" rel="external">像360悬浮窗那样，用WindowManager实现炫酷的悬浮迷你音乐盒（上）</a></p>
+<p>###下面来看看具体的实现<br>代码我就不全文贴了，这样做比较影响阅读，文末会有源码链接。</p>
+<p>先来看看WindowManager创建的这一块<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">      mWindowManager = (WindowManager) </div><div class="line">mContext.getSystemService(Context.WINDOW_SERVICE);</div><div class="line">      mWindowParams = new WindowManager.LayoutParams();</div><div class="line">      mWindowParams.type = WindowManager.LayoutParams.TYPE_TOAST;// 系统提示window</div><div class="line">      mWindowParams.gravity = Gravity.LEFT | Gravity.TOP;</div><div class="line">      mWindowParams.width = WindowManager.LayoutParams.MATCH_PARENT;</div><div class="line">      mWindowParams.height = WindowManager.LayoutParams.WRAP_CONTENT;</div><div class="line">      mWindowParams.flags = </div><div class="line">              WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL |</div><div class="line">              WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS;</div><div class="line">      //设置进入和退出动画</div><div class="line">      mWindowParams.windowAnimations = R.style.NotificationAnim;</div><div class="line">      mWindowParams.x = 0;</div><div class="line">      mWindowParams.y = -mStatusBarHeight;</div></pre></td></tr></table></figure></p>
+<p>这里设置了很多的flag，<br>FLAG_LAYOUT_NO_LIMITS：让Window能全屏显示，能延伸至状态栏<br>FLAG_NOT_TOUCH_MODAL: 不阻塞事件传递到后面的窗口,如果不设置这个flag，当我们的Window显示出来的时候，Window之外的地方就接收不到任何的事件。<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">mWindowParams.windowAnimations = R.style.NotificationAnim;</div></pre></td></tr></table></figure></p>
+<p>这句就是设置Window显示和消失的默认动画。</p>
+<p>由于这个通知窗口是全屏显示，如果不做任何的处理，状态栏就会遮挡住通知窗口的一部分（ps：不知道怎么解决让通知窗口覆盖状态栏的办法）。我的解决方案是，在布局文件中添加一个占位的View然后在代码中动态得到状态栏的高度，然后对这个占位View的高度赋值，还是很好的解决了这个问题。</p>
+<p>到这里就差不多可以将通知窗口给显示出来了。接着来看下怎么实现滑动功能。</p>
+<p>滑动的实现其实也还是比较的简单，就是对内容视图添加一个OnTouch事件。然后在OnTouch事件里面做一些处理。下面看代码的详细实现：<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line">private int downX = 0;</div><div class="line"> private int direction = DIRECTION_NONE;</div><div class="line"></div><div class="line"> @Override</div><div class="line"> public boolean onTouch(View v, MotionEvent event) &#123;</div><div class="line">     if (isAnimatorRunning()) &#123;</div><div class="line">         return false;</div><div class="line">     &#125;</div><div class="line">     switch (event.getAction()) &#123;</div><div class="line">         case MotionEvent.ACTION_DOWN:</div><div class="line">             downX = (int) event.getRawX();//记录下相对于屏幕的坐标</div><div class="line">             break;</div><div class="line">         case MotionEvent.ACTION_MOVE:</div><div class="line">             //处于滑动状态就取消自动消失</div><div class="line">             mHandler.removeMessages(HIDE_WINDOW);</div><div class="line">             int moveX = (int) event.getRawX() - downX;</div><div class="line">             //判断滑动方向</div><div class="line">             if (moveX &gt; 0) &#123;</div><div class="line">                 direction = DIRECTION_RIGHT;</div><div class="line">             &#125; else &#123;</div><div class="line">                 direction = DIRECTION_LEFT;</div><div class="line">             &#125;</div><div class="line">             updateWindowLocation(moveX, mWindowParams.y);//更新窗口的位置</div><div class="line">             break;</div><div class="line">         case MotionEvent.ACTION_UP:</div><div class="line">             if (Math.abs(mWindowParams.x) &gt; mScreenWidth / 2) &#123;</div><div class="line">                 startDismissAnimator(direction);//开始消失动画</div><div class="line">             &#125; else &#123;</div><div class="line">                 startRestoreAnimator();//开始恢复动画</div><div class="line">             &#125;</div><div class="line">             break;</div><div class="line">     &#125;</div><div class="line">     return true;</div><div class="line"> &#125;</div></pre></td></tr></table></figure></p>
+<p>这段代码其实并不复杂，只要仔细看看就会懂了。</p>
+<p>关于对通知窗体里面的赋值，我用的是构造者模式。比较重要的就是这些了，更详细的代码实现可以去看源码。</p>
+<p>来看看怎么去使用:<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">MeiZhuNotification notification =</div><div class="line">               new MeiZhuNotification.Builder().setContext(this)</div><div class="line">                       .setTime(System.currentTimeMillis())</div><div class="line">                       .setImgRes(R.drawable.notify)</div><div class="line">                       .setTitle("你收到了一条消息")</div><div class="line">                       .setContent("人丑就得多读书").build();</div><div class="line"></div><div class="line">notification.show();</div></pre></td></tr></table></figure></p>
+<p>如果没设置图标和标题就相当于一条普通的消息，也还是比较实用的。</p>
+<p>最后，源码链接：<a href="https://github.com/burgessjp/MeiZhuNotification" target="_blank" rel="external">MeiZhuNotification</a></p>
+
+        
+      
+    </div>
+
+    
+
+    
+
+  </article>
+
+    
+      
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          <a class="post-link" href="/2017/04/25/[干货IO-3-0]-一个完全开源的App/">干货IO 3.0一个完全开源的App</a>
+        
+      </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          2017年4月25日
+        </span>
+      </div>
+    </header>
+
+    
+    
+
+    <div class="post-content">
+      
+        
+        
+
+        
+          <p>之前写过一篇关于介绍[干货IO]的文章<a href="http://www.jianshu.com/p/3f137269a942" target="_blank" rel="external">基于Gank.IO提供的API的第三方客户端，可以在线收藏[项目开源]</a>，大致介绍了用到了什么，有哪些功能，一句话就是让大家知道了这个app的存在，之后了一段时间对app也在一直维护，有过好几次的更新，但是改动程度都不是太大，改的最大的一次就是重构底层的网络请求，但并不是太彻底，所以也遗留下了一些问题，其他的就是一些小功能的增增改改。<br>之所以再次写关于<strong>[干货IO]</strong>的文章，就是想纪录一下做这个app的心路历程，以及介绍一下里面的技术实现。</p>
+<p><strong>在这里再次感谢一下<a href="https://github.com/daimajia" target="_blank" rel="external">daimajia</a>，没有<a href="http://gank.io/" target="_blank" rel="external">gank.io</a>就不会有这个app的存在，如果还有不知道的可以每天都去这个网站看看，除了周六周末两天不更新之外，每天都会有技术干货的推送更新。</strong></p>
+<p>先说下这个3.0版本更新的主要内容吧</p>
+<ul>
+<li>1.UI风格大调整，全新的 UI 风格</li>
+<li>2.支持干货配图</li>
+<li>3.新增 gank 最近推出的闲读</li>
+<li>4.新增搜索</li>
+<li>5.修复仅Wifi加载图片的bug</li>
+<li>6.行为更改：长按干货收藏</li>
+</ul>
+<p>下面是应用部分截图：<br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://upload-images.jianshu.io/upload_images/623504-b825a653dee193d7.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/300" alt="p1" title="">
+                </div>
+                <div class="image-caption">p1</div>
+            </figure></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://upload-images.jianshu.io/upload_images/623504-430e5c355e524eca.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/300" alt="p2.jpg" title="">
+                </div>
+                <div class="image-caption">p2.jpg</div>
+            </figure>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://upload-images.jianshu.io/upload_images/623504-a0a8c1ba87cc46c6.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/300" alt="p3.jpg" title="">
+                </div>
+                <div class="image-caption">p3.jpg</div>
+            </figure>
+<p>为了不影响文章的可读性，这里就不放太多的截图了，感兴趣的可以去安装体验。</p>
+<hr>
+<p>好了，开始正题。</p>
+<p>###干货IO 1.0</p>
+<p>大概是今年3月份的时候关注了gan.io这个网站，这上面每天都会提供很多的技术干货，后面的时间我也是受益良多，与此同时也知道了drakeet为之做的一个 App <a href="https://github.com/drakeet/Meizhi" target="_blank" rel="external">Meizhi</a>，这个App最近好像有更新，非常好的一个开源项目，从这个项目中我也学到了很多。众所周知，gan.io是客户端最多的一个网站，应用市场一搜索就可以搜到很多关于gank的应用，但这些应用都有一个共同点，没有收藏功能，我个人感觉收藏功能还是比较重要的，他可以防止以后想回过来再看的时候不用花太多的时间去一页一页的找，这个就是我最开始想做这个App的的主要动机。于是就有了 <strong>干货IO 1.0</strong> 的出现，也是一个完全开源项目，在今年五月份就提交到了github，只有查看最新干货，分类浏览和收藏三个功能，只能说达到了预期目标，做的相对而言也比较的粗糙，App并不是那么流畅。</p>
+<p>1.0系列版本有过好几次更新，大多改动都不太大，基本上都是些bug的修复和一些小功能的增加，最大的一次改动就是使用 RxJava + Retrofit + MVP重构这个项目了，底层的代码改动算是比较大的，由于时间上的原因这次重构并不是太彻底，也因此造成了代码的混乱。说到这里我们来简单说说RxJava 、 Retrofit 、 MVP这三个技术吧，我相信大家对这三个技术肯定也不陌生。</p>
+<p>RxJava可以以流的方式去处理我们的数据，线程的切换上也是十分的方便，可以大大减少代码量，网络上也涌现出了相关的库，很大程度上方便了我们的开发，RxJava相关的文章可以去我管理的专题看看 <a href="http://www.jianshu.com/collection/d79a6385bded" target="_blank" rel="external">RxJava系列专题（Android方向）</a>，这个专题基本上收录完了简书上关于RxJava最好的文章，当然，你有相关的比较好的文章也可以往这个专题投稿。</p>
+<p>Retrofit是Square公司出品的又一大神器，一个高质量的http库，现在十分流行，网上关于他的文章也是多不胜数，他极大化的简化了我们的网络请求，使得我们的代码更加可读，以及方便后期的维护，加上RxJava简直就是完美 。</p>
+<p>MVP是Android目前比较受欢迎的一种设计模式，个人感觉这个库比较适合于多人共同维护开发的大项目，一般的项目用MVP开发，会多出很多的类文件，有点影响开发效率，1.0版本就试过用MVP去重构项目，最后发现大大增大了我们的工作量，本来很快就能完成的一个功能，增加了很多的类文件，最后到了3.0版本我果断去掉了MVP（还残留了一部分）。项目开发的时候应该实际情况去选择设计模式，而不是盲目的套用现在十分流行的。</p>
+<p>###干货IO 2.0<br>这个版本在功能上其实没什么改变，只是调整了一下UI，把侧滑菜单中的部门功能放到了底部选项卡中，加入了谷歌最新推出的<strong>BottomNavigationBar</strong>。</p>
+<p>###干货IO 3.0</p>
+<p>这个版本变化时比较大的，断断续续的花了我一周的时间去做，基本上是完全重构之前所有的代码，这次的重构是的代码更加的干净，比较有学习的价值，网络请求完全采用Retrofit+RxJava，网络请求也更加的清晰可控，新增了搜索和闲读，干货有了Gif配图，应用也更具MD的风格，在这里必须感谢下<a href="https://github.com/ryanhoo/Android-Proficiency-Exercise" target="_blank" rel="external">Android-Proficiency-Exercise</a>，分类列表的UI样式就来源于他。刚开始在做gif图加载的时候，加载十分的慢，并且内存使用也十分的大，最后经过查阅资料把Glide的缓存策略改为<code>DiskCacheStrategy.SOURCE</code>就可以了。列表的Adapter使用的是drakeet的<a href="https://github.com/drakeet/MultiType" target="_blank" rel="external">MultiType</a>，这个库处理含有多种itemType的RecyclerView非常的棒！如果还不知道这个库的，我强烈推荐使用。同时我基于<a href="https://github.com/drakeet/MultiType" target="_blank" rel="external">MultiType</a>也封装了一个通用列表的抽象类，很简单的就能实现一个列表，添加头部这个都不是事，最简单的列表只需实现loadData方法。<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">@Override</div><div class="line">public void loadData(final int pageIndex) &#123;</div><div class="line">    ServiceFactory.getInstance().createService(GankService.class)</div><div class="line">            .getGanHuo(mType, pageIndex)</div><div class="line">            .compose(TransformUtils.&lt;HttpResult&lt;List&lt;GanHuoDataBean&gt;&gt;&gt;defaultSchedulers())</div><div class="line">            .subscribe(new Subscriber&lt;HttpResult&lt;List&lt;GanHuoDataBean&gt;&gt;&gt;() &#123;</div><div class="line">                @Override</div><div class="line">                public void onCompleted() &#123;</div><div class="line"></div><div class="line">                &#125;</div><div class="line"></div><div class="line">                @Override</div><div class="line">                public void onError(Throwable e) &#123;</div><div class="line">                    showError(new Exception(e));</div><div class="line">                &#125;</div><div class="line"></div><div class="line">                @Override</div><div class="line">                public void onNext(HttpResult&lt;List&lt;GanHuoDataBean&gt;&gt; listHttpResult) &#123;</div><div class="line">                    onDataSuccessReceived(pageIndex, listHttpResult.results);</div><div class="line">                &#125;</div><div class="line">            &#125;);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>上面的代码来源于分类列表Fragment，具体的实现可以去看文章末尾的源码。好了差不多就是这些了，这里贴代码也没有什么意义，反而影响文章的可阅读性，用到了哪些技术文章中也提到了，这个App综合了我前面好几篇博客的内容，也算是对之前讲解的技术的一个综合应用，并且应用是完全开源的，阅读源码可以看到更多的技术细节实现，反而更直接有效。如果在使用过程中发现有bug，非常欢迎反馈，我会继续维护这个项目。<br>写到这里突然感觉自己逼逼了好多的废话，轻喷~~~</p>
+<p>###特别感谢<br><a href="https://github.com/daimajia" target="_blank" rel="external">daimajia</a>、<a href="https://github.com/drakeet" target="_blank" rel="external">drakeet</a>、<a href="https://github.com/ryanhoo/Android-Proficiency-Exercise" target="_blank" rel="external">Android-Proficiency-Exercise</a></p>
+<p>应用体验下载地址:<a href="http://android.myapp.com/myapp/detail.htm?apkName=ren.solid.ganhuoio" target="_blank" rel="external">点击下载</a><br>源码传送门：<a href="https://github.com/burgessjp/GanHuoIO" target="_blank" rel="external">GanHuoIO</a></p>
+
+        
+      
+    </div>
+
+    
+
+    
+
+  </article>
+
+    
+  </section>
+
+  
+  <nav class="pagination">
+    
+      <a class="prev" href="/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text">上一页</span>
+      </a>
+    
+    
+      <a class="next" href="/page/3/">
+        <span class="next-text">下一页</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+
+          </div>
+          
+
+        </div>  
+      </main>
+
+      <footer id="footer" class="footer">
+
+  <div class="social-links">
+    
+      
+        
+          <a href="mailto:your@email.com" class="iconfont icon-email" title="email"></a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+    
+    
+      
+      <a href="/atom.xml" class="iconfont icon-rss" title="rss"></a>
+    
+  </div>
+
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://hexo.io/">Hexo</a> 强力驱动
+  </span>
+  
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/ahonn/hexo-theme-even">Even</a>
+  </span>
+
+  <span class="copyright-year">
+    
+    &copy; 
+     
+      2015 - 
+    
+    2017
+
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">_SOLID</span>
+  </span>
+</div>
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+
+    
+
+
+    
 
 
 
 
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/slideout/slideout.js"></script>
+  
+
+  
 
 
-<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <script type="text/javascript" src="/js/src/even.js?v=2.4.x"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=2.4.x"></script>
 
-
-
-<script>
-(function() {
-    var OriginTitile = document.title, titleTime;
-    document.addEventListener('visibilitychange', function() {
-        if (document.hidden) {
-            document.title = '';
-            clearTimeout(titleTime);
-        } else {
-            document.title = '';
-            titleTime = setTimeout(function() {
-                document.title = OriginTitile;
-            },2000);
-        }
-    });
-})();
-</script>
-
-
-
-</body>
+    
+  </body>
 </html>

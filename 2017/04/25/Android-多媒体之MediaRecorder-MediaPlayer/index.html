@@ -1,31 +1,45 @@
 <!DOCTYPE html>
-<html>
-<head>
+<html lang="zh-CN">
+  <head>
     
-
-    
-
-    
-
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 
 
-    <meta charset="utf-8">
-    
-    
-    
-    <title>Android-多媒体之MediaRecorder-MediaPlayer | 技术分享会</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    
-    <meta name="theme-color" content="#3F51B5">
-    
-    
-    <meta name="keywords" content="Android">
-    <meta name="description" content="以前学了很多东西，都没怎么做记录，慢慢的时间长了也就给忘了，当初踩过的坑翻来覆去的踩，由于这些血淋林的教训，所以从现在开始，每次学了新的东西都要来写个博客做个记录总结一下了。 最近在学习Android多媒体这一块，现在刚好学到了MediaRecorder和MediaPlayer。今天也就介绍下这两个类吧，也有利于以后初学者的学习。 本文一共分3个部分：第一和第二部分用来介绍这两个类，第3部分做一个">
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="description" content="Android-多媒体之MediaRecorder-MediaPlayer"/>
+
+
+
+
+  <meta name="keywords" content="Android," />
+
+
+
+
+  <link rel="alternate" href="/default" title="_SOLID的个人博客">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.4.x" />
+
+
+
+<link rel="canonical" href="http://yoursite.com/2017/04/25/Android-多媒体之MediaRecorder-MediaPlayer/"/>
+
+
+<meta name="description" content="以前学了很多东西，都没怎么做记录，慢慢的时间长了也就给忘了，当初踩过的坑翻来覆去的踩，由于这些血淋林的教训，所以从现在开始，每次学了新的东西都要来写个博客做个记录总结一下了。 最近在学习Android多媒体这一块，现在刚好学到了MediaRecorder和MediaPlayer。今天也就介绍下这两个类吧，也有利于以后初学者的学习。 本文一共分3个部分：第一和第二部分用来介绍这两个类，第3部分做一个">
 <meta name="keywords" content="Android">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Android-多媒体之MediaRecorder-MediaPlayer">
 <meta property="og:url" content="http://yoursite.com/2017/04/25/Android-多媒体之MediaRecorder-MediaPlayer/index.html">
-<meta property="og:site_name" content="技术分享会">
+<meta property="og:site_name" content="_SOLID的个人博客">
 <meta property="og:description" content="以前学了很多东西，都没怎么做记录，慢慢的时间长了也就给忘了，当初踩过的坑翻来覆去的踩，由于这些血淋林的教训，所以从现在开始，每次学了新的东西都要来写个博客做个记录总结一下了。 最近在学习Android多媒体这一块，现在刚好学到了MediaRecorder和MediaPlayer。今天也就介绍下这两个类吧，也有利于以后初学者的学习。 本文一共分3个部分：第一和第二部分用来介绍这两个类，第3部分做一个">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/623504-3a1d33e478561a59.gif?imageMogr2/auto-orient/strip">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/623504-1ac220628a50a719.gif?imageMogr2/auto-orient/strip">
@@ -35,151 +49,130 @@
 <meta name="twitter:title" content="Android-多媒体之MediaRecorder-MediaPlayer">
 <meta name="twitter:description" content="以前学了很多东西，都没怎么做记录，慢慢的时间长了也就给忘了，当初踩过的坑翻来覆去的踩，由于这些血淋林的教训，所以从现在开始，每次学了新的东西都要来写个博客做个记录总结一下了。 最近在学习Android多媒体这一块，现在刚好学到了MediaRecorder和MediaPlayer。今天也就介绍下这两个类吧，也有利于以后初学者的学习。 本文一共分3个部分：第一和第二部分用来介绍这两个类，第3部分做一个">
 <meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/623504-3a1d33e478561a59.gif?imageMogr2/auto-orient/strip">
-    
-    <link rel="shortcut icon" href="/favicon.ico">
-    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
-    <script>window.lazyScripts=[]</script>
-</head>
 
-<body>
-    <div id="loading" class="active"></div>
 
-    <aside id="menu" class="hide" >
-  <div class="inner flex-row-vertical">
-    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
-        <i class="icon icon-lg icon-close"></i>
-    </a>
-    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
-      <div class="brand">
-        <a href="/" class="avatar waves-effect waves-circle waves-light">
-          <img src="/img/avatar.jpg">
-        </a>
-        <hgroup class="introduce">
-          <h5 class="nickname">_SOLID</h5>
-          <a href="mailto:jiapeng1818@gmail.com" title="jiapeng1818@gmail.com" class="mail">jiapeng1818@gmail.com</a>
-        </hgroup>
-      </div>
-    </div>
-    <div class="scroll-wrap flex-col">
-      <ul class="nav">
-        
-            <li class="waves-block waves-effect">
-              <a href="/"  >
-                <i class="icon icon-lg icon-home"></i>
-                主页
-              </a>
-            </li>
-        
-            <li class="waves-block waves-effect">
-              <a href="/archives"  >
-                <i class="icon icon-lg icon-archives"></i>
-                Archives
-              </a>
-            </li>
-        
-            <li class="waves-block waves-effect">
-              <a href="/tags"  >
-                <i class="icon icon-lg icon-tags"></i>
-                Tags
-              </a>
-            </li>
-        
-            <li class="waves-block waves-effect">
-              <a href="/categories"  >
-                <i class="icon icon-lg icon-th-list"></i>
-                Categories
-              </a>
-            </li>
-        
-            <li class="waves-block waves-effect">
-              <a href="https://github.com/burgessjp" target="_blank" >
-                <i class="icon icon-lg icon-github"></i>
-                Github
-              </a>
-            </li>
-        
-            <li class="waves-block waves-effect">
-              <a href="http://weibo.com/xljiepeng" target="_blank" >
-                <i class="icon icon-lg icon-weibo"></i>
-                Weibo
-              </a>
-            </li>
-        
-      </ul>
-    </div>
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.4.x" />
+
+
+
+
+
+
+
+<script>
+  var CONFIG = {
+    search: false,
+    searchPath: "/search.xml",
+    fancybox: false,
+    toc: true,
+  }
+</script>
+
+
+
+
+  
+
+
+
+    <title> Android-多媒体之MediaRecorder-MediaPlayer · _SOLID的个人博客 </title>
+  </head>
+
+  <body><div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/." class="logo">_SOLID的个人博客</a>
   </div>
-</aside>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
 
-    <main id="main">
-        <header class="top-header" id="header">
-    <div class="flex-row">
-        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
-          <i class="icon icon-lg icon-navicon"></i>
-        </a>
-        <div class="flex-col header-title ellipsis">Android-多媒体之MediaRecorder-MediaPlayer</div>
-        
-        <div class="search-wrap" id="search-wrap">
-            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
-                <i class="icon icon-lg icon-chevron-left"></i>
-            </a>
-            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
-            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
-                <i class="icon icon-lg icon-search"></i>
-            </a>
-        </div>
-        
-        
-        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
-            <i class="icon icon-lg icon-share-alt"></i>
-        </a>
-        
-    </div>
-</header>
-<header class="content-header post-header">
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    
+      <a href="/">
+        <li class="mobile-menu-item">
+          
+          
+            Home
+          
+        </li>
+      </a>
+    
+      <a href="/archives/">
+        <li class="mobile-menu-item">
+          
+          
+            Archives
+          
+        </li>
+      </a>
+    
+  </ul>
+</nav>
 
-    <div class="container fade-scale">
-        <h1 class="title">Android-多媒体之MediaRecorder-MediaPlayer</h1>
-        <h5 class="subtitle">
+    <div class="container" id="mobile-panel">
+      <header id="header" class="header"><div class="logo-wrapper">
+  <a href="/." class="logo">_SOLID的个人博客</a>
+</div>
+
+<nav class="site-navbar">
+  
+    <ul id="menu" class="menu">
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/">
             
-                <time datetime="2017-04-25T03:05:53.585Z" itemprop="datePublished" class="page-time">
-  2017-04-25
-</time>
-
-
             
-        </h5>
-    </div>
+              首页
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/archives/">
+            
+            
+              归档
+            
+          </a>
+        </li>
+      
+      
+    </ul>
+  
+</nav>
+
+      </header>
+
+      <main id="main" class="main">
+        <div class="content-wrapper">
+          <div id="content" class="content">
+            
+  
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          Android-多媒体之MediaRecorder-MediaPlayer
+        
+      </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          2017年4月25日
+        </span>
+      </div>
+    </header>
 
     
-
-
-</header>
-
-
-<div class="container body-wrap">
     
-<article id="post-Android-多媒体之MediaRecorder-MediaPlayer"
-  class="post-article article-type-post fade" itemprop="blogPost">
 
-    <div class="post-card">
-        <h1 class="post-card-title">Android-多媒体之MediaRecorder-MediaPlayer</h1>
-        <div class="post-meta">
-            <time class="post-time" title="2017-04-25 11:05:53" datetime="2017-04-25T03:05:53.585Z"  itemprop="datePublished">2017-04-25</time>
-
-            
-
-
-            
-<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
-    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
-</span>
-
-
-            
-
-        </div>
-        <div class="post-content" id="post-content" itemprop="postContent">
-            <p>以前学了很多东西，都没怎么做记录，慢慢的时间长了也就给忘了，当初踩过的坑翻来覆去<br>的踩，由于这些血淋林的教训，所以从现在开始，每次学了新的东西都要来写个博客做个记录总结一下了。</p>
+    <div class="post-content">
+      
+        <p>以前学了很多东西，都没怎么做记录，慢慢的时间长了也就给忘了，当初踩过的坑翻来覆去<br>的踩，由于这些血淋林的教训，所以从现在开始，每次学了新的东西都要来写个博客做个记录总结一下了。</p>
 <p>最近在学习Android多媒体这一块，现在刚好学到了MediaRecorder和MediaPlayer。今天也就介绍下这两个类吧，也有利于以后初学者的学习。</p>
 <p>本文一共分3个部分：第一和第二部分用来介绍这两个类，第3部分做一个录音的小Demo（附源码）</p>
 <p>##1.MediaRecorder<br>关于MediaRecorder 官网给的解释是</p>
@@ -451,301 +444,196 @@ private static final int ACTION_PAUSE = 4;
 <p>需要源码的可以点击下面的链接下载。<br><a href="https://github.com/burgessjp/MediaRecorderDemo" target="_blank" rel="external">MediaRecorderDemo</a></p>
 <p>如果在阅读的过程中又发现错误，也欢迎留言纠错。</p>
 
-        </div>
-
-        <blockquote class="post-copyright">
-    <div class="content">
-        
-<span class="post-time">
-    最后更新时间：<time datetime="2017-04-25T03:42:10.584Z" itemprop="dateUpdated">2017-04-25 11:42:10</time>
-</span><br>
-
-
-        
-        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/2017/04/25/Android-多媒体之MediaRecorder-MediaPlayer/" target="_blank" rel="external">http://yoursite.com/2017/04/25/Android-多媒体之MediaRecorder-MediaPlayer/</a>
-        
-    </div>
-    <footer>
-        <a href="http://yoursite.com">
-            <img src="/img/avatar.jpg" alt="_SOLID">
-            _SOLID
-        </a>
-    </footer>
-</blockquote>
-
-        
-<div class="page-reward">
-    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
-</div>
-
-
-
-        <div class="post-footer">
-            
-	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li></ul>
-
-
-            
-<div class="page-share-wrap">
-    
-
-<div class="page-share" id="pageShare">
-    <ul class="reset share-icons">
-      <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/2017/04/25/Android-多媒体之MediaRecorder-MediaPlayer/&title=《Android-多媒体之MediaRecorder-MediaPlayer》 — 技术分享会&pic=http://yoursite.com/img/avatar.jpg" data-title="微博">
-          <i class="icon icon-weibo"></i>
-        </a>
-      </li>
-      <li>
-        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
-          <i class="icon icon-weixin"></i>
-        </a>
-      </li>
-      <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2017/04/25/Android-多媒体之MediaRecorder-MediaPlayer/&title=《Android-多媒体之MediaRecorder-MediaPlayer》 — 技术分享会&source=" data-title=" QQ">
-          <i class="icon icon-qq"></i>
-        </a>
-      </li>
-      <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2017/04/25/Android-多媒体之MediaRecorder-MediaPlayer/" data-title=" Facebook">
-          <i class="icon icon-facebook"></i>
-        </a>
-      </li>
-      <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Android-多媒体之MediaRecorder-MediaPlayer》 — 技术分享会&url=http://yoursite.com/2017/04/25/Android-多媒体之MediaRecorder-MediaPlayer/&via=http://yoursite.com" data-title=" Twitter">
-          <i class="icon icon-twitter"></i>
-        </a>
-      </li>
-      <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://yoursite.com/2017/04/25/Android-多媒体之MediaRecorder-MediaPlayer/" data-title=" Google+">
-          <i class="icon icon-google-plus"></i>
-        </a>
-      </li>
-    </ul>
- </div>
-
-
-
-    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
-        <i class="icon icon-share-alt icon-lg"></i>
-    </a>
-</div>
-
-
-
-        </div>
+      
     </div>
 
     
-<nav class="post-nav flex-row flex-justify-between">
-  
-    <div class="waves-block waves-effect prev">
-      <a href="/2017/04/25/Android-多媒体之Camera/" id="post-prev" class="post-nav-link">
-        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
-        <h4 class="title">Android-多媒体之Camera</h4>
+      
+      
+
+  <div class="post-copyright">
+    <p class="copyright-item">
+      <span>作者: </span>
+      <span>_SOLID</span>
+    </p>
+    <p class="copyright-item">
+      <span>来源: </span>
+      <a href="http://yoursite.com">http://yoursite.com</a>
+    </p>
+    <p class="copyright-item">
+      <span>链接: </span>
+      <a href="http://yoursite.com/2017/04/25/Android-多媒体之MediaRecorder-MediaPlayer/">http://yoursite.com/2017/04/25/Android-多媒体之MediaRecorder-MediaPlayer/</a>
+    </p>
+
+    <p class="copyright-item lincese">
+      
+      本文采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可
+    </p>
+  </div>
+
+
+
+      
+      
+  <div class="post-reward">
+    <input type="checkbox" name="reward" id="reward" hidden />
+    <label class="reward-button" for="reward">赞赏支持</label>
+    <div class="qr-code">
+      
+      
+        <label class="qr-code-image" for="reward">
+          <img class="image" src="/image/reward/wechat.png" title="wechat">
+        </label>
+      
+      
+        <label class="qr-code-image" for="reward">
+          <img class="image" src="/image/reward/alipay.png" title="alipay">
+        </label>
+      
+    </div>
+  </div>
+
+    
+
+    
+      <footer class="post-footer">
+        
+          <div class="post-tags">
+            
+              <a href="/tags/Android/">Android</a>
+            
+          </div>
+        
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/2017/04/25/Android-多媒体之Camera/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">Android-多媒体之Camera</span>
+        <span class="prev-text nav-mobile">上一篇</span>
       </a>
+    
+    
+      <a class="next" href="/2017/04/25/Android主题换肤-无缝切换/">
+        <span class="next-text nav-default">Android主题换肤-无缝切换</span>
+        <span class="prev-text nav-mobile">下一篇</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+      </footer>
+    
+
+  </article>
+
+
+          </div>
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>  
+      </main>
+
+      <footer id="footer" class="footer">
+
+  <div class="social-links">
+    
+      
+        
+          <a href="mailto:your@email.com" class="iconfont icon-email" title="email"></a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+    
+    
+      
+      <a href="/atom.xml" class="iconfont icon-rss" title="rss"></a>
+    
+  </div>
+
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://hexo.io/">Hexo</a> 强力驱动
+  </span>
+  
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/ahonn/hexo-theme-even">Even</a>
+  </span>
+
+  <span class="copyright-year">
+    
+    &copy; 
+     
+      2015 - 
+    
+    2017
+
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">_SOLID</span>
+  </span>
+</div>
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
     </div>
+
+    
   
 
   
-    <div class="waves-block waves-effect next">
-      <a href="/2017/04/25/Android主题换肤-无缝切换/" id="post-next" class="post-nav-link">
-        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
-        <h4 class="title">Android主题换肤-无缝切换</h4>
-      </a>
-    </div>
   
-</nav>
+
 
 
 
     
 
-<div class="comments" id="comments">
-    <div class="ds-thread" data-thread-key="Android-多媒体之MediaRecorder-MediaPlayer" data-title="Android-多媒体之MediaRecorder-MediaPlayer" data-url="http://yoursite.com/2017/04/25/Android-多媒体之MediaRecorder-MediaPlayer/"></div>
-</div>
-<script>
-lazyScripts.push('//cdn.bootcss.com/marked/0.3.6/marked.min.js');
-
-var duoshuoQuery = {short_name:'ysblog', theme: 'none'};
-lazyScripts.push('//unpkg.com/hexo-theme-material-indigo@latest/js/embed.min.js');
-
-
-</script>
 
 
 
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/slideout/slideout.js"></script>
+  
+
+  
 
 
+    <script type="text/javascript" src="/js/src/even.js?v=2.4.x"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=2.4.x"></script>
 
-
-
-
-
-</article>
-
-<div id="reward" class="page-modal reward-lay">
-    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
-    <h3 class="reward-title">
-        <i class="icon icon-quote-left"></i>
-        谢谢大爷~
-        <i class="icon icon-quote-right"></i>
-    </h3>
-    <ul class="reward-items">
-        
-        <li>
-            <img src="/img/wechat.jpg" title="微信打赏二维码" alt="微信打赏二维码">
-            <p>微信</p>
-        </li>
-        
-
-        
-        <li>
-            <img src="/img/alipay.jpg" title="支付宝打赏二维码" alt="支付宝打赏二维码">
-            <p>支付宝</p>
-        </li>
-        
-    </ul>
-</div>
-
-
-
-</div>
-
-        <footer class="footer">
-    <div class="top">
-        
-<p>
-    <span id="busuanzi_container_site_uv" style='display:none'>
-        总访客数：<span id="busuanzi_value_site_uv"></span>
-    </span>
-    <span id="busuanzi_container_site_pv" style='display:none'>
-        总访问量：<span id="busuanzi_value_site_pv"></span>
-    </span>
-</p>
-
-
-        <p>
-            
-            <span>博客内容遵循<a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
-        </p>
-    </div>
-    <div class="bottom">
-        <p>
-            <span>Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a></span>
-            <span>_SOLID &copy; 2017</span>
-        </p>
-    </div>
-</footer>
-
-    </main>
-    <div class="mask" id="mask"></div>
-<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
-
-
-
-<div class="global-share" id="globalShare">
-    <ul class="reset share-icons">
-      <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/2017/04/25/Android-多媒体之MediaRecorder-MediaPlayer/&title=《Android-多媒体之MediaRecorder-MediaPlayer》 — 技术分享会&pic=http://yoursite.com/img/avatar.jpg" data-title="微博">
-          <i class="icon icon-weibo"></i>
-        </a>
-      </li>
-      <li>
-        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
-          <i class="icon icon-weixin"></i>
-        </a>
-      </li>
-      <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2017/04/25/Android-多媒体之MediaRecorder-MediaPlayer/&title=《Android-多媒体之MediaRecorder-MediaPlayer》 — 技术分享会&source=" data-title=" QQ">
-          <i class="icon icon-qq"></i>
-        </a>
-      </li>
-      <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2017/04/25/Android-多媒体之MediaRecorder-MediaPlayer/" data-title=" Facebook">
-          <i class="icon icon-facebook"></i>
-        </a>
-      </li>
-      <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Android-多媒体之MediaRecorder-MediaPlayer》 — 技术分享会&url=http://yoursite.com/2017/04/25/Android-多媒体之MediaRecorder-MediaPlayer/&via=http://yoursite.com" data-title=" Twitter">
-          <i class="icon icon-twitter"></i>
-        </a>
-      </li>
-      <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://yoursite.com/2017/04/25/Android-多媒体之MediaRecorder-MediaPlayer/" data-title=" Google+">
-          <i class="icon icon-google-plus"></i>
-        </a>
-      </li>
-    </ul>
- </div>
-
-
-<div class="page-modal wx-share" id="wxShare">
-    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
-    <p>扫一扫，分享到微信</p>
-    <img src="//api.qrserver.com/v1/create-qr-code/?data=http://yoursite.com/2017/04/25/Android-多媒体之MediaRecorder-MediaPlayer/" alt="微信分享二维码">
-</div>
-
-
-
-
-    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
-<script>
-var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
-
-
-
-</script>
-
-<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
-
-
-<div class="search-panel" id="search-panel">
-    <ul class="search-result" id="search-result"></ul>
-</div>
-<template id="search-tpl">
-<li class="item">
-    <a href="{path}" class="waves-block waves-effect">
-        <div class="title ellipsis" title="{title}">{title}</div>
-        <div class="flex-row flex-middle">
-            <div class="tags ellipsis">
-                {tags}
-            </div>
-            <time class="flex-col time">{date}</time>
-        </div>
-    </a>
-</li>
-</template>
-
-<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
-
-
-
-
-
-
-<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-
-
-
-<script>
-(function() {
-    var OriginTitile = document.title, titleTime;
-    document.addEventListener('visibilitychange', function() {
-        if (document.hidden) {
-            document.title = '';
-            clearTimeout(titleTime);
-        } else {
-            document.title = '';
-            titleTime = setTimeout(function() {
-                document.title = OriginTitile;
-            },2000);
-        }
-    });
-})();
-</script>
-
-
-
-</body>
+    
+  </body>
 </html>
