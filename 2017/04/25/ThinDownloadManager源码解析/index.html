@@ -1,10 +1,19 @@
-<!DOCTYPE html>
-<html lang="zh-CN">
-  <head>
-    
-<meta charset="UTF-8"/>
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
 
 
 <meta http-equiv="Cache-Control" content="no-transform" />
@@ -12,9 +21,57 @@
 
 
 
-  <meta name="description" content="ThinDownloadManager源码解析"/>
 
 
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
 
 
   <meta name="keywords" content="源码分析," />
@@ -22,16 +79,15 @@
 
 
 
-  <link rel="alternate" href="/default" title="_SOLID的个人博客">
 
 
 
 
-  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.4.x" />
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
 
 
 
-<link rel="canonical" href="http://yoursite.com/2017/04/25/ThinDownloadManager源码解析/"/>
+
 
 
 <meta name="description" content="关于Android自带的DownloadManager可能大家都知道，使用自带的DownloadManager可以很方便的就实现文件下载。还不知道的也没关系，看看下面的示例代码你就知道怎么去使用了。 1234567891011DownloadManager manager = (DownloadManager) getSystemService(DOWNLOAD_SERVICE);//下载请求Do">
@@ -49,126 +105,226 @@
 <meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/623504-49339e5afd524ee9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 
 
-<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.4.x" />
 
-
-
-
-
-
-
-<script>
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
   var CONFIG = {
-    search: false,
-    searchPath: "/search.xml",
-    fancybox: false,
-    toc: true,
-  }
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
 </script>
 
 
 
+  <link rel="canonical" href="http://yoursite.com/2017/04/25/ThinDownloadManager源码解析/"/>
+
+
+
+
+
+  <title>ThinDownloadManager源码解析 | _SOLID的个人博客</title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
 
   
 
 
 
-    <title> ThinDownloadManager源码解析 · _SOLID的个人博客 </title>
-  </head>
 
-  <body><div id="mobile-navbar" class="mobile-navbar">
-  <div class="mobile-header-logo">
-    <a href="/." class="logo">_SOLID的个人博客</a>
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">_SOLID的个人博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
   </div>
-  <div class="mobile-navbar-icon">
-    <span></span>
-    <span></span>
-    <span></span>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
   </div>
 </div>
 
-<nav id="mobile-menu" class="mobile-menu slideout-menu">
-  <ul class="mobile-menu-list">
-    
-      <a href="/">
-        <li class="mobile-menu-item">
-          
-          
-            Home
-          
-        </li>
-      </a>
-    
-      <a href="/archives/">
-        <li class="mobile-menu-item">
-          
-          
-            Archives
-          
-        </li>
-      </a>
-    
-  </ul>
-</nav>
+<nav class="site-nav">
+  
 
-    <div class="container" id="mobile-panel">
-      <header id="header" class="header"><div class="logo-wrapper">
-  <a href="/." class="logo">_SOLID的个人博客</a>
-</div>
-
-<nav class="site-navbar">
   
     <ul id="menu" class="menu">
       
-        <li class="menu-item">
-          <a class="menu-item-link" href="/">
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
             
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
-              首页
-            
+            首页
           </a>
         </li>
       
-        <li class="menu-item">
-          <a class="menu-item-link" href="/archives/">
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
             
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
-              归档
-            
+            归档
           </a>
         </li>
       
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
       
     </ul>
   
+
+  
 </nav>
 
-      </header>
 
-      <main id="main" class="main">
-        <div class="content-wrapper">
-          <div id="content" class="content">
-            
-  
-  <article class="post">
-    <header class="post-header">
-      <h1 class="post-title">
-        
-          ThinDownloadManager源码解析
-        
-      </h1>
 
-      <div class="post-meta">
-        <span class="post-time">
-          2017年4月25日
-        </span>
-      </div>
+ </div>
     </header>
 
-    
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
     
 
-    <div class="post-content">
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/04/25/ThinDownloadManager源码解析/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="_SOLID">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="_SOLID的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                ThinDownloadManager源码解析
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-04-25T11:05:53+08:00">
+                2017-04-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
       
         <p>关于Android自带的DownloadManager可能大家都知道，使用自带的DownloadManager可以很方便的就实现文件下载。还不知道的也没关系，看看下面的示例代码你就知道怎么去使用了。</p>
 <figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">DownloadManager manager = (DownloadManager) getSystemService(DOWNLOAD_SERVICE);</div><div class="line">//下载请求</div><div class="line">DownloadManager.Request down = new DownloadManager.Request(Uri.parse("https://ss0.bdstatic.com/5aV1bjqh_Q23odCf/static/superman/img/logo_top_ca79a146.png"));</div><div class="line">//设置允许使用的网络类型</div><div class="line">down.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_MOBILE | DownloadManager.Request.NETWORK_WIFI);</div><div class="line">//禁止发出通知，既后台下载</div><div class="line">down.setNotificationVisibility(DownloadManager.Request.VISIBILITY_HIDDEN);</div><div class="line">//下载完成文件存放的位置</div><div class="line">down.setDestinationInExternalFilesDir(MainActivity.this, null, "logo.png");</div><div class="line">//将下载请求放入队列中,开始下载</div><div class="line">manager.enqueue(down);</div></pre></td></tr></table></figure>
@@ -177,13 +333,7 @@
 <p>如果不再在意这些直接使用系统自带的DownloadManager 就足够了，但是很多人不想声明权限，就想让任务在后台运行（ps：不要问我为什么，我什么都不知道），这样就需要自己去实现下载功能了。</p>
 <p>该说说ThinDownloadManager了，其实我也是无意中发现这个的，因为我想在我的开源项目<a href="https://github.com/burgessjp/MaterialDesignDemo" target="_blank" rel="external">MaterialDesignDemo</a>中实现一个图片下载的功能，但是又不想自己去造轮子，我就想有一个下载功能而已，也不想使用那些很笨重的网络框架，所以就去到处找，最后发现了这个东东，比较轻量级，使用起来也还是比较的方便。因为我自己之前本来也计划自己去撸一个网络相关的框架，但是如果想写一个网络框架涉及的东西太多了，而我现在也还没有达到那个层次，所以就放弃了，平时使用的也就是对一些开源框架的再封装而已。</p>
 <p>现在发现了这个，也还是对他的源码比较好奇，所以就决定去研究一下他的源码，看完了之后，我发现这个框架的结构比较简单不算复杂，于是就决定把我怎么去分析ThinDownloadManager这个框架源码的过程记录下来，给那些还不知道怎么去分析源码的同学一点经验。虽然这个库在现在已经有点过时了，但是他的一些思想还是值得我们去学习的。<strong>学习Android一定要学会看源码，不要一遇到问题就一昧的去网上搜，这个怎么实现，那个怎么实现，其实你只要先看看源码，可能问题很容易的就解决了，看源码对自己的提升也是显而易见的，就算以后Android不火了，但是他的很多编程思想是值得借鉴的</strong><br>ThinDownloadManager的GitHub地址：<a href="https://github.com/smanikandan14/ThinDownloadManager" target="_blank" rel="external">ThinDownloadManager</a></p>
-<p>在分析源码之前我们先来看看ThinDownloadManager怎么去使用吧，如果连怎么使用都不会，分析源码也就是纸上谈兵了<br><figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="http://upload-images.jianshu.io/upload_images/623504-49339e5afd524ee9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="" title="">
-                </div>
-                <div class="image-caption"></div>
-            </figure><br>ThinDownloadManager的使用也还是比较简单的，和系统自带的差不多，我这里是为了我以后使用的方便所以就做了一次再封装，只需传入下载地址，保存地址，还有下载时的回调就可以了。</p>
+<p>在分析源码之前我们先来看看ThinDownloadManager怎么去使用吧，如果连怎么使用都不会，分析源码也就是纸上谈兵了<br><img src="http://upload-images.jianshu.io/upload_images/623504-49339e5afd524ee9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""><br>ThinDownloadManager的使用也还是比较简单的，和系统自带的差不多，我这里是为了我以后使用的方便所以就做了一次再封装，只需传入下载地址，保存地址，还有下载时的回调就可以了。</p>
 <ol>
 <li><p>根据使用的顺序，我们就先来看看<strong>DownloadRequest</strong>，其实根据单词意思我们都能大概知道这里面是封装的肯定是下载请求的一些参数。<br>先来看看他的构造方法</p>
 <figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">public DownloadRequest(Uri uri) &#123;</div><div class="line">        if (uri == null) &#123;</div><div class="line">            throw new NullPointerException();</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        String scheme = uri.getScheme();</div><div class="line">        if (scheme == null || (!scheme.equals("http") &amp;&amp; !scheme.equals("https"))) &#123;</div><div class="line">            throw new IllegalArgumentException("Can only download HTTP/HTTPS URIs: " + uri);</div><div class="line">        &#125;</div><div class="line">        mCustomHeader = new HashMap<span class="tag">&lt;&gt;</span>();</div><div class="line">        mDownloadState = DownloadManager.STATUS_PENDING;</div><div class="line">        mUri = uri;</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
@@ -219,193 +369,330 @@
       
     </div>
 
-    
+    <div>
       
-      
-
-  <div class="post-copyright">
-    <p class="copyright-item">
-      <span>作者: </span>
-      <span>_SOLID</span>
-    </p>
-    <p class="copyright-item">
-      <span>来源: </span>
-      <a href="http://yoursite.com">http://yoursite.com</a>
-    </p>
-    <p class="copyright-item">
-      <span>链接: </span>
-      <a href="http://yoursite.com/2017/04/25/ThinDownloadManager源码解析/">http://yoursite.com/2017/04/25/ThinDownloadManager源码解析/</a>
-    </p>
-
-    <p class="copyright-item lincese">
-      
-      本文采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可
-    </p>
-  </div>
-
-
+        
 
       
+    </div>
+
+    <div>
       
-  <div class="post-reward">
-    <input type="checkbox" name="reward" id="reward" hidden />
-    <label class="reward-button" for="reward">赞赏支持</label>
-    <div class="qr-code">
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/源码分析/" rel="tag"># 源码分析</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/04/25/[干货IO-3-0]-一个完全开源的App/" rel="next" title="干货IO 3.0一个完全开源的App">
+                <i class="fa fa-chevron-left"></i> 干货IO 3.0一个完全开源的App
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/04/25/Android自定义View之高仿QQ健康/" rel="prev" title="Android自定义View之高仿QQ健康">
+                Android自定义View之高仿QQ健康 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
       
       
-        <label class="qr-code-image" for="reward">
-          <img class="image" src="/image/reward/wechat.png" title="wechat">
-        </label>
-      
-      
-        <label class="qr-code-image" for="reward">
-          <img class="image" src="/image/reward/alipay.png" title="alipay">
-        </label>
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
       
     </div>
   </div>
 
-    
-
-    
-      <footer class="post-footer">
-        
-          <div class="post-tags">
-            
-              <a href="/tags/源码分析/">源码分析</a>
-            
-          </div>
-        
-        
-        
-  <nav class="post-nav">
-    
-      <a class="prev" href="/2017/04/25/Android自定义View之高仿QQ健康/">
-        <i class="iconfont icon-left"></i>
-        <span class="prev-text nav-default">Android自定义View之高仿QQ健康</span>
-        <span class="prev-text nav-mobile">上一篇</span>
-      </a>
-    
-    
-      <a class="next" href="/2017/04/25/[干货IO-3-0]-一个完全开源的App/">
-        <span class="next-text nav-default">干货IO 3.0一个完全开源的App</span>
-        <span class="prev-text nav-mobile">下一篇</span>
-        <i class="iconfont icon-right"></i>
-      </a>
-    
-  </nav>
-
-      </footer>
-    
-
-  </article>
-
 
           </div>
+          
+
+
           
   <div class="comments" id="comments">
     
   </div>
 
 
-        </div>  
-      </main>
-
-      <footer id="footer" class="footer">
-
-  <div class="social-links">
-    
-      
+        </div>
         
-          <a href="mailto:your@email.com" class="iconfont icon-email" title="email"></a>
-        
-      
-    
-      
-    
-      
-    
-      
-    
-      
-    
-      
-    
-      
-    
-      
-    
-      
-    
-      
-    
-    
-    
-      
-      <a href="/atom.xml" class="iconfont icon-rss" title="rss"></a>
-    
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
   </div>
 
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
 
-<div class="copyright">
-  <span class="power-by">
-    由 <a class="hexo-link" href="https://hexo.io/">Hexo</a> 强力驱动
-  </span>
-  
-  <span class="theme-info">
-    主题 - 
-    <a class="theme-link" href="https://github.com/ahonn/hexo-theme-even">Even</a>
-  </span>
+      
 
-  <span class="copyright-year">
-    
-    &copy; 
-     
-      2015 - 
-    
-    2017
+      
 
-    <span class="heart">
-      <i class="iconfont icon-heart"></i>
-    </span>
-    <span class="author">_SOLID</span>
-  </span>
-</div>
-      </footer>
+      <section class="site-overview sidebar-panel sidebar-panel-active">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="_SOLID" />
+          <p class="site-author-name" itemprop="name">_SOLID</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
 
-      <div class="back-to-top" id="back-to-top">
-        <i class="iconfont icon-up"></i>
-      </div>
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">19</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-name">标签</span>
+              
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+
+      
+
     </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">_SOLID</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
 
     
-  
-
-  
-  
-
-
-
-
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
     
 
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
 
 
 
   
-    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
   
 
   
-    <script type="text/javascript" src="/lib/slideout/slideout.js"></script>
-  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
 
   
 
 
-    <script type="text/javascript" src="/js/src/even.js?v=2.4.x"></script>
-<script type="text/javascript" src="/js/src/bootstrap.js?v=2.4.x"></script>
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
 
-    
-  </body>
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
 </html>

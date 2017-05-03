@@ -1,10 +1,19 @@
-<!DOCTYPE html>
-<html lang="zh-CN">
-  <head>
-    
-<meta charset="UTF-8"/>
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
 
 
 <meta http-equiv="Cache-Control" content="no-transform" />
@@ -12,9 +21,57 @@
 
 
 
-  <meta name="description" content="Android-多媒体之Camera"/>
 
 
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
 
 
   <meta name="keywords" content="Android," />
@@ -22,16 +79,15 @@
 
 
 
-  <link rel="alternate" href="/default" title="_SOLID的个人博客">
 
 
 
 
-  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.4.x" />
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
 
 
 
-<link rel="canonical" href="http://yoursite.com/2017/04/25/Android-多媒体之Camera/"/>
+
 
 
 <meta name="description" content="Camera顾名思义，就是照相机、摄像机的意思。在Android中使用这个类可以做拍照和录像的功能。但是在Android5.0中这个类已经不推荐使用了，5.0之后使用更强大的Camera2替换他。在这篇文章中我们使用的是Camera，虽然已经不推荐使用了，但是原理都差不多，Camera会用了，相信Camera2肯定也不会太难。本文主要介绍Camera的简单使用以及使用过程中一些常见的问题，绝对的">
@@ -60,143 +116,231 @@
 <meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/623504-80774fdc5022c683.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 
 
-<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.4.x" />
 
-
-
-
-
-
-
-<script>
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
   var CONFIG = {
-    search: false,
-    searchPath: "/search.xml",
-    fancybox: false,
-    toc: true,
-  }
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
 </script>
 
 
 
+  <link rel="canonical" href="http://yoursite.com/2017/04/25/Android-多媒体之Camera/"/>
+
+
+
+
+
+  <title>Android-多媒体之Camera | _SOLID的个人博客</title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
 
   
 
 
 
-    <title> Android-多媒体之Camera · _SOLID的个人博客 </title>
-  </head>
 
-  <body><div id="mobile-navbar" class="mobile-navbar">
-  <div class="mobile-header-logo">
-    <a href="/." class="logo">_SOLID的个人博客</a>
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">_SOLID的个人博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
   </div>
-  <div class="mobile-navbar-icon">
-    <span></span>
-    <span></span>
-    <span></span>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
   </div>
 </div>
 
-<nav id="mobile-menu" class="mobile-menu slideout-menu">
-  <ul class="mobile-menu-list">
-    
-      <a href="/">
-        <li class="mobile-menu-item">
-          
-          
-            Home
-          
-        </li>
-      </a>
-    
-      <a href="/archives/">
-        <li class="mobile-menu-item">
-          
-          
-            Archives
-          
-        </li>
-      </a>
-    
-  </ul>
-</nav>
+<nav class="site-nav">
+  
 
-    <div class="container" id="mobile-panel">
-      <header id="header" class="header"><div class="logo-wrapper">
-  <a href="/." class="logo">_SOLID的个人博客</a>
-</div>
-
-<nav class="site-navbar">
   
     <ul id="menu" class="menu">
       
-        <li class="menu-item">
-          <a class="menu-item-link" href="/">
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
             
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
-              首页
-            
+            首页
           </a>
         </li>
       
-        <li class="menu-item">
-          <a class="menu-item-link" href="/archives/">
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
             
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
-              归档
-            
+            归档
           </a>
         </li>
       
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
       
     </ul>
   
+
+  
 </nav>
 
-      </header>
 
-      <main id="main" class="main">
-        <div class="content-wrapper">
-          <div id="content" class="content">
-            
-  
-  <article class="post">
-    <header class="post-header">
-      <h1 class="post-title">
-        
-          Android-多媒体之Camera
-        
-      </h1>
 
-      <div class="post-meta">
-        <span class="post-time">
-          2017年4月25日
-        </span>
-      </div>
+ </div>
     </header>
 
-    
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
     
 
-    <div class="post-content">
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/04/25/Android-多媒体之Camera/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="_SOLID">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="_SOLID的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Android-多媒体之Camera
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-04-25T11:05:53+08:00">
+                2017-04-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
       
         <p> Camera顾名思义，就是照相机、摄像机的意思。在Android中使用这个类可以做拍照和录像的功能。但是在Android5.0中这个类已经不推荐使用了，5.0之后使用更强大的Camera2替换他。在这篇文章中我们使用的是Camera，虽然已经不推荐使用了，但是原理都差不多，Camera会用了，相信Camera2肯定也不会太难。本文主要介绍Camera的简单使用以及使用过程中一些常见的问题，绝对的干货，也主要是针对刚学这一块的同学。  </p>
 <p>Android中关于相机的实现，是基于SurfaceView的，如果还有不知道SurfaceView的请查看这篇文章<a href="http://blog.csdn.net/listening_music/article/details/6860786" target="_blank" rel="external">Android中SurfaceView的使用详解 </a>,不知道SurfaceView的务必要看一下那篇文章。<br>我相信初学者都不喜欢看太过的理论知识，如果有一个小Demo再配几幅图是再好不过了，所以本文就是基于一个小Demo进行讲解的。</p>
-<p>还是先来看一下最后的效果是怎么样的。<br><figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="http://upload-images.jianshu.io/upload_images/623504-80774fdc5022c683.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="CameraDemo" title="">
-                </div>
-                <div class="image-caption">CameraDemo</div>
-            </figure></p>
-<p>从这幅图中可以看到在右上角有一个切换摄像头的按钮，在左下角有一个图片框，这里主要是用来展示拍照之后得到的图片，并且点击这个按钮会进入自定义的图库可进行照片的选择，界面如下图<br><figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="http://upload-images.jianshu.io/upload_images/623504-35d97e8ba924b16c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="CameraDemo" title="">
-                </div>
-                <div class="image-caption">CameraDemo</div>
-            </figure></p>
+<p>还是先来看一下最后的效果是怎么样的。<br><img src="http://upload-images.jianshu.io/upload_images/623504-80774fdc5022c683.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="CameraDemo"></p>
+<p>从这幅图中可以看到在右上角有一个切换摄像头的按钮，在左下角有一个图片框，这里主要是用来展示拍照之后得到的图片，并且点击这个按钮会进入自定义的图库可进行照片的选择，界面如下图<br><img src="http://upload-images.jianshu.io/upload_images/623504-35d97e8ba924b16c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="CameraDemo"></p>
 <p>中间即是拍照的按钮了，右下角是进入到录像的界面（PS：本文没去讲解录像功能和图库选择的实现，但是在文章最后给出的源码中有实现，感兴趣的小伙伴可以去下载，如果发现有问题欢迎提出）<br>好了，到现在基本上就只知道下面要干什么了，我们正式开始吧！</p>
 <p>我们来看看这个主界面的布局文件：</p>
 <pre>
@@ -227,79 +371,17 @@
 </pre>
 
 <p>细心小伙伴肯定注意到这几行代码了<pre><ren.solid.camerademo.view.camerasurfaceview android:id="@+id/cameraSurfaceView" android:layout_width="match_parent" android:layout_height="match_parent"></ren.solid.camerademo.view.camerasurfaceview></pre>从代码中我们可以看到我们是使用的一个自定义的CameraSurfaceView，现在我们就来看看这个CameraSurfaceView是怎么实现的（PS：其实本文的核心东西就是这个自定义SurfaceView）。<br>看下面红框里面的内容，可以看出CameraSurfaceView是继承于SurfaceView实现的，说白了CameraSurfaceView就是对SurfaceView与Camera的封装。</p>
-<figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="http://upload-images.jianshu.io/upload_images/623504-903591077f6c0177.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="" title="">
-                </div>
-                <div class="image-caption"></div>
-            </figure>
-<p>这里实现了SurfaceView类的三个构造方法，并且前两个构造方法最后都指向有三个参数的，这样写的好处就是不用在三个构造方法中都去写一次init()方法（已经知道的无视这句）。下载我们再来看看init()方法中都做了些什么</p>
-<figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="http://upload-images.jianshu.io/upload_images/623504-d2b2a0567b239026.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="" title="">
-                </div>
-                <div class="image-caption"></div>
-            </figure>
+<p><img src="http://upload-images.jianshu.io/upload_images/623504-903591077f6c0177.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""><br>这里实现了SurfaceView类的三个构造方法，并且前两个构造方法最后都指向有三个参数的，这样写的好处就是不用在三个构造方法中都去写一次init()方法（已经知道的无视这句）。下载我们再来看看init()方法中都做了些什么</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/623504-d2b2a0567b239026.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
 <p>第一句就是得到摄像头的数量，可以用这个去判断是否有前置摄像头。getCamera()是打开系统摄像头实现如下图</p>
-<figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="http://upload-images.jianshu.io/upload_images/623504-8f5cc7e4400a5f82.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="" title="">
-                </div>
-                <div class="image-caption"></div>
-            </figure>
-<p>这里面最核心的就是<strong>mSurfaceHolder.addCallback(new SurfaceCallback())</strong>这一句。为SurfaceHolder添加一个回调。各种功能的切换就是在这个回调里面实现的，下面我们来看看SurfaceCallback这个类的实现<br><figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="http://upload-images.jianshu.io/upload_images/623504-237da7bbc43425b5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="" title="">
-                </div>
-                <div class="image-caption"></div>
-            </figure></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/623504-8f5cc7e4400a5f82.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""><br>这里面最核心的就是<strong>mSurfaceHolder.addCallback(new SurfaceCallback())</strong>这一句。为SurfaceHolder添加一个回调。各种功能的切换就是在这个回调里面实现的，下面我们来看看SurfaceCallback这个类的实现<br><img src="http://upload-images.jianshu.io/upload_images/623504-237da7bbc43425b5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
 <p>这个类中重写了三个方法<br><strong>1.surfaceChanged</strong>：拍照状态改变时调用，也就是你的手机竖屏和横屏相互切换时会调用这个方法，我试过当手机横屏的时候拍照，效果十分不好（拉伸十分严重），用了很多方法也没解决这个问题，我也看了下我系统自带的相机，也没有在横屏下拍照的功能，所以我还是建议最好把拍照界面固定为竖屏，在竖屏状态下拍照。<br><strong>2.surfaceCreated</strong>：就是当surface被创建的时候调用。在这里我们就在surface被创建的时候就开始拍照的预览。我们再来看看startPreview方法是怎么实现的。</p>
-<figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="http://upload-images.jianshu.io/upload_images/623504-3439c39a89d18fc1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="" title="">
-                </div>
-                <div class="image-caption"></div>
-            </figure>
+<p><img src="http://upload-images.jianshu.io/upload_images/623504-3439c39a89d18fc1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
 <p>从图中可以看到我们调用了camera的三个api，至于作用，注释写的很清楚了，这里我就不再重复了。<br><strong>3.surfaceDestroyed：</strong>这里主要是在surface被销毁的时候做一些回收的工作。熟悉SurfaceView的同学肯定知道，当SurfaceView界面不可见时这个方法就会被调用。因为SurfaceView是很占CPU的。</p>
-<p>最后我们再来看看是怎么拍照的吧<br><figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="http://upload-images.jianshu.io/upload_images/623504-4f8f85ffb4e9647a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="" title="">
-                </div>
-                <div class="image-caption"></div>
-            </figure>从图中我们可以看到这里提供了一个takePictue方法，在里面调用了camera的带有三个参数的takePicture方法，其中第一个参数是按下快门的回调，第二个参数是原始图片的回调，第三个参数是经压缩处理后比较小的jpeg图片的回调。</p>
-<p>下面再来看看MyCameraPictureCallback的实现吧<br><figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="http://upload-images.jianshu.io/upload_images/623504-e615de2a30b11a17.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="" title="">
-                </div>
-                <div class="image-caption"></div>
-            </figure><br>其实这里简单，就是把拍照得到的照片保存到sd卡中去。<br><strong>这里需要知道一点：当每次拍完照之后，相机都会自动释放资源，所以这里需要重新开启预览</strong></p>
-<p>对了我们再来看看切换摄像头是怎么实现的吧<br><figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="http://upload-images.jianshu.io/upload_images/623504-e6b677fee50e17c3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="" title="">
-                </div>
-                <div class="image-caption"></div>
-            </figure>到这里这个自定义的SurfaceView就差不多了。详细代码见最后。</p>
-<p>最后我们再来看看这个类怎么使用吧<br><figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="http://upload-images.jianshu.io/upload_images/623504-93fd9d34c387f7b0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="" title="">
-                </div>
-                <div class="image-caption"></div>
-            </figure>还是很简单吧，我们只需几句话就能搞定拍照了。以后哪里有需要的地方直接拿过去用就OK了！<br>这里一定要记得与Activity的生命周期同步，不然可以在界面切换的时候出现现一些错误。<br><figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="http://upload-images.jianshu.io/upload_images/623504-7f3c6f2190f7606b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="" title="">
-                </div>
-                <div class="image-caption"></div>
-            </figure></p>
+<p>最后我们再来看看是怎么拍照的吧<br><img src="http://upload-images.jianshu.io/upload_images/623504-4f8f85ffb4e9647a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="">从图中我们可以看到这里提供了一个takePictue方法，在里面调用了camera的带有三个参数的takePicture方法，其中第一个参数是按下快门的回调，第二个参数是原始图片的回调，第三个参数是经压缩处理后比较小的jpeg图片的回调。</p>
+<p>下面再来看看MyCameraPictureCallback的实现吧<br><img src="http://upload-images.jianshu.io/upload_images/623504-e615de2a30b11a17.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""><br>其实这里简单，就是把拍照得到的照片保存到sd卡中去。<br><strong>这里需要知道一点：当每次拍完照之后，相机都会自动释放资源，所以这里需要重新开启预览</strong></p>
+<p>对了我们再来看看切换摄像头是怎么实现的吧<br><img src="http://upload-images.jianshu.io/upload_images/623504-e6b677fee50e17c3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="">到这里这个自定义的SurfaceView就差不多了。详细代码见最后。</p>
+<p>最后我们再来看看这个类怎么使用吧<br><img src="http://upload-images.jianshu.io/upload_images/623504-93fd9d34c387f7b0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="">还是很简单吧，我们只需几句话就能搞定拍照了。以后哪里有需要的地方直接拿过去用就OK了！<br>这里一定要记得与Activity的生命周期同步，不然可以在界面切换的时候出现现一些错误。<br><img src="http://upload-images.jianshu.io/upload_images/623504-7f3c6f2190f7606b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
 <p>附详细代码：</p>
 <pre>
 /**
@@ -630,193 +712,330 @@ public class CameraSurfaceView extends SurfaceView {
       
     </div>
 
-    
+    <div>
       
-      
-
-  <div class="post-copyright">
-    <p class="copyright-item">
-      <span>作者: </span>
-      <span>_SOLID</span>
-    </p>
-    <p class="copyright-item">
-      <span>来源: </span>
-      <a href="http://yoursite.com">http://yoursite.com</a>
-    </p>
-    <p class="copyright-item">
-      <span>链接: </span>
-      <a href="http://yoursite.com/2017/04/25/Android-多媒体之Camera/">http://yoursite.com/2017/04/25/Android-多媒体之Camera/</a>
-    </p>
-
-    <p class="copyright-item lincese">
-      
-      本文采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可
-    </p>
-  </div>
-
-
+        
 
       
+    </div>
+
+    <div>
       
-  <div class="post-reward">
-    <input type="checkbox" name="reward" id="reward" hidden />
-    <label class="reward-button" for="reward">赞赏支持</label>
-    <div class="qr-code">
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Android/" rel="tag"># Android</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/04/25/Android-多媒体之MediaRecorder-MediaPlayer/" rel="next" title="Android-多媒体之MediaRecorder-MediaPlayer">
+                <i class="fa fa-chevron-left"></i> Android-多媒体之MediaRecorder-MediaPlayer
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/04/25/Android-关于传感器你需要知道的/" rel="prev" title="Android-关于传感器你需要知道的">
+                Android-关于传感器你需要知道的 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
       
       
-        <label class="qr-code-image" for="reward">
-          <img class="image" src="/image/reward/wechat.png" title="wechat">
-        </label>
-      
-      
-        <label class="qr-code-image" for="reward">
-          <img class="image" src="/image/reward/alipay.png" title="alipay">
-        </label>
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
       
     </div>
   </div>
 
-    
-
-    
-      <footer class="post-footer">
-        
-          <div class="post-tags">
-            
-              <a href="/tags/Android/">Android</a>
-            
-          </div>
-        
-        
-        
-  <nav class="post-nav">
-    
-      <a class="prev" href="/2017/04/25/Android-关于传感器你需要知道的/">
-        <i class="iconfont icon-left"></i>
-        <span class="prev-text nav-default">Android-关于传感器你需要知道的</span>
-        <span class="prev-text nav-mobile">上一篇</span>
-      </a>
-    
-    
-      <a class="next" href="/2017/04/25/Android-多媒体之MediaRecorder-MediaPlayer/">
-        <span class="next-text nav-default">Android-多媒体之MediaRecorder-MediaPlayer</span>
-        <span class="prev-text nav-mobile">下一篇</span>
-        <i class="iconfont icon-right"></i>
-      </a>
-    
-  </nav>
-
-      </footer>
-    
-
-  </article>
-
 
           </div>
+          
+
+
           
   <div class="comments" id="comments">
     
   </div>
 
 
-        </div>  
-      </main>
-
-      <footer id="footer" class="footer">
-
-  <div class="social-links">
-    
-      
+        </div>
         
-          <a href="mailto:your@email.com" class="iconfont icon-email" title="email"></a>
-        
-      
-    
-      
-    
-      
-    
-      
-    
-      
-    
-      
-    
-      
-    
-      
-    
-      
-    
-      
-    
-    
-    
-      
-      <a href="/atom.xml" class="iconfont icon-rss" title="rss"></a>
-    
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
   </div>
 
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
 
-<div class="copyright">
-  <span class="power-by">
-    由 <a class="hexo-link" href="https://hexo.io/">Hexo</a> 强力驱动
-  </span>
-  
-  <span class="theme-info">
-    主题 - 
-    <a class="theme-link" href="https://github.com/ahonn/hexo-theme-even">Even</a>
-  </span>
+      
 
-  <span class="copyright-year">
-    
-    &copy; 
-     
-      2015 - 
-    
-    2017
+      
 
-    <span class="heart">
-      <i class="iconfont icon-heart"></i>
-    </span>
-    <span class="author">_SOLID</span>
-  </span>
-</div>
-      </footer>
+      <section class="site-overview sidebar-panel sidebar-panel-active">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="_SOLID" />
+          <p class="site-author-name" itemprop="name">_SOLID</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
 
-      <div class="back-to-top" id="back-to-top">
-        <i class="iconfont icon-up"></i>
-      </div>
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">19</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-name">标签</span>
+              
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+
+      
+
     </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">_SOLID</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
 
     
-  
-
-  
-  
-
-
-
-
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
     
 
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
 
 
 
   
-    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
   
 
   
-    <script type="text/javascript" src="/lib/slideout/slideout.js"></script>
-  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
 
   
 
 
-    <script type="text/javascript" src="/js/src/even.js?v=2.4.x"></script>
-<script type="text/javascript" src="/js/src/bootstrap.js?v=2.4.x"></script>
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
 
-    
-  </body>
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
 </html>

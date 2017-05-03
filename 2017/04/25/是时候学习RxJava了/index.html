@@ -1,10 +1,19 @@
-<!DOCTYPE html>
-<html lang="zh-CN">
-  <head>
-    
-<meta charset="UTF-8"/>
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
 
 
 <meta http-equiv="Cache-Control" content="no-transform" />
@@ -12,9 +21,57 @@
 
 
 
-  <meta name="description" content="是时候学习RxJava了"/>
 
 
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
 
 
   <meta name="keywords" content="Android,RxJava," />
@@ -22,25 +79,24 @@
 
 
 
-  <link rel="alternate" href="/default" title="_SOLID的个人博客">
 
 
 
 
-  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.4.x" />
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
 
 
 
-<link rel="canonical" href="http://yoursite.com/2017/04/25/是时候学习RxJava了/"/>
 
 
-<meta name="description" content="RxJava              从开始最开始学习RxJava到现在也有一段时间了，还记得去年第一次看RxJava的文章就是扔物线的的这篇文章给 Android 开发者的 RxJava 详解，那一次我看了整整">
+
+<meta name="description" content="从开始最开始学习RxJava到现在也有一段时间了，还记得去年第一次看RxJava的文章就是扔物线的的这篇文章给 Android 开发者的 RxJava 详解，那一次我看了整整一个下午，由于在那之前我完全没接触过RxJava，也不知道那是个什么，看完很多地方都还不是很理解，整个人都是晕晕的，当然收获也还是有的，至少对RxJava有了一个初步的概念。那次之后我就没再去碰过RxJava了，当时心里想的">
 <meta name="keywords" content="Android,RxJava">
 <meta property="og:type" content="article">
 <meta property="og:title" content="是时候学习RxJava了">
 <meta property="og:url" content="http://yoursite.com/2017/04/25/是时候学习RxJava了/index.html">
 <meta property="og:site_name" content="_SOLID的个人博客">
-<meta property="og:description" content="RxJava              从开始最开始学习RxJava到现在也有一段时间了，还记得去年第一次看RxJava的文章就是扔物线的的这篇文章给 Android 开发者的 RxJava 详解，那一次我看了整整">
+<meta property="og:description" content="从开始最开始学习RxJava到现在也有一段时间了，还记得去年第一次看RxJava的文章就是扔物线的的这篇文章给 Android 开发者的 RxJava 详解，那一次我看了整整一个下午，由于在那之前我完全没接触过RxJava，也不知道那是个什么，看完很多地方都还不是很理解，整个人都是晕晕的，当然收获也还是有的，至少对RxJava有了一个初步的概念。那次之后我就没再去碰过RxJava了，当时心里想的">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/623504-95ab3050919a97ab.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/623504-c57385da15b90d9a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/623504-0605a63e05ab2f33.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
@@ -48,145 +104,232 @@
 <meta property="og:updated_time" content="2017-04-25T05:18:11.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="是时候学习RxJava了">
-<meta name="twitter:description" content="RxJava              从开始最开始学习RxJava到现在也有一段时间了，还记得去年第一次看RxJava的文章就是扔物线的的这篇文章给 Android 开发者的 RxJava 详解，那一次我看了整整">
+<meta name="twitter:description" content="从开始最开始学习RxJava到现在也有一段时间了，还记得去年第一次看RxJava的文章就是扔物线的的这篇文章给 Android 开发者的 RxJava 详解，那一次我看了整整一个下午，由于在那之前我完全没接触过RxJava，也不知道那是个什么，看完很多地方都还不是很理解，整个人都是晕晕的，当然收获也还是有的，至少对RxJava有了一个初步的概念。那次之后我就没再去碰过RxJava了，当时心里想的">
 <meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/623504-95ab3050919a97ab.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 
 
-<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.4.x" />
 
-
-
-
-
-
-
-<script>
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
   var CONFIG = {
-    search: false,
-    searchPath: "/search.xml",
-    fancybox: false,
-    toc: true,
-  }
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
 </script>
 
 
 
+  <link rel="canonical" href="http://yoursite.com/2017/04/25/是时候学习RxJava了/"/>
+
+
+
+
+
+  <title>是时候学习RxJava了 | _SOLID的个人博客</title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
 
   
 
 
 
-    <title> 是时候学习RxJava了 · _SOLID的个人博客 </title>
-  </head>
 
-  <body><div id="mobile-navbar" class="mobile-navbar">
-  <div class="mobile-header-logo">
-    <a href="/." class="logo">_SOLID的个人博客</a>
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">_SOLID的个人博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
   </div>
-  <div class="mobile-navbar-icon">
-    <span></span>
-    <span></span>
-    <span></span>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
   </div>
 </div>
 
-<nav id="mobile-menu" class="mobile-menu slideout-menu">
-  <ul class="mobile-menu-list">
-    
-      <a href="/">
-        <li class="mobile-menu-item">
-          
-          
-            Home
-          
-        </li>
-      </a>
-    
-      <a href="/archives/">
-        <li class="mobile-menu-item">
-          
-          
-            Archives
-          
-        </li>
-      </a>
-    
-  </ul>
-</nav>
+<nav class="site-nav">
+  
 
-    <div class="container" id="mobile-panel">
-      <header id="header" class="header"><div class="logo-wrapper">
-  <a href="/." class="logo">_SOLID的个人博客</a>
-</div>
-
-<nav class="site-navbar">
   
     <ul id="menu" class="menu">
       
-        <li class="menu-item">
-          <a class="menu-item-link" href="/">
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
             
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
-              首页
-            
+            首页
           </a>
         </li>
       
-        <li class="menu-item">
-          <a class="menu-item-link" href="/archives/">
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
             
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
-              归档
-            
+            归档
           </a>
         </li>
       
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
       
     </ul>
   
+
+  
 </nav>
 
-      </header>
 
-      <main id="main" class="main">
-        <div class="content-wrapper">
-          <div id="content" class="content">
-            
-  
-  <article class="post">
-    <header class="post-header">
-      <h1 class="post-title">
-        
-          是时候学习RxJava了
-        
-      </h1>
 
-      <div class="post-meta">
-        <span class="post-time">
-          2017年4月25日
-        </span>
-      </div>
+ </div>
     </header>
 
-    
-    
-  <div class="post-toc" id="post-toc">
-    <h2 class="post-toc-title">文章目录</h2>
-    <div class="post-toc-content">
-      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#本文的学习目录"><span class="toc-text">本文的学习目录</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-RxJava是什么"><span class="toc-text">1.RxJava是什么</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-怎么去使用RxJava"><span class="toc-text">2.怎么去使用RxJava</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-RxJava操作符的介绍"><span class="toc-text">3.RxJava操作符的介绍</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-RxJava在生产环境中的使用"><span class="toc-text">4.RxJava在生产环境中的使用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-RxJava学习的参考资料"><span class="toc-text">5.RxJava学习的参考资料</span></a>
-    </div>
-  </div>
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
 
+  <div id="posts" class="posts-expand">
+    
 
-    <div class="post-content">
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/04/25/是时候学习RxJava了/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="_SOLID">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="_SOLID的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                是时候学习RxJava了
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-04-25T11:05:53+08:00">
+                2017-04-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
       
-        <figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="http://upload-images.jianshu.io/upload_images/623504-95ab3050919a97ab.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="RxJava" title="">
-                </div>
-                <div class="image-caption">RxJava</div>
-            </figure>
+      
+
+      
+        <p><img src="http://upload-images.jianshu.io/upload_images/623504-95ab3050919a97ab.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="RxJava"></p>
 <p>从开始最开始学习RxJava到现在也有一段时间了，还记得去年第一次看RxJava的文章就是<a href="https://github.com/rengwuxian" target="_blank" rel="external">扔物线</a>的的这篇文章<a href="http://gank.io/post/560e15be2dca930e00da1083#toc_1" target="_blank" rel="external">给 Android 开发者的 RxJava 详解</a>，那一次我看了整整一个下午，由于在那之前我完全没接触过RxJava，也不知道那是个什么，看完很多地方都还不是很理解，整个人都是晕晕的，当然收获也还是有的，至少对RxJava有了一个初步的概念。那次之后我就没再去碰过RxJava了，当时心里想的是，如果后面需要这方面的东西我再来学习也不迟。<br>时间差不多过了半年，RxJava也越来越火了，使用RxJava的开发者也是越来越多，github上关于的开源库中使用RxJava的也越来越多。当我再去看一些开源库的时候，由于很多地方都用到了RxJava，就发现很多代码都看不懂了，这也就激起了再次去学习RxJava的动力，随后就在网上各种的查找RxJava相关的学习资料，从头学习，我又去看了一遍<a href="http://gank.io/post/560e15be2dca930e00da1083#toc_1" target="_blank" rel="external">给 Android 开发者的 RxJava 详解</a>，收获还是很多的，本文也是对这段时间我学习RxJava的一个小结，以下知识点主要针对于Android开发者。</p>
 <blockquote>
 <h3 id="本文的学习目录"><a href="#本文的学习目录" class="headerlink" title="本文的学习目录"></a>本文的学习目录</h3><hr>
@@ -196,13 +339,7 @@
 <p>那么RxJava到底是什么，我对于他的理解就针对于Java语言的一个异步的响应式编程库。</p>
 <h2 id="2-怎么去使用RxJava"><a href="#2-怎么去使用RxJava" class="headerlink" title="2.怎么去使用RxJava"></a>2.怎么去使用RxJava</h2><p>在gradle文件的dependencies中加入以下代码即可（以下版本可能不是最新的，需要最新的可到<a href="https://github.com/ReactiveX/RxAndroid" target="_blank" rel="external">RxAndroid</a>查看）<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">compile 'io.reactivex:rxandroid:1.2.0'</div><div class="line">compile 'io.reactivex:rxjava:1.1.5'</div></pre></td></tr></table></figure></p>
 <h2 id="3-RxJava操作符的介绍"><a href="#3-RxJava操作符的介绍" class="headerlink" title="3.RxJava操作符的介绍"></a>3.RxJava操作符的介绍</h2><p>有了以上的配置，我们就可以在Android中使用RxJava了。对于RxJava的使用，最重要的还是对于操作符的学习，熟悉了操作符才能更好的使用RxJava。RxJava中的操作符是非常丰富的，关于RxJava操作符介绍的文章已经是属于一搜就是一大堆的那种了，所以本文就不多做介绍了，在这里给大家推荐一个学习操作符比较好的地方<a href="https://mcxiaoke.gitbooks.io/rxdocs/content/Operators.html" target="_blank" rel="external">Operaters</a></p>
-<figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="http://upload-images.jianshu.io/upload_images/623504-c57385da15b90d9a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="" title="">
-                </div>
-                <div class="image-caption"></div>
-            </figure>
+<p><img src="http://upload-images.jianshu.io/upload_images/623504-c57385da15b90d9a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
 <h2 id="4-RxJava在生产环境中的使用"><a href="#4-RxJava在生产环境中的使用" class="headerlink" title="4.RxJava在生产环境中的使用"></a>4.RxJava在生产环境中的使用</h2><p>想必学习RxJava的同学，在学习完操作符之后，最想知道的是怎么将其用在我们平时的开发当中去，本节就带大家去了解一下怎么去应用RxJava。</p>
 <blockquote>
 <p>RxBinding<br>节流(防止按钮的重复点击)<br>轮询，定时操作<br>RxPermissions<br>RxBus<br>RxJava与Retrofit<br>等待你们的补充~~~</p>
@@ -232,20 +369,8 @@
 <p>关于Retrofit的基本使用可能我们都不是太陌生，对于请求后的结果都是在一个回调接口里接收，对于结果的处理并不是太灵活，一大堆的回调会让你以后回过来看代码的时候看的醉生梦死。<br>RxJava很好的解决了这个问题，我们来看看Retrofit的怎么去适配RxJava吧。</p>
 <p>gradle文件的引用<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">compile 'com.squareup.retrofit2:retrofit:2.0.2'</div><div class="line">compile 'com.squareup.retrofit2:converter-gson:2.0.2'</div><div class="line">compile 'com.squareup.retrofit2:adapter-rxjava:2.0.2'//RxJava与Retrofit的适配器</div></pre></td></tr></table></figure></p>
 <p>这里我以请求 <a href="http://gank.io/api/data/Android/10/1" target="_blank" rel="external">http://gank.io/api/data/Android/10/1</a> 为例。</p>
-<p>返回的结果大致是这样的<br><figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="http://upload-images.jianshu.io/upload_images/623504-0605a63e05ab2f33.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="" title="">
-                </div>
-                <div class="image-caption"></div>
-            </figure></p>
-<p>于是我定义了一个GankResultBean去接收这个结果。<br><figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="http://upload-images.jianshu.io/upload_images/623504-62967f0fabf00980.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="" title="">
-                </div>
-                <div class="image-caption"></div>
-            </figure></p>
+<p>返回的结果大致是这样的<br><img src="http://upload-images.jianshu.io/upload_images/623504-0605a63e05ab2f33.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p>于是我定义了一个GankResultBean去接收这个结果。<br><img src="http://upload-images.jianshu.io/upload_images/623504-62967f0fabf00980.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
 <p>其中ResultsBean就是results中的每一个条目。<br>好了，下面我们来看看适配了RxJava的Retrofit怎么去使用吧<br>首先我们定义一个接口<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">public interface RxGankService &#123;</div><div class="line">       @GET("all/20/&#123;page&#125;")</div><div class="line">       Observable<span class="tag">&lt;<span class="name">GankResultBean</span>&gt;</span> getAndroidData(@Path("page") int page);</div><div class="line">   &#125;</div></pre></td></tr></table></figure></p>
 <p>值得注意的是这里返回的是<code>Observable<gankresultbean></gankresultbean></code>而不是常规的<code> Call<gankresultbean></gankresultbean></code></p>
 <p>接着就可以做请求了<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div></pre></td><td class="code"><pre><div class="line"> Retrofit retrofit = new Retrofit.Builder()</div><div class="line">                .baseUrl("http://gank.io/api/data/")</div><div class="line">                .addConverterFactory(GsonConverterFactory.create())</div><div class="line">                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())//这个就是用来适配RxJava的</div><div class="line">                .build();</div><div class="line"></div><div class="line">RxGankService rxGankService = retrofit.create(RxGankService.class);</div><div class="line">        final Observable&lt;GankResultBean&gt; observable = rxGankService.getAndroidData(1);</div><div class="line">        observable</div><div class="line">                .subscribeOn(Schedulers.io())</div><div class="line">                .observeOn(AndroidSchedulers.mainThread())</div><div class="line">                .map(new Func1&lt;GankResultBean, List&lt;GankResultBean.ResultsBean&gt;&gt;() &#123;</div><div class="line">                    @Override</div><div class="line">                    public List&lt;GankResultBean.ResultsBean&gt; call(GankResultBean gankResultBean) &#123;</div><div class="line">                        return gankResultBean.getResults();</div><div class="line">                    &#125;</div><div class="line">                &#125;)</div><div class="line">                .flatMap(new Func1&lt;List&lt;GankResultBean.ResultsBean&gt;, Observable&lt;GankResultBean.ResultsBean&gt;&gt;() &#123;</div><div class="line">                    @Override</div><div class="line">                    public Observable&lt;GankResultBean.ResultsBean&gt; call(List&lt;GankResultBean.ResultsBean&gt; resultsBeen) &#123;</div><div class="line">                        return Observable.from(resultsBeen);</div><div class="line">                    &#125;</div><div class="line">                &#125;)</div><div class="line">                .filter(new Func1&lt;GankResultBean.ResultsBean, Boolean&gt;() &#123;</div><div class="line">                    @Override</div><div class="line">                    public Boolean call(GankResultBean.ResultsBean resultsBean) &#123;</div><div class="line">                        return "Android".equals(resultsBean.getType());</div><div class="line">                    &#125;</div><div class="line">                &#125;)</div><div class="line">                .subscribe(new Subscriber&lt;GankResultBean.ResultsBean&gt;() &#123;</div><div class="line">                    @Override</div><div class="line">                    public void onCompleted() &#123;</div><div class="line">                        Log.i("test", "onCompleted");</div><div class="line">                    &#125;</div><div class="line"></div><div class="line">                    @Override</div><div class="line">                    public void onError(Throwable e) &#123;</div><div class="line">                        e.printStackTrace();</div><div class="line">                    &#125;</div><div class="line"></div><div class="line">                    @Override</div><div class="line">                    public void onNext(GankResultBean.ResultsBean resultsBean) &#123;</div><div class="line">                        textView.append(resultsBean + "\n");</div><div class="line">                    &#125;</div><div class="line">                &#125;);</div></pre></td></tr></table></figure></p>
@@ -261,195 +386,357 @@
       
     </div>
 
-    
+    <div>
       
-      
-
-  <div class="post-copyright">
-    <p class="copyright-item">
-      <span>作者: </span>
-      <span>_SOLID</span>
-    </p>
-    <p class="copyright-item">
-      <span>来源: </span>
-      <a href="http://yoursite.com">http://yoursite.com</a>
-    </p>
-    <p class="copyright-item">
-      <span>链接: </span>
-      <a href="http://yoursite.com/2017/04/25/是时候学习RxJava了/">http://yoursite.com/2017/04/25/是时候学习RxJava了/</a>
-    </p>
-
-    <p class="copyright-item lincese">
-      
-      本文采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可
-    </p>
-  </div>
-
-
+        
 
       
+    </div>
+
+    <div>
       
-  <div class="post-reward">
-    <input type="checkbox" name="reward" id="reward" hidden />
-    <label class="reward-button" for="reward">赞赏支持</label>
-    <div class="qr-code">
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Android/" rel="tag"># Android</a>
+          
+            <a href="/tags/RxJava/" rel="tag"># RxJava</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/04/25/比系统自带的更好用的SnackBar/" rel="next" title="比系统自带的更好用的SnackBar">
+                <i class="fa fa-chevron-left"></i> 比系统自带的更好用的SnackBar
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/04/25/打造一个RecyclerView的万能适配器-减少你的代码冗余/" rel="prev" title="打造一个RecyclerView的万能适配器-减少你的代码冗余">
+                打造一个RecyclerView的万能适配器-减少你的代码冗余 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
       
       
-        <label class="qr-code-image" for="reward">
-          <img class="image" src="/image/reward/wechat.png" title="wechat">
-        </label>
-      
-      
-        <label class="qr-code-image" for="reward">
-          <img class="image" src="/image/reward/alipay.png" title="alipay">
-        </label>
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
       
     </div>
   </div>
 
-    
-
-    
-      <footer class="post-footer">
-        
-          <div class="post-tags">
-            
-              <a href="/tags/Android/">Android</a>
-            
-              <a href="/tags/RxJava/">RxJava</a>
-            
-          </div>
-        
-        
-        
-  <nav class="post-nav">
-    
-      <a class="prev" href="/2017/04/25/打造一个RecyclerView的万能适配器-减少你的代码冗余/">
-        <i class="iconfont icon-left"></i>
-        <span class="prev-text nav-default">打造一个RecyclerView的万能适配器-减少你的代码冗余</span>
-        <span class="prev-text nav-mobile">上一篇</span>
-      </a>
-    
-    
-      <a class="next" href="/2017/04/25/比系统自带的更好用的SnackBar/">
-        <span class="next-text nav-default">比系统自带的更好用的SnackBar</span>
-        <span class="prev-text nav-mobile">下一篇</span>
-        <i class="iconfont icon-right"></i>
-      </a>
-    
-  </nav>
-
-      </footer>
-    
-
-  </article>
-
 
           </div>
+          
+
+
           
   <div class="comments" id="comments">
     
   </div>
 
 
-        </div>  
-      </main>
-
-      <footer id="footer" class="footer">
-
-  <div class="social-links">
-    
-      
+        </div>
         
-          <a href="mailto:your@email.com" class="iconfont icon-email" title="email"></a>
-        
-      
-    
-      
-    
-      
-    
-      
-    
-      
-    
-      
-    
-      
-    
-      
-    
-      
-    
-      
-    
-    
-    
-      
-      <a href="/atom.xml" class="iconfont icon-rss" title="rss"></a>
-    
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
   </div>
 
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
 
-<div class="copyright">
-  <span class="power-by">
-    由 <a class="hexo-link" href="https://hexo.io/">Hexo</a> 强力驱动
-  </span>
-  
-  <span class="theme-info">
-    主题 - 
-    <a class="theme-link" href="https://github.com/ahonn/hexo-theme-even">Even</a>
-  </span>
+      
 
-  <span class="copyright-year">
-    
-    &copy; 
-     
-      2015 - 
-    
-    2017
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-    <span class="heart">
-      <i class="iconfont icon-heart"></i>
-    </span>
-    <span class="author">_SOLID</span>
-  </span>
-</div>
-      </footer>
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="_SOLID" />
+          <p class="site-author-name" itemprop="name">_SOLID</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
 
-      <div class="back-to-top" id="back-to-top">
-        <i class="iconfont icon-up"></i>
-      </div>
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">19</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-name">标签</span>
+              
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#本文的学习目录"><span class="nav-number">1.</span> <span class="nav-text">本文的学习目录</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-RxJava是什么"><span class="nav-number"></span> <span class="nav-text">1.RxJava是什么</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-怎么去使用RxJava"><span class="nav-number"></span> <span class="nav-text">2.怎么去使用RxJava</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-RxJava操作符的介绍"><span class="nav-number"></span> <span class="nav-text">3.RxJava操作符的介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-RxJava在生产环境中的使用"><span class="nav-number"></span> <span class="nav-text">4.RxJava在生产环境中的使用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-RxJava学习的参考资料"><span class="nav-number"></span> <span class="nav-text">5.RxJava学习的参考资料</span></a></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
     </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">_SOLID</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
 
     
-  
-
-  
-  
-
-
-
-
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
     
 
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
 
 
 
   
-    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
   
 
   
-    <script type="text/javascript" src="/lib/slideout/slideout.js"></script>
-  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
 
   
 
 
-    <script type="text/javascript" src="/js/src/even.js?v=2.4.x"></script>
-<script type="text/javascript" src="/js/src/bootstrap.js?v=2.4.x"></script>
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
 
-    
-  </body>
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
 </html>

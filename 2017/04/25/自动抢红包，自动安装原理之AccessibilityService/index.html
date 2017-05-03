@@ -1,10 +1,19 @@
-<!DOCTYPE html>
-<html lang="zh-CN">
-  <head>
-    
-<meta charset="UTF-8"/>
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
 
 
 <meta http-equiv="Cache-Control" content="no-transform" />
@@ -12,9 +21,57 @@
 
 
 
-  <meta name="description" content="自动抢红包，自动安装原理之AccessibilityService"/>
 
 
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
 
 
   <meta name="keywords" content="Android," />
@@ -22,16 +79,15 @@
 
 
 
-  <link rel="alternate" href="/default" title="_SOLID的个人博客">
 
 
 
 
-  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.4.x" />
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
 
 
 
-<link rel="canonical" href="http://yoursite.com/2017/04/25/自动抢红包，自动安装原理之AccessibilityService/"/>
+
 
 
 <meta name="description" content="*本篇文章已授权微信公众号 guolin_blog （郭霖）独家发布 前段时间看别人博客的时候偶然间看到了Android微信自动回复功能，最后的效果也很不错，博主在文中提到了AccessibilityService，以前压根没接触过这东西，表示一脸懵逼。也是这个原因我去找了AccessibilityService相关的资料好好的看了一遍，发现这个东西真的太NB了，网上对AccessibilityS">
@@ -57,126 +113,226 @@
 <meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/623504-1f974077211e7752.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 
 
-<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.4.x" />
 
-
-
-
-
-
-
-<script>
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
   var CONFIG = {
-    search: false,
-    searchPath: "/search.xml",
-    fancybox: false,
-    toc: true,
-  }
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
 </script>
 
 
 
+  <link rel="canonical" href="http://yoursite.com/2017/04/25/自动抢红包，自动安装原理之AccessibilityService/"/>
+
+
+
+
+
+  <title>自动抢红包，自动安装原理之AccessibilityService | _SOLID的个人博客</title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
 
   
 
 
 
-    <title> 自动抢红包，自动安装原理之AccessibilityService · _SOLID的个人博客 </title>
-  </head>
 
-  <body><div id="mobile-navbar" class="mobile-navbar">
-  <div class="mobile-header-logo">
-    <a href="/." class="logo">_SOLID的个人博客</a>
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">_SOLID的个人博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
   </div>
-  <div class="mobile-navbar-icon">
-    <span></span>
-    <span></span>
-    <span></span>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
   </div>
 </div>
 
-<nav id="mobile-menu" class="mobile-menu slideout-menu">
-  <ul class="mobile-menu-list">
-    
-      <a href="/">
-        <li class="mobile-menu-item">
-          
-          
-            Home
-          
-        </li>
-      </a>
-    
-      <a href="/archives/">
-        <li class="mobile-menu-item">
-          
-          
-            Archives
-          
-        </li>
-      </a>
-    
-  </ul>
-</nav>
+<nav class="site-nav">
+  
 
-    <div class="container" id="mobile-panel">
-      <header id="header" class="header"><div class="logo-wrapper">
-  <a href="/." class="logo">_SOLID的个人博客</a>
-</div>
-
-<nav class="site-navbar">
   
     <ul id="menu" class="menu">
       
-        <li class="menu-item">
-          <a class="menu-item-link" href="/">
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
             
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
-              首页
-            
+            首页
           </a>
         </li>
       
-        <li class="menu-item">
-          <a class="menu-item-link" href="/archives/">
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
             
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
-              归档
-            
+            归档
           </a>
         </li>
       
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
       
     </ul>
   
+
+  
 </nav>
 
-      </header>
 
-      <main id="main" class="main">
-        <div class="content-wrapper">
-          <div id="content" class="content">
-            
-  
-  <article class="post">
-    <header class="post-header">
-      <h1 class="post-title">
-        
-          自动抢红包，自动安装原理之AccessibilityService
-        
-      </h1>
 
-      <div class="post-meta">
-        <span class="post-time">
-          2017年4月25日
-        </span>
-      </div>
+ </div>
     </header>
 
-    
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
     
 
-    <div class="post-content">
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/04/25/自动抢红包，自动安装原理之AccessibilityService/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="_SOLID">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="_SOLID的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                自动抢红包，自动安装原理之AccessibilityService
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-04-25T11:05:53+08:00">
+                2017-04-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
       
         <p><strong>*本篇文章已授权微信公众号 guolin_blog （郭霖）独家发布</strong></p>
 <p>前段时间看别人博客的时候偶然间看到了<a href="http://www.jianshu.com/p/f67e950d84f7" target="_blank" rel="external">Android微信自动回复功能</a>，最后的效果也很不错，博主在文中提到了<code>AccessibilityService</code>，以前压根没接触过这东西，表示一脸懵逼。也是这个原因我去找了AccessibilityService相关的资料好好的看了一遍，发现这个东西真的太NB了，网上对AccessibilityService的应用还是有不少的文章的，但是详细的介绍资料还是比较少，对于刚刚学习这个的同学看完很多资料还是一脸茫然，于是才有了本文。我相信当你在看完本文之后，再去看前面的那篇文章，我相信会轻松很多。</p>
@@ -196,13 +352,7 @@
 <p>随后就是在res/xml目录下新建一个xml文件（文件名随意）,后面会对这个文件作详细的介绍。<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">accessibility-service</span> <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span></span></div><div class="line">    <span class="attr">android:accessibilityEventTypes</span>=<span class="string">"typeAllMask"</span></div><div class="line">    <span class="attr">android:accessibilityFeedbackType</span>=<span class="string">"feedbackGeneric"</span>  </div><div class="line">    <span class="attr">android:canRetrieveWindowContent</span>=<span class="string">"true"</span></div><div class="line">    <span class="attr">android:description</span>=<span class="string">"@string/my_accessibility_description"</span></div><div class="line">    <span class="attr">android:notificationTimeout</span>=<span class="string">"100"</span></div><div class="line">    <span class="attr">android:packageNames</span>=<span class="string">"com.tencent.mobileqq,com.android.packageinstaller"</span> /&gt;</div></pre></td></tr></table></figure></p>
 <p>最后就是去配置清单文件了<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">service</span></span></div><div class="line">           <span class="attr">android:name</span>=<span class="string">".service.MyAccessibilityService"</span></div><div class="line">           <span class="attr">android:enabled</span>=<span class="string">"true"</span></div><div class="line">           <span class="attr">android:exported</span>=<span class="string">"true"</span></div><div class="line">           <span class="attr">android:label</span>=<span class="string">"@string/app_name"</span></div><div class="line">           <span class="attr">android:permission</span>=<span class="string">"android.permission.BIND_ACCESSIBILITY_SERVICE"</span>&gt;</div><div class="line">           <span class="tag">&lt;<span class="name">intent-filter</span>&gt;</span></div><div class="line">               <span class="tag">&lt;<span class="name">action</span> <span class="attr">android:name</span>=<span class="string">"android.accessibilityservice.AccessibilityService"</span> /&gt;</span></div><div class="line">           <span class="tag">&lt;/<span class="name">intent-filter</span>&gt;</span></div><div class="line">           <span class="tag">&lt;<span class="name">meta-data</span></span></div><div class="line">               <span class="attr">android:name</span>=<span class="string">"android.accessibilityservice"</span></div><div class="line">               <span class="attr">android:resource</span>=<span class="string">"@xml/my_services_config"</span> /&gt;//在meta-data里申明配置信息</div><div class="line">       <span class="tag">&lt;/<span class="name">service</span>&gt;</span></div></pre></td></tr></table></figure></p>
 <p> 别忘记了添加权限<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">uses-permission</span> <span class="attr">android:name</span>=<span class="string">"android.permission.BIND_ACCESSIBILITY_SERVICE"</span> /&gt;</span></div></pre></td></tr></table></figure></p>
-<p>到这我们就可以把应用跑到我们的手机上了，然后打开辅助功能，去开启我们刚刚创建的这个辅助功能。如下图：<br><figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="http://upload-images.jianshu.io/upload_images/623504-1f974077211e7752.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="" title="">
-                </div>
-                <div class="image-caption"></div>
-            </figure></p>
+<p>到这我们就可以把应用跑到我们的手机上了，然后打开辅助功能，去开启我们刚刚创建的这个辅助功能。如下图：<br><img src="http://upload-images.jianshu.io/upload_images/623504-1f974077211e7752.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
 <p>当然因为什么都没做，开启了也没什么用，下面就去看看怎么使用吧！</p>
 <p>###3.怎么去使用AccessibilityService</p>
 <p>先说说之前创建的那个xml文件中各个属性的含义吧</p>
@@ -220,60 +370,18 @@
 <p><img src="http://upload-images.jianshu.io/upload_images/623504-b8cb8b2c0bd531e0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
 <p>可以很清晰的看见当我们打开qq或触发很多的事件，第一个响应的事件是<code>TYPE_WINDOW_STATE_CHANGED</code>,触发此事件的事件源是<code>com.tencent.mobileqq.activity.SplashActivity</code></p>
 <p>接着，当我点击最上面的 ‘ 电话 ’，会得到如下日志：</p>
-<figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="http://upload-images.jianshu.io/upload_images/623504-7d3c979e0283043d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="" title="">
-                </div>
-                <div class="image-caption"></div>
-            </figure>
+<p><img src="http://upload-images.jianshu.io/upload_images/623504-7d3c979e0283043d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
 <p>我就不一一截图操作的日志了，下来大家可以自行尝试。到这里你用该对<code>onAccessibilityEvent</code>有了进一步的了解。</p>
 <p>###4.一步一步构建一个apk自动安装器</p>
 <p>这一节来个实战的应用：做一个apk的自动安装器，点击apk文件即可开始自动安装。</p>
-<p>国内的rom厂商大家都很清楚：百(sang)花(xin)齐(bing)放(kuang)，已经把原生的rom改的面目全非。所以想做一个面对全部手机的apk的自动安装器还是比较麻烦的。我的手机是魅族的，下图是魅族手机apk安装的步骤（其他手机可能会略有不同，下来自己更改不同部分即可，这里主要讲解原理）：<br><figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="http://upload-images.jianshu.io/upload_images/623504-cea30f62d841e6a9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="" title="">
-                </div>
-                <div class="image-caption"></div>
-            </figure></p>
-<figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="http://upload-images.jianshu.io/upload_images/623504-24f650f9cde76772.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="" title="">
-                </div>
-                <div class="image-caption"></div>
-            </figure>
-<figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="http://upload-images.jianshu.io/upload_images/623504-4c27c7c62c391da6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="" title="">
-                </div>
-                <div class="image-caption"></div>
-            </figure>
+<p>国内的rom厂商大家都很清楚：百(sang)花(xin)齐(bing)放(kuang)，已经把原生的rom改的面目全非。所以想做一个面对全部手机的apk的自动安装器还是比较麻烦的。我的手机是魅族的，下图是魅族手机apk安装的步骤（其他手机可能会略有不同，下来自己更改不同部分即可，这里主要讲解原理）：<br><img src="http://upload-images.jianshu.io/upload_images/623504-cea30f62d841e6a9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/623504-24f650f9cde76772.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/623504-4c27c7c62c391da6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
 <p>可以看见点击安装包之后会弹出一个确认框，点击继续之后会出现下一步，点击了下一步就可以点击安装了。我们要实现自动安装无非就是用程序的方式会对相关按钮的自动点击，难点就在于怎么去找到这些按钮并执行点击操作。</p>
 <p>好了，下面我们可以来创建一个自动安装的服务了，步骤和第一节描述的一样将<code>packageNames</code>指定成<code>com.android.packageinstaller</code>就可以了。这里我们先别着急去实现功能（就算你想去实现，也摸不着头脑），我们还是像第二节那样去输出日志信息，<strong>查看日志输出信息（对响应事件信息的打印）是使用AccessibilityService的重点</strong>，看完日志的输出信息，然后对其分析，才会知道具体的操作。<br>我们来看看在安装apk文件时候输出的部分日志信息：</p>
-<figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="http://upload-images.jianshu.io/upload_images/623504-03f81f3b844602e8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="" title="">
-                </div>
-                <div class="image-caption"></div>
-            </figure>
-<figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="http://upload-images.jianshu.io/upload_images/623504-4c107be6ffb3bcd8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="" title="">
-                </div>
-                <div class="image-caption"></div>
-            </figure>
-<figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="http://upload-images.jianshu.io/upload_images/623504-cba858987a52d3d0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="" title="">
-                </div>
-                <div class="image-caption"></div>
-            </figure>
+<p><img src="http://upload-images.jianshu.io/upload_images/623504-03f81f3b844602e8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/623504-4c107be6ffb3bcd8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/623504-cba858987a52d3d0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
 <p>从日志信息中可以看出：<br>1.当我们点击了apk文件的时候，如果该文件已经存在，就会弹出一个对话框并且会响应<code>TYPE_WINDOW_STATE_CHANGE</code>事件<br>2.当我们点击了继续之后就会响应<code>TYPE_VIEW_CLICKED</code>事件，并且继续这个可以点击的View是个Button<br>3.接着点击下一步，同样也会响应<code>TYPE_VIEW_CLICKED</code>事件，并且继续这个可以点击的View是个TextView。最后就可以点击安装了（安装那步忘了截图，和第3步相应的事件是一样的）</p>
 <p>经过上面几步的分析，我想你应该对后面的逻辑还是比较清楚了，直接上代码</p>
 <figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">public class AutoInstallService extends AccessibilityService &#123;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public void onAccessibilityEvent(AccessibilityEvent event) &#123;</div><div class="line">        PrintUtils.printEvent(event);</div><div class="line">        findAndPerformActionButton("继续");</div><div class="line">        findAndPerformActionTextView("下一步");</div><div class="line">        findAndPerformActionTextView("安装");</div><div class="line">    &#125;</div><div class="line"></div><div class="line"></div><div class="line">    private void findAndPerformActionButton(String text) &#123;</div><div class="line">        if (getRootInActiveWindow() == null)//取得当前激活窗体的根节点</div><div class="line">            return;</div><div class="line">        //通过文字找到当前的节点</div><div class="line">        List&lt;AccessibilityNodeInfo&gt; nodes = getRootInActiveWindow().findAccessibilityNodeInfosByText(text);</div><div class="line">        for (int i = 0; i &lt; nodes.size(); i++) &#123;</div><div class="line">            AccessibilityNodeInfo node = nodes.get(i);</div><div class="line">            // 执行点击行为</div><div class="line">            if (node.getClassName().equals("android.widget.Button") &amp;&amp; node.isEnabled()) &#123;</div><div class="line">                node.performAction(AccessibilityNodeInfo.ACTION_CLICK);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    private void findAndPerformActionTextView(String text) &#123;</div><div class="line">        if (getRootInActiveWindow() == null)</div><div class="line">            return;</div><div class="line">        //通过文字找到当前的节点</div><div class="line">        List&lt;AccessibilityNodeInfo&gt; nodes = getRootInActiveWindow().findAccessibilityNodeInfosByText(text);</div><div class="line">        for (int i = 0; i &lt; nodes.size(); i++) &#123;</div><div class="line">            AccessibilityNodeInfo node = nodes.get(i);</div><div class="line">            // 执行按钮点击行为</div><div class="line">            if (node.getClassName().equals("android.widget.TextView") &amp;&amp; node.isEnabled()) &#123;</div><div class="line">                node.performAction(AccessibilityNodeInfo.ACTION_CLICK);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
@@ -288,187 +396,326 @@
       
     </div>
 
-    
+    <div>
       
-      
-
-  <div class="post-copyright">
-    <p class="copyright-item">
-      <span>作者: </span>
-      <span>_SOLID</span>
-    </p>
-    <p class="copyright-item">
-      <span>来源: </span>
-      <a href="http://yoursite.com">http://yoursite.com</a>
-    </p>
-    <p class="copyright-item">
-      <span>链接: </span>
-      <a href="http://yoursite.com/2017/04/25/自动抢红包，自动安装原理之AccessibilityService/">http://yoursite.com/2017/04/25/自动抢红包，自动安装原理之AccessibilityService/</a>
-    </p>
-
-    <p class="copyright-item lincese">
-      
-      本文采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可
-    </p>
-  </div>
-
-
+        
 
       
+    </div>
+
+    <div>
       
-  <div class="post-reward">
-    <input type="checkbox" name="reward" id="reward" hidden />
-    <label class="reward-button" for="reward">赞赏支持</label>
-    <div class="qr-code">
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Android/" rel="tag"># Android</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/04/25/聊聊对RxJava与Retrofit的封装/" rel="prev" title="聊聊对RxJava与Retrofit的封装">
+                聊聊对RxJava与Retrofit的封装 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
       
       
-        <label class="qr-code-image" for="reward">
-          <img class="image" src="/image/reward/wechat.png" title="wechat">
-        </label>
-      
-      
-        <label class="qr-code-image" for="reward">
-          <img class="image" src="/image/reward/alipay.png" title="alipay">
-        </label>
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
       
     </div>
   </div>
 
-    
-
-    
-      <footer class="post-footer">
-        
-          <div class="post-tags">
-            
-              <a href="/tags/Android/">Android</a>
-            
-          </div>
-        
-        
-        
-  <nav class="post-nav">
-    
-      <a class="prev" href="/2017/04/25/聊聊对RxJava与Retrofit的封装/">
-        <i class="iconfont icon-left"></i>
-        <span class="prev-text nav-default">聊聊对RxJava与Retrofit的封装</span>
-        <span class="prev-text nav-mobile">上一篇</span>
-      </a>
-    
-    
-  </nav>
-
-      </footer>
-    
-
-  </article>
-
 
           </div>
+          
+
+
           
   <div class="comments" id="comments">
     
   </div>
 
 
-        </div>  
-      </main>
-
-      <footer id="footer" class="footer">
-
-  <div class="social-links">
-    
-      
+        </div>
         
-          <a href="mailto:your@email.com" class="iconfont icon-email" title="email"></a>
-        
-      
-    
-      
-    
-      
-    
-      
-    
-      
-    
-      
-    
-      
-    
-      
-    
-      
-    
-      
-    
-    
-    
-      
-      <a href="/atom.xml" class="iconfont icon-rss" title="rss"></a>
-    
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
   </div>
 
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
 
-<div class="copyright">
-  <span class="power-by">
-    由 <a class="hexo-link" href="https://hexo.io/">Hexo</a> 强力驱动
-  </span>
-  
-  <span class="theme-info">
-    主题 - 
-    <a class="theme-link" href="https://github.com/ahonn/hexo-theme-even">Even</a>
-  </span>
+      
 
-  <span class="copyright-year">
-    
-    &copy; 
-     
-      2015 - 
-    
-    2017
+      
 
-    <span class="heart">
-      <i class="iconfont icon-heart"></i>
-    </span>
-    <span class="author">_SOLID</span>
-  </span>
-</div>
-      </footer>
+      <section class="site-overview sidebar-panel sidebar-panel-active">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="_SOLID" />
+          <p class="site-author-name" itemprop="name">_SOLID</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
 
-      <div class="back-to-top" id="back-to-top">
-        <i class="iconfont icon-up"></i>
-      </div>
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">19</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-name">标签</span>
+              
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+
+      
+
     </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">_SOLID</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
 
     
-  
-
-  
-  
-
-
-
-
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
     
 
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
 
 
 
   
-    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
   
 
   
-    <script type="text/javascript" src="/lib/slideout/slideout.js"></script>
-  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
 
   
 
 
-    <script type="text/javascript" src="/js/src/even.js?v=2.4.x"></script>
-<script type="text/javascript" src="/js/src/bootstrap.js?v=2.4.x"></script>
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
 
-    
-  </body>
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
 </html>

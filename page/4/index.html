@@ -1,10 +1,19 @@
-<!DOCTYPE html>
-<html lang="zh-CN">
-  <head>
-    
-<meta charset="UTF-8"/>
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
 
 
 <meta http-equiv="Cache-Control" content="no-transform" />
@@ -18,16 +27,67 @@
 
 
 
-  <link rel="alternate" href="/default" title="_SOLID的个人博客">
 
 
 
 
-  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.4.x" />
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
 
 
 
-<link rel="canonical" href="http://yoursite.com/page/4/"/>
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
 
 
 <meta property="og:type" content="website">
@@ -38,149 +98,238 @@
 <meta name="twitter:title" content="_SOLID的个人博客">
 
 
-<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.4.x" />
 
-
-
-
-
-
-
-<script>
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
   var CONFIG = {
-    search: false,
-    searchPath: "/search.xml",
-    fancybox: false,
-    toc: true,
-  }
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
 </script>
 
 
 
+  <link rel="canonical" href="http://yoursite.com/page/4/"/>
+
+
+
+
+
+  <title>_SOLID的个人博客</title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
 
   
 
 
 
-    <title> _SOLID的个人博客 </title>
-  </head>
 
-  <body><div id="mobile-navbar" class="mobile-navbar">
-  <div class="mobile-header-logo">
-    <a href="/." class="logo">_SOLID的个人博客</a>
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left 
+   page-home 
+ ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">_SOLID的个人博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
   </div>
-  <div class="mobile-navbar-icon">
-    <span></span>
-    <span></span>
-    <span></span>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
   </div>
 </div>
 
-<nav id="mobile-menu" class="mobile-menu slideout-menu">
-  <ul class="mobile-menu-list">
-    
-      <a href="/">
-        <li class="mobile-menu-item">
-          
-          
-            Home
-          
-        </li>
-      </a>
-    
-      <a href="/archives/">
-        <li class="mobile-menu-item">
-          
-          
-            Archives
-          
-        </li>
-      </a>
-    
-  </ul>
-</nav>
+<nav class="site-nav">
+  
 
-    <div class="container" id="mobile-panel">
-      <header id="header" class="header"><div class="logo-wrapper">
-  <a href="/." class="logo">_SOLID的个人博客</a>
-</div>
-
-<nav class="site-navbar">
   
     <ul id="menu" class="menu">
       
-        <li class="menu-item">
-          <a class="menu-item-link" href="/">
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
             
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
-              首页
-            
+            首页
           </a>
         </li>
       
-        <li class="menu-item">
-          <a class="menu-item-link" href="/archives/">
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
             
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
-              归档
-            
+            归档
           </a>
         </li>
       
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
       
     </ul>
   
+
+  
 </nav>
 
-      </header>
 
-      <main id="main" class="main">
-        <div class="content-wrapper">
-          <div id="content" class="content">
-            
-  <section id="posts" class="posts">
-    
-      
-  <article class="post">
-    <header class="post-header">
-      <h1 class="post-title">
-        
-          <a class="post-link" href="/2017/04/25/Android-多媒体之Camera/">Android-多媒体之Camera</a>
-        
-      </h1>
 
-      <div class="post-meta">
-        <span class="post-time">
-          2017年4月25日
-        </span>
-      </div>
+ </div>
     </header>
 
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+  <section id="posts" class="posts-expand">
     
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/04/25/Android-多媒体之Camera/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="_SOLID">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="_SOLID的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/04/25/Android-多媒体之Camera/" itemprop="url">
+                  Android-多媒体之Camera
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-04-25T11:05:53+08:00">
+                2017-04-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
     
 
-    <div class="post-content">
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
       
         
-        
-
-        
-          <p> Camera顾名思义，就是照相机、摄像机的意思。在Android中使用这个类可以做拍照和录像的功能。但是在Android5.0中这个类已经不推荐使用了，5.0之后使用更强大的Camera2替换他。在这篇文章中我们使用的是Camera，虽然已经不推荐使用了，但是原理都差不多，Camera会用了，相信Camera2肯定也不会太难。本文主要介绍Camera的简单使用以及使用过程中一些常见的问题，绝对的干货，也主要是针对刚学这一块的同学。  </p>
+          
+            <p> Camera顾名思义，就是照相机、摄像机的意思。在Android中使用这个类可以做拍照和录像的功能。但是在Android5.0中这个类已经不推荐使用了，5.0之后使用更强大的Camera2替换他。在这篇文章中我们使用的是Camera，虽然已经不推荐使用了，但是原理都差不多，Camera会用了，相信Camera2肯定也不会太难。本文主要介绍Camera的简单使用以及使用过程中一些常见的问题，绝对的干货，也主要是针对刚学这一块的同学。  </p>
 <p>Android中关于相机的实现，是基于SurfaceView的，如果还有不知道SurfaceView的请查看这篇文章<a href="http://blog.csdn.net/listening_music/article/details/6860786" target="_blank" rel="external">Android中SurfaceView的使用详解 </a>,不知道SurfaceView的务必要看一下那篇文章。<br>我相信初学者都不喜欢看太过的理论知识，如果有一个小Demo再配几幅图是再好不过了，所以本文就是基于一个小Demo进行讲解的。</p>
-<p>还是先来看一下最后的效果是怎么样的。<br><figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="http://upload-images.jianshu.io/upload_images/623504-80774fdc5022c683.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="CameraDemo" title="">
-                </div>
-                <div class="image-caption">CameraDemo</div>
-            </figure></p>
-<p>从这幅图中可以看到在右上角有一个切换摄像头的按钮，在左下角有一个图片框，这里主要是用来展示拍照之后得到的图片，并且点击这个按钮会进入自定义的图库可进行照片的选择，界面如下图<br><figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="http://upload-images.jianshu.io/upload_images/623504-35d97e8ba924b16c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="CameraDemo" title="">
-                </div>
-                <div class="image-caption">CameraDemo</div>
-            </figure></p>
+<p>还是先来看一下最后的效果是怎么样的。<br><img src="http://upload-images.jianshu.io/upload_images/623504-80774fdc5022c683.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="CameraDemo"></p>
+<p>从这幅图中可以看到在右上角有一个切换摄像头的按钮，在左下角有一个图片框，这里主要是用来展示拍照之后得到的图片，并且点击这个按钮会进入自定义的图库可进行照片的选择，界面如下图<br><img src="http://upload-images.jianshu.io/upload_images/623504-35d97e8ba924b16c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="CameraDemo"></p>
 <p>中间即是拍照的按钮了，右下角是进入到录像的界面（PS：本文没去讲解录像功能和图库选择的实现，但是在文章最后给出的源码中有实现，感兴趣的小伙伴可以去下载，如果发现有问题欢迎提出）<br>好了，到现在基本上就只知道下面要干什么了，我们正式开始吧！</p>
 <p>我们来看看这个主界面的布局文件：</p>
 <pre>
@@ -211,79 +360,17 @@
 </pre>
 
 <p>细心小伙伴肯定注意到这几行代码了<pre><ren.solid.camerademo.view.camerasurfaceview android:id="@+id/cameraSurfaceView" android:layout_width="match_parent" android:layout_height="match_parent"></ren.solid.camerademo.view.camerasurfaceview></pre>从代码中我们可以看到我们是使用的一个自定义的CameraSurfaceView，现在我们就来看看这个CameraSurfaceView是怎么实现的（PS：其实本文的核心东西就是这个自定义SurfaceView）。<br>看下面红框里面的内容，可以看出CameraSurfaceView是继承于SurfaceView实现的，说白了CameraSurfaceView就是对SurfaceView与Camera的封装。</p>
-<figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="http://upload-images.jianshu.io/upload_images/623504-903591077f6c0177.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="" title="">
-                </div>
-                <div class="image-caption"></div>
-            </figure>
-<p>这里实现了SurfaceView类的三个构造方法，并且前两个构造方法最后都指向有三个参数的，这样写的好处就是不用在三个构造方法中都去写一次init()方法（已经知道的无视这句）。下载我们再来看看init()方法中都做了些什么</p>
-<figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="http://upload-images.jianshu.io/upload_images/623504-d2b2a0567b239026.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="" title="">
-                </div>
-                <div class="image-caption"></div>
-            </figure>
+<p><img src="http://upload-images.jianshu.io/upload_images/623504-903591077f6c0177.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""><br>这里实现了SurfaceView类的三个构造方法，并且前两个构造方法最后都指向有三个参数的，这样写的好处就是不用在三个构造方法中都去写一次init()方法（已经知道的无视这句）。下载我们再来看看init()方法中都做了些什么</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/623504-d2b2a0567b239026.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
 <p>第一句就是得到摄像头的数量，可以用这个去判断是否有前置摄像头。getCamera()是打开系统摄像头实现如下图</p>
-<figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="http://upload-images.jianshu.io/upload_images/623504-8f5cc7e4400a5f82.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="" title="">
-                </div>
-                <div class="image-caption"></div>
-            </figure>
-<p>这里面最核心的就是<strong>mSurfaceHolder.addCallback(new SurfaceCallback())</strong>这一句。为SurfaceHolder添加一个回调。各种功能的切换就是在这个回调里面实现的，下面我们来看看SurfaceCallback这个类的实现<br><figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="http://upload-images.jianshu.io/upload_images/623504-237da7bbc43425b5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="" title="">
-                </div>
-                <div class="image-caption"></div>
-            </figure></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/623504-8f5cc7e4400a5f82.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""><br>这里面最核心的就是<strong>mSurfaceHolder.addCallback(new SurfaceCallback())</strong>这一句。为SurfaceHolder添加一个回调。各种功能的切换就是在这个回调里面实现的，下面我们来看看SurfaceCallback这个类的实现<br><img src="http://upload-images.jianshu.io/upload_images/623504-237da7bbc43425b5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
 <p>这个类中重写了三个方法<br><strong>1.surfaceChanged</strong>：拍照状态改变时调用，也就是你的手机竖屏和横屏相互切换时会调用这个方法，我试过当手机横屏的时候拍照，效果十分不好（拉伸十分严重），用了很多方法也没解决这个问题，我也看了下我系统自带的相机，也没有在横屏下拍照的功能，所以我还是建议最好把拍照界面固定为竖屏，在竖屏状态下拍照。<br><strong>2.surfaceCreated</strong>：就是当surface被创建的时候调用。在这里我们就在surface被创建的时候就开始拍照的预览。我们再来看看startPreview方法是怎么实现的。</p>
-<figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="http://upload-images.jianshu.io/upload_images/623504-3439c39a89d18fc1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="" title="">
-                </div>
-                <div class="image-caption"></div>
-            </figure>
+<p><img src="http://upload-images.jianshu.io/upload_images/623504-3439c39a89d18fc1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
 <p>从图中可以看到我们调用了camera的三个api，至于作用，注释写的很清楚了，这里我就不再重复了。<br><strong>3.surfaceDestroyed：</strong>这里主要是在surface被销毁的时候做一些回收的工作。熟悉SurfaceView的同学肯定知道，当SurfaceView界面不可见时这个方法就会被调用。因为SurfaceView是很占CPU的。</p>
-<p>最后我们再来看看是怎么拍照的吧<br><figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="http://upload-images.jianshu.io/upload_images/623504-4f8f85ffb4e9647a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="" title="">
-                </div>
-                <div class="image-caption"></div>
-            </figure>从图中我们可以看到这里提供了一个takePictue方法，在里面调用了camera的带有三个参数的takePicture方法，其中第一个参数是按下快门的回调，第二个参数是原始图片的回调，第三个参数是经压缩处理后比较小的jpeg图片的回调。</p>
-<p>下面再来看看MyCameraPictureCallback的实现吧<br><figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="http://upload-images.jianshu.io/upload_images/623504-e615de2a30b11a17.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="" title="">
-                </div>
-                <div class="image-caption"></div>
-            </figure><br>其实这里简单，就是把拍照得到的照片保存到sd卡中去。<br><strong>这里需要知道一点：当每次拍完照之后，相机都会自动释放资源，所以这里需要重新开启预览</strong></p>
-<p>对了我们再来看看切换摄像头是怎么实现的吧<br><figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="http://upload-images.jianshu.io/upload_images/623504-e6b677fee50e17c3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="" title="">
-                </div>
-                <div class="image-caption"></div>
-            </figure>到这里这个自定义的SurfaceView就差不多了。详细代码见最后。</p>
-<p>最后我们再来看看这个类怎么使用吧<br><figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="http://upload-images.jianshu.io/upload_images/623504-93fd9d34c387f7b0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="" title="">
-                </div>
-                <div class="image-caption"></div>
-            </figure>还是很简单吧，我们只需几句话就能搞定拍照了。以后哪里有需要的地方直接拿过去用就OK了！<br>这里一定要记得与Activity的生命周期同步，不然可以在界面切换的时候出现现一些错误。<br><figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="http://upload-images.jianshu.io/upload_images/623504-7f3c6f2190f7606b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="" title="">
-                </div>
-                <div class="image-caption"></div>
-            </figure></p>
+<p>最后我们再来看看是怎么拍照的吧<br><img src="http://upload-images.jianshu.io/upload_images/623504-4f8f85ffb4e9647a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="">从图中我们可以看到这里提供了一个takePictue方法，在里面调用了camera的带有三个参数的takePicture方法，其中第一个参数是按下快门的回调，第二个参数是原始图片的回调，第三个参数是经压缩处理后比较小的jpeg图片的回调。</p>
+<p>下面再来看看MyCameraPictureCallback的实现吧<br><img src="http://upload-images.jianshu.io/upload_images/623504-e615de2a30b11a17.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""><br>其实这里简单，就是把拍照得到的照片保存到sd卡中去。<br><strong>这里需要知道一点：当每次拍完照之后，相机都会自动释放资源，所以这里需要重新开启预览</strong></p>
+<p>对了我们再来看看切换摄像头是怎么实现的吧<br><img src="http://upload-images.jianshu.io/upload_images/623504-e6b677fee50e17c3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="">到这里这个自定义的SurfaceView就差不多了。详细代码见最后。</p>
+<p>最后我们再来看看这个类怎么使用吧<br><img src="http://upload-images.jianshu.io/upload_images/623504-93fd9d34c387f7b0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="">还是很简单吧，我们只需几句话就能搞定拍照了。以后哪里有需要的地方直接拿过去用就OK了！<br>这里一定要记得与Activity的生命周期同步，不然可以在界面切换的时候出现现一些错误。<br><img src="http://upload-images.jianshu.io/upload_images/623504-7f3c6f2190f7606b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
 <p>附详细代码：</p>
 <pre>
 /**
@@ -611,43 +698,125 @@ public class CameraSurfaceView extends SurfaceView {
 <p><a href="https://github.com/burgessjp/CameraDemo" target="_blank" rel="external">源码下载</a></p>
 <p>参考链接<br> <a href="http://www.jcodecraeer.com/a/anzhuokaifa/androidkaifa/2015/0428/2811.html" target="_blank" rel="external">使用Camera2 替代过时的Camera API</a><br><a href="http://www.lai18.com/content/1165371.html" target="_blank" rel="external">Android Camera多屏幕适配解决预览照片拉伸</a><br><a href="http://www.cnblogs.com/franksunny/archive/2011/11/17/2252926.html" target="_blank" rel="external">Android Camera 使用小结</a><br><a href="http://www.apkbus.com/android-170300-1-1.html" target="_blank" rel="external">Android 相机自动对焦和定点对焦的一些总结</a><br><a href="http://blog.csdn.net/yanzhenjie1003/article/details/44937057" target="_blank" rel="external"> Android保存图片到图库，Android扫描文件到媒体库，Android保存图片到SD卡  </a></p>
 
+          
         
       
     </div>
 
-    
+    <div>
+      
+    </div>
 
-    
+    <div>
+      
+    </div>
 
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
   </article>
 
+
     
       
-  <article class="post">
-    <header class="post-header">
-      <h1 class="post-title">
-        
-          <a class="post-link" href="/2017/04/25/Android-关于传感器你需要知道的/">Android-关于传感器你需要知道的</a>
-        
-      </h1>
 
-      <div class="post-meta">
-        <span class="post-time">
-          2017年4月25日
-        </span>
-      </div>
-    </header>
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/04/25/Android-关于传感器你需要知道的/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="_SOLID">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="_SOLID的个人博客">
+    </span>
 
     
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/04/25/Android-关于传感器你需要知道的/" itemprop="url">
+                  Android-关于传感器你需要知道的
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-04-25T11:05:53+08:00">
+                2017-04-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
     
 
-    <div class="post-content">
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
       
         
-        
-
-        
-          <p>最近在搞一个自己的App，突发一个想法，给App加一个摇一摇随机查看图片的功能，这样可以使得用户在使用App的时候有更多的乐趣。实现摇一摇肯定少不了传感器，在使用之余，索性总结一下在Android中关于传感器的使用。</p>
+          
+            <p>最近在搞一个自己的App，突发一个想法，给App加一个摇一摇随机查看图片的功能，这样可以使得用户在使用App的时候有更多的乐趣。实现摇一摇肯定少不了传感器，在使用之余，索性总结一下在Android中关于传感器的使用。</p>
 <blockquote>
 <p>本文目录：<br>1.什么是传感器<br>2.常用传感器介绍与用法<br>3.实现图片摇一摇</p>
 </blockquote>
@@ -693,13 +862,7 @@ public class CameraSurfaceView extends SurfaceView {
 <li>温度传感器： TYPE_TEMPERATURE<br> 检测设备的温度</li>
 </ul>
 <p>下面再来看看传感器的平台的可用性</p>
-<figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="http://upload-images.jianshu.io/upload_images/623504-11cb13cb313621ef.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="来源于官网" title="">
-                </div>
-                <div class="image-caption">来源于官网</div>
-            </figure>
+<p><img src="http://upload-images.jianshu.io/upload_images/623504-11cb13cb313621ef.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="来源于官网"></p>
 <p>注意到图中Yes右上角有个上标：1这个类型的传感器在Android1.5（API Level 3）被添加，但是直到Android2.3（API Level 9）也不可用。 2这个传感器是可用的，但是它被弃用。 </p>
 <ul>
 <li>第三个参数是传感器数据更新数据的速度<br>有以下四个值可选，他们的速度是递增的<ul>
@@ -715,13 +878,7 @@ public class CameraSurfaceView extends SurfaceView {
 <p>要实现摇一摇，主要就是去监听手机加速度的变化，当达到一个值的时候就出发摇一摇这个事件。</p>
 <p>说到这，你肯定就知道我们要用的就是<strong>加速度传感器</strong>去实现这个功能。</p>
 <p>先来看看效果图：</p>
-<figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="http://upload-images.jianshu.io/upload_images/623504-8e6bcf68406ee6e8.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="" title="">
-                </div>
-                <div class="image-caption"></div>
-            </figure>
+<p><img src="http://upload-images.jianshu.io/upload_images/623504-8e6bcf68406ee6e8.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
 <p>废话不多说了，下面直接上代码，经过前面的知识储备，我相信你肯定能看懂的<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line"> * Created by _SOLID</div><div class="line"> * Date:2016/6/3</div><div class="line"> * Time:9:55</div><div class="line"> */</div><div class="line">public class ShakePictureUtils implements SensorEventListener &#123;</div><div class="line"></div><div class="line">    // 两次检测的时间间隔</div><div class="line">    private static final int UPTATE_INTERVAL_TIME = 100;</div><div class="line">    // 加速度变化阈值，当摇晃速度达到这值后产生作用</div><div class="line">    private static final int SPEED_THRESHOLD = 2000;</div><div class="line"></div><div class="line">    private Context mContext;</div><div class="line">    private SensorManager mSensorManager = null;</div><div class="line">    private Vibrator mVibrator = null;</div><div class="line">    private PictureDialog mPictureDialog = null;</div><div class="line"></div><div class="line"></div><div class="line">    public ShakePictureUtils(Context context) &#123;</div><div class="line">        mContext = context;</div><div class="line">        mSensorManager = (SensorManager) mContext</div><div class="line">                .getSystemService(Context.SENSOR_SERVICE);</div><div class="line">        mVibrator = (Vibrator) mContext.getSystemService(Context.VIBRATOR_SERVICE);</div><div class="line">        mPictureDialog = new PictureDialog(mContext, R.style.PictureDialog);</div><div class="line">        mPictureDialog.setOnDismissListener(new DialogInterface.OnDismissListener() &#123;</div><div class="line">            @Override</div><div class="line">            public void onDismiss(DialogInterface dialog) &#123;</div><div class="line">                registerSensor();</div><div class="line">            &#125;</div><div class="line">        &#125;);</div><div class="line">    &#125;</div><div class="line"></div><div class="line"></div><div class="line">    private long lastUpdateTime;</div><div class="line">    private float lastX;</div><div class="line">    private float lastY;</div><div class="line">    private float lastZ;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public void onSensorChanged(SensorEvent event) &#123;</div><div class="line">        long currentUpdateTime = System.currentTimeMillis();</div><div class="line"></div><div class="line">        long timeInterval = currentUpdateTime - lastUpdateTime;</div><div class="line"></div><div class="line">        if (timeInterval <span class="tag">&lt; <span class="attr">UPTATE_INTERVAL_TIME</span>) &#123;</span></div><div class="line">            <span class="attr">return</span>;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="attr">lastUpdateTime</span> = <span class="string">currentUpdateTime;</span></div><div class="line">        <span class="attr">float</span>[] <span class="attr">values</span> = <span class="string">event.values;</span></div><div class="line"></div><div class="line">        // 获得<span class="attr">x</span>,<span class="attr">y</span>,<span class="attr">z</span>加速度</div><div class="line">        <span class="attr">float</span> <span class="attr">x</span> = <span class="string">values[0];</span></div><div class="line">        <span class="attr">float</span> <span class="attr">y</span> = <span class="string">values[1];</span></div><div class="line">        <span class="attr">float</span> <span class="attr">z</span> = <span class="string">values[2];</span></div><div class="line"></div><div class="line">        // 获得<span class="attr">x</span>,<span class="attr">y</span>,<span class="attr">z</span>加速度的变化值</div><div class="line">        <span class="attr">float</span> <span class="attr">deltaX</span> = <span class="string">x</span> <span class="attr">-</span> <span class="attr">lastX</span>;</div><div class="line">        <span class="attr">float</span> <span class="attr">deltaY</span> = <span class="string">y</span> <span class="attr">-</span> <span class="attr">lastY</span>;</div><div class="line">        <span class="attr">float</span> <span class="attr">deltaZ</span> = <span class="string">z</span> <span class="attr">-</span> <span class="attr">lastZ</span>;</div><div class="line"></div><div class="line">        // 将现在的坐标变成<span class="attr">last</span>坐标</div><div class="line">        <span class="attr">lastX</span> = <span class="string">x;</span></div><div class="line">        <span class="attr">lastY</span> = <span class="string">y;</span></div><div class="line">        <span class="attr">lastZ</span> = <span class="string">z;</span></div><div class="line"></div><div class="line"></div><div class="line">        <span class="attr">Logger.i</span>("<span class="attr">values</span>[<span class="attr">0</span>] = <span class="string">" + values[0]);</span></div><div class="line">        Logger.i("<span class="attr">values</span>[<span class="attr">1</span>] = <span class="string">" + values[1]);</span></div><div class="line">        Logger.i("<span class="attr">values</span>[<span class="attr">2</span>] = <span class="string">" + values[2]);</span></div><div class="line"></div><div class="line">        double speed = Math.sqrt(deltaX * deltaX + deltaY * deltaY + deltaZ</div><div class="line">                * deltaZ)</div><div class="line">                / timeInterval * 10000;</div><div class="line">        Logger.i("<span class="attr">speed:</span>" + <span class="attr">speed</span>);</div><div class="line">        <span class="attr">if</span> (<span class="attr">speed</span> &gt; SPEED_THRESHOLD) &#123;</div><div class="line">            //在这里可以提供一个回调</div><div class="line">            mVibrator.vibrate(300);</div><div class="line">            requestPicture();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public void onAccuracyChanged(Sensor sensor, int accuracy) &#123;</div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void registerSensor() &#123;</div><div class="line">        Sensor sensor = mSensorManager</div><div class="line">                .getDefaultSensor(Sensor.TYPE_ACCELEROMETER);</div><div class="line">        if (null != sensor)</div><div class="line">            mSensorManager.registerListener(this, sensor,</div><div class="line">                    SensorManager.SENSOR_DELAY_NORMAL);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void unRegisterSensor() &#123;</div><div class="line"></div><div class="line">        lastX = 0;</div><div class="line">        lastY = 0;</div><div class="line">        lastZ = 0;</div><div class="line">        mSensorManager.unregisterListener(this);</div><div class="line">    &#125;</div><div class="line"></div><div class="line"></div><div class="line">    private void requestPicture() &#123;</div><div class="line">        HttpClientManager.getData(Apis.Urls.RandomPicture, new JsonHttpCallBack<span class="tag">&lt;<span class="name">RandomPictureBean</span>&gt;</span>() &#123;</div><div class="line">            @Override</div><div class="line">            public void onStart() &#123;</div><div class="line">                unRegisterSensor();</div><div class="line">                ToastUtils.getInstance().showToast("图片获取中...");</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            @Override</div><div class="line">            public void onSuccess(RandomPictureBean result) &#123;</div><div class="line">                mPictureDialog.setPicture(result.getP_ori());</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            @Override</div><div class="line">            public void onError(Exception e) &#123;</div><div class="line">                registerSensor();</div><div class="line">            &#125;</div><div class="line">        &#125;);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
 <p>我是讲=将摇一摇这个功能做了一下封装，方便以后的使用。代码的实现思想就是去判断三个坐标轴加速度的变化值，当其达到一个阈值的时候则触发摇一摇。<br>最后来看看在Activity中怎么去使用</p>
 <ol>
@@ -738,53 +895,129 @@ public class CameraSurfaceView extends SurfaceView {
 <p>源码地址：<a href="https://github.com/burgessjp/GanHuoIO/blob/master/app/src/main/java/ren/solid/ganhuoio/utils/ShakePictureUtils.java" target="_blank" rel="external">ShakePictureUtils</a></p>
 <p>也请大家也关注下我的一个开源项目<a href="https://github.com/burgessjp/GanHuoIO" target="_blank" rel="external">GanHuoIO</a>。这是基于gank.io提供的api写的一个Android客户端，谢谢。</p>
 
+          
         
       
     </div>
 
-    
+    <div>
+      
+    </div>
 
-    
+    <div>
+      
+    </div>
 
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
   </article>
 
+
     
       
-  <article class="post">
-    <header class="post-header">
-      <h1 class="post-title">
-        
-          <a class="post-link" href="/2017/04/25/Android-Material-Design-兼容库的使用详解/">Android-Material-Design-兼容库的使用详解</a>
-        
-      </h1>
 
-      <div class="post-meta">
-        <span class="post-time">
-          2017年4月25日
-        </span>
-      </div>
-    </header>
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/04/25/Android-Material-Design-兼容库的使用详解/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="_SOLID">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="_SOLID的个人博客">
+    </span>
 
     
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/04/25/Android-Material-Design-兼容库的使用详解/" itemprop="url">
+                  Android-Material-Design-兼容库的使用详解
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-04-25T11:05:53+08:00">
+                2017-04-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
     
 
-    <div class="post-content">
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
       
         
-        
-
-        
-          <p>众所周知Material Design（材质设计）是Google在2014年I/O大会上发布的一种新的设计规范。一经推出就好评如潮，个人是非常喜欢这种风格的，由于他只支持5.0及其以上的设备，开发者也只是去尝尝鲜，并没用在真实的项目中去，使得其在国内的市场并不是太好。随后不久Google就退出了其兼容库Android Design Support Library，兼容至2.1！这绝对是业界良心，极大的便利了我们这些开发者。这一兼容库可以让我们可以在自己的项目真实的去体验一把。百度谷歌一下，其实现在已经有个很多介绍这个支持库的文章，但是很多都并不太详细，大部分让人看了都似懂非懂，我之前也学习过这个库的用法，很久没看基本又忘了，最近我又重新开始学习了这个库，所以本文也主要是对这次学习的一个总结，当然也参考了其他很多的文章，算是站在巨人的肩膀上吧，当然这篇文章也为后来的学习者有更多的参考资料。</p>
+          
+            <p>众所周知Material Design（材质设计）是Google在2014年I/O大会上发布的一种新的设计规范。一经推出就好评如潮，个人是非常喜欢这种风格的，由于他只支持5.0及其以上的设备，开发者也只是去尝尝鲜，并没用在真实的项目中去，使得其在国内的市场并不是太好。随后不久Google就退出了其兼容库Android Design Support Library，兼容至2.1！这绝对是业界良心，极大的便利了我们这些开发者。这一兼容库可以让我们可以在自己的项目真实的去体验一把。百度谷歌一下，其实现在已经有个很多介绍这个支持库的文章，但是很多都并不太详细，大部分让人看了都似懂非懂，我之前也学习过这个库的用法，很久没看基本又忘了，最近我又重新开始学习了这个库，所以本文也主要是对这次学习的一个总结，当然也参考了其他很多的文章，算是站在巨人的肩膀上吧，当然这篇文章也为后来的学习者有更多的参考资料。</p>
 <hr>
 <p>先来几张效果图吧：</p>
 <p><img src="http://upload-images.jianshu.io/upload_images/623504-6faff3933cbdc60b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="图1"></p>
-<figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="http://upload-images.jianshu.io/upload_images/623504-a41e2b7a17ece6fb.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="图2" title="">
-                </div>
-                <div class="image-caption">图2</div>
-            </figure>
+<p><img src="http://upload-images.jianshu.io/upload_images/623504-a41e2b7a17ece6fb.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="图2"></p>
 <p>感兴趣的也可以先看看，最后能做一个什么样的App：<a href="http://pan.baidu.com/s/1pLzj2uJ" target="_blank" rel="external">MDDemo.apk</a></p>
 <hr>
 <p> 说到这个兼容库，其实很多都是可以在Github去找到对应的效果的，其实我们也是可以去用Github上的那些开源项目，那么多的库都要一个一个去引用，还是非常的麻烦，我猜可能Google也是看到这些东西经常被开发者用在了项目中，索性自己将其封装成了一个库，以方便开发者的使用。这个库我们应该怎样去使用呢？这是本文讲解的重点。首先我们看看这个库怎么去引用到我们的项目中：</p>
@@ -798,14 +1031,7 @@ public class CameraSurfaceView extends SurfaceView {
 Snackbar.make(mDrawerLayout, "SnackbarClicked", Snackbar.LENGTH_SHORT).show();</pre>
 
 <p>是不是和Toast很相似。我们来看看它的效果图：</p>
-<figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="http://upload-images.jianshu.io/upload_images/623504-0a98a4b33d51e064.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="SnackWithoutAction" title="">
-                </div>
-                <div class="image-caption">SnackWithoutAction</div>
-            </figure>
-<p>是不是看着比Toast舒服多了</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/623504-0a98a4b33d51e064.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="SnackWithoutAction"><br>是不是看着比Toast舒服多了</p>
 <p>好了，我们再来看看一个包含Action的Snackbar怎么使用</p>
 <pre>
   Snackbar.make(mDrawerLayout, "SnackbarClicked", Snackbar.LENGTH_SHORT).setAction("Action", new View.OnClickListener() {
@@ -817,13 +1043,7 @@ Snackbar.make(mDrawerLayout, "SnackbarClicked", Snackbar.LENGTH_SHORT).show();</
 
 </pre>
 
-<p>这里我给Snackbar设置了一个Action，设置其文字颜色为红色，并带有了一个点击事件，在单击这个Action后就弹出一个Toast，效果图如下<br><figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="http://upload-images.jianshu.io/upload_images/623504-e8c6578336716039.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="SnackbarWithAction" title="">
-                </div>
-                <div class="image-caption">SnackbarWithAction</div>
-            </figure></p>
+<p>这里我给Snackbar设置了一个Action，设置其文字颜色为红色，并带有了一个点击事件，在单击这个Action后就弹出一个Toast，效果图如下<br><img src="http://upload-images.jianshu.io/upload_images/623504-e8c6578336716039.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="SnackbarWithAction"></p>
 <p>##2.TextInputLayout</p>
 <p>使用过EditText的同学肯定知道，有一个叫hint的属性，它可以提示用户此处应该输入什么内容，然而当用户输入真实内容之后，hint的提示内容就消失了，用户的体验效果是十分不好的，TextInputLayout的出现解决了这个问题。</p>
 <p>我们来看看这个控件的是怎么使用的</p>
@@ -848,14 +1068,7 @@ Snackbar.make(mDrawerLayout, "SnackbarClicked", Snackbar.LENGTH_SHORT).show();</
 </pre>
 
 <p>其实这个控件的使用非常简单，我们只需在EditText外面再嵌套一个TextInputLayout就行了。我们来看看效果</p>
-<figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="http://upload-images.jianshu.io/upload_images/623504-d029007f302ecdaa.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="TextInputLayout" title="">
-                </div>
-                <div class="image-caption">TextInputLayout</div>
-            </figure>
-<p>还是很不错的，当用户在输入的时候hint的内容就会跑到输入内容的上边去，其中TextInputLayout中字体的颜色是style文件中的colorAccent（关于colorAccent是什么，文末有一张图看了就清楚了）的颜色。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/623504-d029007f302ecdaa.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="TextInputLayout"><br>还是很不错的，当用户在输入的时候hint的内容就会跑到输入内容的上边去，其中TextInputLayout中字体的颜色是style文件中的colorAccent（关于colorAccent是什么，文末有一张图看了就清楚了）的颜色。</p>
 <p>##3.FloatingActionButton</p>
 <p>FloatingActionButton从名字可以看出它是一个浮动的按钮，它是一个带有阴影的圆形按钮，可以通过fabSize来改变其大小，主要负责界面的基本操作，这个按钮总体来说还是比较简单的。<br>我们来看看它的一些属性：</p>
 <ul>
@@ -871,13 +1084,7 @@ Snackbar.make(mDrawerLayout, "SnackbarClicked", Snackbar.LENGTH_SHORT).show();</
 <pre><android.support.design.widget.floatingactionbutton android:id="@+id/fab_search" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_gravity="bottom|end" android:layout_margin="16dp" android:src="@android:drawable/ic_dialog_email" app:borderwidth="2dp" app:fabsize="normal" app:ripplecolor="#ff0000">
 </android.support.design.widget.floatingactionbutton></pre>
 其效果图如下：
-<figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="http://upload-images.jianshu.io/upload_images/623504-8110e395f1693062.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="FloatingActionButton" title="">
-                </div>
-                <div class="image-caption">FloatingActionButton</div>
-            </figure>
+![FloatingActionButton](http://upload-images.jianshu.io/upload_images/623504-8110e395f1693062.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 ##**4.CoordinatorLayout**
 
@@ -888,20 +1095,8 @@ Snackbar.make(mDrawerLayout, "SnackbarClicked", Snackbar.LENGTH_SHORT).show();</
 2.As a container for a specific interaction with one or more child views
 
 从这里我们可以知道它是一个增强版的FrameLayout，他可以协调其子View的交互，控制手势机滚动技巧。这个控件十分的强大，用处也十分的广泛。就比如刚才说的FloatingActionButton如果用CoordinatorLayout 作为FloatingActionButton的父布局，它将很好的协调Snackbar的显示与FloatingActionButton。
-<figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="http://upload-images.jianshu.io/upload_images/623504-eefc577f31d4d2c6.gif?imageMogr2/auto-orient/strip" alt="没有使用CoordinatorLayout 作为父布局的FloatingActionButton显示Snackbar" title="">
-                </div>
-                <div class="image-caption">没有使用CoordinatorLayout 作为父布局的FloatingActionButton显示Snackbar</div>
-            </figure>
-<figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="http://upload-images.jianshu.io/upload_images/623504-4bb65d3ec110ce37.gif?imageMogr2/auto-orient/strip" alt="使用了CoordinatorLayout 作为父布局的FloatingActionButton显示Snackbar" title="">
-                </div>
-                <div class="image-caption">使用了CoordinatorLayout 作为父布局的FloatingActionButton显示Snackbar</div>
-            </figure>
+![没有使用CoordinatorLayout 作为父布局的FloatingActionButton显示Snackbar](http://upload-images.jianshu.io/upload_images/623504-eefc577f31d4d2c6.gif?imageMogr2/auto-orient/strip)
+![使用了CoordinatorLayout 作为父布局的FloatingActionButton显示Snackbar](http://upload-images.jianshu.io/upload_images/623504-4bb65d3ec110ce37.gif?imageMogr2/auto-orient/strip)
 
 这两个动态图来源于网上，效果是显而易见的，原谅我用的手机测试，所以没法录制动态图（如果有人知道怎么去录制的请告知）。
 还有它的另外一个比较重要的用处是控制协调内容区和AppBarLayout的滚动，这个后面会讲到。这个控件还是比较复杂的，用多了就能慢慢体会到他的强大之处。我对这个控件的还不是那么的清楚，所以在这里提供一篇关于CoordinatorLayout 用法的译文: [掌握 Coordinator Layout](https://www.aswifter.com/2015/11/12/mastering-coordinator/?hmsr=toutiao.io&utm_medium=toutiao.io&utm_source=toutiao.io)
@@ -910,13 +1105,7 @@ Snackbar.make(mDrawerLayout, "SnackbarClicked", Snackbar.LENGTH_SHORT).show();</
 
 抽屉式的导航控件，有了他我们可以使得导航更简单。我们可以直接通过菜单资源文件生成所需的元素。下图左边的即是NavigationView。
 
-<figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="http://upload-images.jianshu.io/upload_images/623504-a103ae085323d307.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="NavigationView" title="">
-                </div>
-                <div class="image-caption">NavigationView</div>
-            </figure>
+![NavigationView](http://upload-images.jianshu.io/upload_images/623504-a103ae085323d307.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 下面我们来看看它是怎么实现的吧。
 <pre>
 <?xml version="1.0" encoding="utf-8"?>
@@ -984,34 +1173,16 @@ Snackbar.make(mDrawerLayout, "SnackbarClicked", Snackbar.LENGTH_SHORT).show();</
 
   这三个控件我用一个例子一下讲解了，在实际的使用中这三个控件还是经常会组合在一起的。
 - **AppBarLayout**：其继承于LinearLayout，使用AppBarLayout可以让包含在其中的子控件能响应被标记了ScrollingViewBehavior的的滚动事件（要与CoordinatorLayout 一起使用），利用它我们可以很容易的去实现视差滚动效果，这样所你可能还是不太懂，千言万语不如一张图来的直接爽快（这样图还是来源于网上，其蓝色的部分就是AppBarLayout，内容区就是被标记了ScrollingViewBehavior的，可以看到效果是不是挺不错的）。
-<figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="http://upload-images.jianshu.io/upload_images/623504-703d4b65d11af297.gif?imageMogr2/auto-orient/strip" alt="" title="">
-                </div>
-                <div class="image-caption"></div>
-            </figure>
+![](http://upload-images.jianshu.io/upload_images/623504-703d4b65d11af297.gif?imageMogr2/auto-orient/strip)
 
 - **CollapsingToolbarLayout** ：让Toolbar可伸缩，在伸缩的时候决定ToolBar是移除屏幕和固定在最上面。由于Toolbar 只能固定到屏幕顶端并且不能做出好的动画效果，所以才有了这个Layout的出现。
 - **TabLayout**：这个其实和我们之前使用的第三方库ViewPagerIndicator是很类似的，一般都和ViewPager一起使用，效果如下图： 
-<figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="http://upload-images.jianshu.io/upload_images/623504-1ffee0282ce10e14.gif?imageMogr2/auto-orient/strip" alt="动态图来源于网上" title="">
-                </div>
-                <div class="image-caption">动态图来源于网上</div>
-            </figure>
+![动态图来源于网上](http://upload-images.jianshu.io/upload_images/623504-1ffee0282ce10e14.gif?imageMogr2/auto-orient/strip)
 
 基本知道他们是干什么用的了，下面就让我们动手，看看到底怎么用吧。
 
 先来几张下面我们要实现的效果。由于我是真机测试，没法录制动态图，这里就用几张静态图代替了。
-<figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="http://upload-images.jianshu.io/upload_images/623504-a7165c9de0802f03.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="" title="">
-                </div>
-                <div class="image-caption"></div>
-            </figure>
+![](http://upload-images.jianshu.io/upload_images/623504-a7165c9de0802f03.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 布局文件（这个是很重要的，很多的效果都是直接在布局文件中配置的）:
 <pre>
@@ -1177,61 +1348,131 @@ public class BookDetailActivity extends BaseActivity {
 <p>NestedScrollView is just likeScrollView, but it supports acting as both a nested scrolling parent and child on both new and old versions of Android. Nested scrolling is enabled by default.</p>
 </blockquote>
 <p><strong>如果感觉还不错的就给个喜欢支持一下吧，有问题请留言，谢谢</strong></p>
-<p>最后附一张MD的主题色解析图:<br><figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="http://upload-images.jianshu.io/upload_images/623504-d58e788d279d533d.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="MD主题色解析.jpg" title="">
-                </div>
-                <div class="image-caption">MD主题色解析.jpg</div>
-            </figure></p>
+<p>最后附一张MD的主题色解析图:<br><img src="http://upload-images.jianshu.io/upload_images/623504-d58e788d279d533d.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="MD主题色解析.jpg"></p>
 
+          
         
       
     </div>
 
-    
+    <div>
+      
+    </div>
 
-    
+    <div>
+      
+    </div>
 
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
   </article>
 
+
     
       
-  <article class="post">
-    <header class="post-header">
-      <h1 class="post-title">
-        
-          <a class="post-link" href="/2017/04/06/自定义ItemDecoration这个问题你真的注意到了吗/">自定义ItemDecoration这个问题你真的注意到了吗</a>
-        
-      </h1>
 
-      <div class="post-meta">
-        <span class="post-time">
-          2017年4月6日
-        </span>
-      </div>
-    </header>
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/04/06/自定义ItemDecoration这个问题你真的注意到了吗/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="_SOLID">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="_SOLID的个人博客">
+    </span>
 
     
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/04/06/自定义ItemDecoration这个问题你真的注意到了吗/" itemprop="url">
+                  自定义ItemDecoration这个问题你真的注意到了吗
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-04-06T16:14:00+08:00">
+                2017-04-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
     
 
-    <div class="post-content">
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
       
         
-        
-
-        
-          <blockquote>
+          
+            <blockquote>
 <p>本文讨论的是关于自定义ItemDecoration容易被忽略的问题，此文适合有过自定义ItemDecoration经验的同学阅读，还没有学习过的可以先去看看相关文章再来看本文。</p>
 </blockquote>
 <p><strong>ItemDecoration</strong> 我相信只要使用过RecyclerView的同学肯定都比较熟悉了，我们在使用 <strong>RecyclerView</strong> 的时候一般都是用这个来画分隔线的，不得不说十分的好用。但是在最近发现在使用自定义的<strong>ItemDecoration</strong>上遇到了一些细节上的问题，我这里自定义了一个<strong>GridDividerItemDecoration</strong> ，用于网格布局的分隔，大概效果如下图所示：</p>
-<figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="http://upload-images.jianshu.io/upload_images/623504-79211e4d8ae74ee9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="" title="">
-                </div>
-                <div class="image-caption"></div>
-            </figure>
+<p><img src="http://upload-images.jianshu.io/upload_images/623504-79211e4d8ae74ee9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
 <p><strong>绘制的逻辑大概是这样的：当 itemView 不是最后一列或者最后一行的时候就绘制右侧和底部分隔线，如果是最后一列时则不绘制右侧分隔线，如果是最后一行则不绘制底部分隔线。</strong></p>
 <p>代码大概是这样的<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">if (isLastRow &amp;&amp; isLastColumn) &#123;//最后一行最后一列什么都不绘制</div><div class="line">    outRect.set(0, 0, 0, 0);</div><div class="line">&#125; else if (isLastRow) &#123;// 如果是最后一行，则不需要绘制底部</div><div class="line">    outRect.set(0, 0, mDividerHeight, 0);</div><div class="line">&#125; else if (isLastColumn) &#123;// 如果是最后一列，则不需要绘制右边</div><div class="line">    outRect.set(0, 0, 0, mDividerHeight);</div><div class="line">&#125; else &#123;</div><div class="line">    outRect.set(0, 0, mDividerHeight,</div><div class="line">            mDividerHeight);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
 <p>这里的分割线设置的宽度只有1dp，看起来似乎没有什么问题，但是如果把分隔线的宽度设置为20dp效果如下图所示：</p>
@@ -1248,13 +1489,7 @@ public class BookDetailActivity extends BaseActivity {
 <p>可能有些同学看到上面式子会有点凌乱，这里我直接告诉你最后推算出的结论好了，L<sub>n</sub> 是一个以 <strong>dividerWidth-eachOffset</strong> 为差值的一个等差数列，R<sub>n</sub>就等于 <strong>eachWidth-L<sub>n</sub></strong>。所以我们最后对 getItemOffsets 做了改进，代码如下：</p>
 <figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">int left = 0;</div><div class="line">int top = 0;</div><div class="line">int right = 0;</div><div class="line">int bottom = 0;</div><div class="line">int eachWidth = (spanCount - 1) * mDividerHeight / spanCount;</div><div class="line">int dl = mDividerHeight - eachWidth;</div><div class="line"></div><div class="line">left = itemPosition % spanCount * dl;</div><div class="line">right = eachWidth - left;</div><div class="line">bottom = mDividerHeight;</div><div class="line"></div><div class="line">if (isLastRow) &#123;</div><div class="line">    bottom = 0;</div><div class="line">&#125;</div><div class="line">outRect.set(left, top, right, bottom);</div></pre></td></tr></table></figure>
 <p>最后的效果图如下：</p>
-<figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="http://upload-images.jianshu.io/upload_images/623504-36ce8945af500155.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="" title="">
-                </div>
-                <div class="image-caption"></div>
-            </figure>
+<p><img src="http://upload-images.jianshu.io/upload_images/623504-36ce8945af500155.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
 <p>完美的解决了上面出现的问题，这都是些细节上的问题，如果不怎么注意，还真的很难去注意到，以后如果遇到其他类似的问题也可以很容易的解决了。本文只是讨论了在使用ItemDecoration其中的一个问题，并不算难，但是也很重要，所以大家在平时的开发中还是应该多多注意细节上的问题。</p>
 <p>最后送上本文源码地址:</p>
 <ol>
@@ -1265,126 +1500,295 @@ public class BookDetailActivity extends BaseActivity {
 </ul>
 <p>顺便给大家推荐一个十分强大的开源自定义的ItemDecoration ，适用于 <strong>LinearLayoutManager</strong>作为布局管理器的RecyclerView : <a href="https://github.com/yqritc/RecyclerView-FlexibleDivider" target="_blank" rel="external">RecyclerView-FlexibleDivider</a></p>
 
+          
         
       
     </div>
 
-    
+    <div>
+      
+    </div>
 
-    
+    <div>
+      
+    </div>
 
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
   </article>
+
 
     
   </section>
 
   
   <nav class="pagination">
-    
-      <a class="prev" href="/page/3/">
-        <i class="iconfont icon-left"></i>
-        <span class="prev-text">上一页</span>
-      </a>
-    
-    
+    <a class="extend prev" rel="prev" href="/page/3/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span>
   </nav>
+
 
 
           </div>
           
 
-        </div>  
-      </main>
 
-      <footer id="footer" class="footer">
+          
 
-  <div class="social-links">
-    
-      
+        </div>
         
-          <a href="mailto:your@email.com" class="iconfont icon-email" title="email"></a>
-        
-      
-    
-      
-    
-      
-    
-      
-    
-      
-    
-      
-    
-      
-    
-      
-    
-      
-    
-      
-    
-    
-    
-      
-      <a href="/atom.xml" class="iconfont icon-rss" title="rss"></a>
-    
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
   </div>
 
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
 
-<div class="copyright">
-  <span class="power-by">
-    由 <a class="hexo-link" href="https://hexo.io/">Hexo</a> 强力驱动
-  </span>
-  
-  <span class="theme-info">
-    主题 - 
-    <a class="theme-link" href="https://github.com/ahonn/hexo-theme-even">Even</a>
-  </span>
+      
 
-  <span class="copyright-year">
-    
-    &copy; 
-     
-      2015 - 
-    
-    2017
+      
 
-    <span class="heart">
-      <i class="iconfont icon-heart"></i>
-    </span>
-    <span class="author">_SOLID</span>
-  </span>
-</div>
-      </footer>
+      <section class="site-overview sidebar-panel sidebar-panel-active">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="_SOLID" />
+          <p class="site-author-name" itemprop="name">_SOLID</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
 
-      <div class="back-to-top" id="back-to-top">
-        <i class="iconfont icon-up"></i>
-      </div>
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">19</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-name">标签</span>
+              
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+
+      
+
     </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">_SOLID</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
 
     
-
-
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
     
 
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
 
 
 
   
-    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
   
 
   
-    <script type="text/javascript" src="/lib/slideout/slideout.js"></script>
-  
 
   
 
 
-    <script type="text/javascript" src="/js/src/even.js?v=2.4.x"></script>
-<script type="text/javascript" src="/js/src/bootstrap.js?v=2.4.x"></script>
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
 
-    
-  </body>
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
 </html>
