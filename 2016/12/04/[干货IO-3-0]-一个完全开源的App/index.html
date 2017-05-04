@@ -1,0 +1,712 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="项目," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="之前写过一篇关于介绍[干货IO]的文章基于Gank.IO提供的API的第三方客户端，可以在线收藏[项目开源]，大致介绍了用到了什么，有哪些功能，一句话就是让大家知道了这个app的存在，之后了一段时间对app也在一直维护，有过好几次的更新，但是改动程度都不是太大，改的最大的一次就是重构底层的网络请求，但并不是太彻底，所以也遗留下了一些问题，其他的就是一些小功能的增增改改。之所以再次写关于[干货IO]">
+<meta name="keywords" content="项目">
+<meta property="og:type" content="article">
+<meta property="og:title" content="干货IO 3.0一个完全开源的App">
+<meta property="og:url" content="http://yoursite.com/2016/12/04/[干货IO-3-0]-一个完全开源的App/index.html">
+<meta property="og:site_name" content="_SOLID的个人博客">
+<meta property="og:description" content="之前写过一篇关于介绍[干货IO]的文章基于Gank.IO提供的API的第三方客户端，可以在线收藏[项目开源]，大致介绍了用到了什么，有哪些功能，一句话就是让大家知道了这个app的存在，之后了一段时间对app也在一直维护，有过好几次的更新，但是改动程度都不是太大，改的最大的一次就是重构底层的网络请求，但并不是太彻底，所以也遗留下了一些问题，其他的就是一些小功能的增增改改。之所以再次写关于[干货IO]">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/623504-b825a653dee193d7.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/300">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/623504-430e5c355e524eca.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/300">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/623504-a0a8c1ba87cc46c6.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/300">
+<meta property="og:updated_time" content="2017-05-04T03:38:34.223Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="干货IO 3.0一个完全开源的App">
+<meta name="twitter:description" content="之前写过一篇关于介绍[干货IO]的文章基于Gank.IO提供的API的第三方客户端，可以在线收藏[项目开源]，大致介绍了用到了什么，有哪些功能，一句话就是让大家知道了这个app的存在，之后了一段时间对app也在一直维护，有过好几次的更新，但是改动程度都不是太大，改的最大的一次就是重构底层的网络请求，但并不是太彻底，所以也遗留下了一些问题，其他的就是一些小功能的增增改改。之所以再次写关于[干货IO]">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/623504-b825a653dee193d7.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/300">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2016/12/04/[干货IO-3-0]-一个完全开源的App/"/>
+
+
+
+
+
+  <title>干货IO 3.0一个完全开源的App | _SOLID的个人博客</title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">_SOLID的个人博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/12/04/[干货IO-3-0]-一个完全开源的App/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="_SOLID">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="_SOLID的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                干货IO 3.0一个完全开源的App
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-12-04T21:46:00+08:00">
+                2016-12-04
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>之前写过一篇关于介绍[干货IO]的文章<a href="http://www.jianshu.com/p/3f137269a942" target="_blank" rel="external">基于Gank.IO提供的API的第三方客户端，可以在线收藏[项目开源]</a>，大致介绍了用到了什么，有哪些功能，一句话就是让大家知道了这个app的存在，之后了一段时间对app也在一直维护，有过好几次的更新，但是改动程度都不是太大，改的最大的一次就是重构底层的网络请求，但并不是太彻底，所以也遗留下了一些问题，其他的就是一些小功能的增增改改。<br>之所以再次写关于<strong>[干货IO]</strong>的文章，就是想纪录一下做这个app的心路历程，以及介绍一下里面的技术实现。</p>
+<p><strong>在这里再次感谢一下<a href="https://github.com/daimajia" target="_blank" rel="external">daimajia</a>，没有<a href="http://gank.io/" target="_blank" rel="external">gank.io</a>就不会有这个app的存在，如果还有不知道的可以每天都去这个网站看看，除了周六周末两天不更新之外，每天都会有技术干货的推送更新。</strong></p>
+<p>先说下这个3.0版本更新的主要内容吧</p>
+<ul>
+<li>1.UI风格大调整，全新的 UI 风格</li>
+<li>2.支持干货配图</li>
+<li>3.新增 gank 最近推出的闲读</li>
+<li>4.新增搜索</li>
+<li>5.修复仅Wifi加载图片的bug</li>
+<li>6.行为更改：长按干货收藏</li>
+</ul>
+<p>下面是应用部分截图：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/623504-b825a653dee193d7.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/300" alt="p1"><br><img src="http://upload-images.jianshu.io/upload_images/623504-430e5c355e524eca.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/300" alt="p2.jpg"><br><img src="http://upload-images.jianshu.io/upload_images/623504-a0a8c1ba87cc46c6.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/300" alt="p3.jpg"></p>
+<p>为了不影响文章的可读性，这里就不放太多的截图了，感兴趣的可以去安装体验。</p>
+<hr>
+<p>好了，开始正题。</p>
+<h3 id="干货IO-1-0"><a href="#干货IO-1-0" class="headerlink" title="干货IO 1.0"></a>干货IO 1.0</h3><p>大概是今年3月份的时候关注了gan.io这个网站，这上面每天都会提供很多的技术干货，后面的时间我也是受益良多，与此同时也知道了drakeet为之做的一个 App <a href="https://github.com/drakeet/Meizhi" target="_blank" rel="external">Meizhi</a>，这个App最近好像有更新，非常好的一个开源项目，从这个项目中我也学到了很多。众所周知，gan.io是客户端最多的一个网站，应用市场一搜索就可以搜到很多关于gank的应用，但这些应用都有一个共同点，没有收藏功能，我个人感觉收藏功能还是比较重要的，他可以防止以后想回过来再看的时候不用花太多的时间去一页一页的找，这个就是我最开始想做这个App的的主要动机。于是就有了 <strong>干货IO 1.0</strong> 的出现，也是一个完全开源项目，在今年五月份就提交到了github，只有查看最新干货，分类浏览和收藏三个功能，只能说达到了预期目标，做的相对而言也比较的粗糙，App并不是那么流畅。</p>
+<p>1.0系列版本有过好几次更新，大多改动都不太大，基本上都是些bug的修复和一些小功能的增加，最大的一次改动就是使用 RxJava + Retrofit + MVP重构这个项目了，底层的代码改动算是比较大的，由于时间上的原因这次重构并不是太彻底，也因此造成了代码的混乱。说到这里我们来简单说说RxJava 、 Retrofit 、 MVP这三个技术吧，我相信大家对这三个技术肯定也不陌生。</p>
+<p>RxJava可以以流的方式去处理我们的数据，线程的切换上也是十分的方便，可以大大减少代码量，网络上也涌现出了相关的库，很大程度上方便了我们的开发，RxJava相关的文章可以去我管理的专题看看 <a href="http://www.jianshu.com/collection/d79a6385bded" target="_blank" rel="external">RxJava系列专题（Android方向）</a>，这个专题基本上收录完了简书上关于RxJava最好的文章，当然，你有相关的比较好的文章也可以往这个专题投稿。</p>
+<p>Retrofit是Square公司出品的又一大神器，一个高质量的http库，现在十分流行，网上关于他的文章也是多不胜数，他极大化的简化了我们的网络请求，使得我们的代码更加可读，以及方便后期的维护，加上RxJava简直就是完美 。</p>
+<p>MVP是Android目前比较受欢迎的一种设计模式，个人感觉这个库比较适合于多人共同维护开发的大项目，一般的项目用MVP开发，会多出很多的类文件，有点影响开发效率，1.0版本就试过用MVP去重构项目，最后发现大大增大了我们的工作量，本来很快就能完成的一个功能，增加了很多的类文件，最后到了3.0版本我果断去掉了MVP（还残留了一部分）。项目开发的时候应该实际情况去选择设计模式，而不是盲目的套用现在十分流行的。</p>
+<h3 id="干货IO-2-0"><a href="#干货IO-2-0" class="headerlink" title="干货IO 2.0"></a>干货IO 2.0</h3><p>这个版本在功能上其实没什么改变，只是调整了一下UI，把侧滑菜单中的部门功能放到了底部选项卡中，加入了谷歌最新推出的<strong>BottomNavigationBar</strong>。</p>
+<h3 id="干货IO-3-0"><a href="#干货IO-3-0" class="headerlink" title="干货IO 3.0"></a>干货IO 3.0</h3><p>这个版本变化时比较大的，断断续续的花了我一周的时间去做，基本上是完全重构之前所有的代码，这次的重构是的代码更加的干净，比较有学习的价值，网络请求完全采用Retrofit+RxJava，网络请求也更加的清晰可控，新增了搜索和闲读，干货有了Gif配图，应用也更具MD的风格，在这里必须感谢下<a href="https://github.com/ryanhoo/Android-Proficiency-Exercise" target="_blank" rel="external">Android-Proficiency-Exercise</a>，分类列表的UI样式就来源于他。刚开始在做gif图加载的时候，加载十分的慢，并且内存使用也十分的大，最后经过查阅资料把Glide的缓存策略改为<code>DiskCacheStrategy.SOURCE</code>就可以了。列表的Adapter使用的是drakeet的<a href="https://github.com/drakeet/MultiType" target="_blank" rel="external">MultiType</a>，这个库处理含有多种itemType的RecyclerView非常的棒！如果还不知道这个库的，我强烈推荐使用。同时我基于<a href="https://github.com/drakeet/MultiType" target="_blank" rel="external">MultiType</a>也封装了一个通用列表的抽象类，很简单的就能实现一个列表，添加头部这个都不是事，最简单的列表只需实现loadData方法。<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">@Override</div><div class="line">public void loadData(final int pageIndex) &#123;</div><div class="line">    ServiceFactory.getInstance().createService(GankService.class)</div><div class="line">            .getGanHuo(mType, pageIndex)</div><div class="line">            .compose(TransformUtils.&lt;HttpResult&lt;List&lt;GanHuoDataBean&gt;&gt;&gt;defaultSchedulers())</div><div class="line">            .subscribe(new Subscriber&lt;HttpResult&lt;List&lt;GanHuoDataBean&gt;&gt;&gt;() &#123;</div><div class="line">                @Override</div><div class="line">                public void onCompleted() &#123;</div><div class="line"></div><div class="line">                &#125;</div><div class="line"></div><div class="line">                @Override</div><div class="line">                public void onError(Throwable e) &#123;</div><div class="line">                    showError(new Exception(e));</div><div class="line">                &#125;</div><div class="line"></div><div class="line">                @Override</div><div class="line">                public void onNext(HttpResult&lt;List&lt;GanHuoDataBean&gt;&gt; listHttpResult) &#123;</div><div class="line">                    onDataSuccessReceived(pageIndex, listHttpResult.results);</div><div class="line">                &#125;</div><div class="line">            &#125;);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>上面的代码来源于分类列表Fragment，具体的实现可以去看文章末尾的源码。好了差不多就是这些了，这里贴代码也没有什么意义，反而影响文章的可阅读性，用到了哪些技术文章中也提到了，这个App综合了我前面好几篇博客的内容，也算是对之前讲解的技术的一个综合应用，并且应用是完全开源的，阅读源码可以看到更多的技术细节实现，反而更直接有效。如果在使用过程中发现有bug，非常欢迎反馈，我会继续维护这个项目。<br>写到这里突然感觉自己逼逼了好多的废话，轻喷~~~</p>
+<h3 id="特别感谢"><a href="#特别感谢" class="headerlink" title="特别感谢"></a>特别感谢</h3><p><a href="https://github.com/daimajia" target="_blank" rel="external">daimajia</a>、<a href="https://github.com/drakeet" target="_blank" rel="external">drakeet</a>、<a href="https://github.com/ryanhoo/Android-Proficiency-Exercise" target="_blank" rel="external">Android-Proficiency-Exercise</a></p>
+<p>应用体验下载地址:<a href="http://android.myapp.com/myapp/detail.htm?apkName=ren.solid.ganhuoio" target="_blank" rel="external">点击下载</a><br>源码传送门：<a href="https://github.com/burgessjp/GanHuoIO" target="_blank" rel="external">GanHuoIO</a></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/项目/" rel="tag"># 项目</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/04/06/自定义ItemDecoration这个问题你真的注意到了吗/" rel="next" title="自定义ItemDecoration这个问题你真的注意到了吗">
+                <i class="fa fa-chevron-left"></i> 自定义ItemDecoration这个问题你真的注意到了吗
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/10/25/分享一种RecyclerView滑动到底部自动加载的实现方案/" rel="prev" title="分享一种RecyclerView滑动到底部自动加载的实现方案">
+                分享一种RecyclerView滑动到底部自动加载的实现方案 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="_SOLID" />
+          <p class="site-author-name" itemprop="name">_SOLID</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">19</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-name">标签</span>
+              
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#干货IO-1-0"><span class="nav-number">1.</span> <span class="nav-text">干货IO 1.0</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#干货IO-2-0"><span class="nav-number">2.</span> <span class="nav-text">干货IO 2.0</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#干货IO-3-0"><span class="nav-number">3.</span> <span class="nav-text">干货IO 3.0</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#特别感谢"><span class="nav-number">4.</span> <span class="nav-text">特别感谢</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">_SOLID</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

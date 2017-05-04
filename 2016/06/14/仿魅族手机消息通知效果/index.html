@@ -1,0 +1,671 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Android," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="用了一年多的魅族手机了，先不说手机性能怎么样，个人是非常喜欢魅族的UI，各方面都比较符合我的审美，感觉魅族在UI的设计上在国内还是听超前的吧。这不是广告，这只是一条华丽的分割线123456789101112131415161718---下面就进入今天的正题吧。今天我要实现的是一个魅族的通知效果，先来看看魅族原生的效果吧。![](http://upload-images.jianshu.io/upl">
+<meta name="keywords" content="Android">
+<meta property="og:type" content="article">
+<meta property="og:title" content="仿魅族手机消息通知效果">
+<meta property="og:url" content="http://yoursite.com/2016/06/14/仿魅族手机消息通知效果/index.html">
+<meta property="og:site_name" content="_SOLID的个人博客">
+<meta property="og:description" content="用了一年多的魅族手机了，先不说手机性能怎么样，个人是非常喜欢魅族的UI，各方面都比较符合我的审美，感觉魅族在UI的设计上在国内还是听超前的吧。这不是广告，这只是一条华丽的分割线123456789101112131415161718---下面就进入今天的正题吧。今天我要实现的是一个魅族的通知效果，先来看看魅族原生的效果吧。![](http://upload-images.jianshu.io/upl">
+<meta property="og:updated_time" content="2017-05-04T03:41:18.997Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="仿魅族手机消息通知效果">
+<meta name="twitter:description" content="用了一年多的魅族手机了，先不说手机性能怎么样，个人是非常喜欢魅族的UI，各方面都比较符合我的审美，感觉魅族在UI的设计上在国内还是听超前的吧。这不是广告，这只是一条华丽的分割线123456789101112131415161718---下面就进入今天的正题吧。今天我要实现的是一个魅族的通知效果，先来看看魅族原生的效果吧。![](http://upload-images.jianshu.io/upl">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2016/06/14/仿魅族手机消息通知效果/"/>
+
+
+
+
+
+  <title>仿魅族手机消息通知效果 | _SOLID的个人博客</title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">_SOLID的个人博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/06/14/仿魅族手机消息通知效果/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="_SOLID">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="_SOLID的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                仿魅族手机消息通知效果
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-06-14T11:41:00+08:00">
+                2016-06-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>用了一年多的魅族手机了，先不说手机性能怎么样，个人是非常喜欢魅族的UI，各方面都比较符合我的审美，感觉魅族在UI的设计上在国内还是听超前的吧。这不是广告，这只是一条华丽的分割线<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">---</div><div class="line"></div><div class="line">下面就进入今天的正题吧。今天我要实现的是一个魅族的通知效果，先来看看魅族原生的效果吧。</div><div class="line"></div><div class="line">![](http://upload-images.jianshu.io/upload_images/623504-62c7658ba7ace254.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">最上面的那个区域就是魅族魅族的通知，在一段时间后会自动消失，并且可以滑动删除。这样做给用户的体验还是挺不错的。</div><div class="line"></div><div class="line">既然要能脱离应用显示，第一个想到的肯定是WindowManager，当然只是为了在应用内显示PopupWindow也可以，但是PopupWindow内部也是用的WindowManager实现的，所以最后我选择了WindowManager去在实现这个效果。</div><div class="line"></div><div class="line">那么来看看最终做出来的效果吧。</div><div class="line"></div><div class="line">![](http://upload-images.jianshu.io/upload_images/623504-ad326cabb19e671a.gif?imageMogr2/auto-orient/strip)</div><div class="line"></div><div class="line">和原生的还是有那么一些的差别，最重要的一点就是我的这个没做到覆盖状态栏，在其中我也想了很多办法，始终还是没能实现，当然如果有知道的也望你的指点</div></pre></td></tr></table></figure></p>
+<p>如果还有不太了解WindowManager的同学，推荐去看看<strong>码农小阿飞</strong>的这篇文章<a href="http://www.jianshu.com/p/95ceb0a2ed27" target="_blank" rel="external">像360悬浮窗那样，用WindowManager实现炫酷的悬浮迷你音乐盒（上）</a></p>
+<p>###下面来看看具体的实现<br>代码我就不全文贴了，这样做比较影响阅读，文末会有源码链接。</p>
+<p>先来看看WindowManager创建的这一块<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">      mWindowManager = (WindowManager) </div><div class="line">mContext.getSystemService(Context.WINDOW_SERVICE);</div><div class="line">      mWindowParams = new WindowManager.LayoutParams();</div><div class="line">      mWindowParams.type = WindowManager.LayoutParams.TYPE_TOAST;// 系统提示window</div><div class="line">      mWindowParams.gravity = Gravity.LEFT | Gravity.TOP;</div><div class="line">      mWindowParams.width = WindowManager.LayoutParams.MATCH_PARENT;</div><div class="line">      mWindowParams.height = WindowManager.LayoutParams.WRAP_CONTENT;</div><div class="line">      mWindowParams.flags = </div><div class="line">              WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL |</div><div class="line">              WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS;</div><div class="line">      //设置进入和退出动画</div><div class="line">      mWindowParams.windowAnimations = R.style.NotificationAnim;</div><div class="line">      mWindowParams.x = 0;</div><div class="line">      mWindowParams.y = -mStatusBarHeight;</div></pre></td></tr></table></figure></p>
+<p>这里设置了很多的flag，<br>FLAG_LAYOUT_NO_LIMITS：让Window能全屏显示，能延伸至状态栏<br>FLAG_NOT_TOUCH_MODAL: 不阻塞事件传递到后面的窗口,如果不设置这个flag，当我们的Window显示出来的时候，Window之外的地方就接收不到任何的事件。<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">mWindowParams.windowAnimations = R.style.NotificationAnim;</div></pre></td></tr></table></figure></p>
+<p>这句就是设置Window显示和消失的默认动画。</p>
+<p>由于这个通知窗口是全屏显示，如果不做任何的处理，状态栏就会遮挡住通知窗口的一部分（ps：不知道怎么解决让通知窗口覆盖状态栏的办法）。我的解决方案是，在布局文件中添加一个占位的View然后在代码中动态得到状态栏的高度，然后对这个占位View的高度赋值，还是很好的解决了这个问题。</p>
+<p>到这里就差不多可以将通知窗口给显示出来了。接着来看下怎么实现滑动功能。</p>
+<p>滑动的实现其实也还是比较的简单，就是对内容视图添加一个OnTouch事件。然后在OnTouch事件里面做一些处理。下面看代码的详细实现：<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line">private int downX = 0;</div><div class="line"> private int direction = DIRECTION_NONE;</div><div class="line"></div><div class="line"> @Override</div><div class="line"> public boolean onTouch(View v, MotionEvent event) &#123;</div><div class="line">     if (isAnimatorRunning()) &#123;</div><div class="line">         return false;</div><div class="line">     &#125;</div><div class="line">     switch (event.getAction()) &#123;</div><div class="line">         case MotionEvent.ACTION_DOWN:</div><div class="line">             downX = (int) event.getRawX();//记录下相对于屏幕的坐标</div><div class="line">             break;</div><div class="line">         case MotionEvent.ACTION_MOVE:</div><div class="line">             //处于滑动状态就取消自动消失</div><div class="line">             mHandler.removeMessages(HIDE_WINDOW);</div><div class="line">             int moveX = (int) event.getRawX() - downX;</div><div class="line">             //判断滑动方向</div><div class="line">             if (moveX &gt; 0) &#123;</div><div class="line">                 direction = DIRECTION_RIGHT;</div><div class="line">             &#125; else &#123;</div><div class="line">                 direction = DIRECTION_LEFT;</div><div class="line">             &#125;</div><div class="line">             updateWindowLocation(moveX, mWindowParams.y);//更新窗口的位置</div><div class="line">             break;</div><div class="line">         case MotionEvent.ACTION_UP:</div><div class="line">             if (Math.abs(mWindowParams.x) &gt; mScreenWidth / 2) &#123;</div><div class="line">                 startDismissAnimator(direction);//开始消失动画</div><div class="line">             &#125; else &#123;</div><div class="line">                 startRestoreAnimator();//开始恢复动画</div><div class="line">             &#125;</div><div class="line">             break;</div><div class="line">     &#125;</div><div class="line">     return true;</div><div class="line"> &#125;</div></pre></td></tr></table></figure></p>
+<p>这段代码其实并不复杂，只要仔细看看就会懂了。</p>
+<p>关于对通知窗体里面的赋值，我用的是构造者模式。比较重要的就是这些了，更详细的代码实现可以去看源码。</p>
+<p>来看看怎么去使用:<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">MeiZhuNotification notification =</div><div class="line">               new MeiZhuNotification.Builder().setContext(this)</div><div class="line">                       .setTime(System.currentTimeMillis())</div><div class="line">                       .setImgRes(R.drawable.notify)</div><div class="line">                       .setTitle("你收到了一条消息")</div><div class="line">                       .setContent("人丑就得多读书").build();</div><div class="line"></div><div class="line">notification.show();</div></pre></td></tr></table></figure></p>
+<p>如果没设置图标和标题就相当于一条普通的消息，也还是比较实用的。</p>
+<p>最后，源码链接：<a href="https://github.com/burgessjp/MeiZhuNotification" target="_blank" rel="external">MeiZhuNotification</a></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Android/" rel="tag"># Android</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/06/15/是时候学习RxJava了/" rel="next" title="是时候学习RxJava了">
+                <i class="fa fa-chevron-left"></i> 是时候学习RxJava了
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/06/03/Android-关于传感器你需要知道的/" rel="prev" title="Android-关于传感器你需要知道的">
+                Android-关于传感器你需要知道的 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview sidebar-panel sidebar-panel-active">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="_SOLID" />
+          <p class="site-author-name" itemprop="name">_SOLID</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">19</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-name">标签</span>
+              
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">_SOLID</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

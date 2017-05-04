@@ -1,0 +1,697 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Android," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="源码有更新：加入动画，动画由简书网友xsfelvis提供  我们都知道自定义View一般有三种直接继承View、继承原有的控件对控件的进行修改、重新拼装组合，最后一种主要针对于ViewGroup。具体的怎么做不是本文的所涉及的内容（本文是基于第一种方式实现的），还不太了解的请自行查询相关资料。这次这篇文章主要给大家带来一个高仿QQ健康的自定义View的实现，在介绍的过程中会对涉及到的自定义View">
+<meta name="keywords" content="Android">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android自定义View之高仿QQ健康">
+<meta property="og:url" content="http://yoursite.com/2016/04/11/Android自定义View之高仿QQ健康/index.html">
+<meta property="og:site_name" content="_SOLID的个人博客">
+<meta property="og:description" content="源码有更新：加入动画，动画由简书网友xsfelvis提供  我们都知道自定义View一般有三种直接继承View、继承原有的控件对控件的进行修改、重新拼装组合，最后一种主要针对于ViewGroup。具体的怎么做不是本文的所涉及的内容（本文是基于第一种方式实现的），还不太了解的请自行查询相关资料。这次这篇文章主要给大家带来一个高仿QQ健康的自定义View的实现，在介绍的过程中会对涉及到的自定义View">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/623504-c9055114e1633799.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/623504-30892374cc2e5b46.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/623504-58e2b66f6ae021c4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/623504-0ce87cd7b50c2149.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/623504-6fe50f733534a453.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/623504-a5fe9bc9b8daccbf.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/623504-6361b545aabc8639.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/623504-834e3287e7252674.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/623504-b7b0bd4982e2d151.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/623504-bb924a232b8f1127.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/623504-f41852622a8a8d73.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2017-05-04T03:51:09.631Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android自定义View之高仿QQ健康">
+<meta name="twitter:description" content="源码有更新：加入动画，动画由简书网友xsfelvis提供  我们都知道自定义View一般有三种直接继承View、继承原有的控件对控件的进行修改、重新拼装组合，最后一种主要针对于ViewGroup。具体的怎么做不是本文的所涉及的内容（本文是基于第一种方式实现的），还不太了解的请自行查询相关资料。这次这篇文章主要给大家带来一个高仿QQ健康的自定义View的实现，在介绍的过程中会对涉及到的自定义View">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/623504-c9055114e1633799.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2016/04/11/Android自定义View之高仿QQ健康/"/>
+
+
+
+
+
+  <title>Android自定义View之高仿QQ健康 | _SOLID的个人博客</title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">_SOLID的个人博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/04/11/Android自定义View之高仿QQ健康/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="_SOLID">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="_SOLID的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Android自定义View之高仿QQ健康
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-04-11T22:14:00+08:00">
+                2016-04-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>源码有更新：加入动画，动画由简书网友xsfelvis提供</p>
+<blockquote>
+<p>我们都知道自定义View一般有三种<strong>直接继承View</strong>、<strong>继承原有的控件对控件的进行修改</strong>、<strong>重新拼装组合</strong>，最后一种主要针对于ViewGroup。具体的怎么做不是本文的所涉及的内容（本文是基于第一种方式实现的），还不太了解的请自行查询相关资料。这次这篇文章主要给大家带来一个高仿QQ健康的自定义View的实现，在介绍的过程中会对涉及到的自定义View相关知识点进行简单的说明，着重点还是在怎么是实现这个自定义View上。</p>
+</blockquote>
+<p>好了，话不多说。我们来看看QQ健康页面的这个View吧。下面就是给大家讲解这个View怎么去实现。<br><img src="http://upload-images.jianshu.io/upload_images/623504-c9055114e1633799.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="QQ健康"></p>
+<p>来分析下这个View，最上面有一个圆弧，圆弧里面包含了一些文字，在圆弧的下面有几根竖条，很容易会想到这些竖条的长度是根据每天的步数来计算的。左下方是自己的头像，右下方可以点击查看。<br>我是使用的第一种方式，了解自定义View的同学肯定知道，第一种方式一般就是重写OnDraw方法利用Paint在Canvas中一笔一笔的画。</p>
+<p>这个View的宽和高是有一定比例的。如果我们随意的给宽高，然后又没有一定的比例最后渲染出来的View肯定是很混乱的。所以我首先重写了下onMeasure方法</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/623504-30892374cc2e5b46.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<blockquote>
+<p>在初始化方法中有个mRatio是宽高的比例，是我根据截图用像素尺亮出来的，这个因人而异，可能每个人都会有不一样的度量结果，只要记住这个的作用是用来按照一定的比例绘制这个View的就OK了，这样做的好处就是不管这个View多大多小里面的内容都能够自适应，包括后面可能会会出现的一大堆数字，看到可能会有点晕，不用去管他。</p>
+</blockquote>
+<p>知识点扫盲之<strong>MeasureSpec</strong>：他代表一个32位的int值，前两位代表SpecMode，后30位代表SpecSize。一个MeasureSpec封装了父布局传递给子布局的布局要求，每个MeasureSpec代表了一组宽度和高度的要求。</p>
+<p>从代码中可以看到如果widthMode 是EXACTLY 或者AT_MOST，我们就将父布局传递过来的测量宽度作为View的宽度。如果不是这两种就将前面定义的默认的宽度来作为View宽度（这个一般不会用到）。宽度测量完了之后，就按照一定的比例计算出高度，然后就将这个高度作为我们View的高度，这样做，View的高度都是按照宽度来计算的，这样做的好处是我们在使用这个View的时候不会导致变形。<br>值得注意的是测量完了之后一定要调用 setMeasuredDimension这个方法。</p>
+<p>下面我们再来看看onSizeChanged方法，这里是自适应的关键</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/623504-58e2b66f6ae021c4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p>mArcCenterX 和mArcCenterY 是最上面那个圆弧的中心。我们都知道在Android中画一个圆弧需要一个这个圆弧的外接矩形，mArcRect就是这个外接矩形，mArcWidth和mBarWidth是对应画笔的宽度，在这个方法中我们对这些值作了初始化的工作。如果在构造函数里面取调用这个方法，宽和高是未知的。</p>
+<p>到这里我们的初始化工作做得差不多了。下面来看看最重要的onDraw方法中都干了些什么，下面代码都是onDraw方法里面的（代码较长一次性截不完）</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/623504-0ce87cd7b50c2149.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/623504-6fe50f733534a453.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/623504-a5fe9bc9b8daccbf.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""><br><img src="http://upload-images.jianshu.io/upload_images/623504-6361b545aabc8639.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p>我注释的还是比较详细了，步骤也已经标明了，我相信仔细看肯定能看懂。对于绘制背景那里我多说两句，绘制背景的圆角我用的是贝塞尔曲线画的，当然你也可以直接使用canvas.drawRoundRect去画，但是对于这样一种需求：一个矩形上面两个角是圆角，下面的就是正常的方角，canvas.drawRoundRect显然办不到，然而贝塞尔曲线可以很容易办到，当然贝塞尔曲线的作用不仅仅是这个，它是非常强大的，只要是你能想到的他基本上都是能办到。这里有一篇关于贝塞尔曲线比较好的文章，感兴趣的可以去看看。<br><a href="http://mp.weixin.qq.com/s?__biz=MjM5NDkxMTgyNw==&amp;mid=405545611&amp;idx=1&amp;sn=6f59bb10a31c520aae2c6fbef382053e&amp;scene=0#wechat_redirect" target="_blank" rel="external">Android 自定义View高级特效，神奇的贝塞尔曲线 </a></p>
+<p>最后我们来看看怎么对右下角的那个查看添加点击事件吧<br><img src="http://upload-images.jianshu.io/upload_images/623504-834e3287e7252674.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""><br>其实还是很简单，我们找到右下角对应的一个矩形区域，然后判断当前点击的坐标在不在这个矩形区域内就可以了。</p>
+<p><strong>值得注意的是要记得在初始化方法中加上这句代码<br><code>setLayerType(View.LAYER_TYPE_SOFTWARE, null);</code><br>这句是关闭硬件加速，防止某些4.0的设备虚线显示为实线的问题，可以在AndroidManifest.xml时的Application标签加上android:hardwareAccelerated=”false”,这样整件应用都关闭了硬件加速，虚线可以正常显示，但是关闭硬件加速对性能有些影响，所以这里我们只对当前这个View关闭硬件加速就行了。</strong></p>
+<p>我们来看看最后我们实现的效果吧。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/623504-b7b0bd4982e2d151.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/623504-bb924a232b8f1127.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/623504-f41852622a8a8d73.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""><br>是不是还是挺不错的，并且还能自适应大小，和QQ的基本上一模一样。</p>
+<p>由于代码量还是比较大，完整的贴出来比较 ，就不贴到这篇文章中了，需要完整版代码的请点击：<br><a href="https://github.com/burgessjp/MaterialDesignDemo/blob/master/app/src/main/java/ren/solid/materialdesigndemo/view/QQHealthView.java" target="_blank" rel="external">完整代码</a></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Android/" rel="tag"># Android</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/04/17/Android主题换肤-无缝切换/" rel="next" title="Android主题换肤-无缝切换">
+                <i class="fa fa-chevron-left"></i> Android主题换肤-无缝切换
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/04/05/打造一个RecyclerView的万能适配器-减少你的代码冗余/" rel="prev" title="打造一个RecyclerView的万能适配器-减少你的代码冗余">
+                打造一个RecyclerView的万能适配器-减少你的代码冗余 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview sidebar-panel sidebar-panel-active">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="_SOLID" />
+          <p class="site-author-name" itemprop="name">_SOLID</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">19</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-name">标签</span>
+              
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">_SOLID</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

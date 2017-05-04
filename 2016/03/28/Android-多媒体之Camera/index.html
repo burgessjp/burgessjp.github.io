@@ -1,0 +1,1041 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Android," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="Camera顾名思义，就是照相机、摄像机的意思。在Android中使用这个类可以做拍照和录像的功能。但是在Android5.0中这个类已经不推荐使用了，5.0之后使用更强大的Camera2替换他。在这篇文章中我们使用的是Camera，虽然已经不推荐使用了，但是原理都差不多，Camera会用了，相信Camera2肯定也不会太难。本文主要介绍Camera的简单使用以及使用过程中一些常见的问题，绝对的">
+<meta name="keywords" content="Android">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android-多媒体之Camera">
+<meta property="og:url" content="http://yoursite.com/2016/03/28/Android-多媒体之Camera/index.html">
+<meta property="og:site_name" content="_SOLID的个人博客">
+<meta property="og:description" content="Camera顾名思义，就是照相机、摄像机的意思。在Android中使用这个类可以做拍照和录像的功能。但是在Android5.0中这个类已经不推荐使用了，5.0之后使用更强大的Camera2替换他。在这篇文章中我们使用的是Camera，虽然已经不推荐使用了，但是原理都差不多，Camera会用了，相信Camera2肯定也不会太难。本文主要介绍Camera的简单使用以及使用过程中一些常见的问题，绝对的">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/623504-80774fdc5022c683.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/623504-35d97e8ba924b16c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/623504-903591077f6c0177.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/623504-d2b2a0567b239026.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/623504-8f5cc7e4400a5f82.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/623504-237da7bbc43425b5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/623504-3439c39a89d18fc1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/623504-4f8f85ffb4e9647a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/623504-e615de2a30b11a17.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/623504-e6b677fee50e17c3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/623504-93fd9d34c387f7b0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/623504-7f3c6f2190f7606b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2017-05-04T03:47:13.098Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android-多媒体之Camera">
+<meta name="twitter:description" content="Camera顾名思义，就是照相机、摄像机的意思。在Android中使用这个类可以做拍照和录像的功能。但是在Android5.0中这个类已经不推荐使用了，5.0之后使用更强大的Camera2替换他。在这篇文章中我们使用的是Camera，虽然已经不推荐使用了，但是原理都差不多，Camera会用了，相信Camera2肯定也不会太难。本文主要介绍Camera的简单使用以及使用过程中一些常见的问题，绝对的">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/623504-80774fdc5022c683.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2016/03/28/Android-多媒体之Camera/"/>
+
+
+
+
+
+  <title>Android-多媒体之Camera | _SOLID的个人博客</title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">_SOLID的个人博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/03/28/Android-多媒体之Camera/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="_SOLID">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="_SOLID的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Android-多媒体之Camera
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-03-28T23:12:00+08:00">
+                2016-03-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p> Camera顾名思义，就是照相机、摄像机的意思。在Android中使用这个类可以做拍照和录像的功能。但是在Android5.0中这个类已经不推荐使用了，5.0之后使用更强大的Camera2替换他。在这篇文章中我们使用的是Camera，虽然已经不推荐使用了，但是原理都差不多，Camera会用了，相信Camera2肯定也不会太难。本文主要介绍Camera的简单使用以及使用过程中一些常见的问题，绝对的干货，也主要是针对刚学这一块的同学。  </p>
+<p>Android中关于相机的实现，是基于SurfaceView的，如果还有不知道SurfaceView的请查看这篇文章<a href="http://blog.csdn.net/listening_music/article/details/6860786" target="_blank" rel="external">Android中SurfaceView的使用详解 </a>,不知道SurfaceView的务必要看一下那篇文章。<br>我相信初学者都不喜欢看太过的理论知识，如果有一个小Demo再配几幅图是再好不过了，所以本文就是基于一个小Demo进行讲解的。</p>
+<p>还是先来看一下最后的效果是怎么样的。<br><img src="http://upload-images.jianshu.io/upload_images/623504-80774fdc5022c683.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="CameraDemo"></p>
+<p>从这幅图中可以看到在右上角有一个切换摄像头的按钮，在左下角有一个图片框，这里主要是用来展示拍照之后得到的图片，并且点击这个按钮会进入自定义的图库可进行照片的选择，界面如下图<br><img src="http://upload-images.jianshu.io/upload_images/623504-35d97e8ba924b16c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="CameraDemo"></p>
+<p>中间即是拍照的按钮了，右下角是进入到录像的界面（PS：本文没去讲解录像功能和图库选择的实现，但是在文章最后给出的源码中有实现，感兴趣的小伙伴可以去下载，如果发现有问题欢迎提出）<br>好了，到现在基本上就只知道下面要干什么了，我们正式开始吧！</p>
+<p>我们来看看这个主界面的布局文件：</p>
+<pre>
+<linearlayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools" android:id="@+id/FrameLayout1" android:layout_width="match_parent" android:layout_height="match_parent" android:orientation="vertical">
+
+    <relativelayout android:layout_width="match_parent" android:layout_height="50dp" android:background="#282828" android:paddingright="20dp">
+
+        <imageview android:layout_width="35dp" android:layout_height="35dp" android:layout_alignparentright="true" android:layout_centervertical="true" android:onclick="changeCameraFacing" android:src="@drawable/icon_camear_change">
+    </imageview></relativelayout>
+
+    <linearlayout android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1" android:orientation="vertical">
+
+        <ren.solid.camerademo.view.camerasurfaceview android:id="@+id/cameraSurfaceView" android:layout_width="match_parent" android:layout_height="match_parent">
+
+    </ren.solid.camerademo.view.camerasurfaceview></linearlayout>
+
+    <relativelayout android:id="@+id/rl_bottom" android:layout_width="match_parent" android:layout_height="80dp" android:background="#282828" android:padding="10dp">
+        <!-- 拍照按钮 -->
+        <imageview android:id="@+id/takepicture" android:layout_width="50dp" android:layout_height="50dp" android:layout_centerinparent="true" android:onclick="btnOnclick" android:src="@drawable/icon_take_photo">
+
+        <imageview android:id="@+id/iv_photo" android:layout_width="45dp" android:layout_height="45dp" android:layout_alignparentleft="true" android:layout_centervertical="true" android:background="@drawable/bg_photo_done" android:onclick="openPhotoAlbum">
+
+        <imageview android:id="@+id/iv_switch" android:layout_width="50dp" android:layout_height="50dp" android:layout_alignparentright="true" android:layout_centervertical="true" android:onclick="ivSwitchClick" android:background="@drawable/icon_pushmsg_video">
+    </imageview></imageview></imageview></relativelayout>
+
+
+</linearlayout>
+</pre>
+
+<p>细心小伙伴肯定注意到这几行代码了<pre><ren.solid.camerademo.view.camerasurfaceview android:id="@+id/cameraSurfaceView" android:layout_width="match_parent" android:layout_height="match_parent"></ren.solid.camerademo.view.camerasurfaceview></pre>从代码中我们可以看到我们是使用的一个自定义的CameraSurfaceView，现在我们就来看看这个CameraSurfaceView是怎么实现的（PS：其实本文的核心东西就是这个自定义SurfaceView）。<br>看下面红框里面的内容，可以看出CameraSurfaceView是继承于SurfaceView实现的，说白了CameraSurfaceView就是对SurfaceView与Camera的封装。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/623504-903591077f6c0177.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""><br>这里实现了SurfaceView类的三个构造方法，并且前两个构造方法最后都指向有三个参数的，这样写的好处就是不用在三个构造方法中都去写一次init()方法（已经知道的无视这句）。下载我们再来看看init()方法中都做了些什么</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/623504-d2b2a0567b239026.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p>第一句就是得到摄像头的数量，可以用这个去判断是否有前置摄像头。getCamera()是打开系统摄像头实现如下图</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/623504-8f5cc7e4400a5f82.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""><br>这里面最核心的就是<strong>mSurfaceHolder.addCallback(new SurfaceCallback())</strong>这一句。为SurfaceHolder添加一个回调。各种功能的切换就是在这个回调里面实现的，下面我们来看看SurfaceCallback这个类的实现<br><img src="http://upload-images.jianshu.io/upload_images/623504-237da7bbc43425b5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p>这个类中重写了三个方法<br><strong>1.surfaceChanged</strong>：拍照状态改变时调用，也就是你的手机竖屏和横屏相互切换时会调用这个方法，我试过当手机横屏的时候拍照，效果十分不好（拉伸十分严重），用了很多方法也没解决这个问题，我也看了下我系统自带的相机，也没有在横屏下拍照的功能，所以我还是建议最好把拍照界面固定为竖屏，在竖屏状态下拍照。<br><strong>2.surfaceCreated</strong>：就是当surface被创建的时候调用。在这里我们就在surface被创建的时候就开始拍照的预览。我们再来看看startPreview方法是怎么实现的。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/623504-3439c39a89d18fc1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p>从图中可以看到我们调用了camera的三个api，至于作用，注释写的很清楚了，这里我就不再重复了。<br><strong>3.surfaceDestroyed：</strong>这里主要是在surface被销毁的时候做一些回收的工作。熟悉SurfaceView的同学肯定知道，当SurfaceView界面不可见时这个方法就会被调用。因为SurfaceView是很占CPU的。</p>
+<p>最后我们再来看看是怎么拍照的吧<br><img src="http://upload-images.jianshu.io/upload_images/623504-4f8f85ffb4e9647a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="">从图中我们可以看到这里提供了一个takePictue方法，在里面调用了camera的带有三个参数的takePicture方法，其中第一个参数是按下快门的回调，第二个参数是原始图片的回调，第三个参数是经压缩处理后比较小的jpeg图片的回调。</p>
+<p>下面再来看看MyCameraPictureCallback的实现吧<br><img src="http://upload-images.jianshu.io/upload_images/623504-e615de2a30b11a17.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""><br>其实这里简单，就是把拍照得到的照片保存到sd卡中去。<br><strong>这里需要知道一点：当每次拍完照之后，相机都会自动释放资源，所以这里需要重新开启预览</strong></p>
+<p>对了我们再来看看切换摄像头是怎么实现的吧<br><img src="http://upload-images.jianshu.io/upload_images/623504-e6b677fee50e17c3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="">到这里这个自定义的SurfaceView就差不多了。详细代码见最后。</p>
+<p>最后我们再来看看这个类怎么使用吧<br><img src="http://upload-images.jianshu.io/upload_images/623504-93fd9d34c387f7b0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="">还是很简单吧，我们只需几句话就能搞定拍照了。以后哪里有需要的地方直接拿过去用就OK了！<br>这里一定要记得与Activity的生命周期同步，不然可以在界面切换的时候出现现一些错误。<br><img src="http://upload-images.jianshu.io/upload_images/623504-7f3c6f2190f7606b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p>附详细代码：</p>
+<pre>
+/**
+ * Created by _SOLID
+ * Date:2016/3/23
+ * Time:9:43
+ * <p>
+ * <uses-permission android:name="android.permission.CAMERA">
+ * <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS">
+ * <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE">
+ * <p>
+ * 注：应用程序同时只能存在一个激活的 camera
+ * </p><p>
+ * 关于图片拉伸变形的问题，要把SurfaceView的宽高比例和图片的预览尺寸的宽高比例设置相同
+ */
+public class CameraSurfaceView extends SurfaceView {
+
+    private static String TAG = "CameraSurfaceViewTAG";
+    private SurfaceHolder mSurfaceHolder;
+    private Camera camera;
+    private Camera.Parameters parameters = null;
+    private Context mContext;
+    private int mCameraCount;
+    private int mCurrentCameraFacing = Camera.CameraInfo.CAMERA_FACING_BACK;
+    private String mPictureSaveDir;
+    private String mPictureSavePath;
+    private OnSavePictureListener mOnSavePictureListener;
+
+    public CameraSurfaceView(Context context) {
+        this(context, null);
+    }
+
+    public CameraSurfaceView(Context context, AttributeSet attrs) {
+        this(context, attrs, 0);
+    }
+
+    public CameraSurfaceView(Context context, AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
+        mContext = context;
+        init();
+    }
+
+
+    private void init() {
+        mCameraCount = Camera.getNumberOfCameras();//得到摄像头数量
+        mSurfaceHolder = getHolder();
+        getCamera();
+        mSurfaceHolder.setKeepScreenOn(true);// 屏幕常亮
+        mSurfaceHolder.addCallback(new SurfaceCallback());//为SurfaceView的Holder添加一个回调函数
+
+        setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (camera != null) {
+                    camera.autoFocus(null);
+                }
+            }
+        });
+
+    }
+
+    /***
+     * 得到系统相机
+     */
+    private void getCamera() {
+        if (camera == null)
+            camera = Camera.open(mCurrentCameraFacing); // 打开后置摄像头
+    }
+
+
+    private final class SurfaceCallback implements SurfaceHolder.Callback {
+        // 拍照状态变化时调用该方法
+        @Override
+        public void surfaceChanged(SurfaceHolder holder, int format, int width,
+                                   int height) {
+            Log.i(TAG, "surfaceChanged    " + "width:" + width + "|" + "height:" + height);
+            if (camera != null) {
+                camera.stopPreview();
+                startPreview(holder);
+                setCameraParameters(width, height);
+            }
+        }
+
+        @Override
+        public void surfaceCreated(SurfaceHolder holder) {
+            Log.i(TAG, "surfaceCreated");
+            startPreview(holder);
+        }
+
+        @Override
+        public void surfaceDestroyed(SurfaceHolder holder) {
+            Log.i(TAG, "surfaceDestroyed");
+            releaseCamera();
+        }
+
+    }
+
+    /***
+     * 切换相机摄像头
+     */
+    public void changCameraFacing() {
+        if (mCameraCount > 1) {
+            mCurrentCameraFacing = (mCurrentCameraFacing == Camera.CameraInfo.CAMERA_FACING_BACK) ?
+                    Camera.CameraInfo.CAMERA_FACING_FRONT : Camera.CameraInfo.CAMERA_FACING_BACK;
+            releaseCamera();
+            startPreview(mSurfaceHolder);
+        } else {
+            //手机不支持前置摄像头
+        }
+    }
+
+    /***
+     * 设置相机参数
+     *
+     * @param width
+     * @param height
+     */
+    private void setCameraParameters(int width, int height) {
+        mSurfaceHolder.setFixedSize(width, height);//照片的大小
+        parameters = camera.getParameters(); // 获取相机参数
+        parameters.setPictureFormat(ImageFormat.JPEG); // 设置图片格式
+
+        parameters.setPreviewSize(width, height); // 设置预览大小
+        parameters.setPictureSize(width, height); // 设置保存的图片尺寸
+
+        parameters.setPreviewFpsRange(4, 10);//fps
+        parameters.setJpegQuality(100); // 设置照片质量
+        parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_AUTO);//自动对焦
+        //parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE);//连续对焦
+        //camera.cancelAutoFocus();//如果要实现连续的自动对焦，这一句必须加上
+        camera.setParameters(parameters);
+    }
+
+    /**
+     * 开始预览
+     */
+    private void startPreview(SurfaceHolder surfaceHolder) {
+        getCamera();//防止Camera实例为空
+        try {
+            camera.setPreviewDisplay(surfaceHolder); // 设置用于显示预览的SurfaceHolder对象
+//            if (mContext.getResources().getConfiguration().orientation != Configuration.ORIENTATION_LANDSCAPE) {
+//                // parameters.set("orientation", "portrait");
+//                camera.setDisplayOrientation(90);//在2.2以上可以使用
+//            } else {
+//                // parameters.set("orientation", "landscape");
+//                camera.setDisplayOrientation(0);//在2.2以上可以使用
+//            }
+            camera.setDisplayOrientation(getPreviewDegree());//设置预览的旋转角度，这句很关键，不然预览拉伸很严重
+            camera.startPreview(); // 开始预览
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * 用于根据手机方向获得相机预览画面旋转的角度
+     */
+    private int getPreviewDegree() {
+        // 获得手机的方向
+        WindowManager windowManager = (WindowManager) mContext.getSystemService(Context.WINDOW_SERVICE);
+        int rotation = windowManager.getDefaultDisplay()
+                .getRotation();
+        Log.i(TAG, "rotation:" + rotation);
+        int degree = 0;
+        // 根据手机的方向计算相机预览画面应该选择的角度
+        switch (rotation) {
+            case Surface.ROTATION_0:
+                degree = 90;
+                break;
+            case Surface.ROTATION_90:
+                degree = 0;
+                break;
+            case Surface.ROTATION_180:
+                degree = 270;
+                break;
+            case Surface.ROTATION_270:
+                degree = 180;
+                break;
+        }
+        return degree;
+    }
+
+    /**
+     * 将拍下来的照片存放在SD卡中
+     *
+     * @param data
+     * @throws IOException
+     */
+    private void saveToSDCard(byte[] data) throws IOException {
+        Date date = new Date();
+        SimpleDateFormat format = new SimpleDateFormat("yyyyMMddHHmmss"); // 格式化时间
+        String filename = format.format(date) + ".jpg";
+
+        File fileFolder = new File(getPictureSaveDir());
+
+        if (!fileFolder.exists()) { // 如果目录不存在，则创建一个名为"finger"的目录
+            fileFolder.mkdir();
+        }
+        File jpgFile = new File(fileFolder, filename);
+        FileOutputStream outputStream = new FileOutputStream(jpgFile); // 文件输出流
+
+        //由于在预览的时候，我们调整了预览的方向，所以在保存的时候我们要旋转回来，不然保存的图片方向是不正确的
+        Matrix matrix = new Matrix();
+        if (mCurrentCameraFacing == Camera.CameraInfo.CAMERA_FACING_BACK) {
+            matrix.setRotate(90);
+        } else {
+            matrix.setRotate(-90);
+        }
+        Bitmap bitmap = BitmapFactory.decodeByteArray(data, 0, data.length);
+        bitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, false);
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream);
+
+        outputStream.flush(); // 写入sd卡中
+        outputStream.close(); // 关闭输出流
+        mPictureSavePath = getPictureSaveDir() + File.separator + filename;
+        if (mOnSavePictureListener != null) {
+            mOnSavePictureListener.onSuccess(mPictureSavePath);
+        }
+        Toast.makeText(mContext.getApplicationContext(), "图片已保存至:" + mPictureSavePath,
+                Toast.LENGTH_LONG).show();
+
+        //这个的作用是让系统去扫描刚拍下的这个图片文件，以利于在MediaSore中能及时更新，
+        // 可能会存在部分手机不用使用的情况（众所周知，现在国内的Rom厂商已把原生Rom改的面目全非）
+        //mContext.sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.parse("file://" + mPictureSavePath)));
+        MediaScannerConnection.scanFile(mContext, new String[]{
+                        mPictureSavePath},
+                null, new MediaScannerConnection.OnScanCompletedListener() {
+                    public void onScanCompleted(String path, Uri uri) {
+                        // Log.e(TAG, "扫描完成");
+                    }
+                });
+
+
+    }
+
+
+    private final class MyCameraPictureCallback implements Camera.PictureCallback {
+        @Override
+        public void onPictureTaken(byte[] data, Camera camera) {
+            try {
+                saveToSDCard(data); // 保存图片到sd卡中
+                camera.startPreview(); // 拍完照后，重新开始预览
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    /**
+     * 拍照
+     */
+    public void takePicture() {
+        if (camera != null) {
+            camera.takePicture(null, null, new MyCameraPictureCallback());//每次调用takePicture获取图像后，摄像头会停止预览
+        } else {
+            //TODO: 提示用户相机不存在
+        }
+    }
+
+    /***
+     * 释放相机资源
+     */
+    public void releaseCamera() {
+        if (camera != null) {
+            camera.stopPreview();
+            camera.release();
+            camera = null;
+        }
+    }
+
+    /**
+     * 设置图片的保存路径
+     *
+     * @param pictureSavePath
+     */
+    public void setPictureSavePath(String pictureSavePath) {
+        mPictureSaveDir = pictureSavePath;
+    }
+
+    /***
+     * 得到图片保存的目录
+     *
+     * @return
+     */
+    public String getPictureSaveDir() {
+        String path;
+        if (mPictureSaveDir == null)
+            if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED))
+                path = Environment.getExternalStorageDirectory()
+                        + "/SolidCamera/";
+            else {
+                path = mContext.getCacheDir().getAbsolutePath()
+                        + "/SolidCamera/";
+            }
+        else {
+            path = mPictureSaveDir;
+        }
+        mPictureSaveDir = path;
+        return path;
+    }
+
+    public void onResume() {
+        getCamera();
+    }
+
+    public void onPause() {
+        releaseCamera();
+    }
+
+    /***
+     * 设置拍照成功后的回调
+     * @param onSavePictureListener
+     */
+    public void setOnSavePictureListener(OnSavePictureListener onSavePictureListener) {
+        mOnSavePictureListener = onSavePictureListener;
+    }
+
+    public interface OnSavePictureListener {
+        void onSuccess(String filePath);
+    }
+}
+</p></uses-permission></uses-permission></uses-permission></p></pre>
+
+<p>其实录像和拍照其实差不多，只需添加一个MeadiaRecorder即可，关于录像源码中有。</p>
+<p><a href="https://github.com/burgessjp/CameraDemo" target="_blank" rel="external">源码下载</a></p>
+<p>参考链接<br> <a href="http://www.jcodecraeer.com/a/anzhuokaifa/androidkaifa/2015/0428/2811.html" target="_blank" rel="external">使用Camera2 替代过时的Camera API</a><br><a href="http://www.lai18.com/content/1165371.html" target="_blank" rel="external">Android Camera多屏幕适配解决预览照片拉伸</a><br><a href="http://www.cnblogs.com/franksunny/archive/2011/11/17/2252926.html" target="_blank" rel="external">Android Camera 使用小结</a><br><a href="http://www.apkbus.com/android-170300-1-1.html" target="_blank" rel="external">Android 相机自动对焦和定点对焦的一些总结</a><br><a href="http://blog.csdn.net/yanzhenjie1003/article/details/44937057" target="_blank" rel="external"> Android保存图片到图库，Android扫描文件到媒体库，Android保存图片到SD卡  </a></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Android/" rel="tag"># Android</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/03/31/Android-Material-Design-兼容库的使用详解/" rel="next" title="Android-Material-Design-兼容库的使用详解">
+                <i class="fa fa-chevron-left"></i> Android-Material-Design-兼容库的使用详解
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/03/26/Android-多媒体之MediaRecorder-MediaPlayer/" rel="prev" title="Android-多媒体之MediaRecorder-MediaPlayer">
+                Android-多媒体之MediaRecorder-MediaPlayer <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview sidebar-panel sidebar-panel-active">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="_SOLID" />
+          <p class="site-author-name" itemprop="name">_SOLID</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">19</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-name">标签</span>
+              
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">_SOLID</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

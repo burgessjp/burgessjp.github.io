@@ -1,0 +1,746 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Android," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="*本篇文章已授权微信公众号 guolin_blog （郭霖）独家发布 前段时间看别人博客的时候偶然间看到了Android微信自动回复功能，最后的效果也很不错，博主在文中提到了AccessibilityService，以前压根没接触过这东西，表示一脸懵逼。也是这个原因我去找了AccessibilityService相关的资料好好的看了一遍，发现这个东西真的太NB了，网上对AccessibilityS">
+<meta name="keywords" content="Android">
+<meta property="og:type" content="article">
+<meta property="og:title" content="自动抢红包，自动安装原理之AccessibilityService">
+<meta property="og:url" content="http://yoursite.com/2016/07/21/自动抢红包，自动安装原理之AccessibilityService/index.html">
+<meta property="og:site_name" content="_SOLID的个人博客">
+<meta property="og:description" content="*本篇文章已授权微信公众号 guolin_blog （郭霖）独家发布 前段时间看别人博客的时候偶然间看到了Android微信自动回复功能，最后的效果也很不错，博主在文中提到了AccessibilityService，以前压根没接触过这东西，表示一脸懵逼。也是这个原因我去找了AccessibilityService相关的资料好好的看了一遍，发现这个东西真的太NB了，网上对AccessibilityS">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/623504-1f974077211e7752.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/623504-b8cb8b2c0bd531e0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/623504-7d3c979e0283043d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/623504-cea30f62d841e6a9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/623504-24f650f9cde76772.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/623504-4c27c7c62c391da6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/623504-03f81f3b844602e8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/623504-4c107be6ffb3bcd8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/623504-cba858987a52d3d0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2017-05-04T03:46:40.375Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="自动抢红包，自动安装原理之AccessibilityService">
+<meta name="twitter:description" content="*本篇文章已授权微信公众号 guolin_blog （郭霖）独家发布 前段时间看别人博客的时候偶然间看到了Android微信自动回复功能，最后的效果也很不错，博主在文中提到了AccessibilityService，以前压根没接触过这东西，表示一脸懵逼。也是这个原因我去找了AccessibilityService相关的资料好好的看了一遍，发现这个东西真的太NB了，网上对AccessibilityS">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/623504-1f974077211e7752.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2016/07/21/自动抢红包，自动安装原理之AccessibilityService/"/>
+
+
+
+
+
+  <title>自动抢红包，自动安装原理之AccessibilityService | _SOLID的个人博客</title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">_SOLID的个人博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/07/21/自动抢红包，自动安装原理之AccessibilityService/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="_SOLID">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="_SOLID的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                自动抢红包，自动安装原理之AccessibilityService
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-07-21T16:28:00+08:00">
+                2016-07-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><strong>*本篇文章已授权微信公众号 guolin_blog （郭霖）独家发布</strong></p>
+<p>前段时间看别人博客的时候偶然间看到了<a href="http://www.jianshu.com/p/f67e950d84f7" target="_blank" rel="external">Android微信自动回复功能</a>，最后的效果也很不错，博主在文中提到了<code>AccessibilityService</code>，以前压根没接触过这东西，表示一脸懵逼。也是这个原因我去找了AccessibilityService相关的资料好好的看了一遍，发现这个东西真的太NB了，网上对AccessibilityService的应用还是有不少的文章的，但是详细的介绍资料还是比较少，对于刚刚学习这个的同学看完很多资料还是一脸茫然，于是才有了本文。我相信当你在看完本文之后，再去看前面的那篇文章，我相信会轻松很多。</p>
+<hr>
+<blockquote>
+<h3 id="本文学习目录"><a href="#本文学习目录" class="headerlink" title="本文学习目录"></a>本文学习目录</h3><p>1.AccessibilityService是什么<br>2.AccessibilityService的创建与配置<br>3.怎么去使用AccessibilityService<br>4.一步一步构建一个apk自动安装器</p>
+</blockquote>
+<h3 id="1-AccessibilityService是什么"><a href="#1-AccessibilityService是什么" class="headerlink" title="1.AccessibilityService是什么"></a>1.AccessibilityService是什么</h3><p>AccessibilityService是什么，官网是这样解释的</p>
+<blockquote>
+<p>Accessibility services are intended to assist users with disabilities in using Android devices and apps. They run in the background and receive callbacks by the system whenAccessibilityEvents are fired.</p>
+</blockquote>
+<p>也就是说这是个辅助功能，目的是辅助人们去使用Android设备和应用。它在后台运行，可以接收系统的回调。</p>
+<p>可见AccessibilityService的出现Google的初衷是辅助人们去使用Android设备和应用，但是当你对它足够了解了之后你会发现它的作用不仅仅只是这样。对windows编程有了解的同学肯定知道hook（钩子），AccessibilityService和windows下的hook有那么一点的相似。AccessibilityService可以拦截到系统发出的一些消息（比如窗体状态的改变，通知栏状态的改变，View被点击了等等），当拦截到这些事件我们就可以去做一些我们想做的事儿了~~~<br>AccessibilityService能做些什么呢？ 比如自动化测试、自动抢红包、自动安装等等。在带来便利的同时，也还是有需要注意的地方：当你开启了辅助功能之后会对你的隐私信息带来一些风险，所以还是需要谨慎的去开启第三方的辅助功能。当然这对于我们开发者而言都不是事，因为我们完全可以自己去开发属于我们的辅助功能。</p>
+<h3 id="2-AccessibilityService的创建与配置"><a href="#2-AccessibilityService的创建与配置" class="headerlink" title="2.AccessibilityService的创建与配置"></a>2.AccessibilityService的创建与配置</h3><p>第一步就是自己去创建一个类继承于AccessibilityService，并实现必须实现的两个方法</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">public class MyAccessibilityService extends AccessibilityService &#123;</div><div class="line">    @Override</div><div class="line">    public void onAccessibilityEvent(AccessibilityEvent accessibilityEvent) &#123;</div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public void onInterrupt() &#123;</div><div class="line"></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>随后就是在res/xml目录下新建一个xml文件（文件名随意）,后面会对这个文件作详细的介绍。<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">accessibility-service</span> <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span></span></div><div class="line">    <span class="attr">android:accessibilityEventTypes</span>=<span class="string">"typeAllMask"</span></div><div class="line">    <span class="attr">android:accessibilityFeedbackType</span>=<span class="string">"feedbackGeneric"</span>  </div><div class="line">    <span class="attr">android:canRetrieveWindowContent</span>=<span class="string">"true"</span></div><div class="line">    <span class="attr">android:description</span>=<span class="string">"@string/my_accessibility_description"</span></div><div class="line">    <span class="attr">android:notificationTimeout</span>=<span class="string">"100"</span></div><div class="line">    <span class="attr">android:packageNames</span>=<span class="string">"com.tencent.mobileqq,com.android.packageinstaller"</span> /&gt;</div></pre></td></tr></table></figure></p>
+<p>最后就是去配置清单文件了<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">service</span></span></div><div class="line">           <span class="attr">android:name</span>=<span class="string">".service.MyAccessibilityService"</span></div><div class="line">           <span class="attr">android:enabled</span>=<span class="string">"true"</span></div><div class="line">           <span class="attr">android:exported</span>=<span class="string">"true"</span></div><div class="line">           <span class="attr">android:label</span>=<span class="string">"@string/app_name"</span></div><div class="line">           <span class="attr">android:permission</span>=<span class="string">"android.permission.BIND_ACCESSIBILITY_SERVICE"</span>&gt;</div><div class="line">           <span class="tag">&lt;<span class="name">intent-filter</span>&gt;</span></div><div class="line">               <span class="tag">&lt;<span class="name">action</span> <span class="attr">android:name</span>=<span class="string">"android.accessibilityservice.AccessibilityService"</span> /&gt;</span></div><div class="line">           <span class="tag">&lt;/<span class="name">intent-filter</span>&gt;</span></div><div class="line">           <span class="tag">&lt;<span class="name">meta-data</span></span></div><div class="line">               <span class="attr">android:name</span>=<span class="string">"android.accessibilityservice"</span></div><div class="line">               <span class="attr">android:resource</span>=<span class="string">"@xml/my_services_config"</span> /&gt;//在meta-data里申明配置信息</div><div class="line">       <span class="tag">&lt;/<span class="name">service</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<p> 别忘记了添加权限<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">uses-permission</span> <span class="attr">android:name</span>=<span class="string">"android.permission.BIND_ACCESSIBILITY_SERVICE"</span> /&gt;</span></div></pre></td></tr></table></figure></p>
+<p>到这我们就可以把应用跑到我们的手机上了，然后打开辅助功能，去开启我们刚刚创建的这个辅助功能。如下图：<br><img src="http://upload-images.jianshu.io/upload_images/623504-1f974077211e7752.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p>当然因为什么都没做，开启了也没什么用，下面就去看看怎么使用吧！</p>
+<h3 id="3-怎么去使用AccessibilityService"><a href="#3-怎么去使用AccessibilityService" class="headerlink" title="3.怎么去使用AccessibilityService"></a>3.怎么去使用AccessibilityService</h3><p>先说说之前创建的那个xml文件中各个属性的含义吧</p>
+<ul>
+<li><code>accessibilityEventTypes </code>： 用来设置响应事件的类型，比如typeAllMask就是响应全部事件，typeNotificationStateChanged就是响应通知状态的改变，如果需要响应多种事件类型可以以 ‘ | ’ 隔开。</li>
+<li><code>accessibilityFeedbackType </code>： 给用户的反馈方式，比如语音、震动等，这里用处不大。</li>
+<li><code>canRetrieveWindowContent</code> ：是否可以获取活动窗体的内容，这个设置为true才可以取得窗体中的控件和事件源</li>
+<li><code>description</code> ：辅助功能的描述</li>
+<li><code>notificationTimeout</code> ：两个相同类型事件发送到服务的事件间隔，单位毫秒</li>
+<li><code>packageNames</code> ：指定响应某个应用的事件，取值为应用的包名，多个以‘ , ’ 隔开。没有此属性则表示响应全部应用。这里我填写的是手机qq和系统安装器的包名</li>
+</ul>
+<p>然后进入到我们的<code>MyAccessibilityService </code>中，定位到<code>onAccessibilityEvent</code>方法编写如下代码<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div></pre></td><td class="code"><pre><div class="line">log("-------------------------------------------------------------");</div><div class="line">        int eventType = event.getEventType();//事件类型</div><div class="line">        log("packageName:" + event.getPackageName() + "");//响应事件的包名，也就是哪个应用才响应了这个事件</div><div class="line">        log("source:" + event.getSource() + "");//事件源信息</div><div class="line">        log("source class:" + event.getClassName() + "");//事件源的类名，比如android.widget.TextView</div><div class="line">        log("event type(int):" + eventType + "");</div><div class="line"></div><div class="line">        switch (eventType) &#123;</div><div class="line">            case AccessibilityEvent.TYPE_NOTIFICATION_STATE_CHANGED:// 通知栏事件</div><div class="line">                log("event type:TYPE_NOTIFICATION_STATE_CHANGED");</div><div class="line">                break;</div><div class="line">            case AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED://窗体状态改变</div><div class="line">                log("event type:TYPE_WINDOW_STATE_CHANGED");</div><div class="line">                break;</div><div class="line">            case AccessibilityEvent.TYPE_VIEW_ACCESSIBILITY_FOCUSED://View获取到焦点</div><div class="line">                log("event type:TYPE_VIEW_ACCESSIBILITY_FOCUSED");</div><div class="line">                break;</div><div class="line">            case AccessibilityEvent.TYPE_GESTURE_DETECTION_START:</div><div class="line">                log("event type:TYPE_VIEW_ACCESSIBILITY_FOCUSED");</div><div class="line">                break;</div><div class="line">            case AccessibilityEvent.TYPE_GESTURE_DETECTION_END:</div><div class="line">                log("event type:TYPE_GESTURE_DETECTION_END");</div><div class="line">                break;</div><div class="line">            case AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED:</div><div class="line">                log("event type:TYPE_WINDOW_CONTENT_CHANGED");</div><div class="line">                break;</div><div class="line">            case AccessibilityEvent.TYPE_VIEW_CLICKED:</div><div class="line">                log("event type:TYPE_VIEW_CLICKED");</div><div class="line">                break;</div><div class="line">            case AccessibilityEvent.TYPE_VIEW_TEXT_CHANGED:</div><div class="line">                log("event type:TYPE_VIEW_TEXT_CHANGED");</div><div class="line">                break;</div><div class="line">            case AccessibilityEvent.TYPE_VIEW_SCROLLED:</div><div class="line">                log("event type:TYPE_VIEW_SCROLLED");</div><div class="line">                break;</div><div class="line">            case AccessibilityEvent.TYPE_VIEW_TEXT_SELECTION_CHANGED:</div><div class="line">                log("event type:TYPE_VIEW_TEXT_SELECTION_CHANGED");</div><div class="line">                break;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        for (CharSequence txt : event.getText()) &#123;</div><div class="line">            log("text:" + txt);//输出当前事件包含的文本信息</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        log("-------------------------------------------------------------");</div></pre></td></tr></table></figure></p>
+<p>log方法就是打印信息用的，是对Log的一个简单封装。</p>
+<p>在运行一次程序，打开我们的手机qq可以看见输出日志如下</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/623504-b8cb8b2c0bd531e0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p>可以很清晰的看见当我们打开qq或触发很多的事件，第一个响应的事件是<code>TYPE_WINDOW_STATE_CHANGED</code>,触发此事件的事件源是<code>com.tencent.mobileqq.activity.SplashActivity</code></p>
+<p>接着，当我点击最上面的 ‘ 电话 ’，会得到如下日志：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/623504-7d3c979e0283043d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p>我就不一一截图操作的日志了，下来大家可以自行尝试。到这里你用该对<code>onAccessibilityEvent</code>有了进一步的了解。</p>
+<h3 id="4-一步一步构建一个apk自动安装器"><a href="#4-一步一步构建一个apk自动安装器" class="headerlink" title="4.一步一步构建一个apk自动安装器"></a>4.一步一步构建一个apk自动安装器</h3><p>这一节来个实战的应用：做一个apk的自动安装器，点击apk文件即可开始自动安装。</p>
+<p>国内的rom厂商大家都很清楚：百(sang)花(xin)齐(bing)放(kuang)，已经把原生的rom改的面目全非。所以想做一个面对全部手机的apk的自动安装器还是比较麻烦的。我的手机是魅族的，下图是魅族手机apk安装的步骤（其他手机可能会略有不同，下来自己更改不同部分即可，这里主要讲解原理）：<br><img src="http://upload-images.jianshu.io/upload_images/623504-cea30f62d841e6a9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/623504-24f650f9cde76772.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/623504-4c27c7c62c391da6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p>可以看见点击安装包之后会弹出一个确认框，点击继续之后会出现下一步，点击了下一步就可以点击安装了。我们要实现自动安装无非就是用程序的方式会对相关按钮的自动点击，难点就在于怎么去找到这些按钮并执行点击操作。</p>
+<p>好了，下面我们可以来创建一个自动安装的服务了，步骤和第一节描述的一样将<code>packageNames</code>指定成<code>com.android.packageinstaller</code>就可以了。这里我们先别着急去实现功能（就算你想去实现，也摸不着头脑），我们还是像第二节那样去输出日志信息，<strong>查看日志输出信息（对响应事件信息的打印）是使用AccessibilityService的重点</strong>，看完日志的输出信息，然后对其分析，才会知道具体的操作。<br>我们来看看在安装apk文件时候输出的部分日志信息：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/623504-03f81f3b844602e8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/623504-4c107be6ffb3bcd8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/623504-cba858987a52d3d0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p>从日志信息中可以看出：<br>1.当我们点击了apk文件的时候，如果该文件已经存在，就会弹出一个对话框并且会响应<code>TYPE_WINDOW_STATE_CHANGE</code>事件<br>2.当我们点击了继续之后就会响应<code>TYPE_VIEW_CLICKED</code>事件，并且继续这个可以点击的View是个Button<br>3.接着点击下一步，同样也会响应<code>TYPE_VIEW_CLICKED</code>事件，并且继续这个可以点击的View是个TextView。最后就可以点击安装了（安装那步忘了截图，和第3步相应的事件是一样的）</p>
+<p>经过上面几步的分析，我想你应该对后面的逻辑还是比较清楚了，直接上代码</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">public class AutoInstallService extends AccessibilityService &#123;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public void onAccessibilityEvent(AccessibilityEvent event) &#123;</div><div class="line">        PrintUtils.printEvent(event);</div><div class="line">        findAndPerformActionButton("继续");</div><div class="line">        findAndPerformActionTextView("下一步");</div><div class="line">        findAndPerformActionTextView("安装");</div><div class="line">    &#125;</div><div class="line"></div><div class="line"></div><div class="line">    private void findAndPerformActionButton(String text) &#123;</div><div class="line">        if (getRootInActiveWindow() == null)//取得当前激活窗体的根节点</div><div class="line">            return;</div><div class="line">        //通过文字找到当前的节点</div><div class="line">        List&lt;AccessibilityNodeInfo&gt; nodes = getRootInActiveWindow().findAccessibilityNodeInfosByText(text);</div><div class="line">        for (int i = 0; i &lt; nodes.size(); i++) &#123;</div><div class="line">            AccessibilityNodeInfo node = nodes.get(i);</div><div class="line">            // 执行点击行为</div><div class="line">            if (node.getClassName().equals("android.widget.Button") &amp;&amp; node.isEnabled()) &#123;</div><div class="line">                node.performAction(AccessibilityNodeInfo.ACTION_CLICK);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    private void findAndPerformActionTextView(String text) &#123;</div><div class="line">        if (getRootInActiveWindow() == null)</div><div class="line">            return;</div><div class="line">        //通过文字找到当前的节点</div><div class="line">        List&lt;AccessibilityNodeInfo&gt; nodes = getRootInActiveWindow().findAccessibilityNodeInfosByText(text);</div><div class="line">        for (int i = 0; i &lt; nodes.size(); i++) &#123;</div><div class="line">            AccessibilityNodeInfo node = nodes.get(i);</div><div class="line">            // 执行按钮点击行为</div><div class="line">            if (node.getClassName().equals("android.widget.TextView") &amp;&amp; node.isEnabled()) &#123;</div><div class="line">                node.performAction(AccessibilityNodeInfo.ACTION_CLICK);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>例子很简单，所以也没去对eventType做判断，当有其他需求的时候是需要对eventType做判断了，代码已经注释的比较详细，我就不再对代码作更多的讲解了，有疑问可以留言。</p>
+<p>到这里你应该对AccessibilityService有了进一步的认识，会发现原来红包助手之类软件实现的原理就是利用AccessibilityService检测通知栏的状态，然后再去做一些处理。是不是有点自己去做一个红包助手的想法了？现在再去看看文章开始的那篇文章你的收获会更大：<a href="http://www.jianshu.com/p/f67e950d84f7" target="_blank" rel="external">Android微信自动回复功能</a></p>
+<h3 id="补充说明"><a href="#补充说明" class="headerlink" title="补充说明"></a>补充说明</h3><p>AccessibilityService中还有几个常用的方法 onServiceConnected、onInterrupt、onGesture。看名字大致也知道什么时候会被调用。</p>
+<p>在onServiceConnected中可以去配置AccessibilityService的一些信息，也就是之前在xml文件可以在这里通过代码配置，不过这里没法配置canRetrieveWindowContent属性，刚开始也被这个坑了很久<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">@Override</div><div class="line">    protected void onServiceConnected() &#123;</div><div class="line">        super.onServiceConnected();</div><div class="line">        PrintUtils.log("onServiceConnected");</div><div class="line">//        //可用代码配置当前Service的信息</div><div class="line">//        AccessibilityServiceInfo info = new AccessibilityServiceInfo();</div><div class="line">//        info.packageNames = new String[]&#123;"com.android.packageinstaller", "com.tencent.mobileqq", "com.trs.gygdapp"&#125;; //监听过滤的包名</div><div class="line">//        info.eventTypes = AccessibilityEvent.TYPES_ALL_MASK; //监听哪些行为</div><div class="line">//        info.feedbackType = AccessibilityServiceInfo.FEEDBACK_SPOKEN; //反馈</div><div class="line">//        info.notificationTimeout = 100; //通知的时间</div><div class="line">//        setServiceInfo(info);</div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
+<p><a href="https://developer.android.com/reference/android/accessibilityservice/AccessibilityService.html" target="_blank" rel="external">官方文档</a></p>
+<p><a href="https://github.com/burgessjp/AccessibilityServiceDemo" target="_blank" rel="external">本文源码</a></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Android/" rel="tag"># Android</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/08/16/聊聊对RxJava与Retrofit的封装/" rel="next" title="聊聊对RxJava与Retrofit的封装">
+                <i class="fa fa-chevron-left"></i> 聊聊对RxJava与Retrofit的封装
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/06/15/是时候学习RxJava了/" rel="prev" title="是时候学习RxJava了">
+                是时候学习RxJava了 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="_SOLID" />
+          <p class="site-author-name" itemprop="name">_SOLID</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">19</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-name">标签</span>
+              
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#本文学习目录"><span class="nav-number">1.</span> <span class="nav-text">本文学习目录</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-AccessibilityService是什么"><span class="nav-number">2.</span> <span class="nav-text">1.AccessibilityService是什么</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-AccessibilityService的创建与配置"><span class="nav-number">3.</span> <span class="nav-text">2.AccessibilityService的创建与配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-怎么去使用AccessibilityService"><span class="nav-number">4.</span> <span class="nav-text">3.怎么去使用AccessibilityService</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-一步一步构建一个apk自动安装器"><span class="nav-number">5.</span> <span class="nav-text">4.一步一步构建一个apk自动安装器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#补充说明"><span class="nav-number">6.</span> <span class="nav-text">补充说明</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">_SOLID</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

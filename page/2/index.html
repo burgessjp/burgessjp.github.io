@@ -250,7 +250,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/04/25/基于Gank-IO提供的API的第三方客户端，可以在线收藏[项目开源]/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/07/21/自动抢红包，自动安装原理之AccessibilityService/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="_SOLID">
@@ -272,8 +272,8 @@
             
               
                 
-                <a class="post-title-link" href="/2017/04/25/基于Gank-IO提供的API的第三方客户端，可以在线收藏[项目开源]/" itemprop="url">
-                  基于Gank-IO提供的API的第三方客户端，可以在线收藏
+                <a class="post-title-link" href="/2016/07/21/自动抢红包，自动安装原理之AccessibilityService/" itemprop="url">
+                  自动抢红包，自动安装原理之AccessibilityService
                 </a>
               
             
@@ -289,8 +289,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-04-25T11:05:53+08:00">
-                2017-04-25
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-07-21T16:28:00+08:00">
+                2016-07-21
               </time>
             
 
@@ -326,197 +326,60 @@
       
         
           
-            <blockquote>
-<p>最近也是因为准备毕业设计的事，很久没更新博客了，但是在这段时间我也不是没有准备这方面的东西。知道gank.io的同学肯定知道，代码家在上面提供了一个免费开放的api供大家去玩，这个接口的信息每天也在更新，发布的内容也是很有质量的，不仅有技术类的文章，还有我们喜欢的福利图。<br>之前我也是看到很多比较好的链接由于时间问题，没来的及看，每次回去找都得花很多的时间。也是正因为这个原因激发了我做一个基于Gank.IO提供的API的第三方客户端，最初计划的两个重要功能是可以对信息进行在线收藏和离线缓存，因为时间原因后者暂时没有实现，后面的更新我肯定会实现的。重要的是本项目完全开源，项目已经上传至Github,项目中覆盖了MVP、RxJava、第三方登录以及很多第三方库的使用，我相信本项目的源码对那些正在自学的同学还是有价值的。(ps:这个应用其实都做完一段时间了，微博那边一直没给审核通过，没法正式发布，所以一直没发布出来)</p>
-</blockquote>
-<p>APP下载地址（fir.im）：<a href="http://fir.im/ganhuoio" target="_blank" rel="external">干货IO</a><br>也欢迎大家去应用商店下载:<a href="http://android.myapp.com/myapp/detail.htm?apkName=ren.solid.ganhuoio" target="_blank" rel="external">干货IO</a><br>源码地址：<a href="https://github.com/burgessjp/GanHuoIO" target="_blank" rel="external">GanHuoIO</a>  欢迎Star和Fork，提交问题到 Issues</p>
-<p>先来两张App的截图</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/623504-b273dd5d2e63fc4b.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
-<p><img src="http://upload-images.jianshu.io/upload_images/623504-3a7543e4e650cd4a.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="S60521-211246.jpg"></p>
-<p>下面就来简单的介绍一下这个项目吧</p>
-<p>App是MD风格的，后端服务是用的bomb，由于涉及到了收藏肯定会有登录，对于登录目前只能使用新浪微博（我也借助新浪微博ID是唯一的这一点），用到了MVP，RxJava，这里我也只是单纯的把RxJava来当做EventBus来使用的，最初我本来是计划把最近很火的Retrofit也加上的，但是这次这个项目的最底层是基于我之前自己开发的一个快速开发库的，里面对网络层做了封装，因为Retrofit是基于注解的，我改动的还是比较多，所以最后就放弃了，对于侧滑菜单，我用的是<a href="https://github.com/mikepenz/MaterialDrawer" target="_blank" rel="external">MaterialDrawer</a>，而不是系统自带的那个NavigationView，MaterialDrawer比系统自带的更加的强大和灵活。</p>
-<p>来看看App的基本操作</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/623504-272e96a7ee176af9.gif?imageMogr2/auto-orient/strip" alt=""></p>
-<p>我们可以对信息进行收藏，也可以对类别进行拖动排序（对于RecyclerView的拖动排序十分的简单，只需一个ItemTouchHelper就可以实现）</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/623504-43c90c49394c2b3d.gif?imageMogr2/auto-orient/strip" alt=""></p>
-<p>里面还有更多的操作等着你的使用。</p>
-<p>如果你感觉还不错就赶紧去下载使用吧，非常欢迎大家提供在使用过程中的bug（我没对5.0以下的手机进行适配，我相信作为开发者的你，应该不可能还会在使用5.0以下的系统）。</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/04/25/在Android中使用Realm作本地存储/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="_SOLID">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="_SOLID的个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/04/25/在Android中使用Realm作本地存储/" itemprop="url">
-                  在Android中使用Realm作本地存储
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-04-25T11:05:53+08:00">
-                2017-04-25
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Android平台有很多的orm框架可以对数据作本地存储，比如ormlite、greenDao、SugarORM等等，这些orm框架基本都是基于sqlite的。今天我要介绍的这个数据库Realm，是用来替代sqlite的一种解决方案，它有一套自己的数据库存储引擎，比sqlite更轻量级，拥有更快的速度，最重要的是跨平台，目前已有Java，Objective C，Swift，React-Native，Xamarin这五种实现。<br>本文是Realm数据库在Android中使用的一个入门级的教程，这里不对Realm与其他的orm框架的优缺点作讨论（这些网上已是一搜一大把）。</p>
+            <p><strong>*本篇文章已授权微信公众号 guolin_blog （郭霖）独家发布</strong></p>
+<p>前段时间看别人博客的时候偶然间看到了<a href="http://www.jianshu.com/p/f67e950d84f7" target="_blank" rel="external">Android微信自动回复功能</a>，最后的效果也很不错，博主在文中提到了<code>AccessibilityService</code>，以前压根没接触过这东西，表示一脸懵逼。也是这个原因我去找了AccessibilityService相关的资料好好的看了一遍，发现这个东西真的太NB了，网上对AccessibilityService的应用还是有不少的文章的，但是详细的介绍资料还是比较少，对于刚刚学习这个的同学看完很多资料还是一脸茫然，于是才有了本文。我相信当你在看完本文之后，再去看前面的那篇文章，我相信会轻松很多。</p>
+<hr>
 <blockquote>
-<p>本文学习目录<br>一.环境配置<br>二.创建实体<br>三.CRUD（增删改查操作）<br>四.进阶用法</p>
+<h3 id="本文学习目录"><a href="#本文学习目录" class="headerlink" title="本文学习目录"></a>本文学习目录</h3><p>1.AccessibilityService是什么<br>2.AccessibilityService的创建与配置<br>3.怎么去使用AccessibilityService<br>4.一步一步构建一个apk自动安装器</p>
 </blockquote>
-<p>###一.环境配置</p>
-<ol>
-<li><p>在项目的build文件加上</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">buildscript &#123;</div><div class="line">    repositories &#123;</div><div class="line">        jcenter()</div><div class="line">    &#125;</div><div class="line">    dependencies &#123;</div><div class="line">        ...</div><div class="line">        classpath "io.realm:realm-gradle-plugin:1.2.0"</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
-</li>
-<li><p>在 app 的 build文件中加入</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">apply plugin: 'realm-android'</div></pre></td></tr></table></figure>
-</li>
-</ol>
-<p>###二.创建实体<br>Realm 支持的字段类型，除了Java提供的基本类型之外，Realm还支持<code>继承了RealmObject 的对象</code>和<code>RealmList&lt;? extends RealmObject&gt;</code></p>
-<p>这里为了方便直接使用了示例项目中的对象了。</p>
-<p>创建一个User实体<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div></pre></td><td class="code"><pre><div class="line">public class User extends RealmObject &#123;</div><div class="line">    @PrimaryKey</div><div class="line">    private String id;</div><div class="line">    private String name;</div><div class="line">    private int age;</div><div class="line">    private RealmList<span class="tag">&lt;<span class="name">User</span>&gt;</span> friends;</div><div class="line"></div><div class="line">    public String getName() &#123;</div><div class="line">        return name;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void setName(String name) &#123;</div><div class="line">        this.name = name;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public int getAge() &#123;</div><div class="line">        return age;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void setAge(int age) &#123;</div><div class="line">        this.age = age;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public String getId() &#123;</div><div class="line">        return id;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void setId(String id) &#123;</div><div class="line">        this.id = id;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public RealmList<span class="tag">&lt;<span class="name">User</span>&gt;</span> getFriends() &#123;</div><div class="line">        return friends;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void setFriends(RealmList<span class="tag">&lt;<span class="name">User</span>&gt;</span> friends) &#123;</div><div class="line">        this.friends = friends;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>细心的同学已经注意到了，我们上面创建的实体对象继承于RealmObject ，Realm 数据实体定义需要继承自 RealmObject类。</p>
-<p>这里需要知道的几点：</p>
+<h3 id="1-AccessibilityService是什么"><a href="#1-AccessibilityService是什么" class="headerlink" title="1.AccessibilityService是什么"></a>1.AccessibilityService是什么</h3><p>AccessibilityService是什么，官网是这样解释的</p>
+<blockquote>
+<p>Accessibility services are intended to assist users with disabilities in using Android devices and apps. They run in the background and receive callbacks by the system whenAccessibilityEvents are fired.</p>
+</blockquote>
+<p>也就是说这是个辅助功能，目的是辅助人们去使用Android设备和应用。它在后台运行，可以接收系统的回调。</p>
+<p>可见AccessibilityService的出现Google的初衷是辅助人们去使用Android设备和应用，但是当你对它足够了解了之后你会发现它的作用不仅仅只是这样。对windows编程有了解的同学肯定知道hook（钩子），AccessibilityService和windows下的hook有那么一点的相似。AccessibilityService可以拦截到系统发出的一些消息（比如窗体状态的改变，通知栏状态的改变，View被点击了等等），当拦截到这些事件我们就可以去做一些我们想做的事儿了~~~<br>AccessibilityService能做些什么呢？ 比如自动化测试、自动抢红包、自动安装等等。在带来便利的同时，也还是有需要注意的地方：当你开启了辅助功能之后会对你的隐私信息带来一些风险，所以还是需要谨慎的去开启第三方的辅助功能。当然这对于我们开发者而言都不是事，因为我们完全可以自己去开发属于我们的辅助功能。</p>
+<h3 id="2-AccessibilityService的创建与配置"><a href="#2-AccessibilityService的创建与配置" class="headerlink" title="2.AccessibilityService的创建与配置"></a>2.AccessibilityService的创建与配置</h3><p>第一步就是自己去创建一个类继承于AccessibilityService，并实现必须实现的两个方法</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">public class MyAccessibilityService extends AccessibilityService &#123;</div><div class="line">    @Override</div><div class="line">    public void onAccessibilityEvent(AccessibilityEvent accessibilityEvent) &#123;</div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public void onInterrupt() &#123;</div><div class="line"></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>随后就是在res/xml目录下新建一个xml文件（文件名随意）,后面会对这个文件作详细的介绍。<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">accessibility-service</span> <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span></span></div><div class="line">    <span class="attr">android:accessibilityEventTypes</span>=<span class="string">"typeAllMask"</span></div><div class="line">    <span class="attr">android:accessibilityFeedbackType</span>=<span class="string">"feedbackGeneric"</span>  </div><div class="line">    <span class="attr">android:canRetrieveWindowContent</span>=<span class="string">"true"</span></div><div class="line">    <span class="attr">android:description</span>=<span class="string">"@string/my_accessibility_description"</span></div><div class="line">    <span class="attr">android:notificationTimeout</span>=<span class="string">"100"</span></div><div class="line">    <span class="attr">android:packageNames</span>=<span class="string">"com.tencent.mobileqq,com.android.packageinstaller"</span> /&gt;</div></pre></td></tr></table></figure></p>
+<p>最后就是去配置清单文件了<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">service</span></span></div><div class="line">           <span class="attr">android:name</span>=<span class="string">".service.MyAccessibilityService"</span></div><div class="line">           <span class="attr">android:enabled</span>=<span class="string">"true"</span></div><div class="line">           <span class="attr">android:exported</span>=<span class="string">"true"</span></div><div class="line">           <span class="attr">android:label</span>=<span class="string">"@string/app_name"</span></div><div class="line">           <span class="attr">android:permission</span>=<span class="string">"android.permission.BIND_ACCESSIBILITY_SERVICE"</span>&gt;</div><div class="line">           <span class="tag">&lt;<span class="name">intent-filter</span>&gt;</span></div><div class="line">               <span class="tag">&lt;<span class="name">action</span> <span class="attr">android:name</span>=<span class="string">"android.accessibilityservice.AccessibilityService"</span> /&gt;</span></div><div class="line">           <span class="tag">&lt;/<span class="name">intent-filter</span>&gt;</span></div><div class="line">           <span class="tag">&lt;<span class="name">meta-data</span></span></div><div class="line">               <span class="attr">android:name</span>=<span class="string">"android.accessibilityservice"</span></div><div class="line">               <span class="attr">android:resource</span>=<span class="string">"@xml/my_services_config"</span> /&gt;//在meta-data里申明配置信息</div><div class="line">       <span class="tag">&lt;/<span class="name">service</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<p> 别忘记了添加权限<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">uses-permission</span> <span class="attr">android:name</span>=<span class="string">"android.permission.BIND_ACCESSIBILITY_SERVICE"</span> /&gt;</span></div></pre></td></tr></table></figure></p>
+<p>到这我们就可以把应用跑到我们的手机上了，然后打开辅助功能，去开启我们刚刚创建的这个辅助功能。如下图：<br><img src="http://upload-images.jianshu.io/upload_images/623504-1f974077211e7752.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p>当然因为什么都没做，开启了也没什么用，下面就去看看怎么使用吧！</p>
+<h3 id="3-怎么去使用AccessibilityService"><a href="#3-怎么去使用AccessibilityService" class="headerlink" title="3.怎么去使用AccessibilityService"></a>3.怎么去使用AccessibilityService</h3><p>先说说之前创建的那个xml文件中各个属性的含义吧</p>
 <ul>
-<li><code>@PrimaryKey</code>用来标识主键</li>
-<li>默认的所有的字段都会被存储</li>
-<li>如果某个字段不需要被存储到本地，则需在在这个字段上面加上<code>@Ignore</code>注解</li>
+<li><code>accessibilityEventTypes </code>： 用来设置响应事件的类型，比如typeAllMask就是响应全部事件，typeNotificationStateChanged就是响应通知状态的改变，如果需要响应多种事件类型可以以 ‘ | ’ 隔开。</li>
+<li><code>accessibilityFeedbackType </code>： 给用户的反馈方式，比如语音、震动等，这里用处不大。</li>
+<li><code>canRetrieveWindowContent</code> ：是否可以获取活动窗体的内容，这个设置为true才可以取得窗体中的控件和事件源</li>
+<li><code>description</code> ：辅助功能的描述</li>
+<li><code>notificationTimeout</code> ：两个相同类型事件发送到服务的事件间隔，单位毫秒</li>
+<li><code>packageNames</code> ：指定响应某个应用的事件，取值为应用的包名，多个以‘ , ’ 隔开。没有此属性则表示响应全部应用。这里我填写的是手机qq和系统安装器的包名</li>
 </ul>
-<p>###三.CRUD（增删改查操作）<br>数据库的使用无非上就是增删改查这四种操作，其中查是重点，在写原生sql语句中这也是个难点。下面我们就来看看Realm的CRUD是怎样的</p>
-<p>####1.添加数据<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">RealmConfiguration realmConfig = new RealmConfiguration</div><div class="line">                .Builder(this)</div><div class="line">                .build();</div><div class="line">Realm realm = Realm.getInstance(realmConfig);</div></pre></td></tr></table></figure></p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">public void testAdd() &#123;</div><div class="line">       initRealm();</div><div class="line">       realm.executeTransaction(new Realm.Transaction() &#123;</div><div class="line">           @Override</div><div class="line">           public void execute(Realm realm) &#123;</div><div class="line">               for (int i = 0; i <span class="tag">&lt; <span class="attr">10</span>; <span class="attr">i</span>++) &#123;</span></div><div class="line">                   <span class="attr">User</span> <span class="attr">user</span> = <span class="string">realm.createObject(User.class);</span></div><div class="line">                   <span class="attr">user.setName</span>("<span class="attr">user</span>" + <span class="attr">i</span>);</div><div class="line">                   <span class="attr">user.setAge</span>(<span class="attr">10</span> + <span class="attr">i</span>);</div><div class="line">                   <span class="attr">user.setId</span>(<span class="attr">UUID.randomUUID</span>()<span class="attr">.toString</span>());</div><div class="line">               &#125;</div><div class="line">               <span class="attr">showInTextView</span>("<span class="attr">10</span>条数据添加成功");</div><div class="line">           &#125;</div><div class="line">       &#125;);</div><div class="line">   &#125;</div></pre></td></tr></table></figure>
-<p>在用Realm进行操作之前需要对Realm作相关的配置操作，Realm中所有的写操作都必须在事务中进行，不然就会报错，<strong>记得在Activity的onDestory中调用realm.close()释放资源</strong>。上面的代码片段就创建了10个User对象。</p>
-<p>####2.查询数据</p>
-<ul>
-<li><p>查询全部</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">public void testQuery() &#123;</div><div class="line">       List<span class="tag">&lt;<span class="name">User</span>&gt;</span> users= realm.where(User.class).findAll();</div><div class="line">       for (User user: users) &#123;</div><div class="line">           showInTextView("id:" + user.getId() + " name:" + user.getName() + " age:" + user.getAge());</div><div class="line">       &#125;</div><div class="line">   &#125;</div></pre></td></tr></table></figure>
-</li>
-<li><p>条件查询，Realm 支持以下查询条件（来源于官网）：</p>
-<ul>
-<li>between()、greaterThan()、lessThan()、greaterThanOrEqualTo() 和 lessThanOrEqualTo()</li>
-<li>equalTo() 和 notEqualTo()</li>
-<li>contains()、beginsWith() 和 endsWith()</li>
-<li>isNull() 和 isNotNull()</li>
-<li>isEmpty() 和 isNotEmpty()</li>
-</ul>
-</li>
-</ul>
-<p>以下代码片段查询年龄小于15的User<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">public void testQueryAgeLessThan15() &#123;</div><div class="line">       List<span class="tag">&lt;<span class="name">User</span>&gt;</span> users= realm.where(User.class).lessThan("age", 15).findAll();</div><div class="line">       for (User user: users) &#123;</div><div class="line">           showInTextView("id:" + user.getId() + " name:" + user.getName() + " age:" + user.getAge());</div><div class="line">       &#125;</div><div class="line">   &#125;</div></pre></td></tr></table></figure></p>
-<ul>
-<li>聚合查询，支持的聚合操作有sum，min，max，average<br>以下代码片段得到所有人的平均年龄<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">public void testQueryAverageAge() &#123;</div><div class="line">        double age = realm.where(User.class).findAll().average("age");</div><div class="line">        textView.setText("average age:" + age);</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>####3.更新数据<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">public void testUpdate() &#123;</div><div class="line">       realm.executeTransaction(new Realm.Transaction() &#123;</div><div class="line">           @Override</div><div class="line">           public void execute(Realm realm) &#123;</div><div class="line">               User user = realm.where(User.class).equalTo("name", "user9").findFirst();</div><div class="line">               if (user != null) &#123;</div><div class="line">                   user.setAge(99);</div><div class="line">                   user.setName("二逼青年");</div><div class="line">               &#125;</div><div class="line">               textView.setText("更新成功");</div><div class="line">           &#125;</div><div class="line">       &#125;);</div><div class="line">   &#125;</div></pre></td></tr></table></figure></p>
-<p>####4.删除数据</p>
-<p>以下代码片段展示了如何删除指定的对象<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">public void testDelete() &#123;</div><div class="line">       realm.executeTransaction(new Realm.Transaction() &#123;</div><div class="line">           @Override</div><div class="line">           public void execute(Realm realm) &#123;</div><div class="line">               User user = realm.where(User.class).equalTo("name", "user0").findFirst();</div><div class="line">               if (user != null)</div><div class="line">                   user.deleteFromRealm();</div><div class="line">               textView.setText("删除成功");</div><div class="line">           &#125;</div><div class="line">       &#125;);</div><div class="line">   &#125;</div></pre></td></tr></table></figure></p>
-<p>###四.进阶用法<br>通过前面一节的学习，我们基本学会了Realm数据库基本的增删改查操作。<br>本节来看看Realm还有什么其他用法</p>
-<p>####1.用json创建对象<br>在实际开发中我们和json打交道的机会比较多，所以直接从json去创建对象是十分有用的，下面的代码片段展示了怎么去用。<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line">private void testAddFromJson() &#123;</div><div class="line">        realm.executeTransaction(new Realm.Transaction() &#123;</div><div class="line">            @Override</div><div class="line">            public void execute(Realm realm) &#123;</div><div class="line">                String json = "&#123;\n" +</div><div class="line">                        "    \"id\": \"uuid1\",\n" +</div><div class="line">                        "    \"name\": \"solid\",\n" +</div><div class="line">                        "    \"age\": 20\n" +</div><div class="line">                        "&#125;";</div><div class="line">                String jsons = "[\n" +</div><div class="line">                        "    &#123;\n" +</div><div class="line">                        "        \"id\": \"uuid1\",\n" +</div><div class="line">                        "        \"name\": \"solid\",\n" +</div><div class="line">                        "        \"age\": 20\n" +</div><div class="line">                        "    &#125;,\n" +</div><div class="line">                        "    &#123;\n" +</div><div class="line">                        "        \"id\": \"uuid2\",\n" +</div><div class="line">                        "        \"name\": \"jhack\",\n" +</div><div class="line">                        "        \"age\": 21\n" +</div><div class="line">                        "    &#125;,\n" +</div><div class="line">                        "    &#123;\n" +</div><div class="line">                        "        \"id\": \"uuid3\",\n" +</div><div class="line">                        "        \"name\": \"tom\",\n" +</div><div class="line">                        "        \"age\": 22\n" +</div><div class="line">                        "    &#125;\n" +</div><div class="line">                        "]";</div><div class="line">                //realm.createObjectFromJson(User.class, json);</div><div class="line">                realm.createAllFromJson(User.class, jsons);</div><div class="line">            &#125;</div><div class="line">        &#125;);</div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
-<p>####2.数据模型改变的处理<br> 开发中数据模型不可能从一开始创建了，就保证后面的开发过程中不会更改，对于Realm如果其中的某个实体类改变了，而我们没有做任何的处理，就会报错，如果还处于应用的开发的初期，这无所谓，直接清空数据即可，但是如果应用已经发布了，我们就需要去寻找一种解决方案了。</p>
-<p>这里的解决方案如下：<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">public class MyMigration implements RealmMigration &#123;</div><div class="line">    @Override</div><div class="line">    public void migrate(DynamicRealm realm, long oldVersion, long newVersion) &#123;</div><div class="line">        Log.e(MainActivity.TAG, "oldVersion:" + oldVersion + " newVersion:" + newVersion);</div><div class="line"></div><div class="line">        RealmSchema schema = realm.getSchema();</div><div class="line"></div><div class="line">        if (newVersion == 2) &#123;</div><div class="line">            schema.get("User")</div><div class="line">                    .addField("desc", String.class);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public boolean equals(Object obj) &#123;</div><div class="line">        return obj instanceof MyMigration;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public int hashCode() &#123;</div><div class="line">        return super.hashCode();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">realmConfig = new RealmConfiguration</div><div class="line">               .Builder(this)</div><div class="line">               .schemaVersion(2)</div><div class="line">               .migration(new MyMigration())</div><div class="line">               .build();</div></pre></td></tr></table></figure>
-<p>####3.与RxJava的结合<br>Realm原生是支持Rxjava的，由于RxJava 是可选依赖，所以在使用的时候需要在app的build文件中添加RxJava库的依赖，下面是使用的代码片段。<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">public void testRxJava() &#123;</div><div class="line">        realm.where(User.class).findAll()</div><div class="line">                .asObservable()</div><div class="line">                .flatMap(new Func1&lt;RealmResults&lt;User&gt;, Observable&lt;User&gt;&gt;() &#123;</div><div class="line">                    @Override</div><div class="line">                    public Observable&lt;User&gt; call(RealmResults&lt;User&gt; users) &#123;</div><div class="line">                        return Observable.from(users);</div><div class="line">                    &#125;</div><div class="line">                &#125;)</div><div class="line">                .subscribe(new Action1&lt;User&gt;() &#123;</div><div class="line">                    @Override</div><div class="line">                    public void call(User user) &#123;</div><div class="line">                        showInTextView("id:" + user.getId() + " name:" + user.getName() + " age:" + user.getAge() + " desc:" + user.getDesc());</div><div class="line"></div><div class="line">                    &#125;</div><div class="line">                &#125;);</div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
-<p>这篇文章接到这了，遗憾的是Realm在Windows中没有相关的查看器，只有Mac版的，所以不能直接在Windows中查看Realm数据库中的数据，希望官方后面会有支持吧。更多的资料请查看官方文档。<br>参考文档：<a href="https://realm.io/docs/java/latest/" target="_blank" rel="external">realm-java</a></p>
+<p>然后进入到我们的<code>MyAccessibilityService </code>中，定位到<code>onAccessibilityEvent</code>方法编写如下代码<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div></pre></td><td class="code"><pre><div class="line">log("-------------------------------------------------------------");</div><div class="line">        int eventType = event.getEventType();//事件类型</div><div class="line">        log("packageName:" + event.getPackageName() + "");//响应事件的包名，也就是哪个应用才响应了这个事件</div><div class="line">        log("source:" + event.getSource() + "");//事件源信息</div><div class="line">        log("source class:" + event.getClassName() + "");//事件源的类名，比如android.widget.TextView</div><div class="line">        log("event type(int):" + eventType + "");</div><div class="line"></div><div class="line">        switch (eventType) &#123;</div><div class="line">            case AccessibilityEvent.TYPE_NOTIFICATION_STATE_CHANGED:// 通知栏事件</div><div class="line">                log("event type:TYPE_NOTIFICATION_STATE_CHANGED");</div><div class="line">                break;</div><div class="line">            case AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED://窗体状态改变</div><div class="line">                log("event type:TYPE_WINDOW_STATE_CHANGED");</div><div class="line">                break;</div><div class="line">            case AccessibilityEvent.TYPE_VIEW_ACCESSIBILITY_FOCUSED://View获取到焦点</div><div class="line">                log("event type:TYPE_VIEW_ACCESSIBILITY_FOCUSED");</div><div class="line">                break;</div><div class="line">            case AccessibilityEvent.TYPE_GESTURE_DETECTION_START:</div><div class="line">                log("event type:TYPE_VIEW_ACCESSIBILITY_FOCUSED");</div><div class="line">                break;</div><div class="line">            case AccessibilityEvent.TYPE_GESTURE_DETECTION_END:</div><div class="line">                log("event type:TYPE_GESTURE_DETECTION_END");</div><div class="line">                break;</div><div class="line">            case AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED:</div><div class="line">                log("event type:TYPE_WINDOW_CONTENT_CHANGED");</div><div class="line">                break;</div><div class="line">            case AccessibilityEvent.TYPE_VIEW_CLICKED:</div><div class="line">                log("event type:TYPE_VIEW_CLICKED");</div><div class="line">                break;</div><div class="line">            case AccessibilityEvent.TYPE_VIEW_TEXT_CHANGED:</div><div class="line">                log("event type:TYPE_VIEW_TEXT_CHANGED");</div><div class="line">                break;</div><div class="line">            case AccessibilityEvent.TYPE_VIEW_SCROLLED:</div><div class="line">                log("event type:TYPE_VIEW_SCROLLED");</div><div class="line">                break;</div><div class="line">            case AccessibilityEvent.TYPE_VIEW_TEXT_SELECTION_CHANGED:</div><div class="line">                log("event type:TYPE_VIEW_TEXT_SELECTION_CHANGED");</div><div class="line">                break;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        for (CharSequence txt : event.getText()) &#123;</div><div class="line">            log("text:" + txt);//输出当前事件包含的文本信息</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        log("-------------------------------------------------------------");</div></pre></td></tr></table></figure></p>
+<p>log方法就是打印信息用的，是对Log的一个简单封装。</p>
+<p>在运行一次程序，打开我们的手机qq可以看见输出日志如下</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/623504-b8cb8b2c0bd531e0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p>可以很清晰的看见当我们打开qq或触发很多的事件，第一个响应的事件是<code>TYPE_WINDOW_STATE_CHANGED</code>,触发此事件的事件源是<code>com.tencent.mobileqq.activity.SplashActivity</code></p>
+<p>接着，当我点击最上面的 ‘ 电话 ’，会得到如下日志：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/623504-7d3c979e0283043d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p>我就不一一截图操作的日志了，下来大家可以自行尝试。到这里你用该对<code>onAccessibilityEvent</code>有了进一步的了解。</p>
+<h3 id="4-一步一步构建一个apk自动安装器"><a href="#4-一步一步构建一个apk自动安装器" class="headerlink" title="4.一步一步构建一个apk自动安装器"></a>4.一步一步构建一个apk自动安装器</h3><p>这一节来个实战的应用：做一个apk的自动安装器，点击apk文件即可开始自动安装。</p>
+<p>国内的rom厂商大家都很清楚：百(sang)花(xin)齐(bing)放(kuang)，已经把原生的rom改的面目全非。所以想做一个面对全部手机的apk的自动安装器还是比较麻烦的。我的手机是魅族的，下图是魅族手机apk安装的步骤（其他手机可能会略有不同，下来自己更改不同部分即可，这里主要讲解原理）：<br><img src="http://upload-images.jianshu.io/upload_images/623504-cea30f62d841e6a9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/623504-24f650f9cde76772.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/623504-4c27c7c62c391da6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p>可以看见点击安装包之后会弹出一个确认框，点击继续之后会出现下一步，点击了下一步就可以点击安装了。我们要实现自动安装无非就是用程序的方式会对相关按钮的自动点击，难点就在于怎么去找到这些按钮并执行点击操作。</p>
+<p>好了，下面我们可以来创建一个自动安装的服务了，步骤和第一节描述的一样将<code>packageNames</code>指定成<code>com.android.packageinstaller</code>就可以了。这里我们先别着急去实现功能（就算你想去实现，也摸不着头脑），我们还是像第二节那样去输出日志信息，<strong>查看日志输出信息（对响应事件信息的打印）是使用AccessibilityService的重点</strong>，看完日志的输出信息，然后对其分析，才会知道具体的操作。<br>我们来看看在安装apk文件时候输出的部分日志信息：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/623504-03f81f3b844602e8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/623504-4c107be6ffb3bcd8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/623504-cba858987a52d3d0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p>从日志信息中可以看出：<br>1.当我们点击了apk文件的时候，如果该文件已经存在，就会弹出一个对话框并且会响应<code>TYPE_WINDOW_STATE_CHANGE</code>事件<br>2.当我们点击了继续之后就会响应<code>TYPE_VIEW_CLICKED</code>事件，并且继续这个可以点击的View是个Button<br>3.接着点击下一步，同样也会响应<code>TYPE_VIEW_CLICKED</code>事件，并且继续这个可以点击的View是个TextView。最后就可以点击安装了（安装那步忘了截图，和第3步相应的事件是一样的）</p>
+<p>经过上面几步的分析，我想你应该对后面的逻辑还是比较清楚了，直接上代码</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">public class AutoInstallService extends AccessibilityService &#123;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public void onAccessibilityEvent(AccessibilityEvent event) &#123;</div><div class="line">        PrintUtils.printEvent(event);</div><div class="line">        findAndPerformActionButton("继续");</div><div class="line">        findAndPerformActionTextView("下一步");</div><div class="line">        findAndPerformActionTextView("安装");</div><div class="line">    &#125;</div><div class="line"></div><div class="line"></div><div class="line">    private void findAndPerformActionButton(String text) &#123;</div><div class="line">        if (getRootInActiveWindow() == null)//取得当前激活窗体的根节点</div><div class="line">            return;</div><div class="line">        //通过文字找到当前的节点</div><div class="line">        List&lt;AccessibilityNodeInfo&gt; nodes = getRootInActiveWindow().findAccessibilityNodeInfosByText(text);</div><div class="line">        for (int i = 0; i &lt; nodes.size(); i++) &#123;</div><div class="line">            AccessibilityNodeInfo node = nodes.get(i);</div><div class="line">            // 执行点击行为</div><div class="line">            if (node.getClassName().equals("android.widget.Button") &amp;&amp; node.isEnabled()) &#123;</div><div class="line">                node.performAction(AccessibilityNodeInfo.ACTION_CLICK);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    private void findAndPerformActionTextView(String text) &#123;</div><div class="line">        if (getRootInActiveWindow() == null)</div><div class="line">            return;</div><div class="line">        //通过文字找到当前的节点</div><div class="line">        List&lt;AccessibilityNodeInfo&gt; nodes = getRootInActiveWindow().findAccessibilityNodeInfosByText(text);</div><div class="line">        for (int i = 0; i &lt; nodes.size(); i++) &#123;</div><div class="line">            AccessibilityNodeInfo node = nodes.get(i);</div><div class="line">            // 执行按钮点击行为</div><div class="line">            if (node.getClassName().equals("android.widget.TextView") &amp;&amp; node.isEnabled()) &#123;</div><div class="line">                node.performAction(AccessibilityNodeInfo.ACTION_CLICK);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>例子很简单，所以也没去对eventType做判断，当有其他需求的时候是需要对eventType做判断了，代码已经注释的比较详细，我就不再对代码作更多的讲解了，有疑问可以留言。</p>
+<p>到这里你应该对AccessibilityService有了进一步的认识，会发现原来红包助手之类软件实现的原理就是利用AccessibilityService检测通知栏的状态，然后再去做一些处理。是不是有点自己去做一个红包助手的想法了？现在再去看看文章开始的那篇文章你的收获会更大：<a href="http://www.jianshu.com/p/f67e950d84f7" target="_blank" rel="external">Android微信自动回复功能</a></p>
+<h3 id="补充说明"><a href="#补充说明" class="headerlink" title="补充说明"></a>补充说明</h3><p>AccessibilityService中还有几个常用的方法 onServiceConnected、onInterrupt、onGesture。看名字大致也知道什么时候会被调用。</p>
+<p>在onServiceConnected中可以去配置AccessibilityService的一些信息，也就是之前在xml文件可以在这里通过代码配置，不过这里没法配置canRetrieveWindowContent属性，刚开始也被这个坑了很久<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">@Override</div><div class="line">    protected void onServiceConnected() &#123;</div><div class="line">        super.onServiceConnected();</div><div class="line">        PrintUtils.log("onServiceConnected");</div><div class="line">//        //可用代码配置当前Service的信息</div><div class="line">//        AccessibilityServiceInfo info = new AccessibilityServiceInfo();</div><div class="line">//        info.packageNames = new String[]&#123;"com.android.packageinstaller", "com.tencent.mobileqq", "com.trs.gygdapp"&#125;; //监听过滤的包名</div><div class="line">//        info.eventTypes = AccessibilityEvent.TYPES_ALL_MASK; //监听哪些行为</div><div class="line">//        info.feedbackType = AccessibilityServiceInfo.FEEDBACK_SPOKEN; //反馈</div><div class="line">//        info.notificationTimeout = 100; //通知的时间</div><div class="line">//        setServiceInfo(info);</div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
+<p><a href="https://developer.android.com/reference/android/accessibilityservice/AccessibilityService.html" target="_blank" rel="external">官方文档</a></p>
+<p><a href="https://github.com/burgessjp/AccessibilityServiceDemo" target="_blank" rel="external">本文源码</a></p>
 
           
         
@@ -560,7 +423,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/04/25/分享一种RecyclerView滑动到底部自动加载的实现方案/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/06/15/是时候学习RxJava了/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="_SOLID">
@@ -582,8 +445,8 @@
             
               
                 
-                <a class="post-title-link" href="/2017/04/25/分享一种RecyclerView滑动到底部自动加载的实现方案/" itemprop="url">
-                  分享一种RecyclerView滑动到底部自动加载的实现方案
+                <a class="post-title-link" href="/2016/06/15/是时候学习RxJava了/" itemprop="url">
+                  是时候学习RxJava了
                 </a>
               
             
@@ -599,8 +462,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-04-25T11:05:53+08:00">
-                2017-04-25
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-06-15T17:17:00+08:00">
+                2016-06-15
               </time>
             
 
@@ -636,20 +499,59 @@
       
         
           
-            <p>在我们开发app的时候，列表组件总是最常用的。目前<strong>下拉刷新</strong>和<strong>上拉加载</strong>的组件有很多。Github一搜索，大部分的开源项目都只实现了<strong>下拉刷新</strong>而没有<strong>上拉加载</strong>，也有部分项目把<strong>上拉加载</strong>更多实现了，但是这样做其实并不好，因为在app实际的运行中当户滑动到底部就应该自动加载下一页的内容（决大部分app都是这样做的），而不是要让用户手动去上拉才会去加载，这样会严重影响到用户体验，当然，个别特殊情况除外。</p>
-<p>今天我要讲的内容可能很多人都知道怎么做，搜一搜也会出现很多相应的内容。我这次分享主要的目的是聊聊实现方案和在其中遇到的一些问题，如果有更好的实现方案，望不吝赐教。</p>
-<p>###1.常规版</p>
-<p>我们都知道RecyclerView可以监听滚动事件的Listener：我们只需实现里面对应的事件就可以实现滑动到底部加载更多了<br>代码实现大概是这样的（这里只考虑了布局管理器是LinearLayoutManager的情况，其他的也类似）：<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() &#123;</div><div class="line">            @Override</div><div class="line">            public void onScrollStateChanged(RecyclerView recyclerView, int newState) &#123;</div><div class="line">                LinearLayoutManager lm = (LinearLayoutManager) recyclerView.getLayoutManager();</div><div class="line">                int totalItemCount = recyclerView.getAdapter().getItemCount();</div><div class="line">                int lastVisibleItemPosition = lm.findLastVisibleItemPosition();</div><div class="line">                int visibleItemCount = recyclerView.getChildCount();</div><div class="line"></div><div class="line">                if (newState == RecyclerView.SCROLL_STATE_IDLE</div><div class="line">                        &amp;&amp; lastVisibleItemPosition == totalItemCount - 1</div><div class="line">                        &amp;&amp; visibleItemCount &gt; 0) &#123;</div><div class="line">                    //加载更多</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;);</div></pre></td></tr></table></figure></p>
-<p>上面的代码我相信做过自动加载的朋友都很熟悉， 这样做确实能做到自动加载更多，但是如果我们想显示加载的状态（<strong>加载中，加载出错，没有更多了</strong>）怎么办呢？只是用这种方案肯定是不能解决的。</p>
-<p>###2.进阶版<br>我们也都知道RecyclerView不能像ListView那样直接就有addHeadView和addFooterView之类的方法，要想实现加载状态的显示必须要在Adapter上动手脚才行。洋神对此也有了一种实现<a href="https://github.com/hongyangAndroid/baseAdapter/blob/master/baseadapter-recyclerview/src/main/java/com/zhy/adapter/recyclerview/wrapper/LoadmoreWrapper.java" target="_blank" rel="external">LoadmoreWrapper</a>(只是单纯的加载更多，并没有状态的处理)，代码大概是这样的（我只留下了关键部分的代码，想看代码完整实现的请直接点击上面的链接。）：<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div></pre></td><td class="code"><pre><div class="line">public class LoadMoreWrapper<span class="tag">&lt;<span class="name">T</span>&gt;</span> extends RecyclerView.Adapter<span class="tag">&lt;<span class="name">RecyclerView.ViewHolder</span>&gt;</span></div><div class="line">&#123;</div><div class="line">    public static final int ITEM_TYPE_LOAD_MORE = Integer.MAX_VALUE - 2;</div><div class="line"></div><div class="line">    private RecyclerView.Adapter mInnerAdapter;</div><div class="line">    private View mLoadMoreView;</div><div class="line">    private int mLoadMoreLayoutId;</div><div class="line"></div><div class="line">    public LoadMoreWrapper(RecyclerView.Adapter adapter)</div><div class="line">    &#123;</div><div class="line">        mInnerAdapter = adapter;</div><div class="line">    &#125;</div><div class="line">    ...</div><div class="line">    @Override</div><div class="line">    public int getItemViewType(int position)</div><div class="line">    &#123;</div><div class="line">        if (isShowLoadMore(position))</div><div class="line">        &#123;</div><div class="line">            return ITEM_TYPE_LOAD_MORE;</div><div class="line">        &#125;</div><div class="line">        return mInnerAdapter.getItemViewType(position);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType)</div><div class="line">    &#123;</div><div class="line">        if (viewType == ITEM_TYPE_LOAD_MORE)</div><div class="line">        &#123;</div><div class="line">            ViewHolder holder;</div><div class="line">            if (mLoadMoreView != null)</div><div class="line">            &#123;</div><div class="line">                holder = ViewHolder.createViewHolder(parent.getContext(), mLoadMoreView);</div><div class="line">            &#125; else</div><div class="line">            &#123;</div><div class="line">                holder = ViewHolder.createViewHolder(parent.getContext(), parent, mLoadMoreLayoutId);</div><div class="line">            &#125;</div><div class="line">            return holder;</div><div class="line">        &#125;</div><div class="line">        return mInnerAdapter.onCreateViewHolder(parent, viewType);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position)</div><div class="line">    &#123;</div><div class="line">        if (isShowLoadMore(position))</div><div class="line">        &#123;</div><div class="line">            if (mOnLoadMoreListener != null)</div><div class="line">            &#123;</div><div class="line">                mOnLoadMoreListener.onLoadMoreRequested();</div><div class="line">            &#125;</div><div class="line">            return;</div><div class="line">        &#125;</div><div class="line">        mInnerAdapter.onBindViewHolder(holder, position);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    ...</div><div class="line"></div><div class="line">    private OnLoadMoreListener mOnLoadMoreListener;</div><div class="line"></div><div class="line">    public LoadMoreWrapper setOnLoadMoreListener(OnLoadMoreListener loadMoreListener)</div><div class="line">    &#123;</div><div class="line">        if (loadMoreListener != null)</div><div class="line">        &#123;</div><div class="line">            mOnLoadMoreListener = loadMoreListener;</div><div class="line">        &#125;</div><div class="line">        return this;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    ...</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>可以看到这里巧妙的用到了装饰者模式，完全与数据展示的逻辑分隔，在相应的方法里做了对应判断。加载更多的调用就在<strong>onBindViewHolder</strong>这个方法中，意思就是当这个View显示出来了，我们就触发加载更多这个方法。</p>
-<p>但是这里还是没有实现状态的处理。这确实是一个好的方案这样做还是有点不能满足实际开发中的一些需求。并且这样做还有一个潜在的问题：如果你的请求没有延时，也就是说我们直接add的一批数据，然后直接调用了notifyDataSetChanged()方法，就会出下下面的错误：<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">java.lang.IllegalStateException: Cannot call this method while RecyclerView is computing a layout or scrolling</div></pre></td></tr></table></figure></p>
-<p>###3.综合版<br>上面两种方式各有各的优点，如果我们能将这两种方式结合在一起，那就好了。第一种方式服务加载更多，第二种方式负责状态的显示。下面来看看代码的实现（有省略）：<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div><div class="line">146</div><div class="line">147</div><div class="line">148</div><div class="line">149</div><div class="line">150</div></pre></td><td class="code"><pre><div class="line">public class LoadMoreWrapper extends RecyclerView.Adapter<span class="tag">&lt;<span class="name">RecyclerView.ViewHolder</span>&gt;</span> &#123;</div><div class="line"></div><div class="line">    public static final int ITEM_TYPE_LOAD_FAILED_VIEW = Integer.MAX_VALUE - 1;</div><div class="line">    public static final int ITEM_TYPE_NO_MORE_VIEW = Integer.MAX_VALUE - 2;</div><div class="line">    public static final int ITEM_TYPE_LOAD_MORE_VIEW = Integer.MAX_VALUE - 3;</div><div class="line">    public static final int ITEM_TYPE_NO_VIEW = Integer.MAX_VALUE - 4;//不展示footer view</div><div class="line"></div><div class="line">    private Context mContext;</div><div class="line">    private RecyclerView.Adapter mInnerAdapter;</div><div class="line"></div><div class="line">    private View mLoadMoreView;</div><div class="line">    private View mLoadMoreFailedView;</div><div class="line">    private View mNoMoreView;</div><div class="line"></div><div class="line">    private int mCurrentItemType = ITEM_TYPE_LOAD_MORE_VIEW;</div><div class="line">    private LoadMoreScrollListener mLoadMoreScrollListener;</div><div class="line"></div><div class="line"></div><div class="line">    private boolean isLoadError = false;//标记是否加载出错</div><div class="line">    private boolean isHaveStatesView = true;</div><div class="line"></div><div class="line">    public LoadMoreWrapper(Context context, RecyclerView.Adapter adapter) &#123;</div><div class="line">        this.mContext = context;</div><div class="line">        this.mInnerAdapter = adapter;</div><div class="line">        mLoadMoreScrollListener = new LoadMoreScrollListener() &#123;</div><div class="line">            @Override</div><div class="line">            public void loadMore() &#123;</div><div class="line">                if (mOnLoadListener != null &amp;&amp; isHaveStatesView) &#123;</div><div class="line">                    if (!isLoadError) &#123;</div><div class="line">                        showLoadMore();</div><div class="line">                        mOnLoadListener.onLoadMore();</div><div class="line">                    &#125;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void showLoadMore() &#123;</div><div class="line">        mCurrentItemType = ITEM_TYPE_LOAD_MORE_VIEW;</div><div class="line">        isLoadError = false;</div><div class="line">        isHaveStatesView = true;</div><div class="line">        notifyItemChanged(getItemCount());</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void showLoadError() &#123;</div><div class="line">        mCurrentItemType = ITEM_TYPE_LOAD_FAILED_VIEW;</div><div class="line">        isLoadError = true;</div><div class="line">        isHaveStatesView = true;</div><div class="line">        notifyItemChanged(getItemCount());</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void showLoadComplete() &#123;</div><div class="line">        mCurrentItemType = ITEM_TYPE_NO_MORE_VIEW;</div><div class="line">        isLoadError = false;</div><div class="line">        isHaveStatesView = true;</div><div class="line">        notifyItemChanged(getItemCount());</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void disableLoadMore() &#123;</div><div class="line">        mCurrentItemType = ITEM_TYPE_NO_VIEW;</div><div class="line">        isHaveStatesView = false;</div><div class="line">        notifyDataSetChanged();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    //region Get ViewHolder</div><div class="line">    private ViewHolder getLoadMoreViewHolder() &#123;</div><div class="line">        if (mLoadMoreView == null) &#123;</div><div class="line">            mLoadMoreView = new TextView(mContext);</div><div class="line">            mLoadMoreView.setLayoutParams(new ViewGroup.LayoutParams(MATCH_PARENT, WRAP_CONTENT));</div><div class="line">            mLoadMoreView.setPadding(20, 20, 20, 20);</div><div class="line">            ((TextView) mLoadMoreView).setText("正在加载中");</div><div class="line">            ((TextView) mLoadMoreView).setGravity(Gravity.CENTER);</div><div class="line">        &#125;</div><div class="line">        return ViewHolder.createViewHolder(mContext, mLoadMoreView);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    private ViewHolder getLoadFailedViewHolder() &#123;</div><div class="line">        if (mLoadMoreFailedView == null) &#123;</div><div class="line">            mLoadMoreFailedView = new TextView(mContext);</div><div class="line">            mLoadMoreFailedView.setPadding(20, 20, 20, 20);</div><div class="line">            mLoadMoreFailedView.setLayoutParams(new ViewGroup.LayoutParams(MATCH_PARENT, WRAP_CONTENT));</div><div class="line">            ((TextView) mLoadMoreFailedView).setText("加载失败，请点我重试");</div><div class="line">            ((TextView) mLoadMoreFailedView).setGravity(Gravity.CENTER);</div><div class="line">        &#125;</div><div class="line">        return ViewHolder.createViewHolder(mContext, mLoadMoreFailedView);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    private ViewHolder getNoMoreViewHolder() &#123;</div><div class="line">        if (mNoMoreView == null) &#123;</div><div class="line">            mNoMoreView = new TextView(mContext);</div><div class="line">            mNoMoreView.setPadding(20, 20, 20, 20);</div><div class="line">            mNoMoreView.setLayoutParams(new ViewGroup.LayoutParams(MATCH_PARENT, WRAP_CONTENT));</div><div class="line">            ((TextView) mNoMoreView).setText("--end--");</div><div class="line">            ((TextView) mNoMoreView).setGravity(Gravity.CENTER);</div><div class="line">        &#125;</div><div class="line">        return ViewHolder.createViewHolder(mContext, mNoMoreView);</div><div class="line">    &#125;</div><div class="line">    //endregion</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public int getItemViewType(int position) &#123;</div><div class="line">        if (position == getItemCount() - 1 &amp;&amp; isHaveStatesView) &#123;</div><div class="line">            return mCurrentItemType;</div><div class="line">        &#125;</div><div class="line">        return mInnerAdapter.getItemViewType(position);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) &#123;</div><div class="line">        if (viewType == ITEM_TYPE_NO_MORE_VIEW) &#123;</div><div class="line">            return getNoMoreViewHolder();</div><div class="line">        &#125; else if (viewType == ITEM_TYPE_LOAD_MORE_VIEW) &#123;</div><div class="line">            return getLoadMoreViewHolder();</div><div class="line">        &#125; else if (viewType == ITEM_TYPE_LOAD_FAILED_VIEW) &#123;</div><div class="line">            return getLoadFailedViewHolder();</div><div class="line">        &#125;</div><div class="line">        return mInnerAdapter.onCreateViewHolder(parent, viewType);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) &#123;</div><div class="line">        if (holder.getItemViewType() == ITEM_TYPE_LOAD_FAILED_VIEW) &#123;</div><div class="line">            mLoadMoreFailedView.setOnClickListener(new View.OnClickListener() &#123;</div><div class="line">                @Override</div><div class="line">                public void onClick(View v) &#123;</div><div class="line">                    if (mOnLoadListener != null) &#123;</div><div class="line">                        mOnLoadListener.onRetry();</div><div class="line">                        showLoadMore();</div><div class="line">                    &#125;</div><div class="line">                &#125;</div><div class="line">            &#125;);</div><div class="line">            return;</div><div class="line">        &#125;</div><div class="line">        mInnerAdapter.onBindViewHolder(holder, position);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public void onAttachedToRecyclerView(RecyclerView recyclerView) &#123;</div><div class="line">         ...</div><div class="line">         recyclerView.addOnScrollListener(mLoadMoreScrollListener);</div><div class="line">    &#125;</div><div class="line">   ...</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public int getItemCount() &#123;</div><div class="line">        return mInnerAdapter.getItemCount() + (isHaveStatesView ? 1 : 0);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    ...</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>代码的实现也还是很简单，定义了四种itemType，分别对应<strong>加载失败</strong>、<strong>没有更多了</strong>、<strong>加载中</strong>、<strong>不显示</strong>四种状态，同时也实现了错误重试的处理。在<strong>onAttachedToRecyclerView</strong>回调中去添加LoadMoreScrollListener。<br>完整版代码地址:<a href="https://github.com/burgessjp/QuickDevLib/blob/master/library/src/main/java/me/solidev/library/ui/adapter/wrapper/LoadMoreWrapper.java" target="_blank" rel="external">LoadMoreWrapper</a></p>
-<p>说了这么多，怎么用？<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">//把你用的adapter传进去</div><div class="line">LoadMoreWrapper mLoadMoreWrapper=new LoadMoreWrapper (mAdapter);</div><div class="line">mLoadMoreWrapper.setOnLoadListener(new LoadMoreWrapper.OnLoadListener() &#123;</div><div class="line">            @Override</div><div class="line">            public void onRetry() &#123;</div><div class="line">              //重试处理</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            @Override</div><div class="line">            public void onLoadMore() &#123;</div><div class="line">               //加载更多</div><div class="line">            &#125;</div><div class="line">        &#125;);</div><div class="line">mRecyclerView.setAdapter(mLoadMoreWrapper);</div></pre></td></tr></table></figure></p>
-<p>在刷新数据的时候调用一下showLoadMore()，数据加载出错的时候调用一下showLoadError()，数据加载完成的时候调用showLoadComplete()。</p>
-<p>想看Demo的请看这里:<a href="https://github.com/burgessjp/QuickDevLib/blob/master/library/src/main/java/me/solidev/library/ui/fragment/AbsListFragment.java" target="_blank" rel="external">AbsListFragment</a>，这是我封装了一个通用的列表展示Fragment。</p>
-<p>Over.</p>
+            <p><img src="http://upload-images.jianshu.io/upload_images/623504-95ab3050919a97ab.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="RxJava"></p>
+<p>从开始最开始学习RxJava到现在也有一段时间了，还记得去年第一次看RxJava的文章就是<a href="https://github.com/rengwuxian" target="_blank" rel="external">扔物线</a>的的这篇文章<a href="http://gank.io/post/560e15be2dca930e00da1083#toc_1" target="_blank" rel="external">给 Android 开发者的 RxJava 详解</a>，那一次我看了整整一个下午，由于在那之前我完全没接触过RxJava，也不知道那是个什么，看完很多地方都还不是很理解，整个人都是晕晕的，当然收获也还是有的，至少对RxJava有了一个初步的概念。那次之后我就没再去碰过RxJava了，当时心里想的是，如果后面需要这方面的东西我再来学习也不迟。<br>时间差不多过了半年，RxJava也越来越火了，使用RxJava的开发者也是越来越多，github上关于的开源库中使用RxJava的也越来越多。当我再去看一些开源库的时候，由于很多地方都用到了RxJava，就发现很多代码都看不懂了，这也就激起了再次去学习RxJava的动力，随后就在网上各种的查找RxJava相关的学习资料，从头学习，我又去看了一遍<a href="http://gank.io/post/560e15be2dca930e00da1083#toc_1" target="_blank" rel="external">给 Android 开发者的 RxJava 详解</a>，收获还是很多的，本文也是对这段时间我学习RxJava的一个小结，以下知识点主要针对于Android开发者。</p>
+<blockquote>
+<h3 id="本文的学习目录"><a href="#本文的学习目录" class="headerlink" title="本文的学习目录"></a>本文的学习目录</h3><hr>
+<p>1.RxJava是什么<br>2.在Android中怎么去使用RxJava<br>3.RxJava操作符的介绍<br>4.RxJava在生产环境中的使用<br>5.RxJava学习的参考资料</p>
+</blockquote>
+<h2 id="1-RxJava是什么"><a href="#1-RxJava是什么" class="headerlink" title="1.RxJava是什么"></a>1.RxJava是什么</h2><p>要知道RxJava是什么，那么你应该先去了解一下Rx。Rx的全称是Reactive Extensions，直译过来就是响应式扩展。Rx基于观察者模式，他是一种编程模型，目标是提供一致的编程接口，帮助开发者更方便的处理异步数据流。<em>ReactiveX.io给的定义是，Rx是一个使用可观察数据流进行异步编程的编程接口，ReactiveX结合了观察者模式、迭代器模式和函数式编程的精华。</em>Rx已经渗透到了各个语言中，有了Rx所以才有了 RxJava，Rx.NET、RxJS、RxSwift、Rx.rb、RxPHP等等，更详细的可以去这里看看<a href="http://reactivex.io/languages.html" target="_blank" rel="external">languages</a></p>
+<p>那么RxJava到底是什么，我对于他的理解就针对于Java语言的一个异步的响应式编程库。</p>
+<h2 id="2-怎么去使用RxJava"><a href="#2-怎么去使用RxJava" class="headerlink" title="2.怎么去使用RxJava"></a>2.怎么去使用RxJava</h2><p>在gradle文件的dependencies中加入以下代码即可（以下版本可能不是最新的，需要最新的可到<a href="https://github.com/ReactiveX/RxAndroid" target="_blank" rel="external">RxAndroid</a>查看）<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">compile 'io.reactivex:rxandroid:1.2.0'</div><div class="line">compile 'io.reactivex:rxjava:1.1.5'</div></pre></td></tr></table></figure></p>
+<h2 id="3-RxJava操作符的介绍"><a href="#3-RxJava操作符的介绍" class="headerlink" title="3.RxJava操作符的介绍"></a>3.RxJava操作符的介绍</h2><p>有了以上的配置，我们就可以在Android中使用RxJava了。对于RxJava的使用，最重要的还是对于操作符的学习，熟悉了操作符才能更好的使用RxJava。RxJava中的操作符是非常丰富的，关于RxJava操作符介绍的文章已经是属于一搜就是一大堆的那种了，所以本文就不多做介绍了，在这里给大家推荐一个学习操作符比较好的地方<a href="https://mcxiaoke.gitbooks.io/rxdocs/content/Operators.html" target="_blank" rel="external">Operaters</a></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/623504-c57385da15b90d9a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<h2 id="4-RxJava在生产环境中的使用"><a href="#4-RxJava在生产环境中的使用" class="headerlink" title="4.RxJava在生产环境中的使用"></a>4.RxJava在生产环境中的使用</h2><p>想必学习RxJava的同学，在学习完操作符之后，最想知道的是怎么将其用在我们平时的开发当中去，本节就带大家去了解一下怎么去应用RxJava。</p>
+<blockquote>
+<p>RxBinding<br>节流(防止按钮的重复点击)<br>轮询，定时操作<br>RxPermissions<br>RxBus<br>RxJava与Retrofit<br>等待你们的补充~~~</p>
+</blockquote>
+<p><strong>(1) RxBinding</strong></p>
+<p><a href="https://github.com/JakeWharton/RxBinding" target="_blank" rel="external">RxBinding</a>是<a href="https://github.com/JakeWharton" target="_blank" rel="external">JakeWharton</a>大牛用RxJava为Android控件编写的一个控件绑定库，并且为各个包下的控件都编写相应的库，如下所示<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">Platform bindings:</div><div class="line">compile 'com.jakewharton.rxbinding:rxbinding:0.4.0'</div><div class="line"></div><div class="line">'support-v4' library bindings:</div><div class="line">compile 'com.jakewharton.rxbinding:rxbinding-support-v4:0.4.0'</div><div class="line"></div><div class="line">'appcompat-v7' library bindings:</div><div class="line">compile 'com.jakewharton.rxbinding:rxbinding-appcompat-v7:0.4.0'</div><div class="line"></div><div class="line">'design' library bindings:</div><div class="line">compile 'com.jakewharton.rxbinding:rxbinding-design:0.4.0'</div><div class="line"></div><div class="line">'recyclerview-v7' library bindings:</div><div class="line">compile 'com.jakewharton.rxbinding:rxbinding-recyclerview-v7:0.4.0'</div><div class="line"></div><div class="line">'leanback-v17' library bindings:</div><div class="line">compile 'com.jakewharton.rxbinding:rxbinding-leanback-v17:0.4.0'</div></pre></td></tr></table></figure></p>
+<p>我们只需引入对应地库就可以使用了。</p>
+<p>比如我们对Button添加一个单击事件就可以这样做了<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">Button button = (Button) findViewById(R.id.button);</div><div class="line"></div><div class="line">      RxView.clicks(button).subscribe(new Action1<span class="tag">&lt;<span class="name">Void</span>&gt;</span>() &#123;</div><div class="line">          @Override</div><div class="line">          public void call(Void aVoid) &#123;</div><div class="line">            Log.i("test", "clicked");</div><div class="line">          &#125;</div><div class="line">      &#125;);</div></pre></td></tr></table></figure></p>
+<p>到这里，你肯定会说，这并没有没什么卵用，还不如直接设置一个setOnClickListener来的方便，直接。继续往下看</p>
+<p>通常情况下，如果我们要防止一个按钮重复点击会怎么做？设置一个第一次按下的时间，然后在第二次点击的时候去判断？NO NO NO，这样做都太low了，我们来看看用RxBing怎样去实现</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">RxView.clicks(button).debounce(300, TimeUnit.MILLISECONDS).subscribe(new Action1<span class="tag">&lt;<span class="name">Void</span>&gt;</span>() &#123;</div><div class="line">            @Override</div><div class="line">            public void call(Void aVoid) &#123;</div><div class="line">                Log.i("test", "clicked");</div><div class="line">            &#125;</div><div class="line">        &#125;);</div></pre></td></tr></table></figure>
+<p>很爽吧，这里过滤掉了在300ms内的重复点击，只需加一个操作符就可以了，而不用我们去编写一大堆并且还容易出错的逻辑代码了。</p>
+<p>这里使用最多的一个地方就是在我们做搜索的时候，再结合filter操作，去过滤掉那些没必要的查询操作，来减小服务器的压力和客户端的流量输出。</p>
+<p><strong>(2) 轮询，定时操作</strong><br>在做App的时候，有些地方我们可能会时不时的去请求服务器，以至于客户端的数据是最新的，在RxJava中可以这样做<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">//每隔两秒执行一次</div><div class="line">Observable.interval(2, 2, TimeUnit.SECONDS).subscribe(new Action1<span class="tag">&lt;<span class="name">Long</span>&gt;</span>() &#123;</div><div class="line">         @Override</div><div class="line">         public void call(Long aLong) &#123;</div><div class="line">             //TODO WHAT YOU WANT</div><div class="line">         &#125;</div><div class="line">     &#125;);</div></pre></td></tr></table></figure></p>
+<p>在两秒后去执行一些操作（比如启动页跳转到主页面）<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">Observable.timer(2, TimeUnit.SECONDS).subscribe(new Action1<span class="tag">&lt;<span class="name">Long</span>&gt;</span>() &#123;</div><div class="line">           @Override</div><div class="line">           public void call(Long aLong) &#123;</div><div class="line">               //TODO WHAT YOU WANT</div><div class="line">           &#125;</div><div class="line">       &#125;);</div></pre></td></tr></table></figure></p>
+<p><strong>(3) RxPermissions</strong><br><a href="https://github.com/tbruyelle/RxPermissions" target="_blank" rel="external">RxPermissions</a>也是国外的大牛开发的基于RxJava的Android权限管理库，他让6.0以上的权限管理更加的简单，如果有适配6.0以上的手机的需求，这个库是个不错的选择。下面我们来看看基本的用法。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">// 请求相机权限</div><div class="line"> RxPermissions.getInstance(this)</div><div class="line"> .request(Manifest.permission.CAMERA)</div><div class="line"> .subscribe(granted -&gt; &#123;</div><div class="line">     if (granted) &#123; // 用户同意了（在6.0之前的手机始终都为true）</div><div class="line">       //可以拍照了</div><div class="line">     &#125; else &#123;</div><div class="line">        //可以在这里提示用户，或者再次请求</div><div class="line">     &#125;</div><div class="line"> &#125;);</div></pre></td></tr></table></figure>
+<p>当然，如果我想一次请求多个权限呢，每次都去写上面的代码肯定是个不好的做法，RxPermissions的作者也考虑到了这一点，在Api里提供了一个多参数的重载<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">//取得相机权限和读取手机状态</div><div class="line">RxPermissions.getInstance(this)</div><div class="line">    .request(Manifest.permission.CAMERA,</div><div class="line">             Manifest.permission.READ_PHONE_STATE)</div><div class="line">    .subscribe(granted -&gt; &#123;</div><div class="line">        if (granted) &#123;</div><div class="line">          </div><div class="line">        &#125; else &#123;</div><div class="line">           </div><div class="line">        &#125;</div><div class="line">    &#125;);</div></pre></td></tr></table></figure></p>
+<p>更多的资料还请去github上去查看。<br><strong>(4) RxBus</strong><br>有了RxJava，EventBus、Otto什么的都可以靠边了，因为RxJava本身就自带了这个功能，我们只需做一下简单的封装就可以使用了，也顺便减少了我们项目的体积。<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">public class RxBus &#123;</div><div class="line"></div><div class="line">    private final Subject<span class="tag">&lt;<span class="name">Object,</span> <span class="attr">Object</span>&gt;</span> _bus;</div><div class="line"></div><div class="line">    private static class RxBusHolder &#123;</div><div class="line">        private static final RxBus instance = new RxBus();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    private RxBus() &#123;</div><div class="line">        _bus = new SerializedSubject<span class="tag">&lt;&gt;</span>(PublishSubject.create());</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public static synchronized RxBus getInstance() &#123;</div><div class="line">        return RxBusHolder.instance;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void post(Object o) &#123;</div><div class="line">        _bus.onNext(o);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public <span class="tag">&lt;<span class="name">T</span>&gt;</span> Observable<span class="tag">&lt;<span class="name">T</span>&gt;</span> toObserverable(Class<span class="tag">&lt;<span class="name">T</span>&gt;</span> eventType) &#123;</div><div class="line">        return _bus.ofType(eventType);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>怎么去使用？<br>在需要发送消息的地方<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">RxBus.getInstance().post("SomeChange");</div></pre></td></tr></table></figure></p>
+<p>在需要接收消息的地方<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"> Subscription mSubscription = RxBus.getInstance().toObserverable(String.class).subscribe(new Action1<span class="tag">&lt;<span class="name">String</span>&gt;</span>() &#123;</div><div class="line">            @Override</div><div class="line">            public void call(String s) &#123;</div><div class="line">                handleRxMsg(s);</div><div class="line">            &#125;</div><div class="line">&#125;);</div></pre></td></tr></table></figure></p>
+<p>不要忘了在适当的地方去取消这个订阅（以免发生内存泄漏）<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">mSubscription.unsubscribe();</div></pre></td></tr></table></figure></p>
+<p>到这里可能你有个疑问，Subject是个什么鬼！<br>其实Subject同时充当了Observer和Observable的角色，他可以发射数据也可以接收数据，有AsyncSubject、BehaviorSubject、PublishSubject、ReplaySubject四种，详细的介绍请看<a href="https://mcxiaoke.gitbooks.io/rxdocs/content/Subject.html" target="_blank" rel="external">Subject</a></p>
+<p><strong>(5) RxJava与Retrofit</strong></p>
+<p>Retrofit可能大家都不太陌生了，如果你还不知道的话，那么赶紧去学习吧，这么强大的框架怎么能不知道呢！</p>
+<p>后面的讲解是基于了解过Retrofit的同学</p>
+<p>关于Retrofit的基本使用可能我们都不是太陌生，对于请求后的结果都是在一个回调接口里接收，对于结果的处理并不是太灵活，一大堆的回调会让你以后回过来看代码的时候看的醉生梦死。<br>RxJava很好的解决了这个问题，我们来看看Retrofit的怎么去适配RxJava吧。</p>
+<p>gradle文件的引用<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">compile 'com.squareup.retrofit2:retrofit:2.0.2'</div><div class="line">compile 'com.squareup.retrofit2:converter-gson:2.0.2'</div><div class="line">compile 'com.squareup.retrofit2:adapter-rxjava:2.0.2'//RxJava与Retrofit的适配器</div></pre></td></tr></table></figure></p>
+<p>这里我以请求 <a href="http://gank.io/api/data/Android/10/1" target="_blank" rel="external">http://gank.io/api/data/Android/10/1</a> 为例。</p>
+<p>返回的结果大致是这样的<br><img src="http://upload-images.jianshu.io/upload_images/623504-0605a63e05ab2f33.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p>于是我定义了一个GankResultBean去接收这个结果。<br><img src="http://upload-images.jianshu.io/upload_images/623504-62967f0fabf00980.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p>其中ResultsBean就是results中的每一个条目。<br>好了，下面我们来看看适配了RxJava的Retrofit怎么去使用吧<br>首先我们定义一个接口<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">public interface RxGankService &#123;</div><div class="line">       @GET("all/20/&#123;page&#125;")</div><div class="line">       Observable<span class="tag">&lt;<span class="name">GankResultBean</span>&gt;</span> getAndroidData(@Path("page") int page);</div><div class="line">   &#125;</div></pre></td></tr></table></figure></p>
+<p>值得注意的是这里返回的是<code>Observable<gankresultbean></gankresultbean></code>而不是常规的<code> Call<gankresultbean></gankresultbean></code></p>
+<p>接着就可以做请求了<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div></pre></td><td class="code"><pre><div class="line"> Retrofit retrofit = new Retrofit.Builder()</div><div class="line">                .baseUrl("http://gank.io/api/data/")</div><div class="line">                .addConverterFactory(GsonConverterFactory.create())</div><div class="line">                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())//这个就是用来适配RxJava的</div><div class="line">                .build();</div><div class="line"></div><div class="line">RxGankService rxGankService = retrofit.create(RxGankService.class);</div><div class="line">        final Observable&lt;GankResultBean&gt; observable = rxGankService.getAndroidData(1);</div><div class="line">        observable</div><div class="line">                .subscribeOn(Schedulers.io())</div><div class="line">                .observeOn(AndroidSchedulers.mainThread())</div><div class="line">                .map(new Func1&lt;GankResultBean, List&lt;GankResultBean.ResultsBean&gt;&gt;() &#123;</div><div class="line">                    @Override</div><div class="line">                    public List&lt;GankResultBean.ResultsBean&gt; call(GankResultBean gankResultBean) &#123;</div><div class="line">                        return gankResultBean.getResults();</div><div class="line">                    &#125;</div><div class="line">                &#125;)</div><div class="line">                .flatMap(new Func1&lt;List&lt;GankResultBean.ResultsBean&gt;, Observable&lt;GankResultBean.ResultsBean&gt;&gt;() &#123;</div><div class="line">                    @Override</div><div class="line">                    public Observable&lt;GankResultBean.ResultsBean&gt; call(List&lt;GankResultBean.ResultsBean&gt; resultsBeen) &#123;</div><div class="line">                        return Observable.from(resultsBeen);</div><div class="line">                    &#125;</div><div class="line">                &#125;)</div><div class="line">                .filter(new Func1&lt;GankResultBean.ResultsBean, Boolean&gt;() &#123;</div><div class="line">                    @Override</div><div class="line">                    public Boolean call(GankResultBean.ResultsBean resultsBean) &#123;</div><div class="line">                        return "Android".equals(resultsBean.getType());</div><div class="line">                    &#125;</div><div class="line">                &#125;)</div><div class="line">                .subscribe(new Subscriber&lt;GankResultBean.ResultsBean&gt;() &#123;</div><div class="line">                    @Override</div><div class="line">                    public void onCompleted() &#123;</div><div class="line">                        Log.i("test", "onCompleted");</div><div class="line">                    &#125;</div><div class="line"></div><div class="line">                    @Override</div><div class="line">                    public void onError(Throwable e) &#123;</div><div class="line">                        e.printStackTrace();</div><div class="line">                    &#125;</div><div class="line"></div><div class="line">                    @Override</div><div class="line">                    public void onNext(GankResultBean.ResultsBean resultsBean) &#123;</div><div class="line">                        textView.append(resultsBean + "\n");</div><div class="line">                    &#125;</div><div class="line">                &#125;);</div></pre></td></tr></table></figure></p>
+<p>这里是为了演示才使用了这么多的操作符，在实际使用的时候根据具体情况而定。<br>下面简单解释下上面这段代码<br>observeOn(AndroidSchedulers.mainThread())：订阅者的回调在主线程<br>subscribeOn(Schedulers.io())：订阅发生在io线程<br>map:一般我们不会关心error字段，我们关心的只是results，所以在这里做了一个映射让用户接收的是List<gankresultbean.resultsbean>而不是包含有error的GankResultBean<br>flatMap:让结果一条一条的发射出去，而不是一个集合<br>filter：只接收Type为Android的数据</gankresultbean.resultsbean></p>
+<p>以上的例子用流的方式是不是很好的解决了对请求结果的处理，对结果的处理可以做到随心所欲，并且逻辑还很清晰。</p>
+<p>以上几个点就是我了解的关于RxJava的应用。如果你还有其他方面的应用，还望补充。</p>
+<h2 id="5-RxJava学习的参考资料"><a href="#5-RxJava学习的参考资料" class="headerlink" title="5.RxJava学习的参考资料"></a>5.RxJava学习的参考资料</h2><p>这里我将我学习RxJava以来收集的关于RxJava分享出来，以方便大家的查阅。</p>
+<p>学习RxJava的第一手资料,官方的wiki:<a href="https://github.com/ReactiveX/RxJava/wiki" target="_blank" rel="external">wiki</a><br>我学习RxJava看的第一篇文章：<a href="http://gank.io/post/560e15be2dca930e00da1083#toc_1" target="_blank" rel="external">给 Android 开发者的 RxJava 详解</a>(这个大家肯定都知道)<br>大头鬼总结的RxJava学习资料：<strong><a href="https://github.com/lzyzsd/Awesome-RxJava" target="_blank" rel="external">Awesome-RxJava</a></strong><br>RxJava文档中文翻译：<a href="https://github.com/mcxiaoke/RxDocs" target="_blank" rel="external">Rx和RxJava文档中文翻译项目</a></p>
+<p>其他：<br><a href="http://rxmarbles.com" target="_blank" rel="external">RxJava操作符图解</a>（需科学上网）<br><a href="http://www.jianshu.com/p/7e28c8216c7d" target="_blank" rel="external">RxJava处理网络连接失败和timer()、interval()、delay()之间的区别</a><br><a href="http://www.jianshu.com/p/943ceaccfdff" target="_blank" rel="external">Architecting Android with RxJava</a><br><a href="http://www.jianshu.com/p/33c548bce571" target="_blank" rel="external">使用RxJava 提升用户体验</a><br><a href="http://www.jianshu.com/p/ca090f6e2fe2" target="_blank" rel="external">用RxJava实现事件总线(Event Bus)</a><br><a href="http://www.introtorx.com/Content/v1.0.10621.0/02_KeyTypes.html" target="_blank" rel="external">Intro to Rx</a><br><a href="http://nerds.weddingpartyapp.com/tech/2014/12/24/implementing-an-event-bus-with-rxjava-rxbus/" target="_blank" rel="external">Implementing an Event Bus With RxJava - RxBus</a><br><a href="http://blog.csdn.net/theone10211024/article/details/50435325" target="_blank" rel="external">可能是东半球最全的RxJava使用场景小结 </a><br><a href="http://www.jianshu.com/p/ce228f517586?utm_campaign=haruki&amp;utm_content=note&amp;utm_medium=reader_share&amp;utm_source=qq" target="_blank" rel="external">RxWeekend——RxJava周末狂欢</a></p>
+<p>最后：为了跟上时代的步伐，是时候学习RxJava了</p>
+<p>欢迎关注我的专题：<a href="http://www.jianshu.com/collection/d79a6385bded" target="_blank" rel="external">RxJava系列专题（Android方向）</a></p>
 
           
         
@@ -693,7 +595,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/04/25/仿魅族手机消息通知效果/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/06/14/仿魅族手机消息通知效果/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="_SOLID">
@@ -715,7 +617,7 @@
             
               
                 
-                <a class="post-title-link" href="/2017/04/25/仿魅族手机消息通知效果/" itemprop="url">
+                <a class="post-title-link" href="/2016/06/14/仿魅族手机消息通知效果/" itemprop="url">
                   仿魅族手机消息通知效果
                 </a>
               
@@ -732,8 +634,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-04-25T11:05:53+08:00">
-                2017-04-25
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-06-14T11:41:00+08:00">
+                2016-06-14
               </time>
             
 
@@ -826,7 +728,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/04/25/[干货IO-3-0]-一个完全开源的App/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/06/03/Android-关于传感器你需要知道的/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="_SOLID">
@@ -848,8 +750,8 @@
             
               
                 
-                <a class="post-title-link" href="/2017/04/25/[干货IO-3-0]-一个完全开源的App/" itemprop="url">
-                  干货IO 3.0一个完全开源的App
+                <a class="post-title-link" href="/2016/06/03/Android-关于传感器你需要知道的/" itemprop="url">
+                  Android-关于传感器你需要知道的
                 </a>
               
             
@@ -865,8 +767,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-04-25T11:05:53+08:00">
-                2017-04-25
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-06-03T14:57:00+08:00">
+                2016-06-03
               </time>
             
 
@@ -902,34 +804,215 @@
       
         
           
-            <p>之前写过一篇关于介绍[干货IO]的文章<a href="http://www.jianshu.com/p/3f137269a942" target="_blank" rel="external">基于Gank.IO提供的API的第三方客户端，可以在线收藏[项目开源]</a>，大致介绍了用到了什么，有哪些功能，一句话就是让大家知道了这个app的存在，之后了一段时间对app也在一直维护，有过好几次的更新，但是改动程度都不是太大，改的最大的一次就是重构底层的网络请求，但并不是太彻底，所以也遗留下了一些问题，其他的就是一些小功能的增增改改。<br>之所以再次写关于<strong>[干货IO]</strong>的文章，就是想纪录一下做这个app的心路历程，以及介绍一下里面的技术实现。</p>
-<p><strong>在这里再次感谢一下<a href="https://github.com/daimajia" target="_blank" rel="external">daimajia</a>，没有<a href="http://gank.io/" target="_blank" rel="external">gank.io</a>就不会有这个app的存在，如果还有不知道的可以每天都去这个网站看看，除了周六周末两天不更新之外，每天都会有技术干货的推送更新。</strong></p>
-<p>先说下这个3.0版本更新的主要内容吧</p>
+            <p>最近在搞一个自己的App，突发一个想法，给App加一个摇一摇随机查看图片的功能，这样可以使得用户在使用App的时候有更多的乐趣。实现摇一摇肯定少不了传感器，在使用之余，索性总结一下在Android中关于传感器的使用。</p>
+<blockquote>
+<p>本文目录：<br>1.什么是传感器<br>2.常用传感器介绍与用法<br>3.实现图片摇一摇</p>
+</blockquote>
+<h2 id="1-什么是传感器"><a href="#1-什么是传感器" class="headerlink" title="1.什么是传感器"></a>1.什么是传感器</h2><p>维基百科是这样定义的：<em>传感器是一种物理装置或生物器官，能够探测、感受外界的信号、物理条件（如光、热、湿度）或化学组成（如烟雾），并将探知的信息传递给其他装置或器官。</em></p>
+<p>在Android中传感器可以展示当前手机状态的应用，包括硬件信息、当前位置、加速计、陀螺仪、光感、磁场、定向、电池窗台，声压，同时还可以进行多点触控的测试。只要你的想象力足够丰富，完全可以利用这些信息做出一些很新奇得应用。</p>
+<h2 id="2-常用传感器介绍与用法"><a href="#2-常用传感器介绍与用法" class="headerlink" title="2.常用传感器介绍与用法"></a>2.常用传感器介绍与用法</h2><p>Android平台支持三个大类的传感器</p>
 <ul>
-<li>1.UI风格大调整，全新的 UI 风格</li>
-<li>2.支持干货配图</li>
-<li>3.新增 gank 最近推出的闲读</li>
-<li>4.新增搜索</li>
-<li>5.修复仅Wifi加载图片的bug</li>
-<li>6.行为更改：长按干货收藏</li>
+<li>Motion sensors（运动传感器）<br> 这些传感器测量加速力，并沿三个轴的旋转力。此类别包括加速度计，重力感应器， 陀螺仪和旋转矢量传感器。</li>
+<li>Environmental sensors （环境传感器）<br>这些传感器测量各种环境参数，例如环境空气温度和压力，照明和湿度。此类别包括气压计，光度计，和温度计。</li>
+<li>Position sensors （位置传感器）<br>这些传感器测量设备的物理位置。这个类别包括方向传感器和磁力计。</li>
 </ul>
-<p>下面是应用部分截图：<br><img src="http://upload-images.jianshu.io/upload_images/623504-b825a653dee193d7.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/300" alt="p1"></p>
-<p><img src="http://upload-images.jianshu.io/upload_images/623504-430e5c355e524eca.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/300" alt="p2.jpg"><br><img src="http://upload-images.jianshu.io/upload_images/623504-a0a8c1ba87cc46c6.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/300" alt="p3.jpg"></p>
-<p>为了不影响文章的可读性，这里就不放太多的截图了，感兴趣的可以去安装体验。</p>
-<hr>
-<p>好了，开始正题。</p>
-<p>###干货IO 1.0</p>
-<p>大概是今年3月份的时候关注了gan.io这个网站，这上面每天都会提供很多的技术干货，后面的时间我也是受益良多，与此同时也知道了drakeet为之做的一个 App <a href="https://github.com/drakeet/Meizhi" target="_blank" rel="external">Meizhi</a>，这个App最近好像有更新，非常好的一个开源项目，从这个项目中我也学到了很多。众所周知，gan.io是客户端最多的一个网站，应用市场一搜索就可以搜到很多关于gank的应用，但这些应用都有一个共同点，没有收藏功能，我个人感觉收藏功能还是比较重要的，他可以防止以后想回过来再看的时候不用花太多的时间去一页一页的找，这个就是我最开始想做这个App的的主要动机。于是就有了 <strong>干货IO 1.0</strong> 的出现，也是一个完全开源项目，在今年五月份就提交到了github，只有查看最新干货，分类浏览和收藏三个功能，只能说达到了预期目标，做的相对而言也比较的粗糙，App并不是那么流畅。</p>
-<p>1.0系列版本有过好几次更新，大多改动都不太大，基本上都是些bug的修复和一些小功能的增加，最大的一次改动就是使用 RxJava + Retrofit + MVP重构这个项目了，底层的代码改动算是比较大的，由于时间上的原因这次重构并不是太彻底，也因此造成了代码的混乱。说到这里我们来简单说说RxJava 、 Retrofit 、 MVP这三个技术吧，我相信大家对这三个技术肯定也不陌生。</p>
-<p>RxJava可以以流的方式去处理我们的数据，线程的切换上也是十分的方便，可以大大减少代码量，网络上也涌现出了相关的库，很大程度上方便了我们的开发，RxJava相关的文章可以去我管理的专题看看 <a href="http://www.jianshu.com/collection/d79a6385bded" target="_blank" rel="external">RxJava系列专题（Android方向）</a>，这个专题基本上收录完了简书上关于RxJava最好的文章，当然，你有相关的比较好的文章也可以往这个专题投稿。</p>
-<p>Retrofit是Square公司出品的又一大神器，一个高质量的http库，现在十分流行，网上关于他的文章也是多不胜数，他极大化的简化了我们的网络请求，使得我们的代码更加可读，以及方便后期的维护，加上RxJava简直就是完美 。</p>
-<p>MVP是Android目前比较受欢迎的一种设计模式，个人感觉这个库比较适合于多人共同维护开发的大项目，一般的项目用MVP开发，会多出很多的类文件，有点影响开发效率，1.0版本就试过用MVP去重构项目，最后发现大大增大了我们的工作量，本来很快就能完成的一个功能，增加了很多的类文件，最后到了3.0版本我果断去掉了MVP（还残留了一部分）。项目开发的时候应该实际情况去选择设计模式，而不是盲目的套用现在十分流行的。</p>
-<p>###干货IO 2.0<br>这个版本在功能上其实没什么改变，只是调整了一下UI，把侧滑菜单中的部门功能放到了底部选项卡中，加入了谷歌最新推出的<strong>BottomNavigationBar</strong>。</p>
-<p>###干货IO 3.0</p>
-<p>这个版本变化时比较大的，断断续续的花了我一周的时间去做，基本上是完全重构之前所有的代码，这次的重构是的代码更加的干净，比较有学习的价值，网络请求完全采用Retrofit+RxJava，网络请求也更加的清晰可控，新增了搜索和闲读，干货有了Gif配图，应用也更具MD的风格，在这里必须感谢下<a href="https://github.com/ryanhoo/Android-Proficiency-Exercise" target="_blank" rel="external">Android-Proficiency-Exercise</a>，分类列表的UI样式就来源于他。刚开始在做gif图加载的时候，加载十分的慢，并且内存使用也十分的大，最后经过查阅资料把Glide的缓存策略改为<code>DiskCacheStrategy.SOURCE</code>就可以了。列表的Adapter使用的是drakeet的<a href="https://github.com/drakeet/MultiType" target="_blank" rel="external">MultiType</a>，这个库处理含有多种itemType的RecyclerView非常的棒！如果还不知道这个库的，我强烈推荐使用。同时我基于<a href="https://github.com/drakeet/MultiType" target="_blank" rel="external">MultiType</a>也封装了一个通用列表的抽象类，很简单的就能实现一个列表，添加头部这个都不是事，最简单的列表只需实现loadData方法。<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">@Override</div><div class="line">public void loadData(final int pageIndex) &#123;</div><div class="line">    ServiceFactory.getInstance().createService(GankService.class)</div><div class="line">            .getGanHuo(mType, pageIndex)</div><div class="line">            .compose(TransformUtils.&lt;HttpResult&lt;List&lt;GanHuoDataBean&gt;&gt;&gt;defaultSchedulers())</div><div class="line">            .subscribe(new Subscriber&lt;HttpResult&lt;List&lt;GanHuoDataBean&gt;&gt;&gt;() &#123;</div><div class="line">                @Override</div><div class="line">                public void onCompleted() &#123;</div><div class="line"></div><div class="line">                &#125;</div><div class="line"></div><div class="line">                @Override</div><div class="line">                public void onError(Throwable e) &#123;</div><div class="line">                    showError(new Exception(e));</div><div class="line">                &#125;</div><div class="line"></div><div class="line">                @Override</div><div class="line">                public void onNext(HttpResult&lt;List&lt;GanHuoDataBean&gt;&gt; listHttpResult) &#123;</div><div class="line">                    onDataSuccessReceived(pageIndex, listHttpResult.results);</div><div class="line">                &#125;</div><div class="line">            &#125;);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>上面的代码来源于分类列表Fragment，具体的实现可以去看文章末尾的源码。好了差不多就是这些了，这里贴代码也没有什么意义，反而影响文章的可阅读性，用到了哪些技术文章中也提到了，这个App综合了我前面好几篇博客的内容，也算是对之前讲解的技术的一个综合应用，并且应用是完全开源的，阅读源码可以看到更多的技术细节实现，反而更直接有效。如果在使用过程中发现有bug，非常欢迎反馈，我会继续维护这个项目。<br>写到这里突然感觉自己逼逼了好多的废话，轻喷~~~</p>
-<p>###特别感谢<br><a href="https://github.com/daimajia" target="_blank" rel="external">daimajia</a>、<a href="https://github.com/drakeet" target="_blank" rel="external">drakeet</a>、<a href="https://github.com/ryanhoo/Android-Proficiency-Exercise" target="_blank" rel="external">Android-Proficiency-Exercise</a></p>
-<p>应用体验下载地址:<a href="http://android.myapp.com/myapp/detail.htm?apkName=ren.solid.ganhuoio" target="_blank" rel="external">点击下载</a><br>源码传送门：<a href="https://github.com/burgessjp/GanHuoIO" target="_blank" rel="external">GanHuoIO</a></p>
+<p>好。下面来看看Android中怎么去使用传感器。</p>
+<p>第一步：得到SensorManager<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">SensorManager mSensorManager = (SensorManager) mContext</div><div class="line">                .getSystemService(Context.SENSOR_SERVICE);</div></pre></td></tr></table></figure></p>
+<p>第二步:注册传感器</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">Sensor sensor = mSensorManager</div><div class="line">               .getDefaultSensor(Sensor.TYPE_ACCELEROMETER);</div><div class="line">       if (null != sensor)</div><div class="line">           mSensorManager.registerListener(this, sensor,</div><div class="line">                   SensorManager.SENSOR_DELAY_NORMAL);</div></pre></td></tr></table></figure>
+<p>嗯。然后就可以监听传感器数据的变化了。</p>
+<p>我相信第一步大家都能看懂，这里主要说一下第二步。</p>
+<p>registerListener这个方法有三个参数。</p>
+<ul>
+<li><p>第一个参数是传感器数据变化的监听器<br>我们需要去实现SensorEventListener接口，他里面有两个回调方法</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">@Override</div><div class="line">   public void onSensorChanged(SensorEvent event) &#123;</div><div class="line">    //当传感器的数值发生变化时调用</div><div class="line">   &#125;</div><div class="line"></div><div class="line">   @Override</div><div class="line">   public void onAccuracyChanged(Sensor sensor, int accuracy) &#123;</div><div class="line">    //传感器的精度发生变化时调用</div><div class="line">   &#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>第二个参数是我们需要监听的传感器<br>我们得到传感器用的是下面这种方法：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Sensor sensor = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>TYPE_ACCELEROMETER代表的就是加速度传感器。Android定义了很多的常量来代表支持的传感器，我们来看看Android平台支持的传感器类型。</p>
+<ul>
+<li>加速度传感器：TYPE_ACCELEROMETER<br> 以m/s2测量它设备所有三个物理轴线方向（x,y,和z）加速度。</li>
+<li>周围温度传感器：TYPE_AMBIENT_TEMPERATURE<br>检测周围空气温度。</li>
+<li>重力传感器：TYPE_GRAVITY<br>  测量重力</li>
+<li>陀螺仪传感器：TYPE_GYROSCOPE<br> 以rad/s测量设备三个物理轴线方向（x,y,和z)。旋转速度。</li>
+<li>光照传感器：TYPE_LIGHT<br>  以lx测量周围的光线级别。 </li>
+<li>线性加速度传感器：TYPE_LINEAR_ACCELERATION<br>检测沿着一个轴向的加速度。</li>
+<li>磁力传感器：TYPE_MAGNETIC_FIELD<br> 测量周围的三个物理轴线方向的磁场。</li>
+<li>方向传感器： TYPE_ORIENTATION<br> 测量设备所有三个物理轴线方向（x,y和x）的旋转角度。</li>
+<li>压力传感器：TYPE_PRESSURE<br> 测量周围空气气压</li>
+<li>接近传感器：TYPE_PROXIMITY<br>检测物体与手机的距离</li>
+<li>相对湿度传感器：TYPE_RELATIVE_HUMIDITY<br> 检测周围空气相对湿度</li>
+<li>旋转矢量传感器：TYPE_ROTATION_VECTOR<br> 用于检测运动和检测旋转。 </li>
+<li>温度传感器： TYPE_TEMPERATURE<br> 检测设备的温度</li>
+</ul>
+<p>下面再来看看传感器的平台的可用性</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/623504-11cb13cb313621ef.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="来源于官网"></p>
+<p>注意到图中Yes右上角有个上标：1这个类型的传感器在Android1.5（API Level 3）被添加，但是直到Android2.3（API Level 9）也不可用。 2这个传感器是可用的，但是它被弃用。 </p>
+<ul>
+<li>第三个参数是传感器数据更新数据的速度<br>有以下四个值可选，他们的速度是递增的<ul>
+<li>SENSOR_DELAY_UI</li>
+<li>SENSOR_DELAY_NORMAL</li>
+<li>SENSOR_DELAY_GAME </li>
+<li>SENSOR_DELAY_FASTEST</li>
+</ul>
+</li>
+</ul>
+<p>传感器的基本使用和介绍截差不多就这些，下面来看看，怎么去实现一个图片摇一摇的功能。</p>
+<h2 id="3-实现图片摇一摇"><a href="#3-实现图片摇一摇" class="headerlink" title="3.实现图片摇一摇"></a>3.实现图片摇一摇</h2><p>要实现摇一摇，主要就是去监听手机加速度的变化，当达到一个值的时候就出发摇一摇这个事件。</p>
+<p>说到这，你肯定就知道我们要用的就是<strong>加速度传感器</strong>去实现这个功能。</p>
+<p>先来看看效果图：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/623504-8e6bcf68406ee6e8.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p>废话不多说了，下面直接上代码，经过前面的知识储备，我相信你肯定能看懂的<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line"> * Created by _SOLID</div><div class="line"> * Date:2016/6/3</div><div class="line"> * Time:9:55</div><div class="line"> */</div><div class="line">public class ShakePictureUtils implements SensorEventListener &#123;</div><div class="line"></div><div class="line">    // 两次检测的时间间隔</div><div class="line">    private static final int UPTATE_INTERVAL_TIME = 100;</div><div class="line">    // 加速度变化阈值，当摇晃速度达到这值后产生作用</div><div class="line">    private static final int SPEED_THRESHOLD = 2000;</div><div class="line"></div><div class="line">    private Context mContext;</div><div class="line">    private SensorManager mSensorManager = null;</div><div class="line">    private Vibrator mVibrator = null;</div><div class="line">    private PictureDialog mPictureDialog = null;</div><div class="line"></div><div class="line"></div><div class="line">    public ShakePictureUtils(Context context) &#123;</div><div class="line">        mContext = context;</div><div class="line">        mSensorManager = (SensorManager) mContext</div><div class="line">                .getSystemService(Context.SENSOR_SERVICE);</div><div class="line">        mVibrator = (Vibrator) mContext.getSystemService(Context.VIBRATOR_SERVICE);</div><div class="line">        mPictureDialog = new PictureDialog(mContext, R.style.PictureDialog);</div><div class="line">        mPictureDialog.setOnDismissListener(new DialogInterface.OnDismissListener() &#123;</div><div class="line">            @Override</div><div class="line">            public void onDismiss(DialogInterface dialog) &#123;</div><div class="line">                registerSensor();</div><div class="line">            &#125;</div><div class="line">        &#125;);</div><div class="line">    &#125;</div><div class="line"></div><div class="line"></div><div class="line">    private long lastUpdateTime;</div><div class="line">    private float lastX;</div><div class="line">    private float lastY;</div><div class="line">    private float lastZ;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public void onSensorChanged(SensorEvent event) &#123;</div><div class="line">        long currentUpdateTime = System.currentTimeMillis();</div><div class="line"></div><div class="line">        long timeInterval = currentUpdateTime - lastUpdateTime;</div><div class="line"></div><div class="line">        if (timeInterval <span class="tag">&lt; <span class="attr">UPTATE_INTERVAL_TIME</span>) &#123;</span></div><div class="line">            <span class="attr">return</span>;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="attr">lastUpdateTime</span> = <span class="string">currentUpdateTime;</span></div><div class="line">        <span class="attr">float</span>[] <span class="attr">values</span> = <span class="string">event.values;</span></div><div class="line"></div><div class="line">        // 获得<span class="attr">x</span>,<span class="attr">y</span>,<span class="attr">z</span>加速度</div><div class="line">        <span class="attr">float</span> <span class="attr">x</span> = <span class="string">values[0];</span></div><div class="line">        <span class="attr">float</span> <span class="attr">y</span> = <span class="string">values[1];</span></div><div class="line">        <span class="attr">float</span> <span class="attr">z</span> = <span class="string">values[2];</span></div><div class="line"></div><div class="line">        // 获得<span class="attr">x</span>,<span class="attr">y</span>,<span class="attr">z</span>加速度的变化值</div><div class="line">        <span class="attr">float</span> <span class="attr">deltaX</span> = <span class="string">x</span> <span class="attr">-</span> <span class="attr">lastX</span>;</div><div class="line">        <span class="attr">float</span> <span class="attr">deltaY</span> = <span class="string">y</span> <span class="attr">-</span> <span class="attr">lastY</span>;</div><div class="line">        <span class="attr">float</span> <span class="attr">deltaZ</span> = <span class="string">z</span> <span class="attr">-</span> <span class="attr">lastZ</span>;</div><div class="line"></div><div class="line">        // 将现在的坐标变成<span class="attr">last</span>坐标</div><div class="line">        <span class="attr">lastX</span> = <span class="string">x;</span></div><div class="line">        <span class="attr">lastY</span> = <span class="string">y;</span></div><div class="line">        <span class="attr">lastZ</span> = <span class="string">z;</span></div><div class="line"></div><div class="line"></div><div class="line">        <span class="attr">Logger.i</span>("<span class="attr">values</span>[<span class="attr">0</span>] = <span class="string">" + values[0]);</span></div><div class="line">        Logger.i("<span class="attr">values</span>[<span class="attr">1</span>] = <span class="string">" + values[1]);</span></div><div class="line">        Logger.i("<span class="attr">values</span>[<span class="attr">2</span>] = <span class="string">" + values[2]);</span></div><div class="line"></div><div class="line">        double speed = Math.sqrt(deltaX * deltaX + deltaY * deltaY + deltaZ</div><div class="line">                * deltaZ)</div><div class="line">                / timeInterval * 10000;</div><div class="line">        Logger.i("<span class="attr">speed:</span>" + <span class="attr">speed</span>);</div><div class="line">        <span class="attr">if</span> (<span class="attr">speed</span> &gt; SPEED_THRESHOLD) &#123;</div><div class="line">            //在这里可以提供一个回调</div><div class="line">            mVibrator.vibrate(300);</div><div class="line">            requestPicture();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public void onAccuracyChanged(Sensor sensor, int accuracy) &#123;</div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void registerSensor() &#123;</div><div class="line">        Sensor sensor = mSensorManager</div><div class="line">                .getDefaultSensor(Sensor.TYPE_ACCELEROMETER);</div><div class="line">        if (null != sensor)</div><div class="line">            mSensorManager.registerListener(this, sensor,</div><div class="line">                    SensorManager.SENSOR_DELAY_NORMAL);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void unRegisterSensor() &#123;</div><div class="line"></div><div class="line">        lastX = 0;</div><div class="line">        lastY = 0;</div><div class="line">        lastZ = 0;</div><div class="line">        mSensorManager.unregisterListener(this);</div><div class="line">    &#125;</div><div class="line"></div><div class="line"></div><div class="line">    private void requestPicture() &#123;</div><div class="line">        HttpClientManager.getData(Apis.Urls.RandomPicture, new JsonHttpCallBack<span class="tag">&lt;<span class="name">RandomPictureBean</span>&gt;</span>() &#123;</div><div class="line">            @Override</div><div class="line">            public void onStart() &#123;</div><div class="line">                unRegisterSensor();</div><div class="line">                ToastUtils.getInstance().showToast("图片获取中...");</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            @Override</div><div class="line">            public void onSuccess(RandomPictureBean result) &#123;</div><div class="line">                mPictureDialog.setPicture(result.getP_ori());</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            @Override</div><div class="line">            public void onError(Exception e) &#123;</div><div class="line">                registerSensor();</div><div class="line">            &#125;</div><div class="line">        &#125;);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>我是讲=将摇一摇这个功能做了一下封装，方便以后的使用。代码的实现思想就是去判断三个坐标轴加速度的变化值，当其达到一个阈值的时候则触发摇一摇。<br>最后来看看在Activity中怎么去使用</p>
+<ol>
+<li><p>在onCreate方法中去初始化摇一摇</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ShakePictureUtils mShakePictureUtils = new ShakePictureUtils(this);</div></pre></td></tr></table></figure>
+</li>
+<li><p>在onResume方法中去注册</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">@Override</div><div class="line">protected void onResume() &#123;</div><div class="line">    super.onResume();</div><div class="line">    mShakePictureUtils.registerSensor();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>在onPause方法中去解注册</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">@Override</div><div class="line">protected void onPause() &#123;</div><div class="line">    super.onPause();</div><div class="line">    mShakePictureUtils.unRegisterSensor();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>源码地址：<a href="https://github.com/burgessjp/GanHuoIO/blob/master/app/src/main/java/ren/solid/ganhuoio/utils/ShakePictureUtils.java" target="_blank" rel="external">ShakePictureUtils</a></p>
+<p>也请大家也关注下我的一个开源项目<a href="https://github.com/burgessjp/GanHuoIO" target="_blank" rel="external">GanHuoIO</a>。这是基于gank.io提供的api写的一个Android客户端，谢谢。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/05/23/基于Gank-IO提供的API的第三方客户端，可以在线收藏[项目开源]/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="_SOLID">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="_SOLID的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2016/05/23/基于Gank-IO提供的API的第三方客户端，可以在线收藏[项目开源]/" itemprop="url">
+                  基于Gank-IO提供的API的第三方客户端，可以在线收藏
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-05-23T17:21:00+08:00">
+                2016-05-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <blockquote>
+<p>最近也是因为准备毕业设计的事，很久没更新博客了，但是在这段时间我也不是没有准备这方面的东西。知道gank.io的同学肯定知道，代码家在上面提供了一个免费开放的api供大家去玩，这个接口的信息每天也在更新，发布的内容也是很有质量的，不仅有技术类的文章，还有我们喜欢的福利图。<br>之前我也是看到很多比较好的链接由于时间问题，没来的及看，每次回去找都得花很多的时间。也是正因为这个原因激发了我做一个基于Gank.IO提供的API的第三方客户端，最初计划的两个重要功能是可以对信息进行在线收藏和离线缓存，因为时间原因后者暂时没有实现，后面的更新我肯定会实现的。重要的是本项目完全开源，项目已经上传至Github,项目中覆盖了MVP、RxJava、第三方登录以及很多第三方库的使用，我相信本项目的源码对那些正在自学的同学还是有价值的。(ps:这个应用其实都做完一段时间了，微博那边一直没给审核通过，没法正式发布，所以一直没发布出来)</p>
+</blockquote>
+<p>APP下载地址（fir.im）：<a href="http://fir.im/ganhuoio" target="_blank" rel="external">干货IO</a><br>也欢迎大家去应用商店下载:<a href="http://android.myapp.com/myapp/detail.htm?apkName=ren.solid.ganhuoio" target="_blank" rel="external">干货IO</a><br>源码地址：<a href="https://github.com/burgessjp/GanHuoIO" target="_blank" rel="external">GanHuoIO</a>  欢迎Star和Fork，提交问题到 Issues</p>
+<p>先来两张App的截图</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/623504-b273dd5d2e63fc4b.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/623504-3a7543e4e650cd4a.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="S60521-211246.jpg"></p>
+<p>下面就来简单的介绍一下这个项目吧</p>
+<p>App是MD风格的，后端服务是用的bomb，由于涉及到了收藏肯定会有登录，对于登录目前只能使用新浪微博（我也借助新浪微博ID是唯一的这一点），用到了MVP，RxJava，这里我也只是单纯的把RxJava来当做EventBus来使用的，最初我本来是计划把最近很火的Retrofit也加上的，但是这次这个项目的最底层是基于我之前自己开发的一个快速开发库的，里面对网络层做了封装，因为Retrofit是基于注解的，我改动的还是比较多，所以最后就放弃了，对于侧滑菜单，我用的是<a href="https://github.com/mikepenz/MaterialDrawer" target="_blank" rel="external">MaterialDrawer</a>，而不是系统自带的那个NavigationView，MaterialDrawer比系统自带的更加的强大和灵活。</p>
+<p>来看看App的基本操作</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/623504-272e96a7ee176af9.gif?imageMogr2/auto-orient/strip" alt=""></p>
+<p>我们可以对信息进行收藏，也可以对类别进行拖动排序（对于RecyclerView的拖动排序十分的简单，只需一个ItemTouchHelper就可以实现）</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/623504-43c90c49394c2b3d.gif?imageMogr2/auto-orient/strip" alt=""></p>
+<p>里面还有更多的操作等着你的使用。</p>
+<p>如果你感觉还不错就赶紧去下载使用吧，非常欢迎大家提供在使用过程中的bug（我没对5.0以下的手机进行适配，我相信作为开发者的你，应该不可能还会在使用5.0以下的系统）。</p>
 
           
         

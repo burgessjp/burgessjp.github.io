@@ -250,7 +250,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/04/25/Android-多媒体之Camera/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/04/05/打造一个RecyclerView的万能适配器-减少你的代码冗余/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="_SOLID">
@@ -272,7 +272,808 @@
             
               
                 
-                <a class="post-title-link" href="/2017/04/25/Android-多媒体之Camera/" itemprop="url">
+                <a class="post-title-link" href="/2016/04/05/打造一个RecyclerView的万能适配器-减少你的代码冗余/" itemprop="url">
+                  打造一个RecyclerView的万能适配器-减少你的代码冗余
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-04-05T23:42:00+08:00">
+                2016-04-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>我们都知道每次在我们使用RecyclerView这样的列表组件的时候，我们都会先去创建一个Adapter，对于RecyclerView的Adapter我们已经不需要对itemView的复用操心了，使用过ListView，GridView的肯定知道，对于ItemView的复用需要我们自己去做。但是对于这个RecyclerView的Adapter我们还是会写很多重复的代码，在ViewHolder中也会有很多的FindViewById()这样的代码在里面，写一次无所谓，但是如果我们的项目里面需要写很多个这样的Adapter的时候呢？如果“不偷下懒”，我相信你会写的醉生梦死。</p>
+<p>先说明下：本文的思想是基于HongYang的这篇博客：<a href="http://blog.csdn.net/lmj623565791/article/details/38902805" target="_blank" rel="external">Android 快速开发系列 打造万能的ListView GridView 适配器 </a>，他的是基于ListView，GridView的。本文并没有什么技术含量，只是一种简单的封装而已。<br>我们来看看怎么去实现这个适配器吧（下面代码可直接拷贝使用）：</p>
+<pre>
+/**
+ * Created by _SOLID
+ * Date:2016/4/5
+ * Time:11:18
+ * <p>
+ * 通用的RecyclerView的适配器
+ * </p><p>
+ * 思想上参考了Hongyang的 http://blog.csdn.net/lmj623565791/article/details/38902805这篇博客
+ */
+public abstract class SolidRVBaseAdapter<t> extends RecyclerView.Adapter<solidrvbaseadapter.solidcommonviewholder> {
+
+    protected List<t> mBeans;
+    protected Context mContext;
+    protected boolean mAnimateItems = true;
+    protected int mLastAnimatedPosition = -1;
+
+    public SolidRVBaseAdapter(Context context, List<t> beans) {
+        mContext = context;
+        mBeans = beans;
+    }
+
+    @Override
+    public SolidRVBaseAdapter.SolidCommonViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        LayoutInflater inflater = LayoutInflater.from(mContext);
+        View view = inflater.inflate(getItemLayoutID(viewType), parent, false);
+        SolidCommonViewHolder holder = new SolidCommonViewHolder(view);
+        return holder;
+    }
+
+
+    @Override
+    public void onBindViewHolder(SolidRVBaseAdapter.SolidCommonViewHolder holder, int position) {
+        runEnterAnimation(holder.itemView, position);
+        onBindDataToView(holder, mBeans.get(position));
+
+    }
+
+    /**
+     * 绑定数据到Item的控件中去     *
+     * @param holder
+     * @param bean
+     */
+    protected abstract void onBindDataToView(SolidCommonViewHolder holder, T bean);
+
+    /**
+     * 取得ItemView的布局文件     *
+     * @return
+     */
+    public abstract int getItemLayoutID(int viewType);
+
+
+    @Override
+    public int getItemCount() {
+        return mBeans.size();
+    }
+
+    public void add(T bean) {
+        mBeans.add(bean);
+        notifyDataSetChanged();
+    }
+
+    public void addAll(List<t> beans) {
+        mBeans.addAll(beans);
+        notifyDataSetChanged();
+    }
+
+    public void clear() {
+        mBeans.clear();
+        notifyDataSetChanged();
+    }
+
+    /***
+     * item的加载动画
+     * @param view
+     * @param position
+     */
+    private void runEnterAnimation(View view, int position) {
+        if (!mAnimateItems) {
+            return;
+        }
+        if (position > mLastAnimatedPosition) {
+            mLastAnimatedPosition = position;
+            view.setTranslationY(ViewUtils.getScreenHeight(mContext));
+            view.animate()
+                    .translationY(50)
+                    .setStartDelay(100)
+                    .setInterpolator(new DecelerateInterpolator(3.f))
+                    .setDuration(300)
+                    .start();
+        }
+    }
+
+
+    public class SolidCommonViewHolder extends
+            RecyclerView.ViewHolder {
+        private final SparseArray<view> mViews;
+        private View itemView;
+
+        public SolidCommonViewHolder(View itemView) {
+            super(itemView);
+            this.mViews = new SparseArray<>();
+            this.itemView = itemView;
+            //添加Item的点击事件
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onItemClick(getAdapterPosition());
+                }
+            });
+        }
+
+
+        public <t extends="" view=""> T getView(int viewId) {
+
+            View view = mViews.get(viewId);
+            if (view == null) {
+                view = itemView.findViewById(viewId);
+                mViews.put(viewId, view);
+            }
+            return (T) view;
+        }
+
+        public void setText(int viewId, String text) {
+            TextView tv = getView(viewId);
+            tv.setText(text);
+        }
+
+        /**
+         * 加载drawable中的图片
+         *
+         * @param viewId
+         * @param resId
+         */
+        public void setImage(int viewId, int resId) {
+            ImageView iv = getView(viewId);
+            iv.setImageResource(resId);
+        }
+
+        /**
+         * 加载网络上的图片
+         *
+         * @param viewId
+         * @param url
+         */
+        public void setImageFromInternet(int viewId, String url) {
+            ImageView iv = getView(viewId);
+            SolidHttpUtils.getInstance().loadImage(url, iv);//这里可根据自己的需要变更
+        }
+    }
+
+    /**
+     * ItemView的单击事件(如果需要，重写此方法就行)
+     *
+     * @param position
+     */
+    protected void onItemClick(int position) {
+
+    }
+}
+</t></view></t></t></t></solidrvbaseadapter.solidcommonviewholder></t></p></pre>
+
+<p>这里我们用到了泛型，如果还有不知道泛型的同学那就赶快去补补泛型这方面的基本知识吧，在面向对象程序设计中泛型这个点还是很重要的。细心的肯定注意到了这是个抽象类，里面有getItemLayoutID和onBindDataToView两个抽象方法，getItemLayoutID是用来设置itemView的布局文件的，onBindDataToView是用来绑定数据到itemView中的控件中去。分别在<strong>onCreateViewHolder</strong>和<strong>onBindViewHolder</strong>中使用到了。这两个方法里面的代码其实并不复杂，我就不多说了，此外我还添加了add、addAll、clear这三个方法用来对数据进行操作。其中<strong>runEnterAnimation</strong>是用来添加ItemView的进入动画的（动画的具体效果可根据需求或者自己的喜欢调整）</p>
+<p>比较重要的还是<strong>SolidCommonViewHolder </strong>这个类，这里是我们减少冗余代码的关键。这里使用到了<strong>SparseArray</strong>来保存View（不要问我为什么，这个是Google推荐使用的，和HashMap有点类似，但是在Android中性能要稍微好一些）。我们知道在我们的ItemView中无非是TextView，ImageView这些控件，所以在这里我提供了setText、setImage、setImageFromInternet这几个方法。如果你有更多的控件在ItemView中，请自行添加相关方法。</p>
+<p>我们来看看怎么去使用吧</p>
+<pre>
+/**
+ * Created by _SOLID
+ * Date:2016/4/5
+ * Time:11:34
+ */
+public class BookAdapter extends SolidRVBaseAdapter<bookbean> {
+
+    public BookAdapter(Context context, List<bookbean> beans) {
+        super(context, beans);
+    }
+
+    @Override
+    public int getItemLayoutID(int vieWType) {
+        return R.layout.item_book;
+    }
+
+    @Override
+    protected void onItemClick(int position) {
+        Intent intent = new Intent(mContext, BookDetailActivity.class);
+        intent.putExtra("url", mBeans.get(position - 1).getUrl());
+        mContext.startActivity(intent);
+    }
+    @Override
+    protected void onBindDataToView(SolidCommonViewHolder holder, BookBean bean) {
+        holder.setText(R.id.tv_title, bean.getTitle());
+        holder.setText(R.id.tv_price, "￥" + bean.getPrice());
+        holder.setText(R.id.tv_author, "作者:" + bean.getAuthor() + "");
+        holder.setText(R.id.tv_date, "出版日期:" + bean.getPubdate());
+        holder.setText(R.id.tv_publisher, "出版社:" + bean.getPublisher());
+        holder.setText(R.id.tv_num_rating, bean.getRating().getNumRaters() + "人评分");
+        holder.setImageFromInternet(R.id.iv_image, bean.getImage());
+    }
+}
+</bookbean></bookbean></pre>
+
+<p>是不是很简单，我们只需去设置一个ItemLayoutID然后绑定数据到控件中去就OK了，再也不用去各种FindViewById了。</p>
+<p>到这里可能有的同学肯定会问了，你这个只支持只有一个ViewType的RecyclerView啊，要是我有多个改怎么办呢。其实也不难，请看下面代码：</p>
+<pre>
+
+/**
+ * Created by _SOLID
+ * Date:2016/4/5
+ * Time:17:36
+ * <p>
+ * 支持多种ItemType的Adapter（适用于RecyclerView）
+ */
+public abstract class SolidMultiItemTypeRVBaseAdapter1<t> extends SolidRVBaseAdapter<t> {
+
+
+    public SolidMultiItemTypeRVBaseAdapter1(Context context, List<t> beans) {
+        super(context, beans);
+    }
+    @Override
+    public abstract int getItemViewType(int position);
+
+
+}
+
+</t></t></t></p></pre>
+
+<p>这个类就是继承于之前写的那个类，在这里我只将RecyclerView.Adapter的getItemViewType这个方法变成了抽象方法。目的是强迫子类根据自己的需求去实现即可,实现类中的onBindDataToView方法根据holder.getItemViewType()去绑定数据即可（这里我没有实际去测试过，就不贴测试代码了）。只要你知道之前那个类中的这个方法，我相信你肯定就会懂了。<img src="http://upload-images.jianshu.io/upload_images/623504-8f8b053b0926b6f2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/03/31/Android-Material-Design-兼容库的使用详解/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="_SOLID">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="_SOLID的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2016/03/31/Android-Material-Design-兼容库的使用详解/" itemprop="url">
+                  Android-Material-Design-兼容库的使用详解
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-03-31T18:14:00+08:00">
+                2016-03-31
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>众所周知Material Design（材质设计）是Google在2014年I/O大会上发布的一种新的设计规范。一经推出就好评如潮，个人是非常喜欢这种风格的，由于他只支持5.0及其以上的设备，开发者也只是去尝尝鲜，并没用在真实的项目中去，使得其在国内的市场并不是太好。随后不久Google就退出了其兼容库Android Design Support Library，兼容至2.1！这绝对是业界良心，极大的便利了我们这些开发者。这一兼容库可以让我们可以在自己的项目真实的去体验一把。百度谷歌一下，其实现在已经有个很多介绍这个支持库的文章，但是很多都并不太详细，大部分让人看了都似懂非懂，我之前也学习过这个库的用法，很久没看基本又忘了，最近我又重新开始学习了这个库，所以本文也主要是对这次学习的一个总结，当然也参考了其他很多的文章，算是站在巨人的肩膀上吧，当然这篇文章也为后来的学习者有更多的参考资料。</p>
+<hr>
+<p>先来几张效果图吧：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/623504-6faff3933cbdc60b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="图1"></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/623504-a41e2b7a17ece6fb.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="图2"></p>
+<p>感兴趣的也可以先看看，最后能做一个什么样的App：<a href="http://pan.baidu.com/s/1pLzj2uJ" target="_blank" rel="external">MDDemo.apk</a></p>
+<hr>
+<p> 说到这个兼容库，其实很多都是可以在Github去找到对应的效果的，其实我们也是可以去用Github上的那些开源项目，那么多的库都要一个一个去引用，还是非常的麻烦，我猜可能Google也是看到这些东西经常被开发者用在了项目中，索性自己将其封装成了一个库，以方便开发者的使用。这个库我们应该怎样去使用呢？这是本文讲解的重点。首先我们看看这个库怎么去引用到我们的项目中：</p>
+<blockquote>
+<p>compile ‘com.android.support:design:23.1.1’</p>
+</blockquote>
+<p>我们只需将其添加到项目的依赖中去，然后同步一下就OK了。<br>添加了依赖之后我们再来看看这个库里面都有哪些控件吧，如下图，红色边框矩形框出来的就是这个库里面包含的控件，我们可以看到有<strong>AppBarLayout、CollapsingToolbarLayout、CoordinatorLayout，FloatingActionButton、NavigationView、Snackbar、TabLayout、TextInputLayout</strong>这八种，后面我会一个一个介绍用法，如果还没学过这些控件使用的本文可以手把手教你学会怎么去使用，如果之前有了解过的或者对这个还比较熟悉的，也可以继续看下去，就当做温习一下，顺便还可以帮我找出有表达不正确的地方。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/623504-7ba69eee1de7d116.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="库中包含的控件.png"></p>
+<h2 id="1-Snackbar"><a href="#1-Snackbar" class="headerlink" title="1.Snackbar"></a>1.Snackbar</h2><p>SnackBar通过在屏幕底部展示简洁的信息，为一个操作提供了一个轻量级的反馈，并且在Snackbar中还可以包含一个操作，在同一时间内，仅且只能显示一个 Snackbar，它的显示依赖于UI，不像Toast那样可以脱离应用显示。它的用法和Toast很相似，唯一不同的就是它的第一个参数不是传入Context而是传入它所依附的父视图，但是他比Toast更强大。<br>我们来看看它的基本使用</p>
+<pre>
+Snackbar.make(mDrawerLayout, "SnackbarClicked", Snackbar.LENGTH_SHORT).show();</pre>
+
+<p>是不是和Toast很相似。我们来看看它的效果图：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/623504-0a98a4b33d51e064.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="SnackWithoutAction"><br>是不是看着比Toast舒服多了</p>
+<p>好了，我们再来看看一个包含Action的Snackbar怎么使用</p>
+<pre>
+  Snackbar.make(mDrawerLayout, "SnackbarClicked", Snackbar.LENGTH_SHORT).setAction("Action", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Toast.makeText(MainActivity.this, "I'm a Toast", Toast.LENGTH_SHORT).show();
+                            }
+                        }).setActionTextColor(Color.RED).show();
+
+</pre>
+
+<p>这里我给Snackbar设置了一个Action，设置其文字颜色为红色，并带有了一个点击事件，在单击这个Action后就弹出一个Toast，效果图如下<br><img src="http://upload-images.jianshu.io/upload_images/623504-e8c6578336716039.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="SnackbarWithAction"></p>
+<h2 id="2-TextInputLayout"><a href="#2-TextInputLayout" class="headerlink" title="2.TextInputLayout"></a>2.TextInputLayout</h2><p>使用过EditText的同学肯定知道，有一个叫hint的属性，它可以提示用户此处应该输入什么内容，然而当用户输入真实内容之后，hint的提示内容就消失了，用户的体验效果是十分不好的，TextInputLayout的出现解决了这个问题。</p>
+<p>我们来看看这个控件的是怎么使用的</p>
+<pre>
+<linearlayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent" android:layout_height="match_parent" android:orientation="vertical" android:padding="10dp" tools:context="burgess.com.materialdesignstudy.MDTextViewActivity">
+
+    <!--TextInputLayout的颜色来自style中的colorAccent的颜色-->
+    <android.support.design.widget.textinputlayout android:layout_width="match_parent" android:layout_height="wrap_content">
+
+        <edittext android:id="@+id/edit_username" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="用户名/手机号" android:inputtype="textEmailAddress">
+
+
+    </edittext></android.support.design.widget.textinputlayout>
+
+    <android.support.design.widget.textinputlayout android:layout_width="match_parent" android:layout_height="wrap_content">
+
+        <edittext android:id="@+id/edit_pwd" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="密码" android:inputtype="textPassword">
+    </edittext></android.support.design.widget.textinputlayout>
+
+</linearlayout>
+
+</pre>
+
+<p>其实这个控件的使用非常简单，我们只需在EditText外面再嵌套一个TextInputLayout就行了。我们来看看效果</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/623504-d029007f302ecdaa.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="TextInputLayout"><br>还是很不错的，当用户在输入的时候hint的内容就会跑到输入内容的上边去，其中TextInputLayout中字体的颜色是style文件中的colorAccent（关于colorAccent是什么，文末有一张图看了就清楚了）的颜色。</p>
+<h2 id="3-FloatingActionButton"><a href="#3-FloatingActionButton" class="headerlink" title="3.FloatingActionButton"></a>3.FloatingActionButton</h2><p>FloatingActionButton从名字可以看出它是一个浮动的按钮，它是一个带有阴影的圆形按钮，可以通过fabSize来改变其大小，主要负责界面的基本操作，这个按钮总体来说还是比较简单的。<br>我们来看看它的一些属性：</p>
+<ul>
+<li>默认FloatingActionButton 的背景色是应用主题的 colorAccent（其实MD中的控件主题默认基本都是应用的这个主题），可以通过<strong>app:backgroundTint </strong>属性或者<strong>setBackgroundTintList (ColorStateList tint)</strong>方法去改变背景颜色。</li>
+<li>上面提到 Floating action button 的大小尺寸，可以用过<strong>app:fabSize </strong>属性设置（normal or mini）</li>
+<li><strong> android:src</strong> 属性改变 drawable</li>
+<li><strong>app:rippleColor</strong>设置点击 button 时候的颜色（水波纹效果）</li>
+<li><strong>app:borderWidth</strong>设置 button 的边框宽度</li>
+<li><strong>app:elevation</strong>设置普通状态阴影的深度（默认是 6dp）</li>
+<li><strong>app:pressedTranslationZ</strong>设置点击状态的阴影深度（默认是 12dp）</li>
+</ul>
+<p>怎么去使用：</p>
+<pre><android.support.design.widget.floatingactionbutton android:id="@+id/fab_search" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_gravity="bottom|end" android:layout_margin="16dp" android:src="@android:drawable/ic_dialog_email" app:borderwidth="2dp" app:fabsize="normal" app:ripplecolor="#ff0000">
+</android.support.design.widget.floatingactionbutton></pre>
+其效果图如下：
+![FloatingActionButton](http://upload-images.jianshu.io/upload_images/623504-8110e395f1693062.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+## **4.CoordinatorLayout**
+
+我们来看看官方对他的描述：
+- CoordinatorLayout is a super-poweredFrameLayout.
+- CoordinatorLayout is intended for two primary use cases:
+1.As a top-level application decor or chrome layout
+2.As a container for a specific interaction with one or more child views
+
+从这里我们可以知道它是一个增强版的FrameLayout，他可以协调其子View的交互，控制手势机滚动技巧。这个控件十分的强大，用处也十分的广泛。就比如刚才说的FloatingActionButton如果用CoordinatorLayout 作为FloatingActionButton的父布局，它将很好的协调Snackbar的显示与FloatingActionButton。
+![没有使用CoordinatorLayout 作为父布局的FloatingActionButton显示Snackbar](http://upload-images.jianshu.io/upload_images/623504-eefc577f31d4d2c6.gif?imageMogr2/auto-orient/strip)
+![使用了CoordinatorLayout 作为父布局的FloatingActionButton显示Snackbar](http://upload-images.jianshu.io/upload_images/623504-4bb65d3ec110ce37.gif?imageMogr2/auto-orient/strip)
+
+这两个动态图来源于网上，效果是显而易见的，原谅我用的手机测试，所以没法录制动态图（如果有人知道怎么去录制的请告知）。
+还有它的另外一个比较重要的用处是控制协调内容区和AppBarLayout的滚动，这个后面会讲到。这个控件还是比较复杂的，用多了就能慢慢体会到他的强大之处。我对这个控件的还不是那么的清楚，所以在这里提供一篇关于CoordinatorLayout 用法的译文: [掌握 Coordinator Layout](https://www.aswifter.com/2015/11/12/mastering-coordinator/?hmsr=toutiao.io&utm_medium=toutiao.io&utm_source=toutiao.io)
+
+## **5.NavigationView**
+
+抽屉式的导航控件，有了他我们可以使得导航更简单。我们可以直接通过菜单资源文件生成所需的元素。下图左边的即是NavigationView。
+
+![NavigationView](http://upload-images.jianshu.io/upload_images/623504-a103ae085323d307.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+下面我们来看看它是怎么实现的吧。
+<pre>
+<?xml version="1.0" encoding="utf-8"?>
+
+<android.support.v4.widget.drawerlayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/drawer_layout" android:layout_width="match_parent" android:layout_height="match_parent" android:fitssystemwindows="true">
+
+    <!--内容区-->
+    <android.support.design.widget.coordinatorlayout android:id="@+id/main_content" android:layout_width="match_parent" android:layout_height="match_parent">
+
+        <include android:id="@+id/appbar" layout="@layout/toolbar">
+
+        <framelayout android:id="@+id/frame_content" android:layout_width="match_parent" android:layout_height="match_parent" android:layout_below="@+id/appbar" android:scrollbars="none" app:layout_behavior="@string/appbar_scrolling_view_behavior">
+    </framelayout></include></android.support.design.widget.coordinatorlayout>
+
+    <!--左侧导航菜单-->
+    <android.support.design.widget.navigationview android:id="@+id/navigation_view" android:layout_width="wrap_content" android:layout_height="match_parent" android:layout_gravity="start" app:headerlayout="@layout/navigation_header" app:menu="@menu/drawer">
+</android.support.design.widget.navigationview></android.support.v4.widget.drawerlayout>
+</pre>
+
+<p>可以看到这里我们是以DrawerLayout作为其父布局，对于DrawLayout他可以实现一种抽屉式的侧滑效果，这里不多做讲解,这里只简单说一点:DrawLayout中的第一个布局是内容布局，第二个是菜单布局。现在我们直接定位到NavigationView，我们看到这里有<strong> app:headerLayout=”@layout/navigation_header”</strong>、<strong>app:menu=”@menu/drawer”</strong>这两行代码，其中headerLayout是设置其头部的布局，这个布局我们可以随便写，就和写普通的布局文件一样的。对于menu就是菜单项的配置了，其配置文件如下：</p>
+<pre>
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools" tools:context=".MainActivity">
+    <group android:checkablebehavior="single">
+        <item android:id="@+id/navigation_item_home" android:icon="@drawable/iconfont_home" android:title="首页">
+        <item android:id="@+id/navigation_item_blog" android:icon="@drawable/iconfont_blog" android:title="我的博客">
+
+        <item android:id="@+id/navigation_item_about" android:icon="@drawable/iconfont_about" android:title="关于">
+    </item></item></item></group>
+</menu>
+</pre>
+
+<p>就这么简单，我们要实现上述的效果就只要这些就足够了。但是如果我们想要对Item添加一个点击的事件怎么做呢？请看下面：</p>
+<pre>
+ private void setNavigationViewItemClickListener() {
+        mNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.navigation_item_home:
+                        mToolbar.setTitle("首页");
+                        switchFragment("MainFragment");
+                        break;
+                    case R.id.navigation_item_blog:
+                        mToolbar.setTitle("我的博客");
+                        switchFragment("BlogFragment");
+                        break;
+                    case R.id.navigation_item_about:
+                        mToolbar.setTitle("关于");
+                        switchFragment("AboutFragment");
+                        break;
+                    default:
+                        break;
+                }
+                item.setChecked(true);
+                mDrawerLayout.closeDrawer(Gravity.LEFT);
+                return false;
+            }
+        });
+    }
+</pre>
+上面的代码很清楚了，就是为NavigationView添加了一个OnNavigationItemSelectedListener的监听事件，然后我们就可以做我们想做的事了。
+
+## **6. AppBarLayout、CollapsingToolbarLayout、TabLayout**
+
+  这三个控件我用一个例子一下讲解了，在实际的使用中这三个控件还是经常会组合在一起的。
+- **AppBarLayout**：其继承于LinearLayout，使用AppBarLayout可以让包含在其中的子控件能响应被标记了ScrollingViewBehavior的的滚动事件（要与CoordinatorLayout 一起使用），利用它我们可以很容易的去实现视差滚动效果，这样所你可能还是不太懂，千言万语不如一张图来的直接爽快（这样图还是来源于网上，其蓝色的部分就是AppBarLayout，内容区就是被标记了ScrollingViewBehavior的，可以看到效果是不是挺不错的）。
+![](http://upload-images.jianshu.io/upload_images/623504-703d4b65d11af297.gif?imageMogr2/auto-orient/strip)
+
+- **CollapsingToolbarLayout** ：让Toolbar可伸缩，在伸缩的时候决定ToolBar是移除屏幕和固定在最上面。由于Toolbar 只能固定到屏幕顶端并且不能做出好的动画效果，所以才有了这个Layout的出现。
+- **TabLayout**：这个其实和我们之前使用的第三方库ViewPagerIndicator是很类似的，一般都和ViewPager一起使用，效果如下图： 
+![动态图来源于网上](http://upload-images.jianshu.io/upload_images/623504-1ffee0282ce10e14.gif?imageMogr2/auto-orient/strip)
+
+基本知道他们是干什么用的了，下面就让我们动手，看看到底怎么用吧。
+
+先来几张下面我们要实现的效果。由于我是真机测试，没法录制动态图，这里就用几张静态图代替了。
+![](http://upload-images.jianshu.io/upload_images/623504-a7165c9de0802f03.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+布局文件（这个是很重要的，很多的效果都是直接在布局文件中配置的）:
+<pre>
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.coordinatorlayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" android:layout_width="match_parent" android:layout_height="match_parent">
+
+    <android.support.design.widget.appbarlayout android:layout_width="match_parent" android:layout_height="200dp" android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+        <android.support.design.widget.collapsingtoolbarlayout android:id="@+id/collapsing_toolbar_layout" android:layout_width="match_parent" android:layout_height="match_parent" android:fitssystemwindows="true" app:contentscrim="?attr/colorPrimary" app:expandedtitlemarginend="64dp" app:expandedtitlemarginstart="48dp" app:layout_scrollflags="scroll|exitUntilCollapsed">
+
+            <imageview android:id="@+id/iv_book_image" android:layout_width="match_parent" android:layout_height="match_parent" android:fitssystemwindows="true" android:scaletype="centerInside" android:transitionname="transition_book_img" app:layout_collapsemode="parallax" app:layout_collapseparallaxmultiplier="0.7">
+
+            <android.support.v7.widget.toolbar android:id="@+id/toolbar" android:layout_width="match_parent" android:layout_height="?attr/actionBarSize" app:layout_collapsemode="pin" app:popuptheme="@style/ThemeOverlay.AppCompat.Light">
+
+
+        </android.support.v7.widget.toolbar></imageview></android.support.design.widget.collapsingtoolbarlayout>
+
+
+    </android.support.design.widget.appbarlayout>
+
+
+    <linearlayout android:layout_width="match_parent" android:layout_height="match_parent" android:orientation="vertical" app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <linearlayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:padding="10dp">
+
+            <linearlayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal">
+
+                <textview android:id="@+id/tv_title" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textcolor="#292929" android:textsize="18sp">
+
+                <textview android:id="@+id/tv_rating" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginleft="5dp" android:layout_margintop="2dp" android:textcolor="#FF6347" android:textsize="14sp">
+            </textview></textview></linearlayout>
+
+
+            <textview android:id="@+id/tv_msg" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_margintop="2dp" android:textcolor="#575757" android:textsize="12sp">
+
+
+        </textview></linearlayout>
+
+        <android.support.design.widget.tablayout android:id="@+id/sliding_tabs" android:layout_width="match_parent" android:layout_height="wrap_content" app:tabgravity="fill" app:tabmode="scrollable">
+
+        <android.support.v4.view.viewpager android:id="@+id/viewpager" android:layout_width="match_parent" android:layout_height="match_parent">
+    </android.support.v4.view.viewpager></android.support.design.widget.tablayout></linearlayout>
+</android.support.design.widget.coordinatorlayout>
+</pre>
+
+<p>我们来分析一下这个布局文件：<br>1.最外层的布局用的是CoordinatorLayout，因为这里面有很多的动画，CoordinatorLayout可以很好的去协调里面的动画。在android.support.design.widget.AppBarLayout下面的那个LinearLayout被标记了appbar_scrolling_view_behavior，这样一来AppBarLayout就能响应LinearLayout中的滚动事件。<br>2.再来看看CollapsingToolbarLayout，其中contentScrim是设置其内容区的颜色，layout_scrollFlags取了scroll和exitUntilCollapsed两个值。<br> layout_scrollFlags的Flag包括：</p>
+<ul>
+<li><strong>scroll</strong>: 所有想滚动出屏幕的view都需要设置这个flag，没有设置这个flag的view将被固定在屏幕顶部。</li>
+<li><strong>enterAlways</strong>: 这个flag让任意向下的滚动都会导致该view变为可见，当向上滑的时候Toolbar就隐藏，下滑的时候显示。</li>
+<li><strong>enterAlwaysCollapsed</strong>: 顾名思义，这个flag定义的是何时进入（已经消失之后何时再次显示）。假设你定义了一个最小高度（minHeight）同时enterAlways也定义了，那么view将在到达这个最小高度的时候开始显示，并且从这个时候开始慢慢展开，当滚动到顶部的时候展开完。   </li>
+<li><strong>exitUntilCollapsed</strong>: 同样顾名思义，这个flag时定义何时退出，当你定义了一个minHeight，这个view将在滚动到达这个最小高度的时候消失。</li>
+</ul>
+<p>只看概览可能还是不会太清楚，注意一定要多实践，感兴趣的读者可以一个一个去试一试效果。</p>
+<p>3.定位到ImageView，有这两个属性是我们平常用没看到的，说明我写在注释上了</p>
+<pre>
+app:layout_collapseMode="parallax"//这个是配置当ImageView消失或者显示时候有一种视差滚动效果
+app:layout_collapseParallaxMultiplier="0.7"//视差因子，越大视差特效越明显，最大为1 </pre>
+4.Toolbar中有一个app:layout_collapseMode="pin" 这个确保Toolbar在AppBarLayout折叠的时候仍然被固定在屏幕的顶部
+
+
+布局文件就到这，我们来看看Activity中的逻辑
+
+<pre>
+/**
+ * Created by _SOLID
+ * Date:2016/3/30
+ * Time:20:16
+ */
+public class BookDetailActivity extends BaseActivity {
+
+    private String mUrl;
+    private Toolbar mToolbar;
+    private CollapsingToolbarLayout mCollapsingToolbarLayout;
+    private ImageView mIvBook;
+
+    private BookBean mBookBean;
+    private TextView mTvTitle;
+    private TextView mTvMsg;
+    private TextView mTvRating;
+    private ViewPager mViewPager;
+    private TabLayout mTabLayout;
+
+    @Override
+    protected void initView() {
+        //设置Toolbar
+        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(mToolbar);
+        getSupportActionBar().setHomeButtonEnabled(true);//决定左上角的图标是否可以点击
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);//决定左上角图标的右侧是否有向左的小箭头
+        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
+
+        mCollapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar_layout);
+        mIvBook = (ImageView) findViewById(R.id.iv_book_image);
+        mTvTitle = (TextView) findViewById(R.id.tv_title);
+        mTvMsg = (TextView) findViewById(R.id.tv_msg);
+        mTvRating = (TextView) findViewById(R.id.tv_rating);
+        mViewPager = (ViewPager) findViewById(R.id.viewpager);
+        mTabLayout = (TabLayout) findViewById(R.id.sliding_tabs);
+        mTabLayout.addTab(mTabLayout.newTab().setText("作者信息"));
+        mTabLayout.addTab(mTabLayout.newTab().setText("章节"));
+        mTabLayout.addTab(mTabLayout.newTab().setText("书籍简介"));
+
+    }
+
+    @Override
+    protected int setLayoutResourseID() {
+        return R.layout.activity_book_detail;
+    }
+
+    @Override
+    protected void init() {
+        mUrl = getIntent().getStringExtra("url");
+    }
+
+    @Override
+    protected void initData() {
+        SolidHttpUtils.getInstance().loadString(mUrl, new SolidHttpUtils.HttpCallBack() {
+            @Override
+            public void onLoading() {
+
+            }
+
+            @Override
+            public void onSuccess(String result) {
+                Gson gson = new Gson();
+                mBookBean = gson.fromJson(result, BookBean.class);
+                mCollapsingToolbarLayout.setTitle(mBookBean.getTitle());
+                mTvTitle.setText(mBookBean.getTitle());
+                mTvMsg.setText(mBookBean.getAuthor() + "/" + mBookBean.getPublisher() + "/" + mBookBean.getPubdate());
+                mTvRating.setText(mBookBean.getRating().getAverage() + "分");
+                SolidHttpUtils.getInstance().loadImage(mBookBean.getImages().getLarge(), mIvBook);
+
+                BookInfoPageAdapter adapter = new BookInfoPageAdapter(BookDetailActivity.this, mBookBean, getSupportFragmentManager());
+                mViewPager.setAdapter(adapter);
+                mTabLayout.setupWithViewPager(mViewPager);
+
+            }
+
+            @Override
+            public void onError(Exception e) {
+
+            }
+        });
+    }
+}
+
+</pre>
+
+<p>其实并不难，这里只需注意一点，当Toolbar被CollapsingToolbarLayout包裹的时候，设置标题是设置CollapsingToolbarLayout的，而不是Toolbar。</p>
+<p>好了终于写完了，差不多写了接近4个小时，好累的说，现在整个人都是晕晕的。</p>
+<p>源码献上:<a href="https://github.com/burgessjp/MaterialDesignDemo" target="_blank" rel="external">MaterialDesignDemo</a></p>
+<p>参考链接:<br><a href="http://www.jcodecraeer.com/a/anzhuokaifa/developer/2015/0531/2958.html" target="_blank" rel="external">Android的材料设计兼容库（Design Support Library）</a><br><a href="https://www.aswifter.com/2015/07/02/Material-Design-Example-5/" target="_blank" rel="external">Material Design控件使用</a><br><a href="http://hackeris.me/2015/07/12/floating_action_button/" target="_blank" rel="external"><a href="http://hackeris.me/2015/07/12/floating_action_button/" target="_blank" rel="external">Floating Action Button（翻译）</a></a><br><a href="http://wiki.jikexueyuan.com/project/material-design/" target="_blank" rel="external">Material Design 中文版</a><br><a href="http://blog.csdn.net/growth58/article/details/47972467?hmsr=toutiao.io&amp;utm_medium=toutiao.io&amp;utm_source=toutiao.io" target="_blank" rel="external">  Android Design Support Library概览  </a></p>
+<h3 id="附-一些控件使用使用应注意的地方"><a href="#附-一些控件使用使用应注意的地方" class="headerlink" title="附(一些控件使用使用应注意的地方):"></a>附(一些控件使用使用应注意的地方):</h3><p>1.在使用CardView的时候，一定要注意，当CardView的宽和高填充父容器的时候，CardView的margin最好要比cardElevation大，不然就看不到立体的效果。</p>
+<p>2.我们知道ListView有一个onItemClick的事件，但是RecyclerView却没有，那么我们应该怎样去设置呢？其实很简单，关于RecyclerView设置item的点击事件，只需在创建ViewHolder的时候，给填充的View设置单击事件即可。</p>
+<p>3.在使用android.support.design.widget.AppBarLayout的时候内容区最好使用android.support.v4.widget.NestedScrollView，之前我的内容区用的是ScrollView，在往上拉的时候AppBarLayout一直没有动画效果，折腾了几个小时都没找到原因。最后逼不得用Android Studio创建了一个他自带的关于AppBarLayout的模板项目，看到他用的是NestedScrollView作为内容区，我果断就把我的内容区换成了这个，立马就有动画效果了。</p>
+<p>NestedScrollView官方的描述：</p>
+<blockquote>
+<p>NestedScrollView is just likeScrollView, but it supports acting as both a nested scrolling parent and child on both new and old versions of Android. Nested scrolling is enabled by default.</p>
+</blockquote>
+<p><strong>如果感觉还不错的就给个喜欢支持一下吧，有问题请留言，谢谢</strong></p>
+<p>最后附一张MD的主题色解析图:<br><img src="http://upload-images.jianshu.io/upload_images/623504-d58e788d279d533d.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="MD主题色解析.jpg"></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/03/28/Android-多媒体之Camera/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="_SOLID">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="_SOLID的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2016/03/28/Android-多媒体之Camera/" itemprop="url">
                   Android-多媒体之Camera
                 </a>
               
@@ -289,8 +1090,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-04-25T11:05:53+08:00">
-                2017-04-25
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-03-28T23:12:00+08:00">
+                2016-03-28
               </time>
             
 
@@ -740,7 +1541,7 @@ public class CameraSurfaceView extends SurfaceView {
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/04/25/Android-关于传感器你需要知道的/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/03/26/Android-多媒体之MediaRecorder-MediaPlayer/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="_SOLID">
@@ -762,8 +1563,8 @@ public class CameraSurfaceView extends SurfaceView {
             
               
                 
-                <a class="post-title-link" href="/2017/04/25/Android-关于传感器你需要知道的/" itemprop="url">
-                  Android-关于传感器你需要知道的
+                <a class="post-title-link" href="/2016/03/26/Android-多媒体之MediaRecorder-MediaPlayer/" itemprop="url">
+                  Android-多媒体之MediaRecorder-MediaPlayer
                 </a>
               
             
@@ -779,8 +1580,8 @@ public class CameraSurfaceView extends SurfaceView {
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-04-25T11:05:53+08:00">
-                2017-04-25
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-03-26T14:47:00+08:00">
+                2016-03-26
               </time>
             
 
@@ -816,689 +1617,265 @@ public class CameraSurfaceView extends SurfaceView {
       
         
           
-            <p>最近在搞一个自己的App，突发一个想法，给App加一个摇一摇随机查看图片的功能，这样可以使得用户在使用App的时候有更多的乐趣。实现摇一摇肯定少不了传感器，在使用之余，索性总结一下在Android中关于传感器的使用。</p>
+            <p>以前学了很多东西，都没怎么做记录，慢慢的时间长了也就给忘了，当初踩过的坑翻来覆去<br>的踩，由于这些血淋林的教训，所以从现在开始，每次学了新的东西都要来写个博客做个记录总结一下了。</p>
+<p>最近在学习Android多媒体这一块，现在刚好学到了MediaRecorder和MediaPlayer。今天也就介绍下这两个类吧，也有利于以后初学者的学习。</p>
+<p>本文一共分3个部分：第一和第二部分用来介绍这两个类，第3部分做一个录音的小Demo（附源码）</p>
+<h2 id="1-MediaRecorder"><a href="#1-MediaRecorder" class="headerlink" title="1.MediaRecorder"></a>1.MediaRecorder</h2><p>关于MediaRecorder 官网给的解释是</p>
 <blockquote>
-<p>本文目录：<br>1.什么是传感器<br>2.常用传感器介绍与用法<br>3.实现图片摇一摇</p>
+<p>Used to record audio and video. The recording control is based on a simple state machine </p>
 </blockquote>
-<p>##1.什么是传感器</p>
-<p>维基百科是这样定义的：<em>传感器是一种物理装置或生物器官，能够探测、感受外界的信号、物理条件（如光、热、湿度）或化学组成（如烟雾），并将探知的信息传递给其他装置或器官。</em></p>
-<p>在Android中传感器可以展示当前手机状态的应用，包括硬件信息、当前位置、加速计、陀螺仪、光感、磁场、定向、电池窗台，声压，同时还可以进行多点触控的测试。只要你的想象力足够丰富，完全可以利用这些信息做出一些很新奇得应用。</p>
-<p>##2.常用传感器介绍与用法</p>
-<p>Android平台支持三个大类的传感器</p>
-<ul>
-<li>Motion sensors（运动传感器）<br> 这些传感器测量加速力，并沿三个轴的旋转力。此类别包括加速度计，重力感应器， 陀螺仪和旋转矢量传感器。</li>
-<li>Environmental sensors （环境传感器）<br>这些传感器测量各种环境参数，例如环境空气温度和压力，照明和湿度。此类别包括气压计，光度计，和温度计。</li>
-<li>Position sensors （位置传感器）<br>这些传感器测量设备的物理位置。这个类别包括方向传感器和磁力计。</li>
-</ul>
-<p>好。下面来看看Android中怎么去使用传感器。</p>
-<p>第一步：得到SensorManager<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">SensorManager mSensorManager = (SensorManager) mContext</div><div class="line">                .getSystemService(Context.SENSOR_SERVICE);</div></pre></td></tr></table></figure></p>
-<p>第二步:注册传感器</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">Sensor sensor = mSensorManager</div><div class="line">               .getDefaultSensor(Sensor.TYPE_ACCELEROMETER);</div><div class="line">       if (null != sensor)</div><div class="line">           mSensorManager.registerListener(this, sensor,</div><div class="line">                   SensorManager.SENSOR_DELAY_NORMAL);</div></pre></td></tr></table></figure>
-<p>嗯。然后就可以监听传感器数据的变化了。</p>
-<p>我相信第一步大家都能看懂，这里主要说一下第二步。</p>
-<p>registerListener这个方法有三个参数。</p>
-<ul>
-<li><p>第一个参数是传感器数据变化的监听器<br>我们需要去实现SensorEventListener接口，他里面有两个回调方法</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">@Override</div><div class="line">   public void onSensorChanged(SensorEvent event) &#123;</div><div class="line">    //当传感器的数值发生变化时调用</div><div class="line">   &#125;</div><div class="line"></div><div class="line">   @Override</div><div class="line">   public void onAccuracyChanged(Sensor sensor, int accuracy) &#123;</div><div class="line">    //传感器的精度发生变化时调用</div><div class="line">   &#125;</div></pre></td></tr></table></figure>
-</li>
-<li><p>第二个参数是我们需要监听的传感器<br>我们得到传感器用的是下面这种方法：</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Sensor sensor = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);</div></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>TYPE_ACCELEROMETER代表的就是加速度传感器。Android定义了很多的常量来代表支持的传感器，我们来看看Android平台支持的传感器类型。</p>
-<ul>
-<li>加速度传感器：TYPE_ACCELEROMETER<br> 以m/s2测量它设备所有三个物理轴线方向（x,y,和z）加速度。</li>
-<li>周围温度传感器：TYPE_AMBIENT_TEMPERATURE<br>检测周围空气温度。</li>
-<li>重力传感器：TYPE_GRAVITY<br>  测量重力</li>
-<li>陀螺仪传感器：TYPE_GYROSCOPE<br> 以rad/s测量设备三个物理轴线方向（x,y,和z)。旋转速度。</li>
-<li>光照传感器：TYPE_LIGHT<br>  以lx测量周围的光线级别。 </li>
-<li>线性加速度传感器：TYPE_LINEAR_ACCELERATION<br>检测沿着一个轴向的加速度。</li>
-<li>磁力传感器：TYPE_MAGNETIC_FIELD<br> 测量周围的三个物理轴线方向的磁场。</li>
-<li>方向传感器： TYPE_ORIENTATION<br> 测量设备所有三个物理轴线方向（x,y和x）的旋转角度。</li>
-<li>压力传感器：TYPE_PRESSURE<br> 测量周围空气气压</li>
-<li>接近传感器：TYPE_PROXIMITY<br>检测物体与手机的距离</li>
-<li>相对湿度传感器：TYPE_RELATIVE_HUMIDITY<br> 检测周围空气相对湿度</li>
-<li>旋转矢量传感器：TYPE_ROTATION_VECTOR<br> 用于检测运动和检测旋转。 </li>
-<li>温度传感器： TYPE_TEMPERATURE<br> 检测设备的温度</li>
-</ul>
-<p>下面再来看看传感器的平台的可用性</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/623504-11cb13cb313621ef.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="来源于官网"></p>
-<p>注意到图中Yes右上角有个上标：1这个类型的传感器在Android1.5（API Level 3）被添加，但是直到Android2.3（API Level 9）也不可用。 2这个传感器是可用的，但是它被弃用。 </p>
-<ul>
-<li>第三个参数是传感器数据更新数据的速度<br>有以下四个值可选，他们的速度是递增的<ul>
-<li>SENSOR_DELAY_UI</li>
-<li>SENSOR_DELAY_NORMAL</li>
-<li>SENSOR_DELAY_GAME </li>
-<li>SENSOR_DELAY_FASTEST</li>
-</ul>
-</li>
-</ul>
-<p>传感器的基本使用和介绍截差不多就这些，下面来看看，怎么去实现一个图片摇一摇的功能。</p>
-<p>##3.实现图片摇一摇</p>
-<p>要实现摇一摇，主要就是去监听手机加速度的变化，当达到一个值的时候就出发摇一摇这个事件。</p>
-<p>说到这，你肯定就知道我们要用的就是<strong>加速度传感器</strong>去实现这个功能。</p>
-<p>先来看看效果图：</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/623504-8e6bcf68406ee6e8.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
-<p>废话不多说了，下面直接上代码，经过前面的知识储备，我相信你肯定能看懂的<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line"> * Created by _SOLID</div><div class="line"> * Date:2016/6/3</div><div class="line"> * Time:9:55</div><div class="line"> */</div><div class="line">public class ShakePictureUtils implements SensorEventListener &#123;</div><div class="line"></div><div class="line">    // 两次检测的时间间隔</div><div class="line">    private static final int UPTATE_INTERVAL_TIME = 100;</div><div class="line">    // 加速度变化阈值，当摇晃速度达到这值后产生作用</div><div class="line">    private static final int SPEED_THRESHOLD = 2000;</div><div class="line"></div><div class="line">    private Context mContext;</div><div class="line">    private SensorManager mSensorManager = null;</div><div class="line">    private Vibrator mVibrator = null;</div><div class="line">    private PictureDialog mPictureDialog = null;</div><div class="line"></div><div class="line"></div><div class="line">    public ShakePictureUtils(Context context) &#123;</div><div class="line">        mContext = context;</div><div class="line">        mSensorManager = (SensorManager) mContext</div><div class="line">                .getSystemService(Context.SENSOR_SERVICE);</div><div class="line">        mVibrator = (Vibrator) mContext.getSystemService(Context.VIBRATOR_SERVICE);</div><div class="line">        mPictureDialog = new PictureDialog(mContext, R.style.PictureDialog);</div><div class="line">        mPictureDialog.setOnDismissListener(new DialogInterface.OnDismissListener() &#123;</div><div class="line">            @Override</div><div class="line">            public void onDismiss(DialogInterface dialog) &#123;</div><div class="line">                registerSensor();</div><div class="line">            &#125;</div><div class="line">        &#125;);</div><div class="line">    &#125;</div><div class="line"></div><div class="line"></div><div class="line">    private long lastUpdateTime;</div><div class="line">    private float lastX;</div><div class="line">    private float lastY;</div><div class="line">    private float lastZ;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public void onSensorChanged(SensorEvent event) &#123;</div><div class="line">        long currentUpdateTime = System.currentTimeMillis();</div><div class="line"></div><div class="line">        long timeInterval = currentUpdateTime - lastUpdateTime;</div><div class="line"></div><div class="line">        if (timeInterval <span class="tag">&lt; <span class="attr">UPTATE_INTERVAL_TIME</span>) &#123;</span></div><div class="line">            <span class="attr">return</span>;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="attr">lastUpdateTime</span> = <span class="string">currentUpdateTime;</span></div><div class="line">        <span class="attr">float</span>[] <span class="attr">values</span> = <span class="string">event.values;</span></div><div class="line"></div><div class="line">        // 获得<span class="attr">x</span>,<span class="attr">y</span>,<span class="attr">z</span>加速度</div><div class="line">        <span class="attr">float</span> <span class="attr">x</span> = <span class="string">values[0];</span></div><div class="line">        <span class="attr">float</span> <span class="attr">y</span> = <span class="string">values[1];</span></div><div class="line">        <span class="attr">float</span> <span class="attr">z</span> = <span class="string">values[2];</span></div><div class="line"></div><div class="line">        // 获得<span class="attr">x</span>,<span class="attr">y</span>,<span class="attr">z</span>加速度的变化值</div><div class="line">        <span class="attr">float</span> <span class="attr">deltaX</span> = <span class="string">x</span> <span class="attr">-</span> <span class="attr">lastX</span>;</div><div class="line">        <span class="attr">float</span> <span class="attr">deltaY</span> = <span class="string">y</span> <span class="attr">-</span> <span class="attr">lastY</span>;</div><div class="line">        <span class="attr">float</span> <span class="attr">deltaZ</span> = <span class="string">z</span> <span class="attr">-</span> <span class="attr">lastZ</span>;</div><div class="line"></div><div class="line">        // 将现在的坐标变成<span class="attr">last</span>坐标</div><div class="line">        <span class="attr">lastX</span> = <span class="string">x;</span></div><div class="line">        <span class="attr">lastY</span> = <span class="string">y;</span></div><div class="line">        <span class="attr">lastZ</span> = <span class="string">z;</span></div><div class="line"></div><div class="line"></div><div class="line">        <span class="attr">Logger.i</span>("<span class="attr">values</span>[<span class="attr">0</span>] = <span class="string">" + values[0]);</span></div><div class="line">        Logger.i("<span class="attr">values</span>[<span class="attr">1</span>] = <span class="string">" + values[1]);</span></div><div class="line">        Logger.i("<span class="attr">values</span>[<span class="attr">2</span>] = <span class="string">" + values[2]);</span></div><div class="line"></div><div class="line">        double speed = Math.sqrt(deltaX * deltaX + deltaY * deltaY + deltaZ</div><div class="line">                * deltaZ)</div><div class="line">                / timeInterval * 10000;</div><div class="line">        Logger.i("<span class="attr">speed:</span>" + <span class="attr">speed</span>);</div><div class="line">        <span class="attr">if</span> (<span class="attr">speed</span> &gt; SPEED_THRESHOLD) &#123;</div><div class="line">            //在这里可以提供一个回调</div><div class="line">            mVibrator.vibrate(300);</div><div class="line">            requestPicture();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public void onAccuracyChanged(Sensor sensor, int accuracy) &#123;</div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void registerSensor() &#123;</div><div class="line">        Sensor sensor = mSensorManager</div><div class="line">                .getDefaultSensor(Sensor.TYPE_ACCELEROMETER);</div><div class="line">        if (null != sensor)</div><div class="line">            mSensorManager.registerListener(this, sensor,</div><div class="line">                    SensorManager.SENSOR_DELAY_NORMAL);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void unRegisterSensor() &#123;</div><div class="line"></div><div class="line">        lastX = 0;</div><div class="line">        lastY = 0;</div><div class="line">        lastZ = 0;</div><div class="line">        mSensorManager.unregisterListener(this);</div><div class="line">    &#125;</div><div class="line"></div><div class="line"></div><div class="line">    private void requestPicture() &#123;</div><div class="line">        HttpClientManager.getData(Apis.Urls.RandomPicture, new JsonHttpCallBack<span class="tag">&lt;<span class="name">RandomPictureBean</span>&gt;</span>() &#123;</div><div class="line">            @Override</div><div class="line">            public void onStart() &#123;</div><div class="line">                unRegisterSensor();</div><div class="line">                ToastUtils.getInstance().showToast("图片获取中...");</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            @Override</div><div class="line">            public void onSuccess(RandomPictureBean result) &#123;</div><div class="line">                mPictureDialog.setPicture(result.getP_ori());</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            @Override</div><div class="line">            public void onError(Exception e) &#123;</div><div class="line">                registerSensor();</div><div class="line">            &#125;</div><div class="line">        &#125;);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>我是讲=将摇一摇这个功能做了一下封装，方便以后的使用。代码的实现思想就是去判断三个坐标轴加速度的变化值，当其达到一个阈值的时候则触发摇一摇。<br>最后来看看在Activity中怎么去使用</p>
-<ol>
-<li><p>在onCreate方法中去初始化摇一摇</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ShakePictureUtils mShakePictureUtils = new ShakePictureUtils(this);</div></pre></td></tr></table></figure>
-</li>
-<li><p>在onResume方法中去注册</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">@Override</div><div class="line">protected void onResume() &#123;</div><div class="line">    super.onResume();</div><div class="line">    mShakePictureUtils.registerSensor();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-</li>
-<li><p>在onPause方法中去解注册</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">@Override</div><div class="line">protected void onPause() &#123;</div><div class="line">    super.onPause();</div><div class="line">    mShakePictureUtils.unRegisterSensor();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-</li>
-</ol>
-<p>源码地址：<a href="https://github.com/burgessjp/GanHuoIO/blob/master/app/src/main/java/ren/solid/ganhuoio/utils/ShakePictureUtils.java" target="_blank" rel="external">ShakePictureUtils</a></p>
-<p>也请大家也关注下我的一个开源项目<a href="https://github.com/burgessjp/GanHuoIO" target="_blank" rel="external">GanHuoIO</a>。这是基于gank.io提供的api写的一个Android客户端，谢谢。</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/04/25/Android-Material-Design-兼容库的使用详解/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="_SOLID">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="_SOLID的个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/04/25/Android-Material-Design-兼容库的使用详解/" itemprop="url">
-                  Android-Material-Design-兼容库的使用详解
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-04-25T11:05:53+08:00">
-                2017-04-25
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>众所周知Material Design（材质设计）是Google在2014年I/O大会上发布的一种新的设计规范。一经推出就好评如潮，个人是非常喜欢这种风格的，由于他只支持5.0及其以上的设备，开发者也只是去尝尝鲜，并没用在真实的项目中去，使得其在国内的市场并不是太好。随后不久Google就退出了其兼容库Android Design Support Library，兼容至2.1！这绝对是业界良心，极大的便利了我们这些开发者。这一兼容库可以让我们可以在自己的项目真实的去体验一把。百度谷歌一下，其实现在已经有个很多介绍这个支持库的文章，但是很多都并不太详细，大部分让人看了都似懂非懂，我之前也学习过这个库的用法，很久没看基本又忘了，最近我又重新开始学习了这个库，所以本文也主要是对这次学习的一个总结，当然也参考了其他很多的文章，算是站在巨人的肩膀上吧，当然这篇文章也为后来的学习者有更多的参考资料。</p>
-<hr>
-<p>先来几张效果图吧：</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/623504-6faff3933cbdc60b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="图1"></p>
-<p><img src="http://upload-images.jianshu.io/upload_images/623504-a41e2b7a17ece6fb.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="图2"></p>
-<p>感兴趣的也可以先看看，最后能做一个什么样的App：<a href="http://pan.baidu.com/s/1pLzj2uJ" target="_blank" rel="external">MDDemo.apk</a></p>
-<hr>
-<p> 说到这个兼容库，其实很多都是可以在Github去找到对应的效果的，其实我们也是可以去用Github上的那些开源项目，那么多的库都要一个一个去引用，还是非常的麻烦，我猜可能Google也是看到这些东西经常被开发者用在了项目中，索性自己将其封装成了一个库，以方便开发者的使用。这个库我们应该怎样去使用呢？这是本文讲解的重点。首先我们看看这个库怎么去引用到我们的项目中：</p>
+<p>大致意思就是，这个类是用来去录制音频和视频的。录制基于一种简单的状态机制。<br>这个状态机制是什么呢？Google给了一张图</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/623504-3a1d33e478561a59.gif?imageMogr2/auto-orient/strip" alt="mediarecorder_state_diagram.gif"></p>
+<p>从图中可以看出MediaRecorder 有这么几种状态：<br><strong>Initial</strong>：初始化。也就是MediaRecorder 刚被创建的时候。在这个时候我们去设置音频或者视频的来源了，可能这个时候就有人问了 音频或者视频的来源是什么意思，举个例子吧，比如当我们在录音的时候，这个声音的来源就可以设置成手机的麦克风。<br><strong>Initialized</strong>：初始化完成。这里我们已经知道音频或者视频的来源了，在这里我们就可以设置一些输出的属性了，比如输出文件的保存格式，编码什么的。由于水平有限还有很多关于媒体文件属性，我也不是太理解。<br><strong>DataSourceConfigured</strong>:数据源配置改变。也就是我们改变了一些输出的属性，就会进入到这个状态。<br><strong>Prepered</strong>：处于这个状态就说明了我们的配置已经完成了，现在就等去录制了。<br><strong>Recordeing</strong>：这个不用我说也应该明白了。<br><strong>Released</strong>：资源被释放了。<br><strong>Error</strong>：录制的时候发生了错误。</p>
+<p>图中已经把状态之间是怎么切换的已经描述的非常清楚了，我也不过多介绍了。</p>
+<h2 id="2-MediaPlayer"><a href="#2-MediaPlayer" class="headerlink" title="2.MediaPlayer"></a>2.MediaPlayer</h2><p>关于MediaPlayer官网给的解释是：</p>
 <blockquote>
-<p>compile ‘com.android.support:design:23.1.1’</p>
+<p>MediaPlayer class can be used to control playback of audio/video files and streams.</p>
 </blockquote>
-<p>我们只需将其添加到项目的依赖中去，然后同步一下就OK了。<br>添加了依赖之后我们再来看看这个库里面都有哪些控件吧，如下图，红色边框矩形框出来的就是这个库里面包含的控件，我们可以看到有<strong>AppBarLayout、CollapsingToolbarLayout、CoordinatorLayout，FloatingActionButton、NavigationView、Snackbar、TabLayout、TextInputLayout</strong>这八种，后面我会一个一个介绍用法，如果还没学过这些控件使用的本文可以手把手教你学会怎么去使用，如果之前有了解过的或者对这个还比较熟悉的，也可以继续看下去，就当做温习一下，顺便还可以帮我找出有表达不正确的地方。</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/623504-7ba69eee1de7d116.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="库中包含的控件.png"></p>
-<p>##1.Snackbar<br>SnackBar通过在屏幕底部展示简洁的信息，为一个操作提供了一个轻量级的反馈，并且在Snackbar中还可以包含一个操作，在同一时间内，仅且只能显示一个 Snackbar，它的显示依赖于UI，不像Toast那样可以脱离应用显示。它的用法和Toast很相似，唯一不同的就是它的第一个参数不是传入Context而是传入它所依附的父视图，但是他比Toast更强大。<br>我们来看看它的基本使用</p>
+<p>简单翻译过来就是：这个类是用来去播放音频，视频文件和流文件的。</p>
+<p>他也对应了一个状态图：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/623504-1ac220628a50a719.gif?imageMogr2/auto-orient/strip" alt="mediaplayer_state_diagram.gif"></p>
+<p>其实他的大致流程和MediaRecorder差不多，这里我就略过了。</p>
+<p>你以为到这就结束了吗？肯定不是的，上面的也就为下面我要做的做个铺垫而已，有了上面的基础，后面的肯定就轻松了。</p>
+<h2 id="3-做一个录音的小Demo"><a href="#3-做一个录音的小Demo" class="headerlink" title="3.做一个录音的小Demo"></a>3.做一个录音的小Demo</h2><p>先来看一看效果图吧</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/623504-131c0f6370d6ff0b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="未标题-1.png"></p>
+<p>看起来还是很简单吧。<br>开始是初始状态，然后是录制状态（中间有个波浪形的自定义控件），在这个状态下会显示当前的录制时长，波浪形控件会显示，最后就是录制完成，可以点击播放了。<br>最下面是保存和删除按钮，可以删除当前的录音。PS：保存按钮没有任何实现，录音文件会自动保存。</p>
+<p>知道了这个效果现在就来介绍是怎么做的吧。</p>
+<p>这个小Demo我对MediaRecorder和MediaPlayer做了一下封装，方便以后使用调用方便。</p>
+<p>MediaRecorderHelper代码如下：</p>
 <pre>
-Snackbar.make(mDrawerLayout, "SnackbarClicked", Snackbar.LENGTH_SHORT).show();</pre>
+public class MediaRecorderHelper {
 
-<p>是不是和Toast很相似。我们来看看它的效果图：</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/623504-0a98a4b33d51e064.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="SnackWithoutAction"><br>是不是看着比Toast舒服多了</p>
-<p>好了，我们再来看看一个包含Action的Snackbar怎么使用</p>
-<pre>
-  Snackbar.make(mDrawerLayout, "SnackbarClicked", Snackbar.LENGTH_SHORT).setAction("Action", new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                Toast.makeText(MainActivity.this, "I'm a Toast", Toast.LENGTH_SHORT).show();
-                            }
-                        }).setActionTextColor(Color.RED).show();
+    private MediaRecorder mMediaRecorder;
+    private String mSavePath;
+    private String mCurrentFilePath;
+
+
+    public MediaRecorderHelper(String savePath) {
+        mSavePath = savePath;
+        File file = new File(mSavePath);
+        if (!file.exists()) file.mkdirs();
+
+    }
+
+
+    /**
+     * 开始录音
+     */
+    public void startRecord() {
+        try {
+            mMediaRecorder = new MediaRecorder();
+            File file = new File(mSavePath, generateFileName());
+            mCurrentFilePath = file.getAbsolutePath();
+            // 设置录音文件的保存位置
+            mMediaRecorder.setOutputFile(mCurrentFilePath);
+            // 设置录音的来源（从哪里录音）
+            mMediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
+            // 设置录音的保存格式
+            mMediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.AMR_NB);
+            // 设置录音的编码
+            mMediaRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
+            mMediaRecorder.prepare();
+            mMediaRecorder.start();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * 停止录音
+     */
+    public void stopAndRelease() {
+        if (mMediaRecorder == null) return;
+        mMediaRecorder.stop();
+        mMediaRecorder.release();
+        mMediaRecorder = null;
+    }
+
+    /***
+     * 取消本次录音操作
+     */
+    public void cancel() {
+        this.stopAndRelease();
+        if (mCurrentFilePath != null) {
+            File file = new File(mCurrentFilePath);
+            file.delete();
+            mCurrentFilePath = null;
+
+
+        }
+    }
+
+    private String generateFileName() {
+        return UUID.randomUUID().toString() + ".amr";
+    }
+
+    /**
+     * 得到录音文件的路径
+     *
+     * @return
+     */
+    public String getCurrentFilePath() {
+        return mCurrentFilePath;
+    }
+
+}
 
 </pre>
-
-<p>这里我给Snackbar设置了一个Action，设置其文字颜色为红色，并带有了一个点击事件，在单击这个Action后就弹出一个Toast，效果图如下<br><img src="http://upload-images.jianshu.io/upload_images/623504-e8c6578336716039.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="SnackbarWithAction"></p>
-<p>##2.TextInputLayout</p>
-<p>使用过EditText的同学肯定知道，有一个叫hint的属性，它可以提示用户此处应该输入什么内容，然而当用户输入真实内容之后，hint的提示内容就消失了，用户的体验效果是十分不好的，TextInputLayout的出现解决了这个问题。</p>
-<p>我们来看看这个控件的是怎么使用的</p>
+MediaPlayerHelper代码如下：
 <pre>
-<linearlayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent" android:layout_height="match_parent" android:orientation="vertical" android:padding="10dp" tools:context="burgess.com.materialdesignstudy.MDTextViewActivity">
+public class MediaPlayerHelper {
 
-    <!--TextInputLayout的颜色来自style中的colorAccent的颜色-->
-    <android.support.design.widget.textinputlayout android:layout_width="match_parent" android:layout_height="wrap_content">
+    private static MediaPlayer mMediaPlayer;
+    private static boolean isPause = false;
 
-        <edittext android:id="@+id/edit_username" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="用户名/手机号" android:inputtype="textEmailAddress">
+    public static void playSound(String filePath) {
+        playSound(filePath, null);
+    }
 
-
-    </edittext></android.support.design.widget.textinputlayout>
-
-    <android.support.design.widget.textinputlayout android:layout_width="match_parent" android:layout_height="wrap_content">
-
-        <edittext android:id="@+id/edit_pwd" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="密码" android:inputtype="textPassword">
-    </edittext></android.support.design.widget.textinputlayout>
-
-</linearlayout>
-
-</pre>
-
-<p>其实这个控件的使用非常简单，我们只需在EditText外面再嵌套一个TextInputLayout就行了。我们来看看效果</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/623504-d029007f302ecdaa.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="TextInputLayout"><br>还是很不错的，当用户在输入的时候hint的内容就会跑到输入内容的上边去，其中TextInputLayout中字体的颜色是style文件中的colorAccent（关于colorAccent是什么，文末有一张图看了就清楚了）的颜色。</p>
-<p>##3.FloatingActionButton</p>
-<p>FloatingActionButton从名字可以看出它是一个浮动的按钮，它是一个带有阴影的圆形按钮，可以通过fabSize来改变其大小，主要负责界面的基本操作，这个按钮总体来说还是比较简单的。<br>我们来看看它的一些属性：</p>
-<ul>
-<li>默认FloatingActionButton 的背景色是应用主题的 colorAccent（其实MD中的控件主题默认基本都是应用的这个主题），可以通过<strong>app:backgroundTint </strong>属性或者<strong>setBackgroundTintList (ColorStateList tint)</strong>方法去改变背景颜色。</li>
-<li>上面提到 Floating action button 的大小尺寸，可以用过<strong>app:fabSize </strong>属性设置（normal or mini）</li>
-<li><strong> android:src</strong> 属性改变 drawable</li>
-<li><strong>app:rippleColor</strong>设置点击 button 时候的颜色（水波纹效果）</li>
-<li><strong>app:borderWidth</strong>设置 button 的边框宽度</li>
-<li><strong>app:elevation</strong>设置普通状态阴影的深度（默认是 6dp）</li>
-<li><strong>app:pressedTranslationZ</strong>设置点击状态的阴影深度（默认是 12dp）</li>
-</ul>
-<p>怎么去使用：</p>
-<pre><android.support.design.widget.floatingactionbutton android:id="@+id/fab_search" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_gravity="bottom|end" android:layout_margin="16dp" android:src="@android:drawable/ic_dialog_email" app:borderwidth="2dp" app:fabsize="normal" app:ripplecolor="#ff0000">
-</android.support.design.widget.floatingactionbutton></pre>
-其效果图如下：
-![FloatingActionButton](http://upload-images.jianshu.io/upload_images/623504-8110e395f1693062.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
-
-##**4.CoordinatorLayout**
-
-我们来看看官方对他的描述：
-- CoordinatorLayout is a super-poweredFrameLayout.
-- CoordinatorLayout is intended for two primary use cases:
-1.As a top-level application decor or chrome layout
-2.As a container for a specific interaction with one or more child views
-
-从这里我们可以知道它是一个增强版的FrameLayout，他可以协调其子View的交互，控制手势机滚动技巧。这个控件十分的强大，用处也十分的广泛。就比如刚才说的FloatingActionButton如果用CoordinatorLayout 作为FloatingActionButton的父布局，它将很好的协调Snackbar的显示与FloatingActionButton。
-![没有使用CoordinatorLayout 作为父布局的FloatingActionButton显示Snackbar](http://upload-images.jianshu.io/upload_images/623504-eefc577f31d4d2c6.gif?imageMogr2/auto-orient/strip)
-![使用了CoordinatorLayout 作为父布局的FloatingActionButton显示Snackbar](http://upload-images.jianshu.io/upload_images/623504-4bb65d3ec110ce37.gif?imageMogr2/auto-orient/strip)
-
-这两个动态图来源于网上，效果是显而易见的，原谅我用的手机测试，所以没法录制动态图（如果有人知道怎么去录制的请告知）。
-还有它的另外一个比较重要的用处是控制协调内容区和AppBarLayout的滚动，这个后面会讲到。这个控件还是比较复杂的，用多了就能慢慢体会到他的强大之处。我对这个控件的还不是那么的清楚，所以在这里提供一篇关于CoordinatorLayout 用法的译文: [掌握 Coordinator Layout](https://www.aswifter.com/2015/11/12/mastering-coordinator/?hmsr=toutiao.io&utm_medium=toutiao.io&utm_source=toutiao.io)
-
-##**5.NavigationView**
-
-抽屉式的导航控件，有了他我们可以使得导航更简单。我们可以直接通过菜单资源文件生成所需的元素。下图左边的即是NavigationView。
-
-![NavigationView](http://upload-images.jianshu.io/upload_images/623504-a103ae085323d307.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
-下面我们来看看它是怎么实现的吧。
-<pre>
-<?xml version="1.0" encoding="utf-8"?>
-
-<android.support.v4.widget.drawerlayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/drawer_layout" android:layout_width="match_parent" android:layout_height="match_parent" android:fitssystemwindows="true">
-
-    <!--内容区-->
-    <android.support.design.widget.coordinatorlayout android:id="@+id/main_content" android:layout_width="match_parent" android:layout_height="match_parent">
-
-        <include android:id="@+id/appbar" layout="@layout/toolbar">
-
-        <framelayout android:id="@+id/frame_content" android:layout_width="match_parent" android:layout_height="match_parent" android:layout_below="@+id/appbar" android:scrollbars="none" app:layout_behavior="@string/appbar_scrolling_view_behavior">
-    </framelayout></include></android.support.design.widget.coordinatorlayout>
-
-    <!--左侧导航菜单-->
-    <android.support.design.widget.navigationview android:id="@+id/navigation_view" android:layout_width="wrap_content" android:layout_height="match_parent" android:layout_gravity="start" app:headerlayout="@layout/navigation_header" app:menu="@menu/drawer">
-</android.support.design.widget.navigationview></android.support.v4.widget.drawerlayout>
-</pre>
-
-<p>可以看到这里我们是以DrawerLayout作为其父布局，对于DrawLayout他可以实现一种抽屉式的侧滑效果，这里不多做讲解,这里只简单说一点:DrawLayout中的第一个布局是内容布局，第二个是菜单布局。现在我们直接定位到NavigationView，我们看到这里有<strong> app:headerLayout=”@layout/navigation_header”</strong>、<strong>app:menu=”@menu/drawer”</strong>这两行代码，其中headerLayout是设置其头部的布局，这个布局我们可以随便写，就和写普通的布局文件一样的。对于menu就是菜单项的配置了，其配置文件如下：</p>
-<pre>
-<?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools" tools:context=".MainActivity">
-    <group android:checkablebehavior="single">
-        <item android:id="@+id/navigation_item_home" android:icon="@drawable/iconfont_home" android:title="首页">
-        <item android:id="@+id/navigation_item_blog" android:icon="@drawable/iconfont_blog" android:title="我的博客">
-
-        <item android:id="@+id/navigation_item_about" android:icon="@drawable/iconfont_about" android:title="关于">
-    </item></item></item></group>
-</menu>
-</pre>
-
-<p>就这么简单，我们要实现上述的效果就只要这些就足够了。但是如果我们想要对Item添加一个点击的事件怎么做呢？请看下面：</p>
-<pre>
- private void setNavigationViewItemClickListener() {
-        mNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(MenuItem item) {
-                switch (item.getItemId()) {
-                    case R.id.navigation_item_home:
-                        mToolbar.setTitle("首页");
-                        switchFragment("MainFragment");
-                        break;
-                    case R.id.navigation_item_blog:
-                        mToolbar.setTitle("我的博客");
-                        switchFragment("BlogFragment");
-                        break;
-                    case R.id.navigation_item_about:
-                        mToolbar.setTitle("关于");
-                        switchFragment("AboutFragment");
-                        break;
-                    default:
-                        break;
+    public static void playSound(String filePath, MediaPlayer.OnCompletionListener onCompletionListener) {
+        if (mMediaPlayer == null) {
+            mMediaPlayer = new MediaPlayer();
+            mMediaPlayer.setOnErrorListener(new MediaPlayer.OnErrorListener() {
+                @Override
+                public boolean onError(MediaPlayer mp, int what, int extra) {
+                    mMediaPlayer.reset();
+                    return false;
                 }
-                item.setChecked(true);
-                mDrawerLayout.closeDrawer(Gravity.LEFT);
-                return false;
+            });
+        } else {
+            mMediaPlayer.reset();
+        }
+        try {
+            mMediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+            if (onCompletionListener != null) {
+                mMediaPlayer.setOnCompletionListener(onCompletionListener);
             }
-        });
-    }
-</pre>
-上面的代码很清楚了，就是为NavigationView添加了一个OnNavigationItemSelectedListener的监听事件，然后我们就可以做我们想做的事了。
-
-##**6. AppBarLayout、CollapsingToolbarLayout、TabLayout**
-
-  这三个控件我用一个例子一下讲解了，在实际的使用中这三个控件还是经常会组合在一起的。
-- **AppBarLayout**：其继承于LinearLayout，使用AppBarLayout可以让包含在其中的子控件能响应被标记了ScrollingViewBehavior的的滚动事件（要与CoordinatorLayout 一起使用），利用它我们可以很容易的去实现视差滚动效果，这样所你可能还是不太懂，千言万语不如一张图来的直接爽快（这样图还是来源于网上，其蓝色的部分就是AppBarLayout，内容区就是被标记了ScrollingViewBehavior的，可以看到效果是不是挺不错的）。
-![](http://upload-images.jianshu.io/upload_images/623504-703d4b65d11af297.gif?imageMogr2/auto-orient/strip)
-
-- **CollapsingToolbarLayout** ：让Toolbar可伸缩，在伸缩的时候决定ToolBar是移除屏幕和固定在最上面。由于Toolbar 只能固定到屏幕顶端并且不能做出好的动画效果，所以才有了这个Layout的出现。
-- **TabLayout**：这个其实和我们之前使用的第三方库ViewPagerIndicator是很类似的，一般都和ViewPager一起使用，效果如下图： 
-![动态图来源于网上](http://upload-images.jianshu.io/upload_images/623504-1ffee0282ce10e14.gif?imageMogr2/auto-orient/strip)
-
-基本知道他们是干什么用的了，下面就让我们动手，看看到底怎么用吧。
-
-先来几张下面我们要实现的效果。由于我是真机测试，没法录制动态图，这里就用几张静态图代替了。
-![](http://upload-images.jianshu.io/upload_images/623504-a7165c9de0802f03.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
-
-布局文件（这个是很重要的，很多的效果都是直接在布局文件中配置的）:
-<pre>
-<?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.coordinatorlayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" android:layout_width="match_parent" android:layout_height="match_parent">
-
-    <android.support.design.widget.appbarlayout android:layout_width="match_parent" android:layout_height="200dp" android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
-
-        <android.support.design.widget.collapsingtoolbarlayout android:id="@+id/collapsing_toolbar_layout" android:layout_width="match_parent" android:layout_height="match_parent" android:fitssystemwindows="true" app:contentscrim="?attr/colorPrimary" app:expandedtitlemarginend="64dp" app:expandedtitlemarginstart="48dp" app:layout_scrollflags="scroll|exitUntilCollapsed">
-
-            <imageview android:id="@+id/iv_book_image" android:layout_width="match_parent" android:layout_height="match_parent" android:fitssystemwindows="true" android:scaletype="centerInside" android:transitionname="transition_book_img" app:layout_collapsemode="parallax" app:layout_collapseparallaxmultiplier="0.7">
-
-            <android.support.v7.widget.toolbar android:id="@+id/toolbar" android:layout_width="match_parent" android:layout_height="?attr/actionBarSize" app:layout_collapsemode="pin" app:popuptheme="@style/ThemeOverlay.AppCompat.Light">
 
 
-        </android.support.v7.widget.toolbar></imageview></android.support.design.widget.collapsingtoolbarlayout>
+            mMediaPlayer.setDataSource(filePath);
+            mMediaPlayer.prepare();
+            mMediaPlayer.start();
+        } catch (IllegalArgumentException e) {
+            e.printStackTrace();
+        } catch (SecurityException e) {
+            e.printStackTrace();
+        } catch (IllegalStateException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-
-    </android.support.design.widget.appbarlayout>
-
-
-    <linearlayout android:layout_width="match_parent" android:layout_height="match_parent" android:orientation="vertical" app:layout_behavior="@string/appbar_scrolling_view_behavior">
-
-        <linearlayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:padding="10dp">
-
-            <linearlayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal">
-
-                <textview android:id="@+id/tv_title" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textcolor="#292929" android:textsize="18sp">
-
-                <textview android:id="@+id/tv_rating" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginleft="5dp" android:layout_margintop="2dp" android:textcolor="#FF6347" android:textsize="14sp">
-            </textview></textview></linearlayout>
-
-
-            <textview android:id="@+id/tv_msg" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_margintop="2dp" android:textcolor="#575757" android:textsize="12sp">
-
-
-        </textview></linearlayout>
-
-        <android.support.design.widget.tablayout android:id="@+id/sliding_tabs" android:layout_width="match_parent" android:layout_height="wrap_content" app:tabgravity="fill" app:tabmode="scrollable">
-
-        <android.support.v4.view.viewpager android:id="@+id/viewpager" android:layout_width="match_parent" android:layout_height="match_parent">
-    </android.support.v4.view.viewpager></android.support.design.widget.tablayout></linearlayout>
-</android.support.design.widget.coordinatorlayout>
-</pre>
-
-<p>我们来分析一下这个布局文件：<br>1.最外层的布局用的是CoordinatorLayout，因为这里面有很多的动画，CoordinatorLayout可以很好的去协调里面的动画。在android.support.design.widget.AppBarLayout下面的那个LinearLayout被标记了appbar_scrolling_view_behavior，这样一来AppBarLayout就能响应LinearLayout中的滚动事件。<br>2.再来看看CollapsingToolbarLayout，其中contentScrim是设置其内容区的颜色，layout_scrollFlags取了scroll和exitUntilCollapsed两个值。<br> layout_scrollFlags的Flag包括：</p>
-<ul>
-<li><strong>scroll</strong>: 所有想滚动出屏幕的view都需要设置这个flag，没有设置这个flag的view将被固定在屏幕顶部。</li>
-<li><strong>enterAlways</strong>: 这个flag让任意向下的滚动都会导致该view变为可见，当向上滑的时候Toolbar就隐藏，下滑的时候显示。</li>
-<li><strong>enterAlwaysCollapsed</strong>: 顾名思义，这个flag定义的是何时进入（已经消失之后何时再次显示）。假设你定义了一个最小高度（minHeight）同时enterAlways也定义了，那么view将在到达这个最小高度的时候开始显示，并且从这个时候开始慢慢展开，当滚动到顶部的时候展开完。   </li>
-<li><strong>exitUntilCollapsed</strong>: 同样顾名思义，这个flag时定义何时退出，当你定义了一个minHeight，这个view将在滚动到达这个最小高度的时候消失。</li>
-</ul>
-<p>只看概览可能还是不会太清楚，注意一定要多实践，感兴趣的读者可以一个一个去试一试效果。</p>
-<p>3.定位到ImageView，有这两个属性是我们平常用没看到的，说明我写在注释上了</p>
-<pre>
-app:layout_collapseMode="parallax"//这个是配置当ImageView消失或者显示时候有一种视差滚动效果
-app:layout_collapseParallaxMultiplier="0.7"//视差因子，越大视差特效越明显，最大为1 </pre>
-4.Toolbar中有一个app:layout_collapseMode="pin" 这个确保Toolbar在AppBarLayout折叠的时候仍然被固定在屏幕的顶部
-
-
-布局文件就到这，我们来看看Activity中的逻辑
-
-<pre>
-/**
- * Created by _SOLID
- * Date:2016/3/30
- * Time:20:16
- */
-public class BookDetailActivity extends BaseActivity {
-
-    private String mUrl;
-    private Toolbar mToolbar;
-    private CollapsingToolbarLayout mCollapsingToolbarLayout;
-    private ImageView mIvBook;
-
-    private BookBean mBookBean;
-    private TextView mTvTitle;
-    private TextView mTvMsg;
-    private TextView mTvRating;
-    private ViewPager mViewPager;
-    private TabLayout mTabLayout;
-
-    @Override
-    protected void initView() {
-        //设置Toolbar
-        mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(mToolbar);
-        getSupportActionBar().setHomeButtonEnabled(true);//决定左上角的图标是否可以点击
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);//决定左上角图标的右侧是否有向左的小箭头
-        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onBackPressed();
-            }
-        });
-
-        mCollapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar_layout);
-        mIvBook = (ImageView) findViewById(R.id.iv_book_image);
-        mTvTitle = (TextView) findViewById(R.id.tv_title);
-        mTvMsg = (TextView) findViewById(R.id.tv_msg);
-        mTvRating = (TextView) findViewById(R.id.tv_rating);
-        mViewPager = (ViewPager) findViewById(R.id.viewpager);
-        mTabLayout = (TabLayout) findViewById(R.id.sliding_tabs);
-        mTabLayout.addTab(mTabLayout.newTab().setText("作者信息"));
-        mTabLayout.addTab(mTabLayout.newTab().setText("章节"));
-        mTabLayout.addTab(mTabLayout.newTab().setText("书籍简介"));
 
     }
 
-    @Override
-    protected int setLayoutResourseID() {
-        return R.layout.activity_book_detail;
+    /**
+     * 暂停播放
+     */
+    public static void pause() {
+        if (mMediaPlayer != null && mMediaPlayer.isPlaying()) {
+            mMediaPlayer.pause();
+            isPause = true;
+        }
     }
 
-    @Override
-    protected void init() {
-        mUrl = getIntent().getStringExtra("url");
+
+    /**
+     * 继续播放
+     */
+    public static void resume() {
+        if (mMediaPlayer != null && isPause) {
+            mMediaPlayer.start();
+            isPause = false;
+        }
     }
 
-    @Override
-    protected void initData() {
-        SolidHttpUtils.getInstance().loadString(mUrl, new SolidHttpUtils.HttpCallBack() {
-            @Override
-            public void onLoading() {
-
-            }
-
-            @Override
-            public void onSuccess(String result) {
-                Gson gson = new Gson();
-                mBookBean = gson.fromJson(result, BookBean.class);
-                mCollapsingToolbarLayout.setTitle(mBookBean.getTitle());
-                mTvTitle.setText(mBookBean.getTitle());
-                mTvMsg.setText(mBookBean.getAuthor() + "/" + mBookBean.getPublisher() + "/" + mBookBean.getPubdate());
-                mTvRating.setText(mBookBean.getRating().getAverage() + "分");
-                SolidHttpUtils.getInstance().loadImage(mBookBean.getImages().getLarge(), mIvBook);
-
-                BookInfoPageAdapter adapter = new BookInfoPageAdapter(BookDetailActivity.this, mBookBean, getSupportFragmentManager());
-                mViewPager.setAdapter(adapter);
-                mTabLayout.setupWithViewPager(mViewPager);
-
-            }
-
-            @Override
-            public void onError(Exception e) {
-
-            }
-        });
+    /**
+     * 释放资源
+     */
+    public static void realese() {
+        if (mMediaPlayer != null) {
+            mMediaPlayer.release();
+            mMediaPlayer = null;
+            isPause = true;
+        }
     }
 }
 
 </pre>
 
-<p>其实并不难，这里只需注意一点，当Toolbar被CollapsingToolbarLayout包裹的时候，设置标题是设置CollapsingToolbarLayout的，而不是Toolbar。</p>
-<p>好了终于写完了，差不多写了接近4个小时，好累的说，现在整个人都是晕晕的。</p>
-<p>源码献上:<a href="https://github.com/burgessjp/MaterialDesignDemo" target="_blank" rel="external">MaterialDesignDemo</a></p>
-<p>参考链接:<br><a href="http://www.jcodecraeer.com/a/anzhuokaifa/developer/2015/0531/2958.html" target="_blank" rel="external">Android的材料设计兼容库（Design Support Library）</a><br><a href="https://www.aswifter.com/2015/07/02/Material-Design-Example-5/" target="_blank" rel="external">Material Design控件使用</a><br><a href="http://hackeris.me/2015/07/12/floating_action_button/" target="_blank" rel="external"><a href="http://hackeris.me/2015/07/12/floating_action_button/" target="_blank" rel="external">Floating Action Button（翻译）</a></a><br><a href="http://wiki.jikexueyuan.com/project/material-design/" target="_blank" rel="external">Material Design 中文版</a><br><a href="http://blog.csdn.net/growth58/article/details/47972467?hmsr=toutiao.io&amp;utm_medium=toutiao.io&amp;utm_source=toutiao.io" target="_blank" rel="external">  Android Design Support Library概览  </a></p>
-<p>###附(一些控件使用使用应注意的地方):<br>1.在使用CardView的时候，一定要注意，当CardView的宽和高填充父容器的时候，CardView的margin最好要比cardElevation大，不然就看不到立体的效果。</p>
-<p>2.我们知道ListView有一个onItemClick的事件，但是RecyclerView却没有，那么我们应该怎样去设置呢？其实很简单，关于RecyclerView设置item的点击事件，只需在创建ViewHolder的时候，给填充的View设置单击事件即可。</p>
-<p>3.在使用android.support.design.widget.AppBarLayout的时候内容区最好使用android.support.v4.widget.NestedScrollView，之前我的内容区用的是ScrollView，在往上拉的时候AppBarLayout一直没有动画效果，折腾了几个小时都没找到原因。最后逼不得用Android Studio创建了一个他自带的关于AppBarLayout的模板项目，看到他用的是NestedScrollView作为内容区，我果断就把我的内容区换成了这个，立马就有动画效果了。</p>
-<p>NestedScrollView官方的描述：</p>
-<blockquote>
-<p>NestedScrollView is just likeScrollView, but it supports acting as both a nested scrolling parent and child on both new and old versions of Android. Nested scrolling is enabled by default.</p>
-</blockquote>
-<p><strong>如果感觉还不错的就给个喜欢支持一下吧，有问题请留言，谢谢</strong></p>
-<p>最后附一张MD的主题色解析图:<br><img src="http://upload-images.jianshu.io/upload_images/623504-d58e788d279d533d.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="MD主题色解析.jpg"></p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
+<p>这两个类的代码注释的已经非常详细了，我再在这里介绍也就显得有点多余了。如果还是又不懂或者有问题需要提出的，欢迎留言。</p>
+<p>到这里我们的核心东西已经准备好了，现在就剩下一个Activity让我们去实现刚才效果图上的小Demo了。</p>
+<p>我们来分析一下我们的小Demo会有哪些状态：<br>1.正常状态，也就是没有录制的状态<br>2.录制中<br>3.录制完成<br>4.播放状态<br>5.暂停状态</p>
+<p>对于这几种状态我定义了对应的五个常量来表示。</p>
+<pre>
+private static final int ACTION_NORMAL = 0;
+private static final int ACTION_RECORDING = 1;
+private static final int ACTION_COMMPLETE = 2;
+private static final int ACTION_PLAYING = 3;
+private static final int ACTION_PAUSE = 4;
+</pre>
 
 
-    
-      
+<p>在中间的录制按钮在点击的时候，我们要根据当前的状态来进行状态之间的切换：<br>依然是附代码，就是这么任性~~~~</p>
+<pre>
+  /**
+     * 切换ACTION状态
+     */
+    private void switchActionState() {
+        mIsRecorder = false;
+        if (mCurrentActionState == ACTION_NORMAL) {
+            mCurrentActionState = ACTION_RECORDING;
+            mIvAction.setImageResource(R.drawable.pause);
 
-  
+            //开始录音
+            mMediaRecorderHelper.startRecord();
+            mWaveView.setVisibility(View.VISIBLE);
+            mIsRecorder = true;
+            //开启计时线程
+            mCountTimeThread = new Thread(this);
+            mCountTimeThread.start();
 
-  
-  
-  
+        } else if (mCurrentActionState == ACTION_RECORDING) {//录制中
+            mCurrentActionState = ACTION_COMMPLETE;
+            mIvAction.setImageResource(R.drawable.icon_audio_state_uploaded);
+            //停止录音
+            mMediaRecorderHelper.stopAndRelease();
+            mRlBottom.setVisibility(View.VISIBLE);
+            mWaveView.setVisibility(View.INVISIBLE);
 
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/04/06/自定义ItemDecoration这个问题你真的注意到了吗/">
+        } else if (mCurrentActionState == ACTION_COMMPLETE) {//录制完成
+            mCurrentActionState = ACTION_PLAYING;
+            mIvAction.setImageResource(R.drawable.icon_audio_state_uploaded_play);
 
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="_SOLID">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
+            //播放录音
+            MediaPlayerHelper.playSound(mMediaRecorderHelper.getCurrentFilePath(), new MediaPlayer.OnCompletionListener() {
+                @Override
+                public void onCompletion(MediaPlayer mp) {
+                    //当播放完了之后切换到录制完成的状态
+                    mCurrentActionState = ACTION_COMMPLETE;
+                    mIvAction.setImageResource(R.drawable.icon_audio_state_uploaded);
+                }
+            });
 
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="_SOLID的个人博客">
-    </span>
+        } else if (mCurrentActionState == ACTION_PLAYING) {//播放中
+            mCurrentActionState = ACTION_PAUSE;
+            mIvAction.setImageResource(R.drawable.icon_audio_state_uploaded);
+            //暂停播放
+            MediaPlayerHelper.pause();
+        } else if (mCurrentActionState == ACTION_PAUSE) {//暂停
+            mCurrentActionState = ACTION_PLAYING;
+            mIvAction.setImageResource(R.drawable.icon_audio_state_uploaded_play);
+            //继续播放
+            MediaPlayerHelper.resume();
+        }
+    }
+</pre>
 
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/04/06/自定义ItemDecoration这个问题你真的注意到了吗/" itemprop="url">
-                  自定义ItemDecoration这个问题你真的注意到了吗
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-04-06T16:14:00+08:00">
-                2017-04-06
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <blockquote>
-<p>本文讨论的是关于自定义ItemDecoration容易被忽略的问题，此文适合有过自定义ItemDecoration经验的同学阅读，还没有学习过的可以先去看看相关文章再来看本文。</p>
-</blockquote>
-<p><strong>ItemDecoration</strong> 我相信只要使用过RecyclerView的同学肯定都比较熟悉了，我们在使用 <strong>RecyclerView</strong> 的时候一般都是用这个来画分隔线的，不得不说十分的好用。但是在最近发现在使用自定义的<strong>ItemDecoration</strong>上遇到了一些细节上的问题，我这里自定义了一个<strong>GridDividerItemDecoration</strong> ，用于网格布局的分隔，大概效果如下图所示：</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/623504-79211e4d8ae74ee9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
-<p><strong>绘制的逻辑大概是这样的：当 itemView 不是最后一列或者最后一行的时候就绘制右侧和底部分隔线，如果是最后一列时则不绘制右侧分隔线，如果是最后一行则不绘制底部分隔线。</strong></p>
-<p>代码大概是这样的<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">if (isLastRow &amp;&amp; isLastColumn) &#123;//最后一行最后一列什么都不绘制</div><div class="line">    outRect.set(0, 0, 0, 0);</div><div class="line">&#125; else if (isLastRow) &#123;// 如果是最后一行，则不需要绘制底部</div><div class="line">    outRect.set(0, 0, mDividerHeight, 0);</div><div class="line">&#125; else if (isLastColumn) &#123;// 如果是最后一列，则不需要绘制右边</div><div class="line">    outRect.set(0, 0, 0, mDividerHeight);</div><div class="line">&#125; else &#123;</div><div class="line">    outRect.set(0, 0, mDividerHeight,</div><div class="line">            mDividerHeight);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>这里的分割线设置的宽度只有1dp，看起来似乎没有什么问题，但是如果把分隔线的宽度设置为20dp效果如下图所示：</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/623504-622640741f5eba50.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
-<p>会明显的感觉到最后一列itemView的宽度会比前几列宽一些，具体的数值就是我们设置的 dividerWidth （也就是分隔线的宽度），正常情况下我们在自定义的 ItemDocration 设置 ItemOffsets 不会影响 itemView 的的大小，然而这里却出现了这个问题（其实网上绝大部分流行的关于网格的ItemDocration都存在这个问题），什么原因呢，看看下面两段源码就会知道了<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">private void measureChild(View view, int otherDirParentSpecMode, boolean alreadyMeasured) &#123;</div><div class="line">       final LayoutParams lp = (LayoutParams) view.getLayoutParams();</div><div class="line">       final Rect decorInsets = lp.mDecorInsets;</div><div class="line">       final int verticalInsets = decorInsets.top + decorInsets.bottom</div><div class="line">               + lp.topMargin + lp.bottomMargin;</div><div class="line">       final int horizontalInsets = decorInsets.left + decorInsets.right</div><div class="line">               + lp.leftMargin + lp.rightMargin;</div><div class="line">       final int availableSpaceInOther = getSpaceForSpanRange(lp.mSpanIndex, lp.mSpanSize);</div><div class="line">       final int wSpec;</div><div class="line">       final int hSpec;</div><div class="line">       if (mOrientation == VERTICAL) &#123;</div><div class="line">           //最后一个参数用来标识在当前的mOrientation 下是否可以滚动，</div><div class="line">           //当mOrientation 是VERTICAL的时候水平方向肯定是不能滚动的</div><div class="line">           wSpec = getChildMeasureSpec(availableSpaceInOther, otherDirParentSpecMode,</div><div class="line">                   horizontalInsets, lp.width, false);</div><div class="line">           hSpec = getChildMeasureSpec(mOrientationHelper.getTotalSpace(), getHeightMode(),</div><div class="line">                   verticalInsets, lp.height, true);</div><div class="line">       &#125; else &#123;</div><div class="line">           hSpec = getChildMeasureSpec(availableSpaceInOther, otherDirParentSpecMode,</div><div class="line">                   verticalInsets, lp.height, false);</div><div class="line">           wSpec = getChildMeasureSpec(mOrientationHelper.getTotalSpace(), getWidthMode(),</div><div class="line">                   horizontalInsets, lp.width, true);</div><div class="line">       &#125;</div><div class="line">       measureChildWithDecorationsAndMargin(view, wSpec, hSpec, alreadyMeasured);</div><div class="line">   &#125;</div></pre></td></tr></table></figure></p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div></pre></td><td class="code"><pre><div class="line">public static int getChildMeasureSpec(int parentSize, int parentMode, int padding,</div><div class="line">                int childDimension, boolean canScroll) &#123;</div><div class="line">            int size = Math.max(0, parentSize - padding);</div><div class="line">            int resultSize = 0;</div><div class="line">            int resultMode = 0;</div><div class="line">            if (canScroll) &#123;</div><div class="line">                if (childDimension &gt;= 0) &#123;</div><div class="line">                    resultSize = childDimension;</div><div class="line">                    resultMode = MeasureSpec.EXACTLY;</div><div class="line">                &#125; else if (childDimension == LayoutParams.MATCH_PARENT) &#123;</div><div class="line">                    switch (parentMode) &#123;</div><div class="line">                        case MeasureSpec.AT_MOST:</div><div class="line">                        case MeasureSpec.EXACTLY:</div><div class="line">                            resultSize = size;</div><div class="line">                            resultMode = parentMode;</div><div class="line">                            break;</div><div class="line">                        case MeasureSpec.UNSPECIFIED:</div><div class="line">                            resultSize = 0;</div><div class="line">                            resultMode = MeasureSpec.UNSPECIFIED;</div><div class="line">                            break;</div><div class="line">                    &#125;</div><div class="line">                &#125; else if (childDimension == LayoutParams.WRAP_CONTENT) &#123;</div><div class="line">                    resultSize = 0;</div><div class="line">                    resultMode = MeasureSpec.UNSPECIFIED;</div><div class="line">                &#125;</div><div class="line">            &#125; else &#123;</div><div class="line">                if (childDimension &gt;= 0) &#123;</div><div class="line">                    resultSize = childDimension;</div><div class="line">                    resultMode = MeasureSpec.EXACTLY;</div><div class="line">                &#125; else if (childDimension == LayoutParams.MATCH_PARENT) &#123;</div><div class="line">                    resultSize = size;</div><div class="line">                    resultMode = parentMode;</div><div class="line">                &#125; else if (childDimension == LayoutParams.WRAP_CONTENT) &#123;</div><div class="line">                    resultSize = size;</div><div class="line">                    if (parentMode == MeasureSpec.AT_MOST || parentMode == MeasureSpec.EXACTLY) &#123;</div><div class="line">                        resultMode = MeasureSpec.AT_MOST;</div><div class="line">                    &#125; else &#123;</div><div class="line">                        resultMode = MeasureSpec.UNSPECIFIED;</div><div class="line">                    &#125;</div><div class="line"></div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">            //noinspection WrongConstant</div><div class="line">            return MeasureSpec.makeMeasureSpec(resultSize, resultMode);</div><div class="line">        &#125;</div></pre></td></tr></table></figure>
-<p>由于我们这里讨论的是垂直方向上的Grid，所以 <strong>mOrientation == VERTICA</strong>，从上面的代码可以看出当我们的itemView宽度不是精确数值的时候，然后测量出的宽度就为 <strong> Math.max(0, parentSize - padding)</strong>（这里的 padding 就是 <code>horizontalInsets = decorInsets.left + decorInsets.right + lp.leftMargin + lp.rightMargin</code>），原来这里在实际的宽度下还减去了ItemDecoration的左右偏移量，这也就解释了上面的那个问题。有人会问我们可不可以把宽度设置为固定值呢？可以当然是可以的，但是又会出现其他问题，下来你可以去尝试一下，这里我就不再去细究了。</p>
-<p>一般情况下当 mOrientation == VERTICA 的时候itemView的宽度是 match_parent的，当 mOrientation == HORIZONTAL的时候itemView的高度就是 match_parent的，这样才能更好的去适配各种屏幕的手机。</p>
-<p>这里我们找到了问题的原因所在，应该怎样去解决呢？  其实也很简单，就是均匀的分配offset给每一个itemView。</p>
-<p>下面我们来计算一下偏移量。</p>
-<p>// 每一个itemView的总偏移量（left+right）<br>eachOffset =（spanCount-1）* dividerWidth / spanCount;</p>
-<p>L0=0 , R0=eachOffset;<br>L1=dividerWidth-R0 , R1=eachOffset-L1;<br>L2=dividerWidth-R1 , R2=eachOffset-L2;</p>
-<p>其中：<br>L<sub>n</sub>:表示第n列itemView  left 偏移量。<br>R<sub>n</sub>:表示第n列itemView  right 偏移量。</p>
-<p>可能有些同学看到上面式子会有点凌乱，这里我直接告诉你最后推算出的结论好了，L<sub>n</sub> 是一个以 <strong>dividerWidth-eachOffset</strong> 为差值的一个等差数列，R<sub>n</sub>就等于 <strong>eachWidth-L<sub>n</sub></strong>。所以我们最后对 getItemOffsets 做了改进，代码如下：</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">int left = 0;</div><div class="line">int top = 0;</div><div class="line">int right = 0;</div><div class="line">int bottom = 0;</div><div class="line">int eachWidth = (spanCount - 1) * mDividerHeight / spanCount;</div><div class="line">int dl = mDividerHeight - eachWidth;</div><div class="line"></div><div class="line">left = itemPosition % spanCount * dl;</div><div class="line">right = eachWidth - left;</div><div class="line">bottom = mDividerHeight;</div><div class="line"></div><div class="line">if (isLastRow) &#123;</div><div class="line">    bottom = 0;</div><div class="line">&#125;</div><div class="line">outRect.set(left, top, right, bottom);</div></pre></td></tr></table></figure>
-<p>最后的效果图如下：</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/623504-36ce8945af500155.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
-<p>完美的解决了上面出现的问题，这都是些细节上的问题，如果不怎么注意，还真的很难去注意到，以后如果遇到其他类似的问题也可以很容易的解决了。本文只是讨论了在使用ItemDecoration其中的一个问题，并不算难，但是也很重要，所以大家在平时的开发中还是应该多多注意细节上的问题。</p>
-<p>最后送上本文源码地址:</p>
-<ol>
-<li><a href="https://github.com/burgessjp/QuickDevLib/blob/master/library/src/main/java/me/solidev/library/ui/recyclerview/GridDividerItemDecoration.java" target="_blank" rel="external">GridDividerItemDecoration</a></li>
-</ol>
-<ul>
-<li><a href="https://github.com/burgessjp/QuickDevLib/blob/master/library/src/main/java/me/solidev/library/ui/recyclerview/GridDividerItemDecorationBug.java" target="_blank" rel="external">GridDividerItemDecorationBug</a></li>
-</ul>
-<p>顺便给大家推荐一个十分强大的开源自定义的ItemDecoration ，适用于 <strong>LinearLayoutManager</strong>作为布局管理器的RecyclerView : <a href="https://github.com/yqritc/RecyclerView-FlexibleDivider" target="_blank" rel="external">RecyclerView-FlexibleDivider</a></p>
+<p>上面的就是整个Demo的核心思想。</p>
+<p>需要源码的可以点击下面的链接下载。<br><a href="https://github.com/burgessjp/MediaRecorderDemo" target="_blank" rel="external">MediaRecorderDemo</a></p>
+<p>如果在阅读的过程中又发现错误，也欢迎留言纠错。</p>
 
           
         
