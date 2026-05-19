@@ -1,0 +1,42 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Navbar from '../components/Navbar.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import Footer from '../components/Footer.astro';
+
+const projects = [
+  {
+    icon: '📱',
+    title: 'Android Samples',
+    description: 'Android 开发示例合集，涵盖自定义 View、多媒体、网络请求等常用场景。',
+    tags: ['Java', 'Android SDK', 'Gradle'],
+  },
+  {
+    icon: '🔧',
+    title: 'RxUtils',
+    description: 'RxJava 工具类库，封装常用操作符组合，简化线程切换和错误处理。',
+    tags: ['RxJava 2', 'Retrofit'],
+  },
+  {
+    icon: '🎨',
+    title: 'ThemeEngine',
+    description: 'Android 动态换肤框架，支持插件化加载外部资源包实现主题切换。',
+    tags: ['Java', 'ClassLoader', 'LayoutInflater'],
+  },
+];
+---
+
+<BaseLayout title="Projects">
+  <Navbar />
+  <main class="relative z-10 max-w-5xl mx-auto px-6 pt-24 pb-16">
+    <h1 class="font-mono text-2xl font-bold mb-8">
+      <span class="text-text-muted">// </span>Projects
+    </h1>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {projects.map((project) => (
+        <ProjectCard {...project} />
+      ))}
+    </div>
+  </main>
+  <Footer />
+</BaseLayout>

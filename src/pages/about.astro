@@ -1,0 +1,50 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Navbar from '../components/Navbar.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<BaseLayout title="About">
+  <Navbar />
+  <main class="relative z-10 max-w-3xl mx-auto px-6 pt-24 pb-16">
+    <h1 class="font-mono text-2xl font-bold mb-8">
+      <span class="text-text-muted">// </span>About
+    </h1>
+
+    <div class="space-y-6 text-text-muted leading-relaxed">
+      <p class="text-lg text-text">
+        Hi, I'm <span class="text-accent font-semibold">_SOLID</span> (burgessjp).
+      </p>
+
+      <p>
+        Android developer and tech enthusiast. I write about Android development,
+        RxJava, Retrofit, Material Design, and other technologies I find interesting.
+      </p>
+
+      <div class="mt-10">
+        <h2 class="font-mono text-sm text-accent uppercase tracking-widest mb-4">
+          <span class="text-text-muted">// </span>Skills
+        </h2>
+        <div class="flex flex-wrap gap-2">
+          {['Android', 'Java', 'Kotlin', 'RxJava', 'Retrofit', 'Material Design', 'RecyclerView', 'Realm', 'Gradle'].map((skill) => (
+            <span class="font-mono text-xs text-accent2 bg-[rgba(124,58,237,0.1)] px-3 py-1 rounded-full">
+              {skill}
+            </span>
+          ))}
+        </div>
+      </div>
+
+      <div class="mt-10">
+        <h2 class="font-mono text-sm text-accent uppercase tracking-widest mb-4">
+          <span class="text-text-muted">// </span>Find me
+        </h2>
+        <div class="flex gap-4">
+          <a href="https://github.com/burgessjp" target="_blank" rel="noopener" class="text-accent hover:underline font-mono text-sm">
+            GitHub &rarr;
+          </a>
+        </div>
+      </div>
+    </div>
+  </main>
+  <Footer />
+</BaseLayout>
