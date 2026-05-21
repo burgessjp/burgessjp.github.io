@@ -2,7 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Navbar from '../components/Navbar.astro';
 import Hero from '../components/Hero.astro';
-import BlogCard from '../components/BlogCard.astro';
+import PostRow from '../components/PostRow.astro';
 import Footer from '../components/Footer.astro';
 import { getCollection } from 'astro:content';
 
@@ -13,22 +13,19 @@ const posts = (await getCollection('blog'))
 
 <BaseLayout title="Home">
   <Navbar />
-  <Hero />
-  <section class="relative z-10 max-w-5xl mx-auto px-6 pb-16">
-    <div class="font-mono text-sm text-accent uppercase tracking-widest mb-8">
-      <span class="text-text-muted">// </span>Latest Posts
-    </div>
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+  <main class="max-w-3xl mx-auto px-6 pb-16">
+    <Hero />
+    <div class="text-xs text-text-muted uppercase tracking-wider mb-4">最新文章</div>
+    <div>
       {posts.map((post) => (
-        <BlogCard
+        <PostRow
           title={post.data.title}
           excerpt={post.data.excerpt}
-          date={post.data.date.toLocaleDateString('zh-CN')}
-          tag={post.data.tags[0] || 'Android'}
+          date={post.data.date.toLocaleDateString('zh-CN', { year: 'numeric', month: '2-digit' }).replace(/\//g, '.')}
           slug={post.id}
         />
       ))}
     </div>
-  </section>
+  </main>
   <Footer />
 </BaseLayout>

@@ -14,22 +14,22 @@ const { title, date, tags } = Astro.props;
 
 <BaseLayout title={title}>
   <Navbar />
-  <main class="relative z-10 max-w-3xl mx-auto px-6 pt-24 pb-16">
+  <main class="max-w-3xl mx-auto px-6 pt-16 pb-16">
     <article>
       <header class="mb-10">
         <div class="flex flex-wrap gap-2 mb-4">
           {tags.map((tag) => (
-            <span class="font-mono text-xs text-accent bg-[rgba(0,229,255,0.1)] px-3 py-0.5 rounded-full">
+            <span class="text-xs px-3 py-0.5 rounded-full bg-bg-card text-accent">
               {tag}
             </span>
           ))}
         </div>
-        <h1 class="text-3xl font-bold mb-3">{title}</h1>
+        <h1 class="font-serif text-3xl font-bold mb-3">{title}</h1>
         <time class="text-sm text-text-muted">
           {date.toLocaleDateString('zh-CN', { year: 'numeric', month: 'long', day: 'numeric' })}
         </time>
       </header>
-      <div class="prose prose-invert prose-pre:bg-[#0d0d14] prose-pre:border prose-pre:border-border prose-code:text-accent prose-a:text-accent prose-headings:font-mono max-w-none">
+      <div class="prose prose-neutral prose-pre:bg-bg-card prose-pre:border prose-pre:border-border prose-code:text-accent prose-a:text-accent prose-headings:font-serif max-w-none">
         <slot />
       </div>
     </article>

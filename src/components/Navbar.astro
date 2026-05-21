@@ -2,25 +2,25 @@
 const currentPath = Astro.url.pathname;
 
 const links = [
-  { href: '/', label: 'Home' },
-  { href: '/blog/', label: 'Blog' },
-  { href: '/projects/', label: 'Projects' },
-  { href: '/about/', label: 'About' },
+  { href: '/', label: '首页' },
+  { href: '/blog/', label: '博客' },
+  { href: '/projects/', label: '项目' },
+  { href: '/about/', label: '关于' },
 ];
 ---
 
-<nav class="fixed top-0 left-0 right-0 z-50 bg-[rgba(10,10,15,0.85)] backdrop-blur-xl border-b border-border">
-  <div class="max-w-5xl mx-auto px-6 flex items-center justify-between h-16">
-    <a href="/" class="font-mono font-bold text-xl text-accent no-underline">
-      <span class="text-text">_</span>SOLID
+<nav class="border-b border-border">
+  <div class="max-w-3xl mx-auto px-6 flex items-center justify-between h-14">
+    <a href="/" class="font-serif font-bold text-lg text-text no-underline">
+      PENG
     </a>
-    <div class="flex gap-8">
+    <div class="flex gap-6">
       {links.map(({ href, label }) => (
         <a
           href={href}
           class:list={[
-            'text-sm font-medium no-underline transition-colors',
-            currentPath === href ? 'text-accent' : 'text-text-muted hover:text-accent',
+            'text-sm no-underline transition-colors',
+            currentPath === href ? 'text-accent font-medium' : 'text-text-muted hover:text-accent',
           ]}
         >
           {label}
