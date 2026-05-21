@@ -7,7 +7,7 @@ const blog = defineCollection({
     title: z.string(),
     date: z.coerce.date(),
     tags: z.array(z.string()).default([]),
-    category: z.string().default('Android'),
+    category: z.string().default('AI'),
     excerpt: z.string().default(''),
   }),
 });
