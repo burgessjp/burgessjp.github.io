@@ -12,8 +12,33 @@ export async function getStaticPaths() {
 
 const { post } = Astro.props;
 const { Content } = await render(post);
+
+// Extract headings from rendered HTML
+const { html } = await render(post);
+const headingRegex = /<h([23])\s+id="([^"]*)"[^>]*>(.*?)<\/h[23]>/g;
+const headings = [];
+let match;
+while ((match = headingRegex.exec(html)) !== null) {
+  headings.push({
+    depth: parseInt(match[1]),
+    slug: match[2],
+    text: match[3].replace(/<[^>]*>/g, ''),
+  });
+}
+
+// Calculate reading time (Chinese: ~300 chars/min)
+const chineseChars = (post.body ?? '').replace(/[^一-鿿]/g, '').length;
+const totalWords = (post.body ?? '').split(/\s+/).filter(Boolean).length;
+const readingTime = Math.max(1, Math.ceil(chineseChars / 300 + totalWords / 200));
 ---
 
-<BlogPost title={post.data.title} date={post.data.date} tags={post.data.tags}>
+<BlogPost
+  title={post.data.title}
+  date={post.data.date}
+  tags={post.data.tags}
+  excerpt={post.data.excerpt}
+  headings={headings}
+  readingTime={readingTime}
+>
   <Content />
 </BlogPost>

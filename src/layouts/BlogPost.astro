@@ -3,17 +3,26 @@ import BaseLayout from './BaseLayout.astro';
 import Navbar from '../components/Navbar.astro';
 import Footer from '../components/Footer.astro';
 
+interface Heading {
+  depth: number;
+  slug: string;
+  text: string;
+}
+
 interface Props {
   title: string;
   date: Date;
   tags: string[];
+  excerpt?: string;
+  headings?: Heading[];
+  readingTime?: number;
 }
 
-const { title, date, tags } = Astro.props;
+const { title, date, tags, excerpt, headings = [], readingTime } = Astro.props;
 const giscusRepo = 'burgessjp/burgessjp.github.io';
 ---
 
-<BaseLayout title={title}>
+<BaseLayout title={title} description={excerpt} type="article" publishedTime={date} tags={tags}>
   <Navbar />
   <main class="max-w-3xl mx-auto px-6 pt-16 pb-16">
     <article>
@@ -31,11 +40,29 @@ const giscusRepo = 'burgessjp/burgessjp.github.io';
             {date.toLocaleDateString('zh-CN', { year: 'numeric', month: 'long', day: 'numeric' })}
           </time>
           <span>·</span>
+          {readingTime && <span>约 {readingTime} 分钟阅读</span>}
+          {readingTime && <span>·</span>}
           <span id="busuanzi_container_page_pv">
             <span id="busuanzi_value_page_pv"></span> 次阅读
           </span>
         </div>
       </header>
+
+      {headings.length > 0 && (
+        <nav class="mb-10 p-4 rounded-lg bg-bg-card border border-border">
+          <h2 class="font-serif text-sm font-bold mb-3 text-text-muted uppercase tracking-wider">目录</h2>
+          <ul class="space-y-1.5 text-sm">
+            {headings.map((h) => (
+              <li class={h.depth === 3 ? 'pl-4' : ''}>
+                <a href={`#${h.slug}`} class="text-text-muted hover:text-accent transition-colors">
+                  {h.text}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      )}
+
       <div class="prose prose-neutral prose-pre:bg-bg-card prose-pre:border prose-pre:border-border prose-code:text-accent prose-a:text-accent prose-headings:font-serif max-w-none">
         <slot />
       </div>
@@ -65,4 +92,23 @@ const giscusRepo = 'burgessjp/burgessjp.github.io';
   <Footer />
 
   <script is:inline async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  <script is:inline>
+    document.querySelectorAll('pre code').forEach((block) => {
+      const pre = block.parentElement;
+      const btn = document.createElement('button');
+      btn.className = 'copy-btn';
+      btn.textContent = '复制';
+      btn.addEventListener('click', async () => {
+        await navigator.clipboard.writeText(block.textContent);
+        btn.textContent = '已复制';
+        btn.classList.add('copied');
+        setTimeout(() => {
+          btn.textContent = '复制';
+          btn.classList.remove('copied');
+        }, 1500);
+      });
+      pre.appendChild(btn);
+    });
+  </script>
 </BaseLayout>
