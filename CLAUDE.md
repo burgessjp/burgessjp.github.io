@@ -46,6 +46,16 @@ Warm ink theme defined in `global.css` `@theme` block:
 - **Busuanzi** — page view counter (busuanzi.ibruce.info)
 - Both loaded via inline scripts in `BlogPost.astro`
 
+## 文章工作流
+
+所有文章操作由 Claude Code 完成，用户只需提供完整 markdown 内容。
+
+**发布新文章**：用户提供 markdown + 标题 → 创建 `src/content/blog/YYYY-MM-DD-title.md`（补 frontmatter）→ `npm run build` 验证 → commit + push
+
+**更新文章**：用户提供完整 markdown + 哪篇文章 → 替换文件内容（保留原 frontmatter 的 date，更新其他字段）→ `npm run build` 验证 → commit + push
+
+**删除文章**：用户告知标题 → 确认后删除文件 → `npm run build` 验证 → commit + push
+
 ## Deployment
 
 GitHub Actions (`.github/workflows/deploy.yml`): push to `master` → `npm ci && npm run build` → deploy `dist/` to GitHub Pages.
