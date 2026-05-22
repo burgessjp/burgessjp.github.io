@@ -13,22 +13,28 @@ export async function getStaticPaths() {
 const { post } = Astro.props;
 const { Content } = await render(post);
 
-// Extract headings from rendered HTML
-const { html } = await render(post);
-const headingRegex = /<h([23])\s+id="([^"]*)"[^>]*>(.*?)<\/h[23]>/g;
+// Extract headings from markdown source (skip code blocks)
+const body = post.body ?? '';
+const bodyNoCode = body.replace(/```[\s\S]*?```/g, '');
+const headingRegex = /^(#{2,3})\s+(.+)$/gm;
 const headings = [];
 let match;
-while ((match = headingRegex.exec(html)) !== null) {
-  headings.push({
-    depth: parseInt(match[1]),
-    slug: match[2],
-    text: match[3].replace(/<[^>]*>/g, ''),
-  });
+while ((match = headingRegex.exec(bodyNoCode)) !== null) {
+  const depth = match[1].length;
+  const text = match[2].replace(/[*`\[\]]/g, '');
+  const slug = text
+    .toLowerCase()
+    .trim()
+    .replace(/\s+/g, '-')
+    .replace(/[^a-z0-9一-鿿\-]/g, '')
+    .replace(/-+/g, '-')
+    .replace(/^-|-$/g, '');
+  headings.push({ depth, slug, text });
 }
 
 // Calculate reading time (Chinese: ~300 chars/min)
-const chineseChars = (post.body ?? '').replace(/[^一-鿿]/g, '').length;
-const totalWords = (post.body ?? '').split(/\s+/).filter(Boolean).length;
+const chineseChars = body.replace(/[^一-鿿]/g, '').length;
+const totalWords = body.split(/\s+/).filter(Boolean).length;
 const readingTime = Math.max(1, Math.ceil(chineseChars / 300 + totalWords / 200));
 ---
 
