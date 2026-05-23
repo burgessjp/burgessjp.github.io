@@ -16,7 +16,7 @@
 html {
   background-color: var(--color-bg);
   color: var(--color-text);
-  font-family: var(--font-sans);
+  font-family: var(--font-serif);
 }
 
 /* Code block copy button */
