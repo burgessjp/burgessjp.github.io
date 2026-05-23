@@ -5,8 +5,8 @@ tags: [Claude Code, AI Engineering, Workflow, Best Practices]
 category: AI
 excerpt: 面向有 Claude Code 基础经验的开发者，解决从「会用」到「用好」的四个核心痛点：会话管理、项目配置、工作流设计、成本控制。
 ---
-
 > 面向有 Claude Code 基础经验的开发者，解决从「会用」到「用好」的四个核心痛点：会话管理、项目配置、工作流设计、成本控制。
+
 
 用 Claude Code 写代码的人越来越多了。但观察下来，大多数人的用法还是：打开终端，输入需求，改完就走。遇到问题就多问几轮，会话越来越长，Claude 越来越"笨"，然后困惑——不是说 AI 编程效率提升 10 倍吗？
 
@@ -14,20 +14,20 @@ excerpt: 面向有 Claude Code 基础经验的开发者，解决从「会用」�
 
 文章按四个最常见的痛点组织，每个模块独立可读，直接跳到你感兴趣的部分：
 
-- **「会话越用越笨」** — 上下文管理与会话控制
-- **「Claude 总是乱改」** — 项目配置工程化
-- **「改了老代码又出新 bug」** — 工作流与交互策略
-- **「Token 账单吓一跳」** — 成本控制与常见陷阱
+- **一、「会话越用越笨」** — 上下文管理与会话控制
+- **二、「Claude 总是乱改」** — 项目配置工程化
+- **三、「改了老代码又出新 bug」** — 工作流与交互策略
+- **四、「Token 账单吓一跳」** — 成本控制与常见陷阱
 
 ---
 
-## 「会话越用越笨」— 上下文管理与会话控制
+## 一、「会话越用越笨」— 上下文管理与会话控制
 
 Claude Code 有 100 万 token 的上下文窗口。这听起来很多，但 Anthropic Claude Code 团队的 Thariq 说了一句反直觉的话：**拥有 100 万 token 的窗口不意味着你应该把它填满。**
 
 核心问题叫**上下文腐朽（Context Rot）**：随着会话变长，模型性能悄悄下降。注意力被分散到更多 token 上，旧的、不相关的内容开始干扰当前任务。模型不会报错——它只是变得模糊、不精确、更容易幻觉。
 
-研究表明，性能在上下文窗口使用到 50-60% 时就开始下滑。也就是说，**你的 100 万 token 窗口，真正高效的使用范围大概只有 50-60 万。**
+社区经验和多项测试表明，性能在上下文窗口使用到 50-60% 时就开始下滑。也就是说，**你的 100 万 token 窗口，真正高效的使用范围大概只有 50-60 万。**
 
 这就是为什么你经常遇到这些场景：
 
@@ -35,7 +35,7 @@ Claude Code 有 100 万 token 的上下文窗口。这听起来很多，但 Anth
 - **压缩后丢掉关键上下文** — 自动压缩发生在模型最不聪明的时候（上下文已经很长了），它没法准确判断什么重要
 - **长调试会话后模型变笨** — 调试产生的大量中间输出占满了上下文，留给真正思考的空间不够了
 
-### 每一轮对话都是分支点
+### 1.1 每一轮对话都是分支点
 
 大多数人只会 Continue。但每次 Claude 完成一轮操作后，你其实有五个选择：
 
@@ -49,7 +49,7 @@ Claude Code 有 100 万 token 的上下文窗口。这听起来很多，但 Anth
 
 关键决策：**新任务开新会话，错误方向用 Rewind，上下文膨胀用 Compact，一次性探索用 Subagent。**
 
-### Rewind > 纠正
+### 1.2 Rewind > 纠正
 
 如果你只从这篇文章记住一个习惯，那就是 **Rewind**。
 
@@ -69,7 +69,7 @@ Claude Code 有 100 万 token 的上下文窗口。这听起来很多，但 Anth
 
 双击 Esc 回到文件读取之后那条消息，用你刚学到的信息重新提问。还有一个进阶技巧：先让 Claude「从这一点总结一下」，拿到总结后 Rewind 回去，把总结贴进新 prompt。这等于让「尝试过并失败的 Claude」给「还没开始的 Claude」写了一封信。
 
-### 主动 Compact，而且要带方向
+### 1.3 主动 Compact，而且要带方向
 
 不要等自动压缩。自动压缩在你最不希望它发生的时候触发——上下文已经很长、模型已经变笨了，这时候让它决定什么重要，丢东西的概率很高。
 
@@ -83,7 +83,7 @@ Claude Code 有 100 万 token 的上下文窗口。这听起来很多，但 Anth
 
 社区经验总结出一个实用的阈值：**50% 规则**。不要等到上下文条变红才 compact。在 50% 左右、Claude 还清醒的时候主动压缩，效果远好于 90% 被动触发。一个社区用户的原话：「区别在于 Claude 清醒时压缩还是已经糊涂时压缩。」
 
-### Subagent：隔离一次性上下文
+### 1.4 Subagent：隔离一次性上下文
 
 Subagent 是最被低估的上下文管理工具。当你让 Claude 派一个子代理时，那个代理拥有自己的全新上下文窗口。它可以做任意多的工作——读 20 个文件、跑 12 次搜索、碰 3 次壁——然后只把最终结论返回给父会话。
 
@@ -98,37 +98,25 @@ Subagent 是最被低估的上下文管理工具。当你让 Claude 派一个子
 
 有时候 Claude 会自动调用子代理，但不会总是猜到你需要上下文隔离。**主动告诉它用子代理是更好的做法。**
 
-### Effort 等级：按任务难度动态切换
+### 1.5 Effort 等级：按任务难度动态切换
 
-Opus 4.7 新增 **xhigh** 作为默认等级，大多数任务用 xhigh 就行。但你可以动态切换：简单格式化用 medium，并发会话用 high，碰到卡壳的 bug 切 max，解决后切回 xhigh。**同一任务中可以动态切换**——开始探索时 xhigh，找到方向后切 high 降低成本。（详细的 effort 与 token 成本关系见模块 4。）
+Claude Code 有 5 个 effort 等级：low、medium、high、xhigh、max。默认值因模型而异——**Sonnet 默认 high，Opus 默认 xhigh**。大多数任务用默认值就行，但你可以动态切换：简单格式化用 low，常规改动用 medium，并发会话用 high，碰到卡壳的 bug 切 max，解决后切回默认。**同一任务中可以动态切换**——开始探索时 xhigh，找到方向后切 high 降低成本。（详细的 effort 与 token 成本关系见模块 4。）
 
-### 实战 Demo：从 Session Rot 到正确操作
+### 1.6 实战 Demo：从 Session Rot 到正确操作
 
 下面是一个完整的会话管理操作序列，展示了从问题到解决的全过程：
 
 ```
-# 场景：在一个长会话中调试认证 bug
 
-# 1. 会话已经很长，Claude 开始给出不相关的回答
-# → 不要继续纠正，主动 compact 带方向
 /compact 保留 JWT 验证逻辑的修改，丢掉中间调试过程
 
-# 2. Compact 后继续调试，但发现 Claude 之前读错了文件
-# → 不要在错误基础上纠正，Rewind
-# 双击 Esc，回到读取正确文件之后的消息
-# 重新提问：
 "auth/middleware.go 里的 ValidateToken 函数用了旧的签名算法，
  直接改成 RS256，别动其他文件"
 
-# 3. 需要参考另一个服务的实现，但不想污染当前上下文
-# → 派 Subagent
 "派一个子代理去读 services/user-svc/internal/auth/ 目录，
  总结它的 JWT 刷新逻辑，只给我结论"
 
-# 4. Bug 修好了，准备写测试
-# → 新任务，开新会话
 /clear
-# 新会话第一句话就给足上下文：
 "项目用 Go + gin，JWT 认证逻辑在 auth/middleware.go，
  刚把签名算法从 HS256 改成了 RS256，
  写 unit test 覆盖正常验证、过期 token、错误算法三种情况，
@@ -143,11 +131,13 @@ Opus 4.7 新增 **xhigh** 作为默认等级，大多数任务用 xhigh 就行�
 
 你可能遇到过这些情况：Claude 明明读过你的代码，转头就引入了一个项目根本不用的库；让它改一个模块，它顺手改了其他三个你不想动的文件；团队成员各自配置，同样的代码 Claude 在不同人手里表现完全不一样。
 
+## 二、「Claude 总是乱改」— 项目配置工程化
+
 根本原因只有一个：**你没给 Claude 足够好的操作手册。**
 
 CLAUDE.md 不是项目文档，不是 README，不是给人类看的。**它是给 Claude 的操作手册**——每次会话自动加载，告诉 Claude 这个项目怎么工作、什么能做什么不能做。
 
-### 200 行铁律
+### 2.1 200 行铁律
 
 CLAUDE.md 每次会话都加载到上下文窗口里。超过 200 行，每多一行都在挤占 Claude 理解你代码的空间。
 
@@ -155,7 +145,6 @@ CLAUDE.md 每次会话都加载到上下文窗口里。超过 200 行，每多�
 
 **反面教材（臃肿版）：**
 ```markdown
-# MyApp 项目
 
 ## 项目简介
 这是一个用 React + TypeScript 开发的电商平台，主要面向东南亚市场，
@@ -185,7 +174,6 @@ CLAUDE.md 每次会话都加载到上下文窗口里。超过 200 行，每多�
 
 **正面教材（精简版）：**
 ```markdown
-# MyApp
 
 ## 架构
 React 18 + TypeScript strict + Zustand + React Query
@@ -208,7 +196,7 @@ React 18 + TypeScript strict + Zustand + React Query
 
 区别在哪？精简版砍掉了 Claude 能自己从代码里看出来的东西（React 版本号、文件命名约定），保留了**不看 CLAUDE.md 就会犯错的东西**（不要引入什么库、哪些文件不能改、哪些坑会踩）。
 
-### 禁止清单比正面指导更有效
+### 2.2 禁止清单比正面指导更有效
 
 「写干净的代码」对 AI 等于没说。「禁止 any 类型」才有用。
 
@@ -223,7 +211,7 @@ CLAUDE.md 里最有力量的部分是 **Do NOT 清单**。它防止的不是一�
 - 不要在根目录跑 `pnpm test`（太慢，跑单个文件）
 ```
 
-### 分层 CLAUDE.md：每层管不同的事
+### 2.3 分层 CLAUDE.md：每层管不同的事
 
 CLAUDE.md 不是只有一个文件。Claude Code 支持四层配置，Claude 进入子目录时会自动加载该目录的 CLAUDE.md：
 
@@ -246,7 +234,6 @@ project/CLAUDE.local.md          ← 个人（不进 git）
 **子目录 CLAUDE.md 是大型代码库的秘密武器。** 当 Claude 操作 `src/auth/` 目录时，它会自动加载该目录的 CLAUDE.md。这意味着你可以在敏感模块装上护栏：
 
 ```markdown
-# src/auth/CLAUDE.md
 
 ## 红线
 - JWT secret 只从环境变量读取，不要硬编码或 fallback
@@ -258,7 +245,7 @@ project/CLAUDE.local.md          ← 个人（不进 git）
 - RefreshToken 的 revocation 检查有 race condition，已加分布式锁
 ```
 
-### settings.json：排除噪声，保护关键路径
+### 2.4 settings.json：排除噪声，保护关键路径
 
 `.claude/settings.json` 不只是权限配置。它告诉 Claude **不要读什么、不要写什么**——这在大型代码库里至关重要：
 
@@ -280,7 +267,7 @@ project/CLAUDE.local.md          ← 个人（不进 git）
 
 为什么这很重要？因为 Claude 的上下文是稀缺资源。让它读 2000 行的 lock 文件或 generated 代码，等于浪费了可以用来理解你业务逻辑的空间。
 
-### 超过 100 行就拆到 rules/
+### 2.5 超过 100 行就拆到 rules/
 
 CLAUDE.md 超过 100 行是一个信号：你的项目指导已经需要按领域拆分了。
 
@@ -295,11 +282,15 @@ CLAUDE.md 超过 100 行是一个信号：你的项目指导已经需要按领�
 
 rules/ 下的文件按需加载，不会像 CLAUDE.md 那样每次会话都塞进上下文。**只在相关任务时才占用上下文空间。**
 
-### Hooks：从「请记住」到「你必须」
+### 2.6 Hooks：从「请记住」到「你必须」
 
 CLAUDE.md 里写的规则是「请记住」。Hooks 是「你必须」。
 
 CLAUDE.md 写「每次编辑后运行 lint」——Claude 可能忘。配一个 hook——编辑后自动跑 lint，想忘都不行。
+
+以下配置片段放在项目的 `.claude/settings.json` 中（完整格式参考 [官方 Hooks 文档](https://code.claude.com/docs/en/hooks)）：
+
+**编辑后自动格式化：**
 
 ```json
 {
@@ -320,7 +311,7 @@ CLAUDE.md 写「每次编辑后运行 lint」——Claude 可能忘。配一个 
 }
 ```
 
-更有用的 hook：**保护主分支不被直接编辑**：
+**保护主分支不被直接编辑：**
 
 ```json
 {
@@ -341,7 +332,7 @@ CLAUDE.md 写「每次编辑后运行 lint」——Claude 可能忘。配一个 
 }
 ```
 
-还有一个高价值的 hook 模式——**测试文件变更后自动运行相关测试**：
+**测试文件变更后自动运行相关测试：**
 
 ```json
 {
@@ -362,11 +353,16 @@ CLAUDE.md 写「每次编辑后运行 lint」——Claude 可能忘。配一个 
 }
 ```
 
-### LSP：大型代码库最高价值投资
+### 2.7 LSP：大型代码库最高价值投资
 
 如果你只做一件事来提升 Claude Code 在大型代码库中的表现，那就是**开 LSP**。
 
 没有 LSP，Claude 只能做字符串搜索——grep 一个函数名，然后猜测哪个匹配是真正的定义。有了 LSP，Claude 获得「Go to Definition」和「Find All References」的能力，精确度完全不同。
+
+**启用步骤（以 TypeScript 为例）：**
+
+1. 系统安装语言服务器：`npm install -g typescript-language-server typescript`
+2. 在 `.claude/settings.json` 中启用插件：
 
 ```json
 {
@@ -376,9 +372,11 @@ CLAUDE.md 写「每次编辑后运行 lint」——Claude 可能忘。配一个 
 }
 ```
 
-对于多语言代码库（比如 TypeScript + Go），每种语言配一个 LSP 插件。Anthropic 官方文档明确说：**LSP 是大型 C/C++ 代码库中 Claude Code 成功的前提条件。**
+3. 重启 Claude Code 使配置生效
 
-### 渐进式配置路径
+对于多语言代码库（比如 TypeScript + Go），每种语言安装对应的语言服务器并配一个 LSP 插件。Anthropic 官方文档明确说：**LSP 是大型 C/C++ 代码库中 Claude Code 成功的前提条件。**
+
+### 2.8 渐进式配置路径
 
 不要一上来就搭全套。按需渐进：
 
@@ -398,7 +396,19 @@ CLAUDE.md 写「每次编辑后运行 lint」——Claude 可能忘。配一个 
 
 每一步都解决一个具体的痛点，不提前搭建用不到的东西。
 
-### 实战 Demo：从空白项目搭建完整 .claude 目录
+### 2.9 MCP：连接外部服务
+
+上面的配置都是「让 Claude 更懂你的项目」。MCP（Model Context Protocol）解决的是另一个问题：**让 Claude 能直接操作外部服务。**
+
+通过 MCP 服务器，Claude Code 可以连接数据库、调用 API、读取内部文档系统——不需要你手动复制粘贴信息。常见的高价值 MCP 服务器：
+
+- **数据库**：直接查询数据库结构，不用 `DESCRIBE TABLE` 复制结果
+- **GitHub/GitLab**：直接操作 PR、Issue，不用离开终端
+- **内部文档**：直接搜索和读取团队知识库
+
+配置方式：在 `.claude/settings.json` 中添加 MCP 服务器定义，或在 `~/.claude/` 下配置全局 MCP。具体的 MCP 服务器列表和配置方法参考 [官方 MCP 文档](https://modelcontextprotocol.io/) 和 [Claude Code MCP 指南](https://code.claude.com/docs/en/mcp)。
+
+### 2.10 实战 Demo：从空白项目搭建完整 .claude 目录
 
 假设你要开始一个 React + TypeScript 项目，完整配置过程：
 
@@ -432,13 +442,15 @@ CLAUDE.md 写「每次编辑后运行 lint」——Claude 可能忘。配一个 
 
 配置工程化解决的是「怎么让 Claude 知道规则」。但知道了规则还不够——你怎么和 Claude 协作才能保证代码质量？下一个模块解决工作流问题。
 
+## 三、「改了老代码又出新 bug」— 工作流与交互策略
+
 有一个被反复验证但很多人忽略的事实：**同一个模型既写代码又审查代码，倾向于认为自己的实现没问题。**
 
 这不是模型缺陷，是认知偏差。人类也一样——自己写的代码自己审查，总是更容易放过问题。所以代码审查要找没写过这段代码的人来做。
 
 对 AI 来说，解决方案只有一个：**任务的执行和评估必须彻底拆开。**
 
-### 第一轮就说清任务
+### 3.1 第一轮就说清任务
 
 大多数人和 Claude 交互的方式是：给一句话需求 → Claude 写代码 → 发现不对 → 纠正 → 再写 → 再纠正。来回 3-5 轮才到位。
 
@@ -475,9 +487,9 @@ CLAUDE.md 写「每次编辑后运行 lint」——Claude 可能忘。配一个 
 
 看起来写精确 prompt 花的时间更多。但算总账：5 轮模糊交互 vs 1 轮精确交互，总时间反而更短，总 token 消耗反而更低。
 
-### Plan Mode：先探索，再动手
+### 3.2 Plan Mode：先探索，再动手
 
-Ctrl+G（或 Shift+Tab）进入 Plan Mode。在这个模式下 Claude 只做研究和规划，不修改任何文件。
+按 Shift+Tab 循环切换模式（Normal → Auto-Accept → Plan Mode），切到 Plan Mode 后 Claude 只做研究和规划，不修改任何文件。
 
 Plan Mode 的价值：**把「搞清楚要做什么」和「动手做」分开。** 不用 Plan Mode 时，Claude 边读代码边改，很容易在没完全理解架构的情况下就开始写代码，然后改了不该改的地方。
 
@@ -486,7 +498,7 @@ Plan Mode 的价值：**把「搞清楚要做什么」和「动手做」分开�
 2. 确认方案没问题
 3. **退出 Plan Mode**：让 Claude 按方案执行
 
-### SDD 三角色分离工作流
+### 3.3 SDD 三角色分离工作流
 
 SDD（Spec-Driven Development）是目前用 Claude Code 保证代码质量最有效的工作流之一。核心思想：**让规划的人规划，让写代码的人写代码，让审查的人审查。**
 
@@ -528,7 +540,6 @@ SDD（Spec-Driven Development）是目前用 Claude Code 保证代码质量最�
 生成文件到 specs/{feature-name}.spec.md
 
 ## Spec 格式
-# Spec: {功能名称}
 ## 功能描述（精确，无歧义）
 ## 验收标准
 ### AC-1: {标准名称}
@@ -581,7 +592,7 @@ $ARGUMENTS（Spec 路径 + 代码目录）
 
 进阶技巧：**三个角色可以用不同模型**。Planner 用 Sonnet（擅长规划），Generator 用 Sonnet（擅长编码），Evaluator 用 Opus（更严格的审查）。不同模型减少认知偏差。
 
-### 给 Claude 自检手段
+### 3.4 给 Claude 自检手段
 
 Anthropic 官方说这是**最高杠杆的提效动作**：给 Claude 验证自己工作的方式。
 
@@ -592,7 +603,7 @@ Anthropic 官方说这是**最高杠杆的提效动作**：给 Claude 验证自�
 
 没有自检手段时，Claude 会认为自己的实现是正确的。有了自检手段，它能主动发现问题并修复——**不需要你每次都去验证。**
 
-### Auto 模式的正确使用
+### 3.5 Auto 模式的正确使用
 
 Auto 模式不是「无脑放手」。正确用法是：**先把上下文喂足，再切 Auto。**
 
@@ -604,62 +615,41 @@ Auto 前的检查清单：
 
 这四条都满足后，Auto 模式才能真正发挥价值——Claude 自主执行、自检、修复，不需要你一轮一轮地审批。
 
-### Adaptive Thinking 手动调控
+### 3.6 Adaptive Thinking 手动调控
 
 Opus 4.7 的自适应思考默认会根据任务复杂度自动调整思考深度。但有时候你需要手动干预：
 
 ```
-# 想要更多思考（碰到棘手 bug）
 "Think carefully and step-by-step; this problem is harder than it looks"
 
-# 想要更少思考（简单格式化、小改动）
 "Prioritize responding quickly rather than thinking deeply"
 ```
 
-### 实战 Demo：一个功能开发全链路
+### 3.7 实战 Demo：一个功能开发全链路
 
-以「用户登录功能」为例，展示完整的工作流：
+以「给现有 API 加限流中间件」为例，展示 SDD 的关键决策点——重点不是流程本身（上面已经讲过），而是每个环节容易踩的坑：
 
 ```
-# Step 1: Planner（/plan）
+/plan 给 /api/* 路由加限流，每用户每分钟 60 次请求
 
-/plan 用户登录功能：支持手机号+验证码，7天免登录
+"补充：需要区分已登录用户（按 user_id）和匿名用户（按 IP），
+ 已登录用户限额 100/min，匿名用户 30/min，
+ 限流时返回 429 + Retry-After 头，
+ 不要用 Redis 以外的存储"
 
-# Claude 生成 specs/login.spec.md，包含：
-# - 3 个验收标准（发送验证码、验证登录、自动登录）
-# - 边界条件（无效手机号、过期验证码、网络错误）
-# - 技术约束（用已有 apiClient 和 useAuthStore）
 
-# Step 2: 退出重启 Claude Code
-/exit
+/generate specs/rate-limit.spec.md
 
-# Step 3: Generator（/generate）
-/generate specs/login.spec.md
 
-# Claude 按 Spec 实现：
-# - src/features/auth/LoginForm.tsx（登录表单组件）
-# - src/features/auth/auth.api.ts（API 调用）
-# - src/features/auth/LoginForm.test.tsx（测试）
-# - 运行测试确认通过
-# - 输出实现报告
 
-# Step 4: 退出重启 Claude Code
-/exit
+/evaluate specs/rate-limit.spec.md src/middleware/
 
-# Step 5: Evaluator（/evaluate）
-/evaluate specs/login.spec.md src/features/auth/
-
-# Claude 逐条检查：
-# AC-1: ✅ PASS — 发送验证码 API 调用正确
-# AC-2: ✅ PASS — 登录成功 token 存储正确
-# AC-3: ⚠️ PARTIAL — 自动登录逻辑在 token 过期时缺少刷新
-# 总分：83 分
-# 建议：补上 token 刷新逻辑
-
-# Step 6: 根据评分决定
-# 83 分 → 可选改进
-# 如果要修：重启 → /generate specs/login.spec.md（告诉它修复 Evaluator 发现的问题）
 ```
+
+**三个常见错误：**
+1. 不重启就切换角色——模型会倾向于认可自己的前序工作
+2. Generator 自行决定 Spec 歧义——应该停止并报告，不是自作主张
+3. Evaluator 发现的问题直接改代码——应该反馈给 Planner 重开循环
 
 > 来源：[Anthropic 官方：Claude Code 最佳实践](https://code.claude.com/docs/en/best-practices) · [Claude Code SDD 三角色分离工作流](https://code.claude.com/docs/en/best-practices) · [Addy Osmani: LLM Coding Workflow 2026](https://medium.com/@addyosmani/my-llm-coding-workflow-going-into-2026-52fe1681325e)
 
@@ -667,11 +657,13 @@ Opus 4.7 的自适应思考默认会根据任务复杂度自动调整思考深�
 
 会话管理、项目配置、工作流策略都到位了，最后还有一个现实问题：账单。前三个模块都在提升效率，但如果效率是用钱堆出来的，不可持续。
 
+## 四、「Token 账单吓一跳」— 成本控制与常见陷阱
+
 Opus 4.7 带来了更聪明的推理能力，但也带来了更高的 token 消耗。新 tokenizer 的变化 + 模型倾向于更深入思考，意味着如果你不主动控制，成本会悄悄失控。
 
 同一个任务，不同人用 Claude Code 的成本可以差 3-5 倍。差距不在模型，在用法。
 
-### Token 成本意识
+### 4.1 Token 成本意识
 
 首先理解 token 消耗的结构。每次 Claude Code 会话，token 主要花在三个地方：
 
@@ -683,24 +675,25 @@ Opus 4.7 带来了更聪明的推理能力，但也带来了更高的 token 消�
 
 Effort 等级直接影响思考 token 的消耗。一个实用的对比：
 
-| 等级 | 适用场景 | 大致 token 倍数 |
-|------|----------|----------------|
-| **medium** | 简单格式化、小文本改动 | 基准 1x |
-| **high** | 常规编码、并发会话 | ~2-3x |
-| **xhigh** | 大多数编码任务（默认） | ~3-5x |
-| **max** | 极难 bug、架构决策 | ~5-10x |
+| 等级 | 适用场景 | 大致相对成本 |
+|------|----------|-------------|
+| **low** | 简单格式化、小文本改动 | 基准 1x |
+| **medium** | 文档整理、小改动 | ~2x |
+| **high** | 常规编码（Sonnet 默认） | ~3x |
+| **xhigh** | 复杂编码（Opus 默认） | ~6x |
+| **max** | 极难 bug、架构决策 | ~15x |
 
-**同一任务从 xhigh 切到 high，token 消耗可能减少 40-60%，质量差异在大多数常规任务中不明显。**
+> 数据来源：[Towards AI: I Tested All 5 Effort Levels of Claude Opus 4.7](https://pub.towardsai.net/i-tested-all-5-effort-levels-of-claude-opus-4-7-2f335c626786)，成本为相对比值，实际消耗因任务而异。
 
-### 输出长度控制
+**同一任务从 xhigh 切到 high，token 消耗可能减少约 50%，质量差异在大多数常规任务中不明显。**
+
+### 4.2 输出长度控制
 
 一个经常被忽略的技巧：**指定输出长度可以直接减少 40-60% 的 token 消耗。**
 
 ```
-# 不指定长度（Claude 可能写 2000 字来解释一个简单改动）
 "修复这个 bug"
 
-# 指定长度（Claude 直奔主题）
 "修复这个 bug，回复控制在 200 字以内，只列出改了什么和为什么"
 ```
 
@@ -714,7 +707,7 @@ Effort 等级直接影响思考 token 的消耗。一个实用的对比：
 - 不确定的地方列选项让我选，不要自己猜
 ```
 
-### CLAUDE.md 定期审查
+### 4.3 CLAUDE.md 定期审查
 
 为旧模型写的 CLAUDE.md 规则，在新模型上可能变成负担。
 
@@ -727,9 +720,20 @@ Anthropic 官方举了一个例子：早期模型的跨文件协调能力有限�
 - [ ] hooks 是否有不必要的自动化（限制新模型发挥）？
 - [ ] skills 是否有已经不需要的（新模型默认就能做好）？
 
-### 并行会话策略
+### 4.4 并行会话策略
 
 跑多个并发会话时，不需要每个都用 xhigh。
+
+**更重要的是选择合适的模型。** Sonnet 和 Opus 的价格差约 5 倍，但大多数编码任务用 Sonnet 就够了。一个实用的分配策略：
+
+| 任务类型 | 推荐模型 | Effort 等级 | 理由 |
+|----------|----------|-------------|------|
+| 日常编码、小功能、bug 修复 | Sonnet | high | 性价比最优 |
+| 架构设计、复杂重构、代码审查 | Opus | xhigh | 需要更强的推理能力 |
+| 格式化、文档整理、简单搜索 | Sonnet | medium | 不需要深度思考 |
+| 极难 bug、安全审计 | Opus | max | 需要最大推理深度 |
+
+一个常见误区是所有任务都默认用 Opus。实际上 Sonnet 在编码任务上的表现已经很接近 Opus，速度更快、成本更低。**只在 Opus 的额外推理能力确实能带来价值时才切过去**——架构决策、复杂多文件协调、需要深度推理的 bug。
 
 - **研究型会话**（读代码、查资料）：medium 或 high
 - **实现型会话**（写代码、改 bug）：xhigh
@@ -737,7 +741,7 @@ Anthropic 官方举了一个例子：早期模型的跨文件协调能力有限�
 
 不同类型的会话分配不同 effort 等级，总成本能降下来不少。
 
-### 新话题开新会话
+### 4.5 新话题开新会话
 
 这个建议简单但有效：**新话题开新会话。**
 
@@ -745,7 +749,7 @@ Anthropic 官方举了一个例子：早期模型的跨文件协调能力有限�
 
 灰色地带是相关任务：比如刚实现完功能想写文档。这时部分上下文是有用的，省去了重新读取文件的成本。判断标准：**如果新任务需要用到的上下文超过旧会话的 30%，就继续；否则开新会话。**
 
-### 常见陷阱速查表
+### 4.6 常见陷阱速查表
 
 | 陷阱 | 症状 | 解法 |
 |------|------|------|
@@ -755,7 +759,7 @@ Anthropic 官方举了一个例子：早期模型的跨文件协调能力有限�
 | **从不 /compact** | 上下文腐朽 + 高 token 消耗 | 50% 时主动 compact 带方向描述 |
 | **同一会话又探索又编辑** | 上下文爆炸 | subagent 探索，主实例编辑 |
 | **模糊 prompt 来回纠正** | 5 轮才到位，每轮都烧 token | 第一轮就说清任务 |
-| **从不切 effort 等级** | 简单任务也用 xhigh/max | 按任务难度动态切换 |
+| **从不切 effort 等级** | 简单任务也用 xhigh/max | 按任务难度动态切换（5 个等级：low → max） |
 
 ---
 

@@ -5,18 +5,16 @@ tags: [Claude Code, Harness Engineering, AI Workflow, React Native]
 category: AI
 excerpt: 移动端（RN/Android）场景下，用 Harness Engineering 思路搭建工程化 Claude Code 工作流——面向有 Claude Code 使用经验的开发者，不谈概念，只解决大项目实战中的真实问题。
 ---
-
 > 移动端（RN/Android）场景下，用 Harness Engineering 思路搭建工程化 Claude Code 工作流——面向有 Claude Code 使用经验的开发者，不谈概念，只解决大项目实战中的真实问题。
 
-## 一、问题现场——大项目用 Claude Code 为什么会失控
 
 你有一个 5 万行的 React Native 项目。Claude Code 用了两个月，一开始很爽——加个组件、改个 bug、写个接口，几分钟搞定。但随着项目变大，事情开始不对劲了。
 
-**上下文爆炸。** 你让 Claude 改一个 Native Module 的桥接逻辑，它读完 Java 文件、读 Kotlin 文件、读 JS 导出层、读构建配置……等你反应过来，上下文窗口已经塞满了。后面的对话质量急剧下降，Claude 开始"忘记"前面的讨论，给出自相矛盾的方案。ETH Zurich 对 138 个 agentfile 的研究发现，上下文利用率超过 40% 后性能显著下降——进入了所谓的"愚蠢区域"。你的感觉是对的：不是模型变笨了，是你给它塞了太多东西。
+**上下文爆炸。** 你让 Claude 改一个 Native Module 的桥接逻辑，它读完 Java 文件、读 Kotlin 文件、读 JS 导出层、读构建配置……等你反应过来，上下文窗口已经塞满了。后面的对话质量急剧下降，Claude 开始"忘记"前面的讨论，给出自相矛盾的方案。实践经验表明，上下文膨胀到一定程度后性能会显著下降——你的感觉是对的：不是模型变笨了，是你给它塞了太多东西。
 
 **质量赌博。** 同样一个需求，今天 Claude 生成的代码跑得通，明天换一个 session 同样的需求就不一定了。你没法复现昨天的质量。问题不在模型本身——同一个 Claude，在配置良好的项目里能稳定输出高质量代码，在配置混乱的项目里就像掷骰子。关键区别不在于你用了什么 prompt，在于项目有没有一个工程外壳。
 
-**配置碎片。** 你花了一个下午写了一篇长长的 CLAUDE.md，把项目架构、编码规范、目录结构全写进去了。结果 Claude 该不遵守还是不遵守。ETH Zurich 的研究给出了一个反直觉的结论：LLM 自动生成的配置文件不仅没有帮助，反而**损害了性能**，同时成本增加了 20% 以上。HumanLayer 团队的 CLAUDE.md 不到 60 行。Anthropic 官方建议更直接——对 CLAUDE.md 中的每一行问自己："移除它会导致 Claude 犯错吗？"如果不会，就删掉。
+**配置碎片。** 你花了一个下午写了一篇长长的 CLAUDE.md，把项目架构、编码规范、目录结构全写进去了。结果 Claude 该不遵守还是不遵守。Anthropic 官方建议对 CLAUDE.md 中的每一行问自己："移除它会导致 Claude 犯错吗？"如果不会，就删掉。后面会看到，HumanLayer 团队的生产级项目 CLAUDE.md 不到 60 行——少即是多。
 
 **协作黑洞。** 你和同事用 Claude 改同一份代码。你的 Claude 按 Redux 模式写状态管理，他的 Claude 按 Zustand 模式写——因为你们各自的 CLAUDE.md 不一样。一个月后项目里出现了三套状态管理方案，谁的 Claude 都不知道该遵循哪套。大型代码库的最佳实践文档里有一句话很精准："自下而上的采用会带来热情，但没人集中化就会碎片化。"
 
@@ -26,11 +24,10 @@ excerpt: 移动端（RN/Android）场景下，用 Harness Engineering 思路搭�
 
 接下来的四章，我用一个 RN/Android 项目为主线，把 Harness Engineering 从理论拆解成你可以直接拿去用的配置和工作流。不谈概念，只解决问题。
 
-## 二、配置体系——让 Claude 理解你的项目
 
 Harness Engineering 有四层架构：Memory（记忆）、Execution（执行）、Feedback（反馈）、Orchestration（编排）。配置体系是 Memory 层——教 Claude 理解你的项目规则和约束。这一章解决一个问题：**怎么让 Claude 每次都按你的规矩来，而不是按它自己的理解来。**
 
-### 2.1 CLAUDE.md：从 router 思维开始
+## 2.1 CLAUDE.md：从 router 思维开始
 
 **问题：** 你的项目有编码规范、架构约定、目录结构、构建命令……这些信息散落在文档里、README 里、同事的脑子里，Claude 无从遵循。
 
@@ -49,7 +46,6 @@ Harness Engineering 有四层架构：Memory（记忆）、Execution（执行）
 一个 RN 项目的根 CLAUDE.md，25 行足够：
 
 ```markdown
-# RN/Android 项目
 
 ## 项目类型
 React Native 0.76 + Kotlin Android + TypeScript strict
@@ -62,7 +58,7 @@ React Native 0.76 + Kotlin Android + TypeScript strict
 - DO NOT use `// eslint-disable-next-line`
 
 ## 关键命令
-- `pnpm test` — 运行所有单元测试
+- `yarn test` — 运行所有单元测试
 - `cd android && ./gradlew assembleRelease` — Android Release 构建
 
 ## 架构决策
@@ -73,7 +69,7 @@ React Native 0.76 + Kotlin Android + TypeScript strict
 
 进阶做法是**子目录 CLAUDE.md 分层**。在 `android/` 下放一个本地 CLAUDE.md，写原生层的规则（Kotlin 编码规范、JNI 边界、ProGuard 注意事项）；在 `src/navigation/` 下放导航结构的约定。Claude 进入这些目录时会自动加载对应的 CLAUDE.md，形成分层约束。
 
-### 2.2 rules/：专项规则拆分
+## 2.2 rules/：专项规则拆分
 
 **问题：** CLAUDE.md 超过 100 行了，信息密度开始下降。你在文件里找一条具体规则要翻半天，Claude 也一样。
 
@@ -112,7 +108,7 @@ React Native 0.76 + Kotlin Android + TypeScript strict
 
 OpenAI 的百万行项目用了 **88 个 AGENTS.md 文件**做分层约束。他们的做法是"给 agent 一张地图，不是一本千页的操作手册"。你的项目不需要 88 个文件，但按关注点分离的思路是一样的——让 Claude 在需要时按需读取，而不是一开始就全塞进去。
 
-### 2.3 hooks：把"请记住"变成"必须"
+## 2.3 hooks：把"请记住"变成"必须"
 
 **问题：** CLAUDE.md 和 rules/ 里写了规则，但 Claude 不一定遵守。写"禁止修改原生层"和 Claude 实际不修改原生层，中间差了一个执行力。
 
@@ -183,21 +179,19 @@ exit 0
 #!/bin/bash
 cd "$CLAUDE_PROJECT_DIR"
 
-# 并行跑 lint 和类型检查
-OUTPUT=$(pnpm run lint 2>&1 && pnpm run typecheck 2>&1)
+OUTPUT=$(yarn run lint 2>&1 && yarn run typecheck 2>&1)
 
 if [ $? -ne 0 ]; then
   echo "验证失败，请修复以下问题后重试：" >&2
   echo "$OUTPUT" | tail -20 >&2
   exit 2
 fi
-# 成功时沉默——不输出任何东西
 exit 0
 ```
 
 注意最后一行：成功时 `exit 0`，不输出任何内容。这是 HumanLayer 的设计哲学——**成功时沉默，失败时才反馈。** 每一次不必要的输出都在浪费上下文窗口。
 
-### 2.4 skills：封装可复用的操作序列
+## 2.4 skills：封装可复用的操作序列
 
 **问题：** "帮我新建一个 RN 模块"——你每次都要教 Claude 一遍步骤：创建目录、写 index.ts、写类型定义、注册 TurboModule、导出到 NativeModules。重复操作的每次教学都是在浪费 token 和时间。
 
@@ -213,7 +207,6 @@ name: create-rn-module
 description: 创建新的 React Native 模块。当用户说"新建模块"、"创建 feature"、"添加新页面模块"时使用。
 ---
 
-# 创建 RN 模块
 
 ## 步骤
 1. 在 `src/modules/` 下创建目录，命名为 kebab-case
@@ -221,7 +214,7 @@ description: 创建新的 React Native 模块。当用户说"新建模块"、"�
 3. 创建 `types.ts` 定义 TypeScript 类型
 4. 如果涉及原生桥接，参考 `src/native/README.md` 创建 TurboModule
 5. 在 `src/modules/index.ts` 中注册新模块
-6. 运行 `pnpm typecheck` 验证类型正确
+6. 运行 `yarn typecheck` 验证类型正确
 
 ## 模板
 组件模板参考 `@src/modules/_template/`
@@ -229,21 +222,24 @@ description: 创建新的 React Native 模块。当用户说"新建模块"、"�
 
 引用深度保持一层——`SKILL.md` 可以引用其他文件（比如模板目录），但不要嵌套引用（A 引用 B，B 又引用 C）。Anthropic 的 Skill 最佳实践明确建议：SKILL.md 控制在 500 行以内，50 token 的简洁指令胜过 150 token 的冗长解释。
 
-另外一个实用建议：**让一个 Claude 实例帮你写 Skill，然后用另一个 Claude 实例测试它。** 这避免了"写的人和用的人是同一个模型"的认知偏差——和后面要讲的 SDD 三角色分离是同一个逻辑。
+另外一个实用建议：**让一个 Claude 实例帮你写 Skill，然后用另一个 Claude 实例测试它。** 这避免了"写的人和用的人是同一个模型"的认知偏差——和后面要讲的 SDD（Spec-Driven Development）是同一个逻辑。
 
 ---
 
 配置体系搭建好了，Claude 已经能理解你的项目规则和约束。但理解规则和稳定输出之间还有一道鸿沟——工作流。下一章解决的问题是：**配置好了，但工作流不对，质量照样不稳定。**
 
-## 三、工程工作流——让 Claude 稳定输出
 
 配置是 Memory 层，告诉 Claude "规则是什么"。工作流是 Execution + Orchestration 层，解决"怎么稳定地按规则做事"。这一章覆盖三个核心问题：怎么避免 AI 自评偏见、怎么拆分复杂任务、怎么管理大项目的上下文。
 
-### 3.1 Spec-Driven Development：三角色分离
+## 3.1 Spec-Driven Development：OpenSpec + 三角色分离
 
 **问题：** 你让 Claude 写一个功能，写完让它自己检查一遍。它说"看起来不错"。你 review 了一下，发现三个遗漏的边界条件和一个类型不匹配。Claude 不是没能力发现这些问题——而是**同一个模型既写代码又审查代码，倾向于认为自己的实现没问题。** 这是 AI 的自评偏见，不是个别现象，是所有 LLM 的共性。
 
-解法是 **SDD（Spec-Driven Development）**——把一个 Claude 干的事拆成三个角色：
+解法是两步叠加：**三角色分离**解决自评偏见，**OpenSpec** 解决 Spec 在角色之间流转的工程问题。
+
+### 三角色分离
+
+把一个 Claude 干的事拆成三个角色：
 
 | 角色 | 职责 | 可以做 | 禁止做 |
 |------|------|--------|--------|
@@ -253,50 +249,89 @@ description: 创建新的 React Native 模块。当用户说"新建模块"、"�
 
 关键约束：**角色之间必须重启 Claude Code。** 重启 = 清空上下文 = 角色隔离。同一个 session 里切角色，自评偏见依然存在。
 
-用一个实际需求走一遍流程："给 RN 项目添加 Dark Mode 支持。"
+这套方法的核心问题是 Spec 怎么在三个角色之间流转。手写 Spec 文件、手动复制给下一个角色——能用但低效，而且 Spec 没有持久化，会话结束就没了。
 
-**Planner 阶段**——输入模糊需求，输出精确 Spec：
+### OpenSpec：让 Spec 在角色之间自动流转
 
-```markdown
-# Spec: Dark Mode 支持
+OpenSpec（openspec.dev）是目前最成熟的 SDD 工具：开源、零配置（不需要 API Key 或 MCP）、Claude Code 原生支持。它的核心价值是把 Spec 变成代码仓库的一部分，任何 Claude 实例——甚至不同的 coding agent——都能读取同一份 Spec。
 
-## 功能描述
-支持系统级和手动切换的 Dark Mode，覆盖所有页面组件。
+OpenSpec 的目录结构：
 
-## 验收标准
-### AC-1: 系统主题跟随
-- 前置条件：设备设置为 Dark Mode
-- 期望结果：应用启动后自动使用 Dark 主题
-- 验证方式：截屏对比
-
-### AC-2: 手动切换
-- 操作步骤：设置页 → 外观 → 选择"深色"
-- 期望结果：立即切换，下次启动保持选择
-- 验证方式：单元测试 + 手动验证
-
-### AC-3: 自定义组件适配
-- 期望结果：所有自定义组件响应主题变化，无硬编码颜色
-- 验证方式：`grep -r "#[0-9a-fA-F]" src/` 返回空
-
-## 技术约束
-- 使用 react-native-paper 的主题系统
-- 颜色定义集中在 src/theme/colors.ts
-
-## 不包含
-- 不修改原生启动屏颜色（单独需求）
+```
+openspec/
+├── specs/                  # 按功能组织的规格说明（持久存在）
+│   ├── auth-session/
+│   │   └── spec.md
+│   └── theme/
+│       └── spec.md
+└── changes/                # 变更提案（每次需求生成，完成后归档）
+    └── add-dark-mode/
+        ├── proposal.md     # 变更描述
+        ├── design.md       # 技术决策
+        ├── tasks.md        # 拆分后的实现任务
+        └── specs/          # spec delta（需求变化的前后对比）
+            └── theme/
+                └── spec.md
 ```
 
-**Generator 阶段**——重启 Claude Code，输入 Spec，输出代码和测试。Generator 只看 Spec，不看 Planner 的思考过程，确保实现严格按 Spec 走，不按 Planner 的暗示走。
+两个关键机制：
 
-**Evaluator 阶段**——再重启，输入 Spec + 实现代码，输出评分报告。Evaluator 用 AC-3 的 `grep` 命令实际跑一遍——发现 `src/components/Header.tsx` 第 42 行有一个硬编码的 `#333`，给 AC-3 标记为 PARTIAL，总分 82。
+**Spec 持久存在于代码仓库中。** 不是写在聊天窗口里、会话结束就消失的一次性 prompt。Specs 随代码一起提交，新成员加入时浏览 spec 目录就能理解系统。变更时生成 spec delta（需求变化的 diff），review 时看 delta 而不是 code diff——你审查的是"需求变了什么"，不只是"代码变了什么"。
 
-评分标准：**90+ 合并，80-89 可选改进后合并，60-79 回 Generator 修复，<60 回 Planner 重新规划。** 82 分的 Dark Mode 可以合并，但 Header 的硬编码颜色需要先修。
+**Proposal → Tasks 的结构化拆分。** OpenSpec 的 `/openspec:proposal` 命令自动完成：读取现有 spec → 生成变更提案 → 拆分实现任务 → 标记受影响的 spec。你 review proposal 确认无误后，Claude 按 tasks.md 逐步实现。
+
+### 实战走读：Dark Mode 支持
+
+用一个实际需求走一遍三角色 + OpenSpec 的完整流程。
+
+**Planner 阶段**——新开 Claude Code 会话，生成 Proposal：
+
+```
+> /openspec:proposal 添加 Dark Mode 支持，包括系统主题跟随和手动切换
+```
+
+OpenSpec 读取现有的 `specs/theme/spec.md`，分析代码库中的主题相关文件，生成变更提案：
+
+```
+openspec/changes/add-dark-mode/
+├── proposal.md       ← 变更描述和影响范围
+├── design.md         ← 技术方案（用 react-native-paper 主题系统）
+├── tasks.md          ← 拆分为 3 个阶段 8 个任务
+└── specs/theme/
+    └── spec.md       ← spec delta
+```
+
+**你审查 proposal 和 spec delta。** 这一步不需要写代码，只需要判断"OpenSpec 理解的需求和你想的是不是一回事"。spec delta 的格式是标准 diff，一眼看出需求变化：
+
+```markdown
+### Requirement: Theme switching
+- The system SHALL follow system theme setting.
++ The system SHALL follow system theme setting.
++ The system SHALL support manual theme override.
++ #### Scenario: Manual dark mode
++ - GIVEN user selects "深色" in settings
++ - WHEN the app is running
++ - THEN apply dark theme immediately
++ - AND persist the choice for next launch
+```
+
+如果 delta 里出现了你没提到的需求（比如"适配原生启动屏颜色"），说明 AI 过度推断了——直接在 proposal 里划掉，不需要写代码再改。
+
+**Generator 阶段**——重启 Claude Code，输入 Spec，按 tasks.md 逐步实现。Generator 只看 Spec 和 tasks，不看 Planner 的思考过程，确保实现严格按 Spec 走。每个 task 的验收标准来自 spec delta 中的场景描述。
+
+**Evaluator 阶段**——再重启，输入 Spec + 实现代码，输出评分报告。Evaluator 对照 spec delta 中的场景逐条验证——比如 spec 里写了"无硬编码颜色"，就跑 `grep -r "#[0-9a-fA-F]" src/`。发现 `Header.tsx` 有一个 `#333`，标记为 PARTIAL，总分 82。
+
+评分标准：**90+ 合并，80-89 可选改进后合并，60-79 回 Generator 修复，<60 回 Planner 重新规划。**
+
+### 为什么两者要结合
+
+三角色单独用，Spec 在角色之间靠手动搬运，容易丢失上下文。OpenSpec 单独用，Spec 持久化了但没有角色隔离，自评偏见依然存在。
+
+结合之后：OpenSpec 让 Spec 持久化在文件系统里，三角色之间的"重启清空上下文"不再是信息丢失——因为 Spec 不在上下文里，在仓库里。Planner 写完 proposal 关掉会话，Generator 新开会话直接从仓库读 spec，Evaluator 也从仓库读。**角色隔离靠重启保证，信息连续性靠 OpenSpec 保证。**
 
 进阶技巧：**混用模型。** Planner 用 Opus（需要强推理做需求分析），Generator 用 Sonnet（结构化执行，性价比高），Evaluator 用 Opus（严格审查需要深度理解）。不同模型进一步减少认知偏差。
 
-核心思想：**Spec 是开发者和 AI 之间的合同。** 开发者承诺需求就是这些，AI 承诺实现就是这些，评估基于合同条款，不看心情。
-
-### 3.2 Subagent 拆分：复杂任务怎么分工
+## 3.2 Subagent 拆分：复杂任务怎么分工
 
 **问题：** 一个大需求——比如"重构整个导航系统"——涉及十几个文件，Claude 单次搞不定。你让它分步做，但做到一半上下文窗口已经溢出，后面的步骤质量急剧下降。
 
@@ -325,16 +360,16 @@ model: sonnet
 - 只修改 src/ 目录下的文件
 - 不修改 android/ 或 ios/ 目录
 - 不修改 package.json（依赖变更需上报）
-- 完成后运行 pnpm test && pnpm typecheck
+- 完成后运行 yarn test && yarn typecheck
 ```
 
 这个配置限制了工具范围（不给 Agent 工具权限防止它委派子任务）、指定了模型（Sonnet 足够处理 JS 层开发）、明确了输出接口（handoff 文件）。
 
-模型选择有讲究：**父会话用 Opus 做规划/编排，子代理用 Sonnet/Haiku 做执行。** 这是成本和质量的平衡——不需要在每个子任务上烧 Opus 的 token。Anthropic 内部用 16 个并行 Claude 实例构建 C 编译器，2000 次会话产出 10 万行 Rust 代码，用的就是这个策略：编排用 Opus，执行用更快的模型。
+模型选择有讲究：**父会话用 Opus 做规划/编排，子代理用 Sonnet/Haiku 做执行。** 这是成本和质量的平衡——不需要在每个子任务上烧 Opus 的 token。Anthropic 内部用 16 个并行 Claude Opus 实例构建 C 编译器，2000 次会话产出约 10 万行 Rust 代码。不过这个案例用的是全 Opus 配置——对于日常项目，编排层用 Opus、执行层用 Sonnet 是更经济的做法。
 
 mihomo-rust 项目（3 万行 Go 移植到 Rust）的四角色 Agent Team 进一步验证了这个模式——PM 用 Sonnet 管路线图，Architect 用 Opus 做架构决策，Engineer 用 Sonnet 写代码，QA 用 Haiku 跑测试。文件系统是协作界面：vision.md → gap-analysis.md → roadmap.md → specs/*.md，每个角色只读前序文档、输出自己的文档。
 
-Geoffrey Huntley 的做法更激进——所谓的 **Ralph 循环**：
+上面讲的 subagent 模式适合**有明确边界的开发任务**——每个 agent 有自己的职责范围和文件边界。还有一种更激进的模式适合不同场景：**自主循环（Autonomous Loop）**——agent 推送到主分支，CI 作为唯一的安全网，失败就自动修复。Geoffrey Huntley 的 **Ralph 循环**就是这种思路：
 
 ```bash
 while :; do cat PROMPT.md | claude-code; done
@@ -342,9 +377,9 @@ while :; do cat PROMPT.md | claude-code; done
 
 Agent 直接推送到主分支，CI 作为唯一的安全网。部署 30 秒内完成，失败就自动修复。他的观点是："你捕获的反压越多，你就能授予越多的自主权。"
 
-### 3.3 Context 管理：大项目的上下文策略
+## 3.3 Context 管理：大项目的上下文策略
 
-**问题：** 5 万行代码库，Claude 的上下文窗口装不下。你不可能把整个项目塞进去——而且即使能塞进去，上一章提到的 40% 阈值也会让性能跳水。
+**问题：** 5 万行代码库，Claude 的上下文窗口装不下。你不可能把整个项目塞进去——而且即使能塞进去，上下文膨胀也会让性能跳水。
 
 解法是**三层渐进式上下文架构**：
 
@@ -356,27 +391,26 @@ Agent 直接推送到主分支，CI 作为唯一的安全网。部署 30 秒内�
 
 具体操作建议：
 
-**`/compact` 的时机。** Anthropic 官方的说法是"上下文窗口是唯一需要管理的最重要资源"。当上下文利用率超过 40% 时，主动用 `/compact` 压缩。Dex Horthy 在 BAML（30 万行 Rust）上的做法更精细——通过频繁的有意压缩，把上下文始终保持在 40-60% 的"智能区域"内。
+**`/compact` 的时机。** Anthropic 官方的说法是"上下文窗口是唯一需要管理的最重要资源"。当上下文开始膨胀、Claude 的回复质量明显下降时，主动用 `/compact` 压缩。Dex Horthy（HumanLayer）的做法更精细——通过频繁的有意压缩，让上下文始终保持在低占用率的"智能区域"内。
 
 **`/clear` 的策略。** 两次失败纠正后必须 `/clear`。不是因为你前面的对话没用，而是因为上下文已经被失败的方法"污染"了——Claude 会倾向于在已经失败的思路上继续打转。清空后，把前两轮学到的经验写成一句更好的初始提示，胜过带着 40 轮失败历史继续纠缠。
 
 **HANDOFF.md。** 上下文刷新前让 Claude 写一份交接文档——当前进度、什么方法有效、什么方法无效、下一步该做什么。控制在 60 行以内。新会话从 HANDOFF.md 恢复，比从零开始快得多。
 
-**`#` 快速记忆。** 输入以 `#` 开头的内容，可以选择存储到 CLAUDE.md 或 MEMORY.md。适合记录 Claude 在调试过程中发现的关键洞察——比如"React Native 0.76 的 `useColorScheme` 在 Android 上有延迟，需要手动 listener"。这些发现不进 CLAUDE.md（不是规则），进 MEMORY.md（跨会话的知识）。
+**`#` 快速记忆。** 输入以 `#` 开头的内容，Claude 会将其存储到 `.claude/` 下的 memory 系统中，跨会话可用。适合记录调试过程中发现的关键洞察——比如"React Native 0.76 的 `useColorScheme` 在 Android 上有延迟，需要手动 listener"。这些发现不进 CLAUDE.md（不是规则），进 memory 系统（跨会话的知识）。
 
-Anthropic 内部实现了 5 层上下文压缩管线（Budget Reduction → Snip → Microcompact → Context Collapse → Auto-compact），但作为用户你不需要关心这些细节。你需要关心的是：**在 40% 阈值前主动压缩，在失败后果断清空，在清空前留好交接文档。**
+Anthropic 内部实现了 5 层上下文压缩管线（Budget Reduction → Snip → Microcompact → Context Collapse → Auto-compact），但作为用户你不需要关心这些细节。你需要关心的是：**在质量下降前主动压缩，在失败后果断清空，在清空前留好交接文档。**
 
 ---
 
 工作流建立好了，Claude 能稳定地按 Spec 输出，能通过 subagent 处理复杂任务，能管理好上下文窗口。但还有一个关键环节缺失——验证自动化。下一章解决的问题是：**怎么让 Claude 写完代码后自动跑测试、自动修复、形成闭环？**
 
-## 四、开发侧自动化——从写完代码到自测通过
 
 这是全文的核心实操章节。前面三章建立了"理解规则"和"稳定工作流"的基础，这一章把它们串成一条自动化链路：**Claude 写完代码 → 自动验证 → 失败自动修复 → 直到通过。** 目标是让"开发→自测"这个循环不依赖你的手动介入。
 
 Harness 的四层架构里，这是 **Feedback 层**。生成是概率的，验证必须确定。
 
-### 4.1 自动化验证链
+## 4.1 自动化验证链
 
 验证不是一道关，是一条链。RN 项目的典型验证层级：
 
@@ -422,14 +456,14 @@ Harness 的四层架构里，这是 **Feedback 层**。生成是概率的，验�
 #!/bin/bash
 cd "$CLAUDE_PROJECT_DIR"
 
-# 只检查被修改的文件，快速反馈
 CHANGED=$(git diff --name-only --cached 2>/dev/null || git diff --name-only)
 TS_FILES=$(echo "$CHANGED" | grep '\.ts\|\.tsx$' | head -5)
 
 if [ -n "$TS_FILES" ]; then
-  pnpm exec tsc --noEmit 2>&1 | tail -10
+  OUTPUT=$(yarn tsc --noEmit 2>&1)
   if [ $? -ne 0 ]; then
-    echo "TypeScript 类型检查失败，请修复。" >&2
+    echo "TypeScript 类型检查失败，请修复：" >&2
+    echo "$OUTPUT" | tail -10 >&2
     exit 2
   fi
 fi
@@ -442,8 +476,7 @@ exit 0
 #!/bin/bash
 cd "$CLAUDE_PROJECT_DIR"
 
-# 并行跑 lint 和类型检查，串行跑测试（需要完整环境）
-OUTPUT=$(pnpm run lint 2>&1 && pnpm run typecheck 2>&1)
+OUTPUT=$(yarn run lint 2>&1 && yarn run typecheck 2>&1)
 
 if [ $? -ne 0 ]; then
   echo "验证失败：" >&2
@@ -451,21 +484,21 @@ if [ $? -ne 0 ]; then
   exit 2
 fi
 
-# lint 和 typecheck 通过后跑测试
-TEST_OUTPUT=$(pnpm test 2>&1)
+TEST_OUTPUT=$(yarn test 2>&1)
 if [ $? -ne 0 ]; then
   echo "测试失败：" >&2
   echo "$TEST_OUTPUT" | tail -15 >&2
   exit 2
 fi
 
-# 成功时沉默
 exit 0
 ```
 
 Stripe 的 Minions 团队把这个原则叫 **"Shift feedback left"**——把验证尽可能前移，不要等到 CI 才发现问题。他们的做法是 pre-push hooks + background lint daemons，在开发者（或 agent）推送之前就拦截问题。你的 Stop hook 做的是同一件事——在 Claude 说"我做完了"之前，先验证它真的做完了。
 
-### 4.2 自主度分级
+**成本和延迟的权衡。** 每次文件修改后跑类型检查、每次完成后跑完整验证链——这些自动化有代价。一个中型 RN 项目，PostToolUse hook 可能每次触发 3-5 秒，Stop hook 可能需要 30-60 秒。一次涉及 10 个文件修改的任务，hooks 总开销可能在 1-2 分钟。如果觉得太慢，可以先只开 Stop hook（省掉 PostToolUse），或者把 PostToolUse 的检查范围限制为最近修改的文件（用 `git diff` 过滤）。关键是：**先保证验证链跑起来，再调优速度。** 没有验证的自动化比手动还差。
+
+## 4.2 自主度分级
 
 不是所有任务都该给 Claude 同等自由度。在 RN 项目里，JS 层的改动成本低、回滚容易，原生层的改动成本高、影响范围大。给不同层级不同的自主度，是 Harness 的约束型设计。
 
@@ -499,7 +532,6 @@ PreToolUse hook 阻止原生层直接修改的配置：
 INPUT=$(cat)
 FILE_PATH=$(echo "$INPUT" | jq -r '.tool_input.file_path // empty')
 
-# 低自主度：完全阻止
 if echo "$FILE_PATH" | grep -qE "(android/app/src/main|ios/.*\.pbxproj)"; then
   cat <<'EOF' >&2
 {"decision": "ask", "reason": "原生层修改需要人工确认。请描述需要修改什么，由开发者手动操作。"}
@@ -507,7 +539,6 @@ EOF
   exit 0
 fi
 
-# 中自主度：允许但记录
 if echo "$FILE_PATH" | grep -qE "(package\.json|android/build\.gradle)"; then
   echo "注意：正在修改依赖文件，请确保同步更新所有相关配置。" >&2
 fi
@@ -516,7 +547,7 @@ exit 0
 
 这个 hook 的设计体现了 OpenAI 百万行案例的核心经验：**通过不变的约束来强制执行，而不是微管理实现。** 他们用自定义 linter 锁死依赖层方向（Types → Config → Repo → Service → Runtime → UI），linter 错误信息不是简单的 "violation detected"，而是包含具体的修复指南——错误信息本身就成了 agent 的上下文。Augment Code 的 Harness 架构进一步建议：**所有规则设为 error 而非 warn**，并禁止 `// eslint-disable-next-line`——防止 agent 绕过检查而不是修复问题。
 
-### 4.3 反馈闭环
+## 4.3 反馈闭环
 
 验证链和自主度分级是静态防线。反馈闭环是动态的——让 Claude 写完代码后，**自动验证、自动发现问题、自动修复**，直到通过。
 
@@ -536,16 +567,21 @@ Claude 读取错误信息，修复代码
 通过 → Claude 正常结束（沉默，退出码 0）
 ```
 
-这个闭环能运转的关键在于 **Stop hook 的 JSON 输出**。普通的退出码 2 只是告诉 Claude "出错了"，JSON 输出可以阻止 Claude 停止并告诉它为什么：
+这个闭环能运转的关键在于 **stderr 输出的质量**。普通的 `exit 2` 只是告诉 Claude "出错了"，stderr 中的具体错误信息才是 Claude 修复的依据：
 
-```json
-{
-  "decision": "block",
-  "reason": "ESLint 发现 3 个错误：\n1. src/Header.tsx:42 - 硬编码颜色值，请使用 theme.colors.text\n2. src/utils/format.ts:15 - 缺少 return type 注解\n3. src/api/client.ts:88 - 禁止使用 any 类型\n\n请修复后重试。"
-}
+```bash
+echo "ESLint 发现 3 个错误：
+1. src/Header.tsx:42 - 硬编码颜色值，请使用 theme.colors.text
+2. src/utils/format.ts:15 - 缺少 return type 注解
+3. src/api/client.ts:88 - 禁止使用 any 类型
+
+请修复后重试。" >&2
+exit 2
 ```
 
 注意这些错误信息不是简单的 "violation detected"——每条都告诉 Claude **具体哪里错了、怎么修**。这是 OpenAI 百万行案例中"linter 错误信息包含修复指南"的实践。错误信息本身成了 Claude 的上下文，它不需要猜该怎么修。
+
+进阶用法：Claude Code 的 hooks 还支持 **JSON 格式的精细控制**——通过 stdout 输出 `{"decision": "block", "reason": "..."}` 并 exit 0，可以实现更细粒度的阻塞行为（比如 PreToolUse hook 中用 `"decision": "ask"` 强制转人工确认）。但在 Stop hook 的反馈闭环场景中，exit 2 + stderr 文本是最简单可靠的模式，前面所有示例脚本用的也是这种模式。
 
 **禁止 `// eslint-disable-next-line`** 是一个容易被忽略但至关重要的配置。没有这条禁令，Claude 遇到 lint 错误时会直接加 `// eslint-disable-next-line` 来绕过——问题"消失"了，但根因没解决。在 CLAUDE.md 的禁止清单里加上这一条，同时配置 ESLint 的 `noInlineConfig: true` 规则，双保险。
 
@@ -553,14 +589,13 @@ Mitchell Hashimoto 的 Harness Engineering 定义在这里得到了最直接的�
 
 Stripe Minions 的迭代策略更系统化——给 agent **一次 CI 修复机会**，如果修复后 CI 还不过，直接升级给人类。不是无限循环让 agent 自己修——那样容易陷入 "doom loop"。一次机会的边界强迫 agent 集中精力，也给人类一个清晰的信号：agent 修不好的问题，可能是 spec 本身有歧义。
 
-### 4.4 CI 集成（思路 + 关键配置）
+## 4.4 CI 集成（思路 + 关键配置）
 
 CI 集成不展开全链路——那是一篇独立文章的体量。这里讲清思路和关键配置。
 
 **核心模式：Docker + Claude Code 非交互模式。**
 
 ```bash
-# CI 中运行 Claude Code 的典型命令
 claude -p "review this PR and check for issues" \
   --allowedTools "Read,Grep,Glob" \
   --max-turns 10 \
@@ -571,9 +606,9 @@ claude -p "review this PR and check for issues" \
 
 **关键门禁：**
 
-- **类型检查必须过**——`pnpm typecheck` 返回非零则阻止合并
-- **测试必须过**——`pnpm test` 必须全部通过
-- **Lint 必须过**——`pnpm lint` 零 error（warn 可以有）
+- **类型检查必须过**——`yarn typecheck` 返回非零则阻止合并
+- **测试必须过**——`yarn test` 必须全部通过
+- **Lint 必须过**——`yarn lint` 零 error（warn 可以有）
 - **构建必须成功**——`cd android && ./gradlew assembleRelease` 成功
 
 **安全红线：**
@@ -590,11 +625,10 @@ GitHub Actions / GitLab CI 的配置模式类似：Docker 镜像里装好 Claude
 
 自动化链路搭好了。Claude 写完代码会自动验证，验证失败会自动修复，原生层有权限保护，CI 有门禁把关。最后一章回答一个更根本的问题：**如果我今天从零开始，怎么一步步搭出这套体系？**
 
-## 五、落地路径——渐进式搭建指南
 
 不要试图一次搭好全套 Harness。正确的节奏是**边用边建，遇到问题再加**。以下四个阶段，每个阶段都有明确的检查清单——什么时候该进下一阶段。
 
-### 阶段 0：第 1 天——写 CLAUDE.md，只写最关键的 20 行
+## 阶段 0：第 1 天——写 CLAUDE.md，只写最关键的 20 行
 
 打开你现有的项目，回答三个问题：
 
@@ -613,8 +647,8 @@ GitHub Actions / GitLab CI 的配置模式类似：Docker 镜像里装好 Claude
 - DO NOT modify native layer without approval
 
 ## 关键命令
-- `pnpm test` — 跑测试
-- `pnpm typecheck` — 类型检查
+- `yarn test` — 跑测试
+- `yarn typecheck` — 类型检查
 
 ## 架构决策
 - JS ↔ Native 通信走 TurboModule，见 src/native/README.md
@@ -628,14 +662,14 @@ GitHub Actions / GitLab CI 的配置模式类似：Docker 镜像里装好 Claude
 
 完成这个阶段只需要 10 分钟。做完之后继续正常用 Claude——你会发现它犯那 3 个错的频率明显下降。
 
-### 阶段 1：第 1 周——配置验证链 + hooks
+## 阶段 1：第 1 周——配置验证链 + hooks
 
 等你在阶段 0 的基础上用了一周 Claude，你会开始发现新的问题：Claude 写完代码没跑测试、类型不匹配直接交差、lint 报错了当没看见。这些问题用 CLAUDE.md 解决不了——需要 hooks。
 
 具体操作：
 
 1. **确认你的 ESLint + TypeScript strict 已经配好。** 如果没有，这是前提条件。
-2. **写一个 Stop hook**：Claude 完成任务后自动跑 `pnpm lint && pnpm typecheck`。参考第四章 4.1 的 `full-validate.sh`。
+2. **写一个 Stop hook**：Claude 完成任务后自动跑 `yarn lint && yarn typecheck`。参考第四章 4.1 的 `full-validate.sh`。
 3. **测试这个 hook**：故意让 Claude 写一段有类型错误的代码，看它完成后 hook 是否触发、错误是否喂回、Claude 是否自行修复。
 
 **检查清单：**
@@ -646,22 +680,22 @@ GitHub Actions / GitLab CI 的配置模式类似：Docker 镜像里装好 Claude
 
 阶段 1 完成后，你已经有了一个最小可用的 Harness：CLAUDE.md 定义规则，hooks 强制执行验证。这已经能覆盖 70% 的质量问题。
 
-### 阶段 2：第 2-3 周——封装 skills + 建立 SDD 工作流
+## 阶段 2：第 2-3 周——封装 skills + 建立 SDD 工作流
 
 用了两周 Claude + hooks，你会发现两类新问题：一是某些操作每次都要教一遍（比如"新建模块"），二是复杂需求的输出质量波动大。
 
 针对重复操作——封装成 skills。先封装你最常用的 2-3 个：新建模块、跑测试、生成路由。每个 skill 只解决一件事，触发词写在 description 里。参考第二章 2.4 的 SKILL.md 示例。
 
-针对质量波动——开始实践 SDD 三角色分离。不用每个需求都走三角色，先从**你写过的最复杂的那 3 个需求**开始试。对比一下：单角色直出 vs 三角色分离，质量差距有多大。参考第三章 3.1 的完整流程。
+针对质量波动——开始实践三角色 + OpenSpec 的 SDD 工作流。不用每个需求都走完整流程，先从**你写过的最复杂的那 3 个需求**开始试。对比一下：单角色直出 vs 三角色 + OpenSpec，质量差距有多大。参考第三章 3.1 的完整流程。
 
 开始用 subagent 做上下文隔离——当你发现一个任务 Claude 做到一半开始"迷路"，那就是该拆 subagent 的信号。不要提前拆，在需要时才拆。
 
 **检查清单：**
 - Skill 被 Claude 自动触发了（不需要你手动提醒）？
-- 三角色分离比单角色质量有明显提升？
+- 三角色 + OpenSpec 比单角色直出质量有明显提升？
 - Subagent 的 handoff 文件能被父会话正确消费？
 
-### 阶段 3：第 1 月+——subagent 拆分 + CI 集成 + 持续优化
+## 阶段 3：第 1 月+——subagent 拆分 + CI 集成 + 持续优化
 
 到这个阶段，你的 Harness 已经覆盖了 Memory（CLAUDE.md + rules）、Execution（SDD + subagent）、Feedback（hooks + 验证链）三层。剩下的是 Orchestration 和持续迭代。
 
@@ -670,24 +704,6 @@ GitHub Actions / GitLab CI 的配置模式类似：Docker 镜像里装好 Claude
 **CI 集成。** 用 `claude -p` + Docker + `--allowedTools` 做自动化检查。不用一步到位——先加一个 PR review agent，再做自动化测试。参考第四章 4.4。
 
 **持续优化。** 每周花 10 分钟回顾 Claude 这周犯的错：哪些是 CLAUDE.md 没覆盖到的？哪些是 hooks 没拦住的？把新的错误转化为新规则或新 hooks。Mitchell Hashimoto 说的："AGENTS.md 的每一行都基于一个 bad agent behavior。" 你的 CLAUDE.md 和 hooks 也应该是这样——**没有犯错就没有规则，每次犯错都加一条规则。**
-
----
-
-## 补充视角：Mitchell Hashimoto 的六步采纳框架
-
-前面四个阶段是从 Harness 的架构出发，自下而上搭建。Mitchell Hashimoto 在 Ghostty 终端项目上用的是另一个角度——**从个人采纳出发，自外而内演进**。六个步骤，对开发者个体的参考价值很高：
-
-**1. Drop the Chatbot。** 从聊天界面切换到 agent。Claude Code 就是 agent——它能读文件、执行命令、发 HTTP 请求。聊天模式（比如在 claude.ai 对话框里问代码问题）本质上还是你手动搬运上下文，agent 模式让 Claude 自己去找。
-
-**2. Reproduce Your Own Work。** 强迫自己用 agent 复现你手动做的 commit。Hashimoto 说"这很痛苦……但专业技能由此形成"。你会发现很多你以为"很简单"的操作，agent 根本不知道怎么做——这些就是你该写进 CLAUDE.md 的东西。
-
-**3. End-of-Day Agents。** 每天下班前 30 分钟，启动 Claude 做深度任务：代码库调研、性能分析、issue triage。你不需要等结果——第二天早上来看。这是让 agent 利用你的"空闲时间"。
-
-**4. Outsource the Slam Dunks。** 把你 100% 确信 agent 能做好的事交给它，然后去做别的事。Hashimoto 的建议是："关掉 agent 的桌面通知。上下文切换非常昂贵。" 让 agent 在后台跑，你集中精力做只有你能做的事。
-
-**5. Engineer the Harness。** 这一步和我们的四阶段路径重合——每次犯错都加一条规则，每次绕过检查都加一个 hook。但 Hashimoto 的做法更具体：他会专门写脚本来验证 agent 的输出（比如截图脚本对比 UI 变化），而不只是跑 lint 和测试。
-
-**6. Always Have an Agent Running。** 目标是 10-20% 的工作时间有 agent 在跑。不需要每时每刻都有，但当你发现"我在等 agent 完成"的频率变高，说明你已经开始利用 agent 的并行能力了。
 
 ---
 
