@@ -20,9 +20,31 @@ interface Props {
 
 const { title, date, tags, excerpt, headings = [], readingTime } = Astro.props;
 const giscusRepo = 'burgessjp/burgessjp.github.io';
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+
+const blogPostingLd = {
+  '@context': 'https://schema.org',
+  '@type': 'BlogPosting',
+  headline: title,
+  description: excerpt || '',
+  datePublished: date.toISOString(),
+  author: {
+    '@type': 'Person',
+    name: 'PENG',
+    url: 'https://github.com/burgessjp',
+  },
+  mainEntityOfPage: {
+    '@type': 'WebPage',
+    '@id': canonicalURL.toString(),
+  },
+  publisher: {
+    '@type': 'Person',
+    name: 'PENG',
+  },
+};
 ---
 
-<BaseLayout title={title} description={excerpt} type="article" publishedTime={date} tags={tags}>
+<BaseLayout title={title} description={excerpt} type="article" publishedTime={date} tags={tags} jsonLd={blogPostingLd}>
   <Navbar />
   <main class="max-w-3xl mx-auto px-6 pt-16 pb-16">
     <article>

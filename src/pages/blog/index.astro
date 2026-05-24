@@ -11,7 +11,7 @@ const allPosts = (await getCollection('blog'))
 const allTags = [...new Set(allPosts.flatMap((p) => p.data.tags))].sort();
 ---
 
-<BaseLayout title="Blog">
+<BaseLayout title="Blog" description="技术文章 — Claude Code、AI Agent、React Native、Android 开发实战">
   <Navbar />
   <main class="max-w-3xl mx-auto px-6 pt-16 pb-16">
     <h1 class="font-serif text-2xl font-bold mb-8">博客</h1>

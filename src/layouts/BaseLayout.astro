@@ -7,10 +7,26 @@ interface Props {
   type?: 'website' | 'article';
   publishedTime?: Date;
   tags?: string[];
+  jsonLd?: object;
 }
 
-const { title, description = 'Mobile Dev | AI Explorer', type = 'website', publishedTime, tags } = Astro.props;
+const { title, description = 'Mobile Dev | AI Explorer', type = 'website', publishedTime, tags, jsonLd } = Astro.props;
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+const siteName = 'PENG Blog';
+
+const defaultJsonLd = type === 'website' ? {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: siteName,
+  url: Astro.site?.toString(),
+  author: {
+    '@type': 'Person',
+    name: 'PENG',
+    url: 'https://github.com/burgessjp',
+  },
+} : null;
+
+const structuredData = jsonLd || defaultJsonLd;
 ---
 
 <!doctype html>
@@ -21,13 +37,14 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
     <meta name="description" content={description} />
     <link rel="canonical" href={canonicalURL} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="alternate" type="application/rss+xml" title="PENG Blog" href="/rss.xml" />
+    <link rel="alternate" type="application/rss+xml" title={siteName} href="/rss.xml" />
     <title>{title} | PENG</title>
 
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content={type} />
     <meta property="og:url" content={canonicalURL} />
+    <meta property="og:site_name" content={siteName} />
     <meta property="og:locale" content="zh_CN" />
     <meta name="twitter:card" content="summary" />
     <meta name="twitter:title" content={title} />
@@ -38,6 +55,9 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
     {type === 'article' && tags?.map((tag) => (
       <meta property="article:tag" content={tag} />
     ))}
+    {structuredData && (
+      <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
+    )}
   </head>
   <body class="min-h-screen overflow-x-hidden">
     <slot />
