@@ -62,6 +62,11 @@
   }
   .sec-title::before { content: ""; width: 10px; height: 10px; background: var(--acc); flex: none; }
   .sec-title .en { font-family: var(--f-num); font-size: 9px; letter-spacing: 0.3em; color: var(--ink2); font-weight: 400; }
+  .unit-btn {
+    margin-left: auto; height: 22px; padding: 0 10px; font-size: 11px; letter-spacing: 0.08em;
+    background: var(--paper); border: 1.5px solid var(--ink); color: var(--ink);
+  }
+  .unit-btn:hover { background: var(--ink); color: var(--paper); }
 
   .field-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 12px; }
   .field-grid .three-col { grid-column: span 3; }
@@ -246,13 +251,13 @@
   <!-- ===== 左侧：参数表单 ===== -->
   <aside>
     <section>
-      <div class="sec-title">托盘参数 <span class="en">PALLET</span></div>
+      <div class="sec-title">托盘参数 <span class="en">PALLET</span><button id="unitToggle" class="unit-btn" title="切换输入与显示单位">cm / kg</button></div>
       <div class="field-grid">
-        <div><label class="fl">托盘长 L <b>cm</b></label><input type="number" id="pL" value="120" min="1" step="any"></div>
-        <div><label class="fl">托盘宽 W <b>cm</b></label><input type="number" id="pW" value="100" min="1" step="any"></div>
-        <div><label class="fl">可用高度 H <b>cm</b></label><input type="number" id="pH" value="180" min="1" step="any"></div>
-        <div><label class="fl">限重 <b>kg</b></label><input type="number" id="pMaxW" value="450" min="1" step="any"></div>
-        <div><label class="fl">托盘自重 <b>kg</b></label><input type="number" id="pOwnW" value="0" min="0" step="any"></div>
+        <div><label class="fl">托盘长 L <b class="u-len">cm</b></label><input type="number" id="pL" value="120" min="1" step="any"></div>
+        <div><label class="fl">托盘宽 W <b class="u-len">cm</b></label><input type="number" id="pW" value="100" min="1" step="any"></div>
+        <div><label class="fl">可用高度 H <b class="u-len">cm</b></label><input type="number" id="pH" value="180" min="1" step="any"></div>
+        <div><label class="fl">限重 <b class="u-wt">kg</b></label><input type="number" id="pMaxW" value="450" min="1" step="any"></div>
+        <div><label class="fl">托盘自重 <b class="u-wt">kg</b></label><input type="number" id="pOwnW" value="0" min="0" step="any"></div>
       </div>
       <div class="opt-note">自重可留 0；填写后计入限重（货重 + 自重 ≤ 限重）。H 为货物可用高度，不含托盘自身厚度。</div>
     </section>
@@ -267,7 +272,7 @@
     <section>
       <div class="sec-title">箱规清单 <span class="en">CARTONS</span></div>
       <div style="margin-bottom:10px">
-        <label class="fl"><b>整票总重</b> kg（可选）</label>
+        <label class="fl"><b>整票总重</b> <span class="u-wt">kg</span>（可选）</label>
         <input type="number" id="gTw" min="0" step="any" placeholder="只知整票总重时填">
       </div>
       <div class="sku-rows" id="skuRows"></div>
@@ -288,14 +293,14 @@
       <table id="skuTable">
         <caption>分箱规明细<span class="en">PER CARTON TYPE</span></caption>
         <thead><tr>
-          <th>箱规 CM</th><th>单箱 KG</th><th>数量</th><th>摆放</th><th>单板箱数</th><th>限重/几何上限</th><th>约束</th><th>板数</th>
+          <th>箱规 <span class="u-len">CM</span></th><th>单箱 <span class="u-wt">KG</span></th><th>数量</th><th>摆放</th><th>单板箱数</th><th>限重/几何上限</th><th>约束</th><th>板数</th>
         </tr></thead>
         <tbody></tbody>
       </table>
       <table id="palletTable">
         <caption>逐板装载清单<span class="en">PALLET MANIFEST</span></caption>
         <thead><tr>
-          <th>板号</th><th>箱规</th><th>箱数</th><th>货重 KG</th><th>载货尺寸 CM</th><th>高度利用</th><th>空间利用</th><th>状态</th>
+          <th>板号</th><th>箱规</th><th>箱数</th><th>货重 <span class="u-wt">KG</span></th><th>载货尺寸 <span class="u-len">CM</span></th><th>高度利用</th><th>空间利用</th><th>状态</th>
         </tr></thead>
         <tbody></tbody>
       </table>
@@ -310,7 +315,7 @@
         <button class="vp-btn" id="btnReset">重置视角</button>
       </div>
       <div class="legend" id="legend"></div>
-      <div class="vp-hint">拖拽旋转 · 滚轮缩放 · 右键平移</div>
+      <div class="vp-hint">拖拽旋转 · 滚轮缩放 · 右键平移 · 触屏双指缩放</div>
       <div class="title-block" id="titleBlock">
         <div><b>PALLET PLAN</b> · 3D PREVIEW</div>
         <div id="tbInfo">—</div>
@@ -319,7 +324,7 @@
     </div>
 
     <footer>
-      <b>口径说明：</b>结果为几何 + 限重预估。各箱规独立打板、满板优先（不混装拼板，尾板可与其他货拼板，实际板数可能更少）；层内为整齐码放（含换向条带优化），未做交错咬合码放；未考虑堆叠强度、重心偏载与货物「此面向上」限制（可用左侧选项控制）。3D 中托盘厚度仅为示意，可用高度按参数 H 计算。
+      <b>口径说明：</b>结果为几何 + 限重预估。各箱规独立打板、满板优先（不混装拼板，尾板可与其他货拼板，实际板数可能更少）；层内为整齐码放（含换向条带优化），未做交错咬合码放；未考虑堆叠强度、重心偏载与货物「此面向上」限制（可用左侧选项控制）。3D 中托盘厚度仅为示意，可用高度按参数 H 计算。单位：托盘参数区可切 cm/kg ↔ in/lbs，内部按公制计算，体积固定 m³（行业计费口径）。
     </footer>
   </div>
 </main>
@@ -579,6 +584,21 @@ function computeVoids(pallet, blocks, maxCount = 3) {
     .slice(0, maxCount);
 }
 
+// 单箱规板的占位块：满层取整层包围盒，部分层取紧包围盒（供剩余空间计算）
+function palletBlocks(p) {
+  const blocks = [];
+  if (p.fullLayers > 0)
+    blocks.push({ x: 0, z: 0, y: 0, w: p.loadL, d: p.loadW, h: p.fullLayers * p.vh });
+  if (p.partial > 0) {
+    const pl = p.layer.slice(0, p.partial);
+    blocks.push({
+      x: 0, z: 0, y: p.fullLayers * p.vh,
+      w: Math.max(...pl.map((q) => q.x + q.w)), d: Math.max(...pl.map((q) => q.y + q.h)), h: p.vh,
+    });
+  }
+  return blocks.length ? blocks : [{ x: 0, z: 0, y: 0, w: p.loadL, d: p.loadW, h: p.loadH }];
+}
+
 // 多箱规总体规划（各箱规独立打板满板优先；mergeTailsOn 时尾板互相拼合）
 // skus: [{ l, w, h, wt, qty }], 返回逐板明细与汇总
 function planLoad(skus, pallet, allowTip, mergeTailsOn) {
@@ -652,6 +672,46 @@ function planLoad(skus, pallet, allowTip, mergeTailsOn) {
 // UI 逻辑
 // ============================================================
 const SKU_COLORS = ['#c98a3b', '#4a7f74', '#5b6b9e', '#8a9a5b', '#b45a4a', '#806ba0', '#3f6f8f', '#a0825a'];
+window.SKU_COLORS = SKU_COLORS; // 3D 模块共用同一调色板，避免两份漂移
+
+// ===== 单位换算：内部恒为 cm/kg，仅输入框与展示层转换 =====
+const UNIT = {
+  metric: { len: 1, wt: 1, lenU: 'cm', wtU: 'kg', name: 'cm / kg' },
+  imp: { len: 1 / 2.54, wt: 1 / 0.45359237, lenU: 'in', wtU: 'lbs', name: 'in / lbs' },
+};
+let unitMode = 'metric';
+const toLen = (cm) => cm * UNIT[unitMode].len;
+const toWt = (kg) => kg * UNIT[unitMode].wt;
+const fromLen = (v) => v / UNIT[unitMode].len;
+const fromWt = (v) => v / UNIT[unitMode].wt;
+const fdLen = (cm) => fmt(toLen(cm), unitMode === 'imp' ? 1 : 0); // 尺寸展示（英制保留 1 位小数）
+const fdWt = (kg) => fmt(toWt(kg), 1);
+
+const LEN_INPUTS = () => ['pL', 'pW', 'pH'].map($).concat([...document.querySelectorAll('#skuRows .c-l, #skuRows .c-w, #skuRows .c-h')]);
+const WT_INPUTS = () => ['pMaxW', 'pOwnW', 'gTw'].map($).concat([...document.querySelectorAll('#skuRows .c-wt')]);
+
+function setUnitLabels() {
+  const u = UNIT[unitMode];
+  document.querySelectorAll('.u-len').forEach((el) => (el.textContent = u.lenU));
+  document.querySelectorAll('.u-wt').forEach((el) => (el.textContent = u.wtU));
+  $('unitToggle').textContent = u.name;
+  window.__units = { lf: u.len, wf: u.wt, lenU: u.lenU, wtU: u.wtU }; // 3D 标签换算用
+}
+
+function toggleUnit() {
+  const oldU = UNIT[unitMode];
+  unitMode = unitMode === 'metric' ? 'imp' : 'metric';
+  const newU = UNIT[unitMode];
+  const conv = (els, f) => els.forEach((el) => {
+    if (el.value.trim() === '') return;
+    const v = parseFloat(el.value);
+    if (!isNaN(v)) el.value = +(v * f).toPrecision(6); // 6 位有效数字保证往返换算不失真
+  });
+  conv(LEN_INPUTS(), newU.len / oldU.len);
+  conv(WT_INPUTS(), newU.wt / oldU.wt);
+  setUnitLabels();
+  calculate();
+}
 const $ = (id) => document.getElementById(id);
 
 function skuRowHtml(vals) {
@@ -664,7 +724,7 @@ function skuRowHtml(vals) {
         <div class="cell"><label>长 L</label><input type="number" class="c-l" min="1" step="any" value="${v[0]}"></div>
         <div class="cell"><label>宽 W</label><input type="number" class="c-w" min="1" step="any" value="${v[1]}"></div>
         <div class="cell"><label>高 H</label><input type="number" class="c-h" min="1" step="any" value="${v[2]}"></div>
-        <div class="cell"><label>KG/箱</label><input type="number" class="c-wt" min="0" step="any" value="${v[3]}" title="可不填，配合上方整票总重按余重均摊"></div>
+        <div class="cell"><label><span class="u-wt">KG</span>/箱</label><input type="number" class="c-wt" min="0" step="any" value="${v[3]}" title="可不填，配合上方整票总重按余重均摊"></div>
         <div class="cell"><label>数量</label><input type="number" class="c-qty" min="1" step="1" value="${v[4]}"></div>
       </div>
     </div>`;
@@ -684,19 +744,23 @@ function addSkuRow(vals) {
 function readInputs() {
   const errs = [];
   document.querySelectorAll('input.err').forEach((i) => i.classList.remove('err'));
-  const num = (el, label, { min = 0, integer = false, required = true } = {}) => {
+  const num = (el, label, { min = 0, max, integer = false, required = true } = {}) => {
     const raw = el.value.trim();
     const v = parseFloat(raw);
     if (required && (raw === '' || isNaN(v))) { el.classList.add('err'); errs.push(`${label} 需为数字`); return NaN; }
     if (!isNaN(v) && v < min) { el.classList.add('err'); errs.push(`${label} 需 ≥ ${min}`); return NaN; }
+    if (max !== undefined && !isNaN(v) && v > max) { el.classList.add('err'); errs.push(`${label} 需 ≤ ${max}`); return NaN; }
     if (integer && !isNaN(v) && !Number.isInteger(v)) { el.classList.add('err'); errs.push(`${label} 需为整数`); return NaN; }
     return v;
   };
 
+  const ownW = num($('pOwnW'), '托盘自重', { min: 0, required: false });
   const pallet = {
-    L: num($('pL'), '托盘长'), W: num($('pW'), '托盘宽'),
-    H: num($('pH'), '可用高度'), maxW: num($('pMaxW'), '限重'),
-    palletWt: num($('pOwnW'), '托盘自重', { min: 0 }),
+    L: fromLen(num($('pL'), '托盘长', { min: 1 })),
+    W: fromLen(num($('pW'), '托盘宽', { min: 1 })),
+    H: fromLen(num($('pH'), '可用高度', { min: 1 })),
+    maxW: fromWt(num($('pMaxW'), '限重', { min: 1 })),
+    palletWt: isNaN(ownW) ? 0 : fromWt(ownW),
   };
   if (pallet.palletWt >= pallet.maxW) { $('pOwnW').classList.add('err'); errs.push('托盘自重需小于限重'); }
 
@@ -704,18 +768,18 @@ function readInputs() {
   const rowEls = [];
   document.querySelectorAll('#skuRows .sku-row').forEach((row, i) => {
     const wtEl = row.querySelector('.c-wt');
-    const qty = num(row.querySelector('.c-qty'), `第${i + 1}行 数量`, { integer: true });
-    let wt = NaN;
+    const qty = num(row.querySelector('.c-qty'), `第${i + 1}行 数量`, { min: 1, max: 100000, integer: true });
+    let wt = NaN, avg = false; // wt 先按当前显示单位收集，末尾统一换算为内部单位
     if (wtEl.value.trim() !== '') {
       wt = num(wtEl, `第${i + 1}行 单箱重`, { min: 0 });
       if (!isNaN(wt) && wt <= 0) { wtEl.classList.add('err'); errs.push(`第${i + 1}行 单箱重需 > 0`); }
     }
     rowEls.push({ wtEl });
     skus.push({
-      l: num(row.querySelector('.c-l'), `第${i + 1}行 长`),
-      w: num(row.querySelector('.c-w'), `第${i + 1}行 宽`),
-      h: num(row.querySelector('.c-h'), `第${i + 1}行 高`),
-      wt, qty, avg: false,
+      l: fromLen(num(row.querySelector('.c-l'), `第${i + 1}行 长`, { min: 1 })),
+      w: fromLen(num(row.querySelector('.c-w'), `第${i + 1}行 宽`, { min: 1 })),
+      h: fromLen(num(row.querySelector('.c-h'), `第${i + 1}行 高`, { min: 1 })),
+      wt, qty, avg,
     });
   });
 
@@ -734,14 +798,15 @@ function readInputs() {
         const knownW = skus.reduce((t, s) => (isNaN(s.wt) ? t : t + s.wt * s.qty), 0);
         const unknownQty = unknown.reduce((t, x) => t + (isNaN(x.s.qty) ? 0 : x.s.qty), 0);
         if (unknownQty < 1) errs.push('未填单箱重的箱规，数量无效');
-        else if (gTw - knownW <= 0) { gTwEl.classList.add('err'); errs.push(`整票总重需大于已知箱规货重 ${+knownW.toFixed(2)}kg`); }
+        else if (gTw - knownW <= 0) { gTwEl.classList.add('err'); errs.push(`整票总重需大于已知箱规货重 ${+knownW.toFixed(2)}${UNIT[unitMode].wtU}`); }
         else {
-          const avg = (gTw - knownW) / unknownQty;
-          unknown.forEach((x) => { x.s.wt = avg; x.s.avg = true; });
+          const avgW = (gTw - knownW) / unknownQty;
+          unknown.forEach((x) => { x.s.wt = avgW; x.s.avg = true; });
         }
       }
     }
   }
+  skus.forEach((s) => { if (!isNaN(s.wt)) s.wt = fromWt(s.wt); }); // 显示单位 → 内部 kg
   if (!skus.length) errs.push('至少需要一行箱规');
 
   return { pallet, skus, errs };
@@ -750,7 +815,7 @@ function readInputs() {
 function fmt(n, d = 1) {
   return Number(n.toFixed(d)).toString();
 }
-function skuLabel(sku) { return `${fmt(sku.l, 1)}×${fmt(sku.w, 1)}×${fmt(sku.h, 1)}`; }
+function skuLabel(sku) { return `${fmt(toLen(sku.l), 1)}×${fmt(toLen(sku.w), 1)}×${fmt(toLen(sku.h), 1)}`; }
 
 function renderResults(plan, pallet) {
   const t = plan.totals;
@@ -761,7 +826,7 @@ function renderResults(plan, pallet) {
     <div class="kpi-stamp"><div class="v">${t.pallets}</div><div class="k">托盘 PLTS</div></div>
     <div class="kpi-list">
       <div class="kpi"><div class="k">总箱数 CTNS</div><div class="v">${t.boxes}<small> 箱</small></div></div>
-      <div class="kpi"><div class="k">总货重 GW</div><div class="v">${fmt(t.weight, 1)}<small> kg</small></div></div>
+      <div class="kpi"><div class="k">总货重 GW</div><div class="v">${fdWt(t.weight)}<small> ${UNIT[unitMode].wtU}</small></div></div>
       <div class="kpi"><div class="k">总体积 VOL</div><div class="v">${fmt(t.volumeM3, 3)}<small> m³</small></div></div>
       <div class="kpi"><div class="k">重量下限 MIN</div><div class="v">${weightFloor || '—'}<small> 板</small></div></div>
     </div>`;
@@ -774,7 +839,7 @@ function renderResults(plan, pallet) {
   if (!t.feasible) {
     note += '部分箱规无法装载，见下表原因；其余箱规已正常计算。';
   } else if (binds.includes('weight') && binds.every((b) => b === 'weight' || b === 'both')) {
-    note += `<b>瓶颈：限重。</b>单板重量先于高度到达上限（还有堆高富余）——板数已由总重决定：⌈${fmt(t.weight, 1)} ÷ ${fmt(pallet.maxW - (pallet.palletWt || 0), 1)}⌉ = ${weightFloor} 板${optimal ? '，当前方案已达重量下限，减不了板' : '，当前方案未达下限（受几何限制），可考虑混装拼尾板'}。`;
+    note += `<b>瓶颈：限重。</b>单板重量先于高度到达上限（还有堆高富余）——板数已由总重决定：⌈${fdWt(t.weight)} ÷ ${fdWt(pallet.maxW - (pallet.palletWt || 0))}⌉ = ${weightFloor} 板${optimal ? '，当前方案已达重量下限，减不了板' : '，当前方案未达下限（受几何限制），可考虑混装拼尾板'}。`;
   } else if (binds.every((b) => b === 'geom')) {
     note += '<b>瓶颈：几何。</b>高度或底面先于限重到达上限——想减板需压缩箱规、换更匹配托盘底面的箱型或允许倒放。';
   } else {
@@ -794,7 +859,7 @@ function renderResults(plan, pallet) {
     const pose = r.vertical === 'h' ? '正立' : '侧/倒放';
     return `<tr>
       <td class="zh"><span class="chip" style="background:${color}"></span>${skuLabel(sku)}</td>
-      <td>${sku.avg ? '≈' : ''}${fmt(sku.wt, 2)}</td><td>${sku.qty}</td>
+      <td>${sku.avg ? '≈' : ''}${fmt(toWt(sku.wt), 2)}</td><td>${sku.qty}</td>
       <td class="zh">${r.perLayer}/层 × ${r.layersFit}层 · ${pose}</td>
       <td>${r.perPallet}</td>
       <td>${r.wtCap} / ${r.geomCap}</td>
@@ -803,11 +868,13 @@ function renderResults(plan, pallet) {
     </tr>`;
   }).join('');
 
-  // 逐板表
+  // 逐板表（超过 200 板只渲染前 200 行，避免巨量 DOM 卡顿）
   const envVol = pallet.L * pallet.W * pallet.H / 1e6;
-  $('palletTable').querySelector('tbody').innerHTML = plan.pallets.map((p, i) => {
+  const MAX_ROWS = 200;
+  const shown = plan.pallets.slice(0, MAX_ROWS);
+  $('palletTable').querySelector('tbody').innerHTML = shown.map((p, i) => {
     const pid = `P${String(i + 1).padStart(2, '0')}`;
-    const dims = `${fmt(p.loadL, 0)}×${fmt(p.loadW, 0)}×${fmt(p.loadH, 0)}`;
+    const dims = `${fdLen(p.loadL)}×${fdLen(p.loadW)}×${fdLen(p.loadH)}`;
     const hUtil = `${Math.round(p.loadH / pallet.H * 100)}%`;
     if (p.type === 'mixed') {
       const chips = [...new Set(p.blocks.map((b) => b.block.skuIdx))]
@@ -818,7 +885,7 @@ function renderResults(plan, pallet) {
         <td>${pid}</td>
         <td class="zh">${chips}拼板 · ${new Set(p.blocks.map((b) => b.block.skuIdx)).size} 种</td>
         <td>${p.count}</td>
-        <td>${fmt(p.weight, 1)}</td>
+        <td>${fdWt(p.weight)}</td>
         <td>${dims}</td>
         <td>${hUtil}</td>
         <td>${Math.round(vol / envVol * 100)}%</td>
@@ -832,13 +899,15 @@ function renderResults(plan, pallet) {
       <td>${pid}</td>
       <td class="zh"><span class="chip" style="background:${color}"></span>${skuLabel(p.sku)}</td>
       <td>${p.count}</td>
-      <td>${fmt(p.weight, 1)}</td>
+      <td>${fdWt(p.weight)}</td>
       <td>${dims}</td>
       <td>${hUtil}</td>
       <td>${Math.round(spaceUtil)}%</td>
       <td>${isTail && p.count < plan.skuResults[p.skuIdx].perPallet ? '<span class="badge last">尾板</span>' : '<span class="badge full">满板</span>'}</td>
     </tr>`;
-  }).join('') || '<tr><td colspan="8" class="zh">无可装载箱规</td></tr>';
+  }).join('') + (plan.pallets.length > MAX_ROWS
+    ? `<tr><td colspan="8" class="zh">共 ${plan.pallets.length} 板，仅显示前 ${MAX_ROWS} 板（全部数据见 3D 图签汇总）</td></tr>` : '')
+    || '<tr><td colspan="8" class="zh">无可装载箱规</td></tr>';
 
   // 3D
   window.__lastPlan = plan;
@@ -874,7 +943,7 @@ function saveState() {
     localStorage.setItem(STORE_KEY, JSON.stringify({
       pallet: { L: $('pL').value, W: $('pW').value, H: $('pH').value, maxW: $('pMaxW').value, palletWt: $('pOwnW').value },
       allowTip: $('allowTip').checked, mergeTails: $('mergeTails').checked,
-      totalWt: $('gTw').value, skus,
+      totalWt: $('gTw').value, unit: unitMode, skus,
     }));
   } catch (e) { /* 存储不可用（隐私模式等）时静默降级为无记忆 */ }
 }
@@ -890,7 +959,9 @@ function restoreState() {
     $('allowTip').checked = s.allowTip !== false;
     $('mergeTails').checked = s.mergeTails !== false; // 旧记忆无此字段时按默认开
     $('gTw').value = s.totalWt ?? '';
+    unitMode = s.unit === 'imp' ? 'imp' : 'metric';
     s.skus.forEach((k) => addSkuRow([k.l, k.w, k.h, k.wt, k.qty]));
+    setUnitLabels(); // 记忆中的输入已是该单位的数值，只切标签不换算
     return true;
   } catch (e) { return false; }
 }
@@ -900,8 +971,10 @@ if (!restoreState()) addSkuRow(['30', '25', '35', '13', '118']);
 $('btnAdd').addEventListener('click', () => addSkuRow());
 $('btnCalc').addEventListener('click', calculate);
 $('gTw').addEventListener('keydown', (e) => { if (e.key === 'Enter') calculate(); });
+$('unitToggle').addEventListener('click', toggleUnit);
 $('allowTip').addEventListener('change', calculate);
 $('mergeTails').addEventListener('change', calculate);
+setUnitLabels();
 calculate();
 </script>
 
@@ -934,7 +1007,7 @@ try {
   scene.background = new THREE.Color(0xece7db);
   scene.fog = new THREE.Fog(0xece7db, 2200, 5200);
 
-  // 精简轨道控制：左键旋转 / 右键或 Ctrl 拖拽平移 / 滚轮缩放，带阻尼与自动旋转
+  // 精简轨道控制：左键旋转 / 右键或 Ctrl 拖拽平移 / 滚轮或双指捏合缩放，带阻尼与自动旋转
   class SimpleOrbit {
     constructor(camera, dom) {
       this.camera = camera; this.dom = dom;
@@ -945,13 +1018,28 @@ try {
       this._vTheta = 0; this._vPhi = 0; this._vRadius = 0;
       this._vPan = new THREE.Vector3();
       this._drag = null;
+      this._pts = new Map(); // 触屏多指：双指捏合缩放
+      dom.style.touchAction = 'none';
       dom.addEventListener('contextmenu', (e) => e.preventDefault());
       dom.addEventListener('pointerdown', (e) => {
-        this._drag = { x: e.clientX, y: e.clientY, pan: e.button !== 0 || e.ctrlKey || e.metaKey };
-        if (this.onStart) this.onStart();
+        this._pts.set(e.pointerId, { x: e.clientX, y: e.clientY });
+        if (this._pts.size === 1) {
+          this._drag = { x: e.clientX, y: e.clientY, pan: e.button !== 0 || e.ctrlKey || e.metaKey };
+          if (this.onStart) this.onStart();
+        } else this._drag = null; // 第二指进入 → 转捏合
         dom.setPointerCapture(e.pointerId);
       });
       dom.addEventListener('pointermove', (e) => {
+        const p = this._pts.get(e.pointerId);
+        if (!p) return;
+        if (this._pts.size >= 2) {
+          const [a, b] = [...this._pts.values()];
+          const d0 = Math.hypot(a.x - b.x, a.y - b.y);
+          p.x = e.clientX; p.y = e.clientY;
+          const d1 = Math.hypot(a.x - b.x, a.y - b.y);
+          this._vRadius -= (d1 - d0) * 1.4;
+          return;
+        }
         if (!this._drag) return;
         const dx = e.clientX - this._drag.x, dy = e.clientY - this._drag.y;
         this._drag.x = e.clientX; this._drag.y = e.clientY;
@@ -965,7 +1053,10 @@ try {
           this._vPhi -= dy * 0.0052;
         }
       });
-      const end = () => { this._drag = null; };
+      const end = (e) => {
+        this._pts.delete(e.pointerId);
+        if (this._pts.size === 0) this._drag = null;
+      };
       dom.addEventListener('pointerup', end);
       dom.addEventListener('pointercancel', end);
       dom.addEventListener('wheel', (e) => { e.preventDefault(); this._vRadius += e.deltaY; }, { passive: false });
@@ -1021,7 +1112,7 @@ try {
   scene.add(grid);
 
   // ===== 材质/几何缓存 =====
-  const COLORS = ['#c98a3b', '#4a7f74', '#5b6b9e', '#8a9a5b', '#b45a4a', '#806ba0', '#3f6f8f', '#a0825a'];
+  const COLORS = window.SKU_COLORS;
   const matCache = new Map();
   const geoCache = new Map();
   const boxMat = (skuIdx) => {
@@ -1031,13 +1122,13 @@ try {
   };
   const boxGeo = (w, h, d) => {
     const k = `${w}|${h}|${d}`;
-    if (!geoCache.has(k)) geoCache.set(k, new THREE.BoxGeometry(w * 0.985, h * 0.985, d * 0.985));
+    if (!geoCache.has(k)) { const g = new THREE.BoxGeometry(w * 0.985, h * 0.985, d * 0.985); geoCache.set(k, g); cachedGeos.add(g); }
     return geoCache.get(k);
   };
   const edgeCache = new Map();
   const boxEdges = (w, h, d) => {
     const k = `${w}|${h}|${d}`;
-    if (!edgeCache.has(k)) edgeCache.set(k, new THREE.EdgesGeometry(new THREE.BoxGeometry(w * 0.99, h * 0.99, d * 0.99)));
+    if (!edgeCache.has(k)) { const g = new THREE.EdgesGeometry(new THREE.BoxGeometry(w * 0.99, h * 0.99, d * 0.99)); edgeCache.set(k, g); cachedGeos.add(g); }
     return edgeCache.get(k);
   };
   const edgeMat = new THREE.LineBasicMaterial({ color: 0x2a251c, transparent: true, opacity: 0.4 });
@@ -1046,6 +1137,7 @@ try {
   // 剩余空间：淡橙虚线框 + 半透明体
   const voidMat = new THREE.MeshLambertMaterial({ color: 0xe8490f, transparent: true, opacity: 0.06, depthWrite: false });
   const voidEdgeMat = new THREE.LineDashedMaterial({ color: 0xe8490f, dashSize: 5, gapSize: 4, transparent: true, opacity: 0.55, depthTest: false });
+  const envEdgeMat = new THREE.LineDashedMaterial({ color: 0x211d17, dashSize: 7, gapSize: 5, transparent: true, opacity: 0.65, depthTest: false });
 
   const PALLET_T = 10; // 3D 示意托盘厚度
   let palletGroup = null;
@@ -1114,22 +1206,30 @@ try {
 
   const RENDER_BOX_LIMIT = 4000;
 
+  // 清理上一场景：释放 sprite 贴图与非缓存几何体（缓存几何/共享材质不释放，避免 GPU 泄漏）
+  const cachedGeos = new Set();
+  const disposePalletGroup = () => {
+    if (!palletGroup) return;
+    palletGroup.traverse((o) => {
+      if (o.isSprite) { o.material.map.dispose(); o.material.dispose(); }
+      else if (o.geometry && !cachedGeos.has(o.geometry)) o.geometry.dispose();
+    });
+    scene.remove(palletGroup);
+    palletGroup = null;
+  };
+
   window.__palletRender = (plan, pallet) => {
     const totalBoxes = plan.pallets.reduce((s, p) => s + p.count, 0);
     const fb = document.getElementById('vpFallback');
     if (totalBoxes > RENDER_BOX_LIMIT) {
+      disposePalletGroup(); // 清掉旧场景，避免提示文字下残留过期几何
       fb.innerHTML = `箱子总数 ${totalBoxes} 超过 3D 预览上限（${RENDER_BOX_LIMIT}），计算结果仍有效。<br>如需 3D 预览请减少数量或分批查看。`;
       fb.style.display = 'flex';
       return;
     }
     fb.style.display = 'none';
 
-    if (palletGroup) {
-      palletGroup.traverse((o) => {
-        if (o.isSprite) { o.material.map.dispose(); o.material.dispose(); }
-      });
-      scene.remove(palletGroup);
-    }
+    disposePalletGroup();
     palletGroup = new THREE.Group();
     scene.add(palletGroup);
     dimsGroup = new THREE.Group(); // 标注层：P01 尺寸包络 + 各板剩余空间，统一开关
@@ -1172,7 +1272,8 @@ try {
       }
 
       // 板号标签
-      const tag = p.type === 'mixed' ? `P${String(i + 1).padStart(2, '0')} · 拼${p.count}箱 · ${Math.round(p.weight)}kg` : `P${String(i + 1).padStart(2, '0')} · ${p.count}箱 · ${Math.round(p.weight)}kg`;
+      const u = window.__units || { lf: 1, wf: 1, lenU: 'cm', wtU: 'kg' };
+      const tag = p.type === 'mixed' ? `P${String(i + 1).padStart(2, '0')} · 拼${p.count}箱 · ${Math.round(p.weight * u.wf)}${u.wtU}` : `P${String(i + 1).padStart(2, '0')} · ${p.count}箱 · ${Math.round(p.weight * u.wf)}${u.wtU}`;
       const label = makeLabel(tag);
       label.position.set(ox + pallet.L / 2, PALLET_T + p.loadH + 26, oz + pallet.W / 2);
       palletGroup.add(label);
@@ -1180,16 +1281,17 @@ try {
       // 剩余空间标注：分层最大空白矩形（≥5cm、≥5000cm³，按体积取前3），与尺寸包络同开关
       const occBlocks = p.type === 'mixed'
         ? p.blocks.map((b) => ({ x: b.x, z: b.z, y: b.y, w: b.w, d: b.d, h: b.block.h }))
-        : [{ x: 0, z: 0, y: 0, w: p.loadL, d: p.loadW, h: p.loadH }];
-      computeVoids(pallet, occBlocks).forEach((v) =>
-        addVoid(dimsGroup, ox + v.x, PALLET_T + v.y, oz + v.z, v.w, v.h, v.d, `余${f0(v.w)}×${f0(v.d)}×${f0(v.h)}`)
-      );
+        : palletBlocks(p);
+      computeVoids(pallet, occBlocks).forEach((v) => {
+        const u = window.__units || { lf: 1 };
+        addVoid(dimsGroup, ox + v.x, PALLET_T + v.y, oz + v.z, v.w, v.h, v.d, `余${f0(v.w * u.lf)}×${f0(v.d * u.lf)}×${f0(v.h * u.lf)}`)
+      });
     });
 
     // 尺寸标注：P01 的虚线可用空间包络（L×W×H）+ 三向尺寸（CAD 风格，透视穿透显示）
     const envelope = new THREE.LineSegments(
       new THREE.EdgesGeometry(new THREE.BoxGeometry(pallet.L, pallet.H, pallet.W)),
-      new THREE.LineDashedMaterial({ color: 0x211d17, dashSize: 7, gapSize: 5, transparent: true, opacity: 0.65, depthTest: false })
+      envEdgeMat
     );
     envelope.computeLineDistances();
     envelope.position.set(pallet.L / 2, PALLET_T + pallet.H / 2, pallet.W / 2);
@@ -1203,13 +1305,14 @@ try {
       s.position.set(x, y, z);
       dimsGroup.add(s);
     };
-    dim(`${pallet.L} cm`, pallet.L / 2, PALLET_T + 10, pallet.W + 34);
-    dim(`${pallet.W} cm`, pallet.L + 38, PALLET_T + 10, pallet.W / 2);
-    dim(`${pallet.H} cm`, pallet.L + 34, PALLET_T + pallet.H / 2, pallet.W + 34);
+    const du = window.__units || { lf: 1, lenU: 'cm' };
+    dim(`${Math.round(pallet.L * du.lf)} ${du.lenU}`, pallet.L / 2, PALLET_T + 10, pallet.W + 34);
+    dim(`${Math.round(pallet.W * du.lf)} ${du.lenU}`, pallet.L + 38, PALLET_T + 10, pallet.W / 2);
+    dim(`${Math.round(pallet.H * du.lf)} ${du.lenU}`, pallet.L + 34, PALLET_T + pallet.H / 2, pallet.W + 34);
 
     // 图签 & 图例
     document.getElementById('tbInfo').textContent =
-      `${plan.totals.pallets} PLTS · ${plan.totals.boxes} CTNS · ${plan.totals.weight.toFixed(1)} KG · ${plan.totals.volumeM3.toFixed(3)} M³`;
+      `${plan.totals.pallets} PLTS · ${plan.totals.boxes} CTNS · ${(plan.totals.weight * (window.__units || { wf: 1 }).wf).toFixed(1)} ${(window.__units || { wtU: 'KG' }).wtU.toUpperCase()} · ${plan.totals.volumeM3.toFixed(3)} M³`;
     // 图例：按实际出现的箱规索引生成（拼板由多箱规组成）
     const idxs = new Set();
     plan.pallets.forEach((p) => {
@@ -1217,7 +1320,7 @@ try {
       else idxs.add(p.skuIdx);
     });
     document.getElementById('legend').innerHTML = [...idxs]
-      .map((idx) => `<span><span class="chip" style="background:${COLORS[idx % COLORS.length]}"></span>${plan.skus[idx].l}×${plan.skus[idx].w}×${plan.skus[idx].h} cm</span>`)
+      .map((idx) => `<span><span class="chip" style="background:${COLORS[idx % COLORS.length]}"></span>${(plan.skus[idx].l * (window.__units || { lf: 1 }).lf).toFixed(1)}×${(plan.skus[idx].w * (window.__units || { lf: 1 }).lf).toFixed(1)}×${(plan.skus[idx].h * (window.__units || { lf: 1 }).lf).toFixed(1)} ${(window.__units || { lenU: 'cm' }).lenU}</span>`)
       .join('');
 
     fitCamera();
