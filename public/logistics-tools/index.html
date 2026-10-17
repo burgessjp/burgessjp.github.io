@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>物流工具 · LOGISTICS TOOLS</title>
+<style>
+  :root {
+    --paper: #f1ecdf;
+    --paper2: #faf7ee;
+    --ink: #211d17;
+    --ink2: #6f6656;
+    --line: #cfc7b4;
+    --acc: #e8490f;
+    --f-ui: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans CJK SC", sans-serif;
+    --f-num: ui-monospace, "SF Mono", Menlo, Consolas, "Courier New", monospace;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    min-height: 100vh;
+    font-family: var(--f-ui);
+    background: var(--paper);
+    color: var(--ink);
+    -webkit-font-smoothing: antialiased;
+    display: flex; flex-direction: column;
+  }
+  .hazard { height: 8px; background: repeating-linear-gradient(-45deg, var(--acc) 0 14px, var(--ink) 14px 28px); flex: none; }
+
+  header {
+    display: flex; align-items: flex-end; justify-content: space-between;
+    padding: 34px 32px 18px; border-bottom: 2px solid var(--ink);
+  }
+  .brand h1 { font-size: 30px; font-weight: 900; letter-spacing: 0.06em; }
+  .brand .en { font-family: var(--f-num); font-size: 10px; letter-spacing: 0.42em; color: var(--ink2); margin-top: 6px; text-transform: uppercase; }
+  .stamp {
+    font-family: var(--f-num); font-size: 11px; letter-spacing: 0.12em;
+    border: 2px solid var(--ink); padding: 7px 12px; transform: rotate(-1.5deg);
+    text-align: center; line-height: 1.5; background: var(--paper2);
+  }
+  .stamp b { font-size: 14px; }
+
+  main { flex: 1; padding: 28px 32px 40px; }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+    gap: 18px;
+    max-width: 1160px;
+  }
+  .card {
+    display: flex; flex-direction: column;
+    border: 2px solid var(--ink); background: var(--paper2);
+    text-decoration: none; color: inherit;
+    position: relative; overflow: hidden;
+    transition: transform 0.12s ease, box-shadow 0.12s ease;
+  }
+  .card::before {
+    content: ""; position: absolute; top: 0; left: 0; right: 0; height: 4px;
+    background: repeating-linear-gradient(-45deg, var(--acc) 0 10px, transparent 10px 20px);
+    opacity: 0; transition: opacity 0.12s ease;
+  }
+  .card:hover { transform: translate(-2px, -2px); box-shadow: 4px 4px 0 var(--ink); }
+  .card:hover::before { opacity: 1; }
+  .card .tag {
+    font-family: var(--f-num); font-size: 10px; letter-spacing: 0.1em;
+    background: var(--ink); color: var(--paper); padding: 2px 8px;
+    align-self: flex-start; margin: 14px 14px 0;
+  }
+  .card .body { padding: 12px 16px 0; flex: 1; }
+  .card h2 { font-size: 19px; font-weight: 800; letter-spacing: 0.04em; }
+  .card .en { font-family: var(--f-num); font-size: 9px; letter-spacing: 0.28em; color: var(--ink2); margin-top: 3px; text-transform: uppercase; }
+  .card p { font-size: 13px; line-height: 1.7; color: var(--ink2); margin-top: 10px; }
+  .card .chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
+  .chip {
+    font-family: var(--f-num); font-size: 10px; letter-spacing: 0.08em;
+    border: 1px solid var(--line); color: var(--ink2); padding: 2px 8px;
+  }
+  .card .open {
+    display: flex; align-items: center; justify-content: space-between;
+    font-family: var(--f-num); font-size: 11px; letter-spacing: 0.22em;
+    border-top: 1px solid var(--line); margin-top: 16px; padding: 10px 16px;
+    color: var(--ink2);
+  }
+  .card:hover .open { color: var(--acc); }
+  .card .open::after { content: "→"; }
+
+  .empty { padding: 60px 0; text-align: center; color: var(--ink2); font-size: 13px; display: none; }
+
+  footer {
+    flex: none; border-top: 1px solid var(--line); padding: 12px 32px 16px;
+    font-size: 11px; color: var(--ink2); line-height: 1.8;
+  }
+  footer b { color: var(--ink); }
+  @media (max-width: 640px) {
+    header { flex-direction: column; align-items: flex-start; gap: 14px; }
+    main { padding: 22px 18px 32px; }
+    header, footer { padding-left: 18px; padding-right: 18px; }
+  }
+</style>
+</head>
+<body>
+<div class="hazard"></div>
+<header>
+  <div class="brand">
+    <h1>物流工具</h1>
+    <div class="en">Logistics Tools · Direct URL Access Only</div>
+  </div>
+  <div class="stamp">工具清单<br><b id="toolCount">—</b> TOOLS</div>
+</header>
+
+<main>
+  <div class="grid" id="grid"></div>
+  <div class="empty" id="empty">暂无工具</div>
+</main>
+
+<footer>
+  <b>说明：</b>物流行业常用小工具集合，持续新增。所有工具均为纯前端本地计算，数据不出浏览器。
+</footer>
+
+<script>
+// 工具清单：新增工具时在此追加一项，并在 public/logistics-tools/<path>/ 放入工具页面
+const TOOLS = [
+  {
+    title: '打板计算器',
+    en: 'Pallet Loading Calculator',
+    path: './pallet-calculator/',
+    description: '按托盘尺寸、可用高度与限重计算最优打板方案：多箱规独立打板、尾板拼板、限重/几何瓶颈分析，输出逐板装载清单与 3D 装载预览。',
+    tags: ['打板', '多箱规', '3D 预览', '尾板拼板'],
+  },
+];
+
+const grid = document.getElementById('grid');
+document.getElementById('toolCount').textContent = String(TOOLS.length).padStart(2, '0');
+if (!TOOLS.length) {
+  document.getElementById('empty').style.display = 'block';
+} else {
+  grid.innerHTML = TOOLS.map((t, i) => `
+    <a class="card" href="${t.path}">
+      <span class="tag">TOOL ${String(i + 1).padStart(2, '0')}</span>
+      <div class="body">
+        <h2>${t.title}</h2>
+        <div class="en">${t.en}</div>
+        <p>${t.description}</p>
+        <div class="chips">${t.tags.map((c) => `<span class="chip">${c}</span>`).join('')}</div>
+      </div>
+      <div class="open">OPEN</div>
+    </a>`).join('');
+}
+</script>
+</body>
+</html>
