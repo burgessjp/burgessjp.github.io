@@ -1,0 +1,1280 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>打板计算器 · PALLET LOADING CALCULATOR</title>
+<style>
+  :root {
+    --paper: #f1ecdf;
+    --paper2: #faf7ee;
+    --ink: #211d17;
+    --ink2: #6f6656;
+    --line: #cfc7b4;
+    --line2: #e2dbc9;
+    --acc: #e8490f;
+    --good: #3f7f5f;
+    --bad: #b3402e;
+    --f-ui: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans CJK SC", sans-serif;
+    --f-num: ui-monospace, "SF Mono", Menlo, Consolas, "Courier New", monospace;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { height: 100%; }
+  body {
+    font-family: var(--f-ui);
+    background: var(--paper);
+    color: var(--ink);
+    -webkit-font-smoothing: antialiased;
+    display: flex; flex-direction: column;
+  }
+
+  /* ===== 顶部 ===== */
+  .hazard { height: 8px; background: repeating-linear-gradient(-45deg, var(--acc) 0 14px, var(--ink) 14px 28px); flex: none; }
+  header {
+    flex: none; display: flex; align-items: center; justify-content: space-between;
+    padding: 18px 28px 14px; border-bottom: 2px solid var(--ink);
+  }
+  .brand h1 { font-size: 26px; font-weight: 900; letter-spacing: 0.06em; }
+  .brand h1 .zh { margin-right: 10px; }
+  .brand .en { font-family: var(--f-num); font-size: 10px; letter-spacing: 0.42em; color: var(--ink2); margin-top: 4px; text-transform: uppercase; }
+  .stamp-std {
+    font-family: var(--f-num); font-size: 11px; letter-spacing: 0.12em;
+    border: 2px solid var(--ink); padding: 7px 12px; transform: rotate(-1.5deg);
+    color: var(--ink); text-align: center; line-height: 1.5; background: var(--paper2);
+  }
+  .stamp-std b { font-size: 14px; }
+  .barcode { display: flex; align-items: flex-end; gap: 14px; }
+  .barcode .bars {
+    width: 120px; height: 34px;
+    background: repeating-linear-gradient(90deg, var(--ink) 0 2px, transparent 2px 5px, var(--ink) 5px 6px, transparent 6px 11px, var(--ink) 11px 14px, transparent 14px 17px);
+  }
+
+  /* ===== 布局 ===== */
+  main { flex: 1; display: grid; grid-template-columns: 392px 1fr; min-height: 0; }
+  aside {
+    border-right: 2px solid var(--ink); background: var(--paper2);
+    padding: 20px 22px 28px; overflow-y: auto;
+  }
+  section { margin-bottom: 26px; }
+  .sec-title {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 12px; font-weight: 800; letter-spacing: 0.22em; margin-bottom: 12px;
+  }
+  .sec-title::before { content: ""; width: 10px; height: 10px; background: var(--acc); flex: none; }
+  .sec-title .en { font-family: var(--f-num); font-size: 9px; letter-spacing: 0.3em; color: var(--ink2); font-weight: 400; }
+
+  .field-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 12px; }
+  .field-grid .three-col { grid-column: span 3; }
+  label.fl { display: block; font-size: 11px; color: var(--ink2); margin-bottom: 4px; letter-spacing: 0.05em; }
+  label.fl b { color: var(--ink); font-weight: 700; }
+  input[type="number"] {
+    width: 100%; height: 34px; padding: 0 9px;
+    font-family: var(--f-num); font-size: 14px; color: var(--ink);
+    background: #fff; border: 1.5px solid var(--line); border-radius: 0; outline: none;
+  }
+  input[type="number"]:focus { border-color: var(--acc); }
+  input.err { border-color: var(--bad) !important; background: #fdf1ee; }
+  input::-webkit-outer-spin-button, input::-webkit-inner-spin-button { -webkit-appearance: none; }
+  input[type="number"] { -moz-appearance: textfield; appearance: textfield; }
+
+  .opt-row { display: flex; align-items: center; gap: 9px; font-size: 13px; cursor: pointer; user-select: none; }
+  .opt-row input { width: 15px; height: 15px; accent-color: var(--acc); cursor: pointer; }
+  .opt-note { font-size: 11px; color: var(--ink2); margin-top: 6px; line-height: 1.6; }
+
+  /* 箱规清单 */
+  .sku-rows { display: flex; flex-direction: column; gap: 10px; }
+  .sku-row {
+    border: 1.5px solid var(--line); background: #fff; padding: 10px 10px 8px; position: relative;
+  }
+  .sku-row .tag {
+    position: absolute; top: -8px; left: 8px; font-family: var(--f-num); font-size: 10px;
+    background: var(--ink); color: var(--paper); padding: 1px 7px; letter-spacing: 0.1em;
+  }
+  .sku-row .del {
+    position: absolute; top: 4px; right: 6px; border: none; background: none; cursor: pointer;
+    font-size: 15px; color: var(--ink2); line-height: 1; padding: 4px;
+  }
+  .sku-row .del:hover { color: var(--bad); }
+  .sku-cols { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; }
+  .sku-cols .cell label { display: block; font-family: var(--f-num); font-size: 9px; color: var(--ink2); margin-bottom: 3px; letter-spacing: 0.06em; }
+  .sku-cols .cell input { height: 30px; padding: 0 6px; font-size: 13px; }
+
+  .btn-line { display: flex; gap: 10px; margin-top: 12px; }
+  button { font-family: var(--f-num); cursor: pointer; border-radius: 0; }
+  .btn-add {
+    flex: 1; height: 34px; background: none; border: 1.5px dashed var(--ink2); color: var(--ink2);
+    font-size: 12px; letter-spacing: 0.15em;
+  }
+  .btn-add:hover { border-color: var(--ink); color: var(--ink); }
+  .btn-calc {
+    width: 100%; height: 46px; margin-top: 18px;
+    background: var(--ink); color: var(--paper); border: none;
+    font-size: 15px; font-weight: 700; letter-spacing: 0.35em; text-indent: 0.35em;
+    position: relative; overflow: hidden;
+  }
+  .btn-calc::before {
+    content: ""; position: absolute; top: 0; left: 0; right: 0; height: 4px;
+    background: repeating-linear-gradient(-45deg, var(--acc) 0 10px, transparent 10px 20px);
+  }
+  .btn-calc:hover { background: var(--acc); }
+  .btn-calc:active { transform: translateY(1px); }
+  .err-msg {
+    display: none; margin-top: 10px; padding: 8px 10px; font-size: 12px; line-height: 1.6;
+    border: 1.5px solid var(--bad); color: var(--bad); background: #fdf1ee;
+  }
+  .err-msg.show { display: block; }
+
+  /* ===== 右侧结果 ===== */
+  .content { display: flex; flex-direction: column; min-width: 0; overflow-y: auto; }
+  .result-wrap { padding: 20px 26px 8px; }
+  .summary { display: flex; align-items: stretch; gap: 14px; flex-wrap: wrap; margin-bottom: 18px; }
+  .kpi-stamp {
+    border: 3px double var(--ink); padding: 10px 22px 12px; text-align: center;
+    transform: rotate(-2deg); background: var(--paper2); min-width: 150px;
+  }
+  .kpi-stamp .v { font-family: var(--f-num); font-size: 52px; font-weight: 800; color: var(--acc); line-height: 1; }
+  .kpi-stamp .k { font-family: var(--f-num); font-size: 10px; letter-spacing: 0.3em; color: var(--ink2); margin-top: 6px; }
+  .kpi-list { display: flex; gap: 12px; flex: 1; flex-wrap: wrap; align-content: stretch; }
+  .kpi {
+    flex: 1; min-width: 128px; border: 1.5px solid var(--ink); background: var(--paper2);
+    padding: 10px 14px 11px;
+  }
+  .kpi .k { font-family: var(--f-num); font-size: 9px; letter-spacing: 0.24em; color: var(--ink2); }
+  .kpi .v { font-family: var(--f-num); font-size: 24px; font-weight: 700; margin-top: 5px; }
+  .kpi .v small { font-size: 12px; font-weight: 400; color: var(--ink2); }
+  .bind-note {
+    font-size: 12.5px; line-height: 1.7; color: var(--ink); background: var(--paper2);
+    border-left: 4px solid var(--acc); padding: 9px 13px; margin-bottom: 18px;
+  }
+  .bind-note b { color: var(--acc); }
+
+  table { width: 100%; border-collapse: collapse; background: var(--paper2); margin-bottom: 20px; }
+  caption { text-align: left; font-size: 12px; font-weight: 800; letter-spacing: 0.2em; padding: 0 0 8px; }
+  caption .en { font-family: var(--f-num); font-size: 9px; color: var(--ink2); letter-spacing: 0.3em; margin-left: 8px; font-weight: 400; }
+  th {
+    font-family: var(--f-num); font-size: 9.5px; letter-spacing: 0.14em; color: var(--ink2); font-weight: 600;
+    text-align: right; padding: 7px 10px; border-bottom: 2px solid var(--ink); white-space: nowrap;
+  }
+  th:first-child, td:first-child { text-align: left; }
+  td {
+    font-size: 13px; padding: 7px 10px; border-bottom: 1px solid var(--line); text-align: right;
+    font-family: var(--f-num); white-space: nowrap;
+  }
+  td.zh { font-family: var(--f-ui); }
+  tbody tr:hover { background: #f5f0e2; }
+  .chip { display: inline-block; width: 10px; height: 10px; margin-right: 6px; vertical-align: -1px; border: 1px solid rgba(0,0,0,.25); }
+  .badge {
+    display: inline-block; font-family: var(--f-num); font-size: 9px; letter-spacing: 0.1em;
+    padding: 1px 6px; border: 1px solid var(--ink2); color: var(--ink2);
+  }
+  .badge.full { border-color: var(--good); color: var(--good); }
+  .badge.last { border-color: var(--acc); color: var(--acc); }
+  .badge.w { border-color: var(--bad); color: var(--bad); }
+  .infeasible td { color: var(--bad); background: #fdf3f0; }
+
+  /* ===== 3D 视口 ===== */
+  .viewport-shell { flex: 1; min-height: 480px; position: relative; border-top: 2px solid var(--ink); direction: ltr; }
+  #viewport {
+    position: absolute; inset: 0;
+    background:
+      linear-gradient(var(--line2) 1px, transparent 1px),
+      linear-gradient(90deg, var(--line2) 1px, transparent 1px),
+      radial-gradient(ellipse at 50% 30%, #f6f2e6 0%, #ece7da 70%);
+    background-size: 28px 28px, 28px 28px, 100% 100%;
+  }
+  #viewport canvas { display: block; }
+  .vp-toolbar {
+    position: absolute; top: 12px; left: 12px; right: 12px; display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+    pointer-events: none;
+  }
+  .vp-toolbar > * { pointer-events: auto; }
+  .vp-btn {
+    height: 30px; padding: 0 12px; background: var(--paper2); border: 1.5px solid var(--ink);
+    font-size: 11px; letter-spacing: 0.08em; color: var(--ink);
+  }
+  .vp-btn.on { background: var(--ink); color: var(--paper); }
+  .vp-slider { display: flex; align-items: center; gap: 8px; background: var(--paper2); border: 1.5px solid var(--ink); padding: 0 12px; height: 30px; font-family: var(--f-num); font-size: 11px; }
+  .vp-slider input { accent-color: var(--acc); width: 110px; }
+  .legend {
+    position: absolute; left: 12px; bottom: 12px; display: flex; gap: 14px; flex-wrap: wrap;
+    background: var(--paper2); border: 1.5px solid var(--ink); padding: 7px 12px;
+    font-family: var(--f-num); font-size: 11px;
+  }
+  .vp-hint {
+    position: absolute; right: 12px; bottom: 12px; font-family: var(--f-num); font-size: 10px;
+    color: var(--ink2); letter-spacing: 0.08em; background: rgba(250,247,238,.8); padding: 4px 8px;
+  }
+  .title-block {
+    position: absolute; right: 0; bottom: 0; border-top: 2px solid var(--ink); border-left: 2px solid var(--ink);
+    background: var(--paper2); font-family: var(--f-num); font-size: 9px; letter-spacing: 0.1em;
+  }
+  .title-block div { padding: 4px 12px; border-bottom: 1px solid var(--line2); }
+  .title-block div:last-child { border-bottom: none; }
+  .title-block b { font-size: 11px; }
+  .vp-fallback {
+    position: absolute; inset: 0; display: none; align-items: center; justify-content: center;
+    font-size: 13px; color: var(--ink2); text-align: center; line-height: 2; padding: 30px;
+  }
+
+  footer {
+    flex: none; border-top: 1px solid var(--line); padding: 10px 28px 14px;
+    font-size: 11px; color: var(--ink2); line-height: 1.8;
+  }
+  footer b { color: var(--ink); }
+
+  @media (max-width: 1020px) {
+    main { grid-template-columns: 1fr; }
+    aside { border-right: none; border-bottom: 2px solid var(--ink); }
+    .viewport-shell { min-height: 420px; }
+  }
+</style>
+</head>
+<body>
+<div class="hazard"></div>
+<header>
+  <div class="brand">
+    <h1><span class="zh">打板计算器</span></h1>
+    <div class="en">Pallet Loading Calculator · Carton → Pallet Plan</div>
+  </div>
+  <div class="barcode">
+    <div class="bars"></div>
+    <div class="stamp-std">标准托盘<br><b>120 × 100 × 180</b> cm<br>限重 450 kg（可调）</div>
+  </div>
+</header>
+
+<main>
+  <!-- ===== 左侧：参数表单 ===== -->
+  <aside>
+    <section>
+      <div class="sec-title">托盘参数 <span class="en">PALLET</span></div>
+      <div class="field-grid">
+        <div><label class="fl">托盘长 L <b>cm</b></label><input type="number" id="pL" value="120" min="1" step="any"></div>
+        <div><label class="fl">托盘宽 W <b>cm</b></label><input type="number" id="pW" value="100" min="1" step="any"></div>
+        <div><label class="fl">可用高度 H <b>cm</b></label><input type="number" id="pH" value="180" min="1" step="any"></div>
+        <div><label class="fl">限重 <b>kg</b></label><input type="number" id="pMaxW" value="450" min="1" step="any"></div>
+        <div><label class="fl">托盘自重 <b>kg</b></label><input type="number" id="pOwnW" value="0" min="0" step="any"></div>
+      </div>
+      <div class="opt-note">自重可留 0；填写后计入限重（货重 + 自重 ≤ 限重）。H 为货物可用高度，不含托盘自身厚度。</div>
+    </section>
+
+    <section>
+      <div class="sec-title">装载选项 <span class="en">OPTIONS</span></div>
+      <label class="opt-row"><input type="checkbox" id="allowTip" checked>允许倒放 / 侧放（不限「此面向上」）</label>
+      <label class="opt-row" style="margin-top:8px"><input type="checkbox" id="mergeTails" checked>尾板拼板（不同箱规的尾板混装同板）</label>
+      <div class="opt-note">不勾选则只按正立（H 朝上）计算，若放不下会明确提示。尾板拼板按柱状并排+顶面叠放估算（不交错嵌套），偏保守，仅多种箱规且有空余位时生效。</div>
+    </section>
+
+    <section>
+      <div class="sec-title">箱规清单 <span class="en">CARTONS</span></div>
+      <div style="margin-bottom:10px">
+        <label class="fl"><b>整票总重</b> kg（可选）</label>
+        <input type="number" id="gTw" min="0" step="any" placeholder="只知整票总重时填">
+      </div>
+      <div class="sku-rows" id="skuRows"></div>
+      <div class="btn-line">
+        <button class="btn-add" id="btnAdd">＋ 添加箱规</button>
+      </div>
+      <div class="opt-note" style="margin-top:8px">箱重口径：各行可填单箱重；只知整票总重时在上方填写，未填单箱重的箱规按（整票总重 − 已知箱规货重）÷ 其数量均摊（明细标 ≈），两者可混用。</div>
+      <button class="btn-calc" id="btnCalc">计 算</button>
+      <div class="err-msg" id="errMsg"></div>
+    </section>
+  </aside>
+
+  <!-- ===== 右侧：结果 ===== -->
+  <div class="content">
+    <div class="result-wrap">
+      <div class="summary" id="summary"></div>
+      <div class="bind-note" id="bindNote" style="display:none"></div>
+      <table id="skuTable">
+        <caption>分箱规明细<span class="en">PER CARTON TYPE</span></caption>
+        <thead><tr>
+          <th>箱规 CM</th><th>单箱 KG</th><th>数量</th><th>摆放</th><th>单板箱数</th><th>限重/几何上限</th><th>约束</th><th>板数</th>
+        </tr></thead>
+        <tbody></tbody>
+      </table>
+      <table id="palletTable">
+        <caption>逐板装载清单<span class="en">PALLET MANIFEST</span></caption>
+        <thead><tr>
+          <th>板号</th><th>箱规</th><th>箱数</th><th>货重 KG</th><th>载货尺寸 CM</th><th>高度利用</th><th>空间利用</th><th>状态</th>
+        </tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+
+    <div class="viewport-shell">
+      <div id="viewport"></div>
+      <div class="vp-toolbar">
+        <button class="vp-btn on" id="btnRotate">自动旋转：开</button>
+        <div class="vp-slider">层间展开 <input type="range" id="explode" min="0" max="60" value="0"><span id="explodeVal">0</span>cm</div>
+        <button class="vp-btn on" id="btnDims">尺寸标注：开</button>
+        <button class="vp-btn" id="btnReset">重置视角</button>
+      </div>
+      <div class="legend" id="legend"></div>
+      <div class="vp-hint">拖拽旋转 · 滚轮缩放 · 右键平移</div>
+      <div class="title-block" id="titleBlock">
+        <div><b>PALLET PLAN</b> · 3D PREVIEW</div>
+        <div id="tbInfo">—</div>
+      </div>
+      <div class="vp-fallback" id="vpFallback"></div>
+    </div>
+
+    <footer>
+      <b>口径说明：</b>结果为几何 + 限重预估。各箱规独立打板、满板优先（不混装拼板，尾板可与其他货拼板，实际板数可能更少）；层内为整齐码放（含换向条带优化），未做交错咬合码放；未考虑堆叠强度、重心偏载与货物「此面向上」限制（可用左侧选项控制）。3D 中托盘厚度仅为示意，可用高度按参数 H 计算。
+    </footer>
+  </div>
+</main>
+
+<script>
+// ===PALLET-CORE-START===
+// 物流打板核心算法（纯函数，无 DOM 依赖）
+// 单位：cm / kg。托盘可用空间 pallet = { L, W, H, maxW, palletWt }
+// palletWt：托盘自重，计入限重（maxW 为板+货总限重）
+
+const EPS = 1e-9;
+
+// 在 (x0,y0) 起点放 nx×ny 个 w×h 的箱子
+function gridPlacements(x0, y0, nx, ny, w, h) {
+  const pts = [];
+  if (nx <= 0 || ny <= 0) return pts;
+  for (let i = 0; i < nx; i++)
+    for (let j = 0; j < ny; j++)
+      pts.push({ x: x0 + i * w, y: y0 + j * h, w, h });
+  return pts;
+}
+
+// 单一箱规在 PL×PW 底面上的最优一层摆放（纯网格 + 混向条带启发式）
+// 返回 placements: [{x, y, w, h}, ...]，x 沿 PL 方向，y 沿 PW 方向
+function bestLayer(PL, PW, a, b) {
+  let best = [];
+  const consider = (p) => {
+    if (p.length > best.length) best = p;
+  };
+
+  const nx1 = Math.floor(PL / a + EPS), ny1 = Math.floor(PW / b + EPS); // a 沿 L
+  const nx2 = Math.floor(PL / b + EPS), ny2 = Math.floor(PW / a + EPS); // b 沿 L
+  consider(gridPlacements(0, 0, nx1, ny1, a, b));
+  consider(gridPlacements(0, 0, nx2, ny2, b, a));
+
+  // 混向：主区用朝向1，剩余条带换向填充（两种分解，条带互不重叠）
+  if (nx1 >= 1 && ny1 >= 1) {
+    const base = gridPlacements(0, 0, nx1, ny1, a, b);
+    const stripW = PL - nx1 * a; // 右侧竖条带
+    if (stripW >= b - EPS)
+      consider(base.concat(gridPlacements(nx1 * a, 0, Math.floor(stripW / b + EPS), Math.floor(PW / a + EPS), b, a)));
+    const stripH = PW - ny1 * b; // 上方横条带
+    if (stripH >= a - EPS)
+      consider(base.concat(gridPlacements(0, ny1 * b, Math.floor(PL / b + EPS), Math.floor(stripH / a + EPS), b, a)));
+  }
+  if (nx2 >= 1 && ny2 >= 1) {
+    const base = gridPlacements(0, 0, nx2, ny2, b, a);
+    const stripW = PL - nx2 * b;
+    if (stripW >= a - EPS)
+      consider(base.concat(gridPlacements(nx2 * b, 0, Math.floor(stripW / a + EPS), Math.floor(PW / b + EPS), a, b)));
+    const stripH = PW - ny2 * a;
+    if (stripH >= b - EPS)
+      consider(base.concat(gridPlacements(0, ny2 * a, Math.floor(PL / a + EPS), Math.floor(stripH / b + EPS), a, b)));
+  }
+  return best;
+}
+
+// 单箱规打板方案。sku = { l, w, h, wt, qty }
+function packSku(sku, pallet, allowTip) {
+  const verts = allowTip ? ['h', 'l', 'w'] : ['h']; // h = 正立（不倒放）
+  let best = null;
+  let geomMax = 0, wtCap = 0;
+
+  wtCap = Math.floor((pallet.maxW - (pallet.palletWt || 0)) / sku.wt + EPS);
+
+  for (const v of verts) {
+    const dims = { l: sku.l, w: sku.w, h: sku.h };
+    const vh = dims[v]; // 竖直方向尺寸
+    const [a, b] = ['l', 'w', 'h'].filter((k) => k !== v).map((k) => dims[k]);
+    const layer = bestLayer(pallet.L, pallet.W, a, b);
+    const layersFit = Math.floor(pallet.H / vh + EPS);
+    const geomCap = layer.length * layersFit;
+    geomMax = Math.max(geomMax, geomCap);
+    const perPallet = Math.max(0, Math.min(geomCap, wtCap));
+    const upright = v === 'h' ? 1 : 0;
+    if (
+      !best ||
+      perPallet > best.perPallet ||
+      (perPallet === best.perPallet &&
+        (upright > best.upright || (upright === best.upright && layer.length > best.perLayer)))
+    ) {
+      best = { v, vh, layer, layersFit, geomCap, perPallet, perLayer: layer.length, upright };
+    }
+  }
+
+  if (wtCap <= 0)
+    return { ok: false, reason: '单箱重量超过托盘限重', wtCap };
+  if (geomMax <= 0)
+    return { ok: false, reason: '箱规超过托盘可用尺寸，任何朝向均放不下', wtCap };
+  if (best.perPallet <= 0)
+    return { ok: false, reason: '无法装载（几何或重量约束）', wtCap };
+
+  const { vh, layer, perPallet, perLayer, geomCap } = best;
+  const loadL = Math.max(...layer.map((p) => p.x + p.w));
+  const loadW = Math.max(...layer.map((p) => p.y + p.h));
+
+  const pallets = [];
+  let remain = sku.qty;
+  while (remain > 0) {
+    const count = Math.min(perPallet, remain);
+    remain -= count;
+    const fullLayers = Math.floor(count / perLayer);
+    const partial = count % perLayer;
+    const loadH = (fullLayers + (partial > 0 ? 1 : 0)) * vh;
+    pallets.push({
+      count,
+      weight: +(count * sku.wt).toFixed(2),
+      fullLayers,
+      partial,
+      loadH,
+      loadL,
+      loadW,
+      vh,
+      layer,
+    });
+  }
+
+  const bind =
+    wtCap < geomCap ? 'weight' : geomCap < wtCap ? 'geom' : 'both';
+  return {
+    ok: true,
+    perPallet,
+    perLayer,
+    layersFit: best.layersFit,
+    geomCap,
+    wtCap,
+    bind,
+    vertical: best.v,
+    vh,
+    loadL,
+    loadW,
+    pallets,
+    boxVolM3: +(sku.l * sku.w * sku.h / 1e6).toFixed(4),
+  };
+}
+
+// 构造尾板块（柱状：满层在下、部分层在上）
+// 尾板只有部分层时用实际占位的紧包围盒，有满层时用整层占位
+function tailBlock(last, skuIdx, sku) {
+  let w, d, topPlacements;
+  if (last.fullLayers >= 1) {
+    w = last.loadL;
+    d = last.loadW;
+    topPlacements = last.layer.slice(0, last.partial);
+  } else {
+    const pl = last.layer.slice(0, last.partial);
+    w = Math.max(...pl.map((p) => p.x + p.w));
+    d = Math.max(...pl.map((p) => p.y + p.h));
+    topPlacements = pl;
+  }
+  return {
+    skuIdx, sku, count: last.count, weight: last.weight,
+    w, d, h: last.loadH, vh: last.vh, layer: last.layer,
+    fullLayers: last.fullLayers, partial: last.partial, topPlacements,
+  };
+}
+
+// 首次适应货架装箱：块沿 L 方向排入行，行沿 W 方向叠，块可 90° 转向，限重受控
+// 底面放不下时尝试叠放到已放块顶面（脚印须被包含、总高受限、每块顶面只叠一个）
+function packTailBlocks(blocks, pallet) {
+  const cap = pallet.maxW - (pallet.palletWt || 0);
+  const sorted = [...blocks].sort((a, b) => b.w * b.d - a.w * a.d || b.h - a.h);
+  const tryPlace = (p, block) => {
+    if (p.weight + block.weight > cap + EPS) return false;
+    for (const [w, d] of [[block.w, block.d], [block.d, block.w]]) {
+      // 底面：现有行内找位
+      for (const row of p.rows) {
+        if (d <= row.d + EPS && row.used + w <= pallet.L + EPS) {
+          p.blocks.push({ block, x: row.used, z: row.z, y: 0, w, d });
+          row.used += w;
+          p.weight += block.weight;
+          return true;
+        }
+      }
+      // 底面：开新行
+      const z = p.rows.reduce((s, r) => s + r.d, 0);
+      if (z + d <= pallet.W + EPS) {
+        p.rows.push({ z, d, used: w });
+        p.blocks.push({ block, x: 0, z, y: 0, w, d });
+        p.weight += block.weight;
+        return true;
+      }
+      // 顶面叠放：落在顶面未被占用的块上
+      for (const pb of p.blocks) {
+        if (pb.topUsed) continue;
+        if (w <= pb.w + EPS && d <= pb.d + EPS && pb.y + pb.block.h + block.h <= pallet.H + EPS) {
+          p.blocks.push({ block, x: pb.x, z: pb.z, y: pb.y + pb.block.h, w, d });
+          pb.topUsed = true;
+          p.weight += block.weight;
+          return true;
+        }
+      }
+    }
+    return false;
+  };
+  const pallets = [];
+  for (const b of sorted) {
+    if (!pallets.some((p) => tryPlace(p, b))) {
+      const p = { blocks: [], rows: [], weight: 0 };
+      tryPlace(p, b); // 单块必放得下（块本身来自合法装载）
+      pallets.push(p);
+    }
+  }
+  return pallets;
+}
+
+// 求最大空白矩形（直方图法）。occ 为 gx×gz 的 0/1 占用网格，行沿 x、列沿 z
+function maxEmptyRect(occ, gx, gz) {
+  const heights = new Int16Array(gz); // heights[z]：以当前 x 结尾、z 列连续空闲的 x 长度
+  let best = null;
+  for (let x = 0; x < gx; x++) {
+    for (let z = 0; z < gz; z++) heights[z] = occ[x * gz + z] ? 0 : heights[z] + 1;
+    const stack = [];
+    for (let z = 0; z <= gz; z++) {
+      const h = z === gz ? 0 : heights[z];
+      let start = z;
+      while (stack.length && stack[stack.length - 1].h >= h) {
+        const t = stack.pop();
+        const area = t.h * (z - t.z);
+        if ((!best || area > best.area) && t.h > 0)
+          best = { x: x - t.h + 1, z: t.z, w: t.h, d: z - t.z, area };
+        start = t.z;
+      }
+      stack.push({ h, z: start });
+    }
+  }
+  return best;
+}
+
+// 剩余空间计算：按高度分层（各块顶/底面为层线），每层求底面最大空白矩形，
+// 得到保证可用的长方体空腔；按体积降序取前 maxCount 个（≥5cm 且 ≥5000cm³ 才计）
+// blocks: [{x, z, y, w, d, h}]（cm，pallet 坐标系）
+function computeVoids(pallet, blocks, maxCount = 3) {
+  const levels = new Set([0, pallet.H]);
+  blocks.forEach((b) => { levels.add(Math.round(b.y)); levels.add(Math.round(b.y + b.h)); });
+  const ys = [...levels].filter((y) => y >= 0 && y <= pallet.H).sort((a, b) => a - b);
+  const gx = Math.round(pallet.L), gz = Math.round(pallet.W);
+  const occ = new Uint8Array(gx * gz);
+  const voids = [];
+  for (let i = 0; i < ys.length - 1; i++) {
+    const y0 = ys[i], y1 = ys[i + 1], h = y1 - y0;
+    if (h < 5) continue;
+    occ.fill(0);
+    blocks.forEach((b) => {
+      if (b.y + b.h <= y0 + EPS || b.y >= y1 - EPS) return; // 不与本层相交
+      const x0 = Math.max(0, Math.floor(b.x)), x1 = Math.min(gx, Math.ceil(b.x + b.w));
+      const z0 = Math.max(0, Math.floor(b.z)), z1 = Math.min(gz, Math.ceil(b.z + b.d));
+      for (let x = x0; x < x1; x++) for (let z = z0; z < z1; z++) occ[x * gz + z] = 1;
+    });
+    const r = maxEmptyRect(occ, gx, gz);
+    if (r && r.area > 0)
+      voids.push({ x: r.x, z: r.z, y: y0, w: r.w, d: r.d, h });
+  }
+  return voids
+    .filter((v) => v.w >= 5 && v.d >= 5 && v.h >= 5 && v.w * v.d * v.h >= 5000)
+    .sort((a, b) => b.w * b.d * b.h - a.w * a.d * a.h)
+    .slice(0, maxCount);
+}
+
+// 多箱规总体规划（各箱规独立打板满板优先；mergeTailsOn 时尾板互相拼合）
+// skus: [{ l, w, h, wt, qty }], 返回逐板明细与汇总
+function planLoad(skus, pallet, allowTip, mergeTailsOn) {
+  const skuResults = [];
+  const palletsAll = [];
+  let boxes = 0, weight = 0, volume = 0;
+
+  skus.forEach((sku, skuIdx) => {
+    const r = packSku(sku, pallet, allowTip);
+    skuResults.push(r);
+    if (r.ok) {
+      boxes += sku.qty;
+      weight += sku.qty * sku.wt;
+      volume += sku.qty * sku.l * sku.w * sku.h / 1e6;
+      r.pallets.forEach((p) => palletsAll.push({ skuIdx, sku, ...p }));
+    }
+  });
+
+  // 尾板拼板：拼合板数少于尾板数才采用
+  let mergedInfo = null;
+  if (mergeTailsOn) {
+    const blocks = [];
+    skuResults.forEach((r, skuIdx) => {
+      if (!r.ok || !r.pallets.length) return;
+      const last = r.pallets[r.pallets.length - 1];
+      if (last.count < r.perPallet) blocks.push(tailBlock(last, skuIdx, skus[skuIdx]));
+    });
+    if (blocks.length >= 2) {
+      const packed = packTailBlocks(blocks, pallet);
+      if (packed.length < blocks.length) {
+        palletsAll.length = 0;
+        skuResults.forEach((r, skuIdx) => {
+          if (!r.ok) return;
+          const hasTail = r.pallets.length && r.pallets[r.pallets.length - 1].count < r.perPallet;
+          if (hasTail) r.mergedTail = true;
+          const keep = hasTail ? r.pallets.slice(0, -1) : r.pallets;
+          keep.forEach((p) => palletsAll.push({ skuIdx, sku: skus[skuIdx], ...p }));
+        });
+        packed.forEach((p) => {
+          palletsAll.push({
+            type: 'mixed',
+            blocks: p.blocks,
+            count: p.blocks.reduce((s, b) => s + b.block.count, 0),
+            weight: +p.weight.toFixed(2),
+            loadH: Math.max(...p.blocks.map((b) => b.y + b.block.h)),
+            loadL: Math.max(...p.blocks.map((b) => b.x + b.w)),
+            loadW: Math.max(...p.blocks.map((b) => b.z + b.d)),
+          });
+        });
+        mergedInfo = { tails: blocks.length, mergedPallets: packed.length };
+      }
+    }
+  }
+
+  return {
+    skuResults,
+    pallets: palletsAll,
+    mergedInfo,
+    totals: {
+      pallets: palletsAll.length,
+      boxes,
+      weight: +weight.toFixed(2),
+      volumeM3: +volume.toFixed(3),
+      feasible: skuResults.every((r) => r.ok),
+    },
+  };
+}
+// ===PALLET-CORE-END===
+
+// ============================================================
+// UI 逻辑
+// ============================================================
+const SKU_COLORS = ['#c98a3b', '#4a7f74', '#5b6b9e', '#8a9a5b', '#b45a4a', '#806ba0', '#3f6f8f', '#a0825a'];
+const $ = (id) => document.getElementById(id);
+
+function skuRowHtml(vals) {
+  const v = vals || ['', '', '', '', ''];
+  return `
+    <div class="sku-row">
+      <span class="tag">SKU</span>
+      <button class="del" title="删除此箱规">×</button>
+      <div class="sku-cols">
+        <div class="cell"><label>长 L</label><input type="number" class="c-l" min="1" step="any" value="${v[0]}"></div>
+        <div class="cell"><label>宽 W</label><input type="number" class="c-w" min="1" step="any" value="${v[1]}"></div>
+        <div class="cell"><label>高 H</label><input type="number" class="c-h" min="1" step="any" value="${v[2]}"></div>
+        <div class="cell"><label>KG/箱</label><input type="number" class="c-wt" min="0" step="any" value="${v[3]}" title="可不填，配合上方整票总重按余重均摊"></div>
+        <div class="cell"><label>数量</label><input type="number" class="c-qty" min="1" step="1" value="${v[4]}"></div>
+      </div>
+    </div>`;
+}
+
+function addSkuRow(vals) {
+  const wrap = $('skuRows');
+  const tmp = document.createElement('div');
+  tmp.innerHTML = skuRowHtml(vals);
+  const row = tmp.firstElementChild;
+  wrap.appendChild(row);
+  row.querySelector('.del').addEventListener('click', () => row.remove());
+  row.querySelectorAll('input').forEach((inp) => inp.addEventListener('keydown', (e) => { if (e.key === 'Enter') calculate(); }));
+  return row;
+}
+
+function readInputs() {
+  const errs = [];
+  document.querySelectorAll('input.err').forEach((i) => i.classList.remove('err'));
+  const num = (el, label, { min = 0, integer = false, required = true } = {}) => {
+    const raw = el.value.trim();
+    const v = parseFloat(raw);
+    if (required && (raw === '' || isNaN(v))) { el.classList.add('err'); errs.push(`${label} 需为数字`); return NaN; }
+    if (!isNaN(v) && v < min) { el.classList.add('err'); errs.push(`${label} 需 ≥ ${min}`); return NaN; }
+    if (integer && !isNaN(v) && !Number.isInteger(v)) { el.classList.add('err'); errs.push(`${label} 需为整数`); return NaN; }
+    return v;
+  };
+
+  const pallet = {
+    L: num($('pL'), '托盘长'), W: num($('pW'), '托盘宽'),
+    H: num($('pH'), '可用高度'), maxW: num($('pMaxW'), '限重'),
+    palletWt: num($('pOwnW'), '托盘自重', { min: 0 }),
+  };
+  if (pallet.palletWt >= pallet.maxW) { $('pOwnW').classList.add('err'); errs.push('托盘自重需小于限重'); }
+
+  const skus = [];
+  const rowEls = [];
+  document.querySelectorAll('#skuRows .sku-row').forEach((row, i) => {
+    const wtEl = row.querySelector('.c-wt');
+    const qty = num(row.querySelector('.c-qty'), `第${i + 1}行 数量`, { integer: true });
+    let wt = NaN;
+    if (wtEl.value.trim() !== '') {
+      wt = num(wtEl, `第${i + 1}行 单箱重`, { min: 0 });
+      if (!isNaN(wt) && wt <= 0) { wtEl.classList.add('err'); errs.push(`第${i + 1}行 单箱重需 > 0`); }
+    }
+    rowEls.push({ wtEl });
+    skus.push({
+      l: num(row.querySelector('.c-l'), `第${i + 1}行 长`),
+      w: num(row.querySelector('.c-w'), `第${i + 1}行 宽`),
+      h: num(row.querySelector('.c-h'), `第${i + 1}行 高`),
+      wt, qty, avg: false,
+    });
+  });
+
+  // 整票总重：未填单箱重的箱规按（整票总重 − 已知箱规货重）÷ 其数量均摊
+  const gTwEl = $('gTw');
+  const hasG = gTwEl.value.trim() !== '';
+  const unknown = skus.map((s, i) => ({ s, i })).filter((x) => isNaN(x.s.wt));
+  if (unknown.length) {
+    if (!hasG) {
+      unknown.forEach((x) => rowEls[x.i].wtEl.classList.add('err'));
+      errs.push('存在未填单箱重的箱规：请补单箱重，或填写整票总重');
+    } else {
+      const gTw = num(gTwEl, '整票总重', { min: 0 });
+      if (!isNaN(gTw) && gTw <= 0) { gTwEl.classList.add('err'); errs.push('整票总重需 > 0'); }
+      else if (!isNaN(gTw)) {
+        const knownW = skus.reduce((t, s) => (isNaN(s.wt) ? t : t + s.wt * s.qty), 0);
+        const unknownQty = unknown.reduce((t, x) => t + (isNaN(x.s.qty) ? 0 : x.s.qty), 0);
+        if (unknownQty < 1) errs.push('未填单箱重的箱规，数量无效');
+        else if (gTw - knownW <= 0) { gTwEl.classList.add('err'); errs.push(`整票总重需大于已知箱规货重 ${+knownW.toFixed(2)}kg`); }
+        else {
+          const avg = (gTw - knownW) / unknownQty;
+          unknown.forEach((x) => { x.s.wt = avg; x.s.avg = true; });
+        }
+      }
+    }
+  }
+  if (!skus.length) errs.push('至少需要一行箱规');
+
+  return { pallet, skus, errs };
+}
+
+function fmt(n, d = 1) {
+  return Number(n.toFixed(d)).toString();
+}
+function skuLabel(sku) { return `${fmt(sku.l, 1)}×${fmt(sku.w, 1)}×${fmt(sku.h, 1)}`; }
+
+function renderResults(plan, pallet) {
+  const t = plan.totals;
+  const weightFloor = t.weight > 0 ? Math.ceil(t.weight / (pallet.maxW - (pallet.palletWt || 0))) : 0;
+  const optimal = weightFloor > 0 && t.pallets === weightFloor;
+
+  $('summary').innerHTML = `
+    <div class="kpi-stamp"><div class="v">${t.pallets}</div><div class="k">托盘 PLTS</div></div>
+    <div class="kpi-list">
+      <div class="kpi"><div class="k">总箱数 CTNS</div><div class="v">${t.boxes}<small> 箱</small></div></div>
+      <div class="kpi"><div class="k">总货重 GW</div><div class="v">${fmt(t.weight, 1)}<small> kg</small></div></div>
+      <div class="kpi"><div class="k">总体积 VOL</div><div class="v">${fmt(t.volumeM3, 3)}<small> m³</small></div></div>
+      <div class="kpi"><div class="k">重量下限 MIN</div><div class="v">${weightFloor || '—'}<small> 板</small></div></div>
+    </div>`;
+
+  // 约束提示
+  const binds = plan.skuResults.filter((r) => r.ok).map((r) => r.bind);
+  let note = '';
+  if (plan.mergedInfo)
+    note += `已将 <b>${plan.mergedInfo.tails} 个尾板</b>拼合为 ${plan.mergedInfo.mergedPallets} 板（省 ${plan.mergedInfo.tails - plan.mergedInfo.mergedPallets} 板），拼板为柱状并排+顶面叠放的保守估算。<br>`;
+  if (!t.feasible) {
+    note += '部分箱规无法装载，见下表原因；其余箱规已正常计算。';
+  } else if (binds.includes('weight') && binds.every((b) => b === 'weight' || b === 'both')) {
+    note += `<b>瓶颈：限重。</b>单板重量先于高度到达上限（还有堆高富余）——板数已由总重决定：⌈${fmt(t.weight, 1)} ÷ ${fmt(pallet.maxW - (pallet.palletWt || 0), 1)}⌉ = ${weightFloor} 板${optimal ? '，当前方案已达重量下限，减不了板' : '，当前方案未达下限（受几何限制），可考虑混装拼尾板'}。`;
+  } else if (binds.every((b) => b === 'geom')) {
+    note += '<b>瓶颈：几何。</b>高度或底面先于限重到达上限——想减板需压缩箱规、换更匹配托盘底面的箱型或允许倒放。';
+  } else {
+    note += '部分箱规受限重、部分受几何约束，详见分箱规明细。';
+  }
+  const bindNote = $('bindNote');
+  bindNote.innerHTML = note;
+  bindNote.style.display = 'block';
+
+  // 分箱规表
+  $('skuTable').querySelector('tbody').innerHTML = plan.skuResults.map((r, i) => {
+    const sku = plan.skus[i];
+    const color = SKU_COLORS[i % SKU_COLORS.length];
+    if (!r.ok)
+      return `<tr class="infeasible"><td class="zh"><span class="chip" style="background:${color}"></span>${skuLabel(sku)}</td><td>—</td><td>—</td><td class="zh">${r.reason}</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>`;
+    const bindTxt = { weight: '<span class="badge w">限重</span>', geom: '<span class="badge">几何</span>', both: '<span class="badge w">双重</span>' }[r.bind];
+    const pose = r.vertical === 'h' ? '正立' : '侧/倒放';
+    return `<tr>
+      <td class="zh"><span class="chip" style="background:${color}"></span>${skuLabel(sku)}</td>
+      <td>${sku.avg ? '≈' : ''}${fmt(sku.wt, 2)}</td><td>${sku.qty}</td>
+      <td class="zh">${r.perLayer}/层 × ${r.layersFit}层 · ${pose}</td>
+      <td>${r.perPallet}</td>
+      <td>${r.wtCap} / ${r.geomCap}</td>
+      <td>${bindTxt}</td>
+      <td>${r.mergedTail ? `${r.pallets.length - 1} + 拼板` : r.pallets.length}</td>
+    </tr>`;
+  }).join('');
+
+  // 逐板表
+  const envVol = pallet.L * pallet.W * pallet.H / 1e6;
+  $('palletTable').querySelector('tbody').innerHTML = plan.pallets.map((p, i) => {
+    const pid = `P${String(i + 1).padStart(2, '0')}`;
+    const dims = `${fmt(p.loadL, 0)}×${fmt(p.loadW, 0)}×${fmt(p.loadH, 0)}`;
+    const hUtil = `${Math.round(p.loadH / pallet.H * 100)}%`;
+    if (p.type === 'mixed') {
+      const chips = [...new Set(p.blocks.map((b) => b.block.skuIdx))]
+        .map((idx) => `<span class="chip" style="background:${SKU_COLORS[idx % SKU_COLORS.length]}"></span>`).join('');
+      const vol = p.blocks.reduce((s, b) => s + b.block.count * b.block.sku.l * b.block.sku.w * b.block.sku.h / 1e6, 0);
+      const badge = p.blocks.length > 1 ? '<span class="badge last">拼板</span>' : '<span class="badge last">尾板</span>';
+      return `<tr>
+        <td>${pid}</td>
+        <td class="zh">${chips}拼板 · ${new Set(p.blocks.map((b) => b.block.skuIdx)).size} 种</td>
+        <td>${p.count}</td>
+        <td>${fmt(p.weight, 1)}</td>
+        <td>${dims}</td>
+        <td>${hUtil}</td>
+        <td>${Math.round(vol / envVol * 100)}%</td>
+        <td>${badge}</td>
+      </tr>`;
+    }
+    const color = SKU_COLORS[p.skuIdx % SKU_COLORS.length];
+    const isTail = i === plan.pallets.length - 1 || plan.pallets[i + 1].skuIdx !== p.skuIdx;
+    const spaceUtil = p.count * p.sku.l * p.sku.w * p.sku.h / 1e6 / envVol * 100;
+    return `<tr>
+      <td>${pid}</td>
+      <td class="zh"><span class="chip" style="background:${color}"></span>${skuLabel(p.sku)}</td>
+      <td>${p.count}</td>
+      <td>${fmt(p.weight, 1)}</td>
+      <td>${dims}</td>
+      <td>${hUtil}</td>
+      <td>${Math.round(spaceUtil)}%</td>
+      <td>${isTail && p.count < plan.skuResults[p.skuIdx].perPallet ? '<span class="badge last">尾板</span>' : '<span class="badge full">满板</span>'}</td>
+    </tr>`;
+  }).join('') || '<tr><td colspan="8" class="zh">无可装载箱规</td></tr>';
+
+  // 3D
+  window.__lastPlan = plan;
+  window.__lastPallet = pallet;
+  if (window.__palletRender) window.__palletRender(plan, pallet);
+}
+
+function calculate() {
+  const { pallet, skus, errs } = readInputs();
+  const errBox = $('errMsg');
+  if (errs.length) {
+    errBox.textContent = '✗ ' + errs[0] + (errs.length > 1 ? `（共 ${errs.length} 处问题）` : '');
+    errBox.classList.add('show');
+    return;
+  }
+  errBox.classList.remove('show');
+  const plan = planLoad(skus, pallet, $('allowTip').checked, $('mergeTails').checked);
+  plan.skus = skus; // 供表格直接取箱规（拼板后某箱规可能一块板都不剩）
+  renderResults(plan, pallet);
+  saveState(); // 计算成功即记忆，刷新后自动恢复
+}
+
+// ===== 记忆（localStorage，仅存本机） =====
+const STORE_KEY = 'pallet-calculator/v1';
+
+function saveState() {
+  try {
+    const skus = [...document.querySelectorAll('#skuRows .sku-row')].map((row) => ({
+      l: row.querySelector('.c-l').value, w: row.querySelector('.c-w').value,
+      h: row.querySelector('.c-h').value, wt: row.querySelector('.c-wt').value,
+      qty: row.querySelector('.c-qty').value,
+    }));
+    localStorage.setItem(STORE_KEY, JSON.stringify({
+      pallet: { L: $('pL').value, W: $('pW').value, H: $('pH').value, maxW: $('pMaxW').value, palletWt: $('pOwnW').value },
+      allowTip: $('allowTip').checked, mergeTails: $('mergeTails').checked,
+      totalWt: $('gTw').value, skus,
+    }));
+  } catch (e) { /* 存储不可用（隐私模式等）时静默降级为无记忆 */ }
+}
+
+function restoreState() {
+  try {
+    const raw = localStorage.getItem(STORE_KEY);
+    if (!raw) return false;
+    const s = JSON.parse(raw);
+    if (!s || !Array.isArray(s.skus) || !s.skus.length || !s.pallet) return false;
+    $('pL').value = s.pallet.L; $('pW').value = s.pallet.W; $('pH').value = s.pallet.H;
+    $('pMaxW').value = s.pallet.maxW; $('pOwnW').value = s.pallet.palletWt;
+    $('allowTip').checked = s.allowTip !== false;
+    $('mergeTails').checked = s.mergeTails !== false; // 旧记忆无此字段时按默认开
+    $('gTw').value = s.totalWt ?? '';
+    s.skus.forEach((k) => addSkuRow([k.l, k.w, k.h, k.wt, k.qty]));
+    return true;
+  } catch (e) { return false; }
+}
+
+// 初始化：优先恢复上次输入，无记忆时预填用户案例
+if (!restoreState()) addSkuRow(['30', '25', '35', '13', '118']);
+$('btnAdd').addEventListener('click', () => addSkuRow());
+$('btnCalc').addEventListener('click', calculate);
+$('gTw').addEventListener('keydown', (e) => { if (e.key === 'Enter') calculate(); });
+$('allowTip').addEventListener('change', calculate);
+$('mergeTails').addEventListener('change', calculate);
+calculate();
+</script>
+
+<!-- ===== 3D 预览（Three.js，双 CDN 兜底，失败时自动降级为纯计算） ===== -->
+<script type="module">
+const viewport = document.getElementById('viewport');
+try {
+  // 主库多 CDN 兜底：国内源优先（npmmirror 阿里镜像），单源 15s 超时挂起即切换；min 版体积约为完整版 1/7
+  const THREE_URLS = [
+    'https://registry.npmmirror.com/three/0.164.1/files/build/three.module.min.js',
+    'https://cdn.jsdelivr.net/npm/three@0.164.1/build/three.module.min.js',
+    'https://unpkg.com/three@0.164.1/build/three.module.min.js',
+  ];
+  const importWithTimeout = (url, ms) =>
+    Promise.race([
+      import(url),
+      new Promise((_, rej) => setTimeout(() => rej(new Error(`加载超时 ${url}`)), ms)),
+    ]);
+  let THREE = null, lastErr = null;
+  for (const u of THREE_URLS) {
+    try { THREE = await importWithTimeout(u, 15000); break; } catch (e) { lastErr = e; }
+  }
+  if (!THREE) throw lastErr || new Error('Three.js CDN 均不可用');
+
+  const renderer = new THREE.WebGLRenderer({ antialias: true });
+  renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+  viewport.appendChild(renderer.domElement);
+
+  const scene = new THREE.Scene();
+  scene.background = new THREE.Color(0xece7db);
+  scene.fog = new THREE.Fog(0xece7db, 2200, 5200);
+
+  // 精简轨道控制：左键旋转 / 右键或 Ctrl 拖拽平移 / 滚轮缩放，带阻尼与自动旋转
+  class SimpleOrbit {
+    constructor(camera, dom) {
+      this.camera = camera; this.dom = dom;
+      this.target = new THREE.Vector3();
+      this.autoRotate = false; this.autoRotateSpeed = 0.9;
+      this.onStart = null;
+      this._theta = 0.6; this._phi = 1.15; this._radius = 800;
+      this._vTheta = 0; this._vPhi = 0; this._vRadius = 0;
+      this._vPan = new THREE.Vector3();
+      this._drag = null;
+      dom.addEventListener('contextmenu', (e) => e.preventDefault());
+      dom.addEventListener('pointerdown', (e) => {
+        this._drag = { x: e.clientX, y: e.clientY, pan: e.button !== 0 || e.ctrlKey || e.metaKey };
+        if (this.onStart) this.onStart();
+        dom.setPointerCapture(e.pointerId);
+      });
+      dom.addEventListener('pointermove', (e) => {
+        if (!this._drag) return;
+        const dx = e.clientX - this._drag.x, dy = e.clientY - this._drag.y;
+        this._drag.x = e.clientX; this._drag.y = e.clientY;
+        if (this._drag.pan) {
+          const s = this._radius * 0.0011;
+          const right = new THREE.Vector3().setFromMatrixColumn(this.camera.matrix, 0);
+          const up = new THREE.Vector3().setFromMatrixColumn(this.camera.matrix, 1);
+          this._vPan.addScaledVector(right, -dx * s).addScaledVector(up, dy * s);
+        } else {
+          this._vTheta -= dx * 0.0052;
+          this._vPhi -= dy * 0.0052;
+        }
+      });
+      const end = () => { this._drag = null; };
+      dom.addEventListener('pointerup', end);
+      dom.addEventListener('pointercancel', end);
+      dom.addEventListener('wheel', (e) => { e.preventDefault(); this._vRadius += e.deltaY; }, { passive: false });
+    }
+    setFromPosition(pos) {
+      const off = pos.clone().sub(this.target);
+      this._radius = Math.max(off.length(), 1);
+      this._theta = Math.atan2(off.x, off.z);
+      this._phi = THREE.MathUtils.clamp(Math.acos(off.y / this._radius), 0.05, Math.PI - 0.05);
+    }
+    update() {
+      const k = 0.16;
+      this._theta += this._vTheta * k;
+      this._phi = THREE.MathUtils.clamp(this._phi + this._vPhi * k, 0.05, Math.PI - 0.05);
+      this._radius = THREE.MathUtils.clamp(this._radius * Math.exp(this._vRadius * 0.0012 * k), 40, 20000);
+      this.target.addScaledVector(this._vPan, k);
+      this._vTheta *= 1 - k; this._vPhi *= 1 - k; this._vRadius *= 1 - k; this._vPan.multiplyScalar(1 - k);
+      if (this.autoRotate) this._theta += this.autoRotateSpeed * 0.0035;
+      const sinPhi = Math.sin(this._phi);
+      this.camera.position.set(
+        this.target.x + this._radius * sinPhi * Math.sin(this._theta),
+        this.target.y + this._radius * Math.cos(this._phi),
+        this.target.z + this._radius * sinPhi * Math.cos(this._theta)
+      );
+      this.camera.lookAt(this.target);
+    }
+  }
+
+  const camera = new THREE.PerspectiveCamera(42, 1, 1, 12000);
+  const controls = new SimpleOrbit(camera, renderer.domElement);
+  controls.autoRotate = true;
+  controls.onStart = () => {
+    controls.autoRotate = false;
+    const b = document.getElementById('btnRotate');
+    b.classList.remove('on'); b.textContent = '自动旋转：关';
+  };
+
+  scene.add(new THREE.AmbientLight(0xffffff, 0.72));
+  const sun = new THREE.DirectionalLight(0xfff3e0, 1.15);
+  sun.position.set(160, 320, 220);
+  scene.add(sun);
+
+  // 地面与网格（工程图纸风）
+  const ground = new THREE.Mesh(
+    new THREE.PlaneGeometry(8000, 8000),
+    new THREE.MeshLambertMaterial({ color: 0xe7e1d0 })
+  );
+  ground.rotation.x = -Math.PI / 2;
+  ground.position.y = -0.5;
+  scene.add(ground);
+  const grid = new THREE.GridHelper(1600, 16, 0xb9b09a, 0xd3ccb9);
+  grid.position.y = 0;
+  scene.add(grid);
+
+  // ===== 材质/几何缓存 =====
+  const COLORS = ['#c98a3b', '#4a7f74', '#5b6b9e', '#8a9a5b', '#b45a4a', '#806ba0', '#3f6f8f', '#a0825a'];
+  const matCache = new Map();
+  const geoCache = new Map();
+  const boxMat = (skuIdx) => {
+    if (!matCache.has(skuIdx))
+      matCache.set(skuIdx, new THREE.MeshLambertMaterial({ color: new THREE.Color(COLORS[skuIdx % COLORS.length]) }));
+    return matCache.get(skuIdx);
+  };
+  const boxGeo = (w, h, d) => {
+    const k = `${w}|${h}|${d}`;
+    if (!geoCache.has(k)) geoCache.set(k, new THREE.BoxGeometry(w * 0.985, h * 0.985, d * 0.985));
+    return geoCache.get(k);
+  };
+  const edgeCache = new Map();
+  const boxEdges = (w, h, d) => {
+    const k = `${w}|${h}|${d}`;
+    if (!edgeCache.has(k)) edgeCache.set(k, new THREE.EdgesGeometry(new THREE.BoxGeometry(w * 0.99, h * 0.99, d * 0.99)));
+    return edgeCache.get(k);
+  };
+  const edgeMat = new THREE.LineBasicMaterial({ color: 0x2a251c, transparent: true, opacity: 0.4 });
+  const woodMat = new THREE.MeshLambertMaterial({ color: 0xb9905e });
+  const woodEdgeMat = new THREE.LineBasicMaterial({ color: 0x6f532e, transparent: true, opacity: 0.6 });
+  // 剩余空间：淡橙虚线框 + 半透明体
+  const voidMat = new THREE.MeshLambertMaterial({ color: 0xe8490f, transparent: true, opacity: 0.06, depthWrite: false });
+  const voidEdgeMat = new THREE.LineDashedMaterial({ color: 0xe8490f, dashSize: 5, gapSize: 4, transparent: true, opacity: 0.55, depthTest: false });
+
+  const PALLET_T = 10; // 3D 示意托盘厚度
+  let palletGroup = null;
+  let dimsGroup = null;
+  let showDims = true;
+
+  // 剩余空间标注：起点 (x,z)、底部 y，尺寸 w×h×d，标签置于体心
+  function addVoid(group, x, y, z, w, h, d, text) {
+    const geo = new THREE.BoxGeometry(w, h, d);
+    const box = new THREE.Mesh(geo, voidMat);
+    box.position.set(x + w / 2, y + h / 2, z + d / 2);
+    const edge = new THREE.LineSegments(new THREE.EdgesGeometry(geo), voidEdgeMat);
+    edge.computeLineDistances();
+    edge.position.copy(box.position);
+    edge.renderOrder = 1;
+    const lbl = makeLabel(text);
+    lbl.scale.multiplyScalar(0.52);
+    lbl.material.depthTest = false;
+    lbl.renderOrder = 2;
+    lbl.position.copy(box.position);
+    group.add(box, edge, lbl);
+  }
+  const f0 = (n) => Math.round(n);
+
+  function makeLabel(text) {
+    const FONT = 'bold 52px ui-monospace, Menlo, monospace';
+    const probe = document.createElement('canvas').getContext('2d');
+    probe.font = FONT;
+    const c = document.createElement('canvas');
+    c.width = Math.max(360, Math.ceil(probe.measureText(text).width) + 100);
+    c.height = 112;
+    const ctx = c.getContext('2d');
+    ctx.fillStyle = '#211d17';
+    ctx.fillRect(0, 0, c.width, c.height);
+    ctx.strokeStyle = '#f1ecdf'; ctx.lineWidth = 3;
+    ctx.strokeRect(5, 5, c.width - 10, 102);
+    ctx.fillStyle = '#f1ecdf';
+    ctx.font = FONT;
+    ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    ctx.fillText(text, c.width / 2, 60);
+    const tex = new THREE.CanvasTexture(c);
+    tex.colorSpace = THREE.SRGBColorSpace;
+    const sp = new THREE.Sprite(new THREE.SpriteMaterial({ map: tex }));
+    sp.scale.set((c.width / 512) * 110, 24, 1);
+    return sp;
+  }
+
+  function fitCamera() {
+    const box = new THREE.Box3().setFromObject(palletGroup);
+    const center = box.getCenter(new THREE.Vector3());
+    const size = box.getSize(new THREE.Vector3());
+    // 分别按水平/垂直视场角求所需距离（视口常为宽幅），取大者并留边距
+    const vHalf = THREE.MathUtils.degToRad(camera.fov / 2);
+    const hHalf = Math.atan(Math.tan(vHalf) * camera.aspect);
+    const needX = (Math.max(size.x, 200) / 2 + 45) / Math.tan(hHalf);
+    const needY = (Math.max(size.y, 100) / 2 + 40) / Math.tan(vHalf);
+    const dist = Math.max(needX, needY);
+    const dir = new THREE.Vector3(0.52, 0.32, 0.94).normalize();
+    camera.position.copy(center).addScaledVector(dir, dist);
+    camera.near = dist / 100; camera.far = dist * 40;
+    camera.updateProjectionMatrix();
+    controls.target.copy(center);
+    controls.setFromPosition(camera.position);
+    controls.update();
+  }
+
+  const RENDER_BOX_LIMIT = 4000;
+
+  window.__palletRender = (plan, pallet) => {
+    const totalBoxes = plan.pallets.reduce((s, p) => s + p.count, 0);
+    const fb = document.getElementById('vpFallback');
+    if (totalBoxes > RENDER_BOX_LIMIT) {
+      fb.innerHTML = `箱子总数 ${totalBoxes} 超过 3D 预览上限（${RENDER_BOX_LIMIT}），计算结果仍有效。<br>如需 3D 预览请减少数量或分批查看。`;
+      fb.style.display = 'flex';
+      return;
+    }
+    fb.style.display = 'none';
+
+    if (palletGroup) {
+      palletGroup.traverse((o) => {
+        if (o.isSprite) { o.material.map.dispose(); o.material.dispose(); }
+      });
+      scene.remove(palletGroup);
+    }
+    palletGroup = new THREE.Group();
+    scene.add(palletGroup);
+    dimsGroup = new THREE.Group(); // 标注层：P01 尺寸包络 + 各板剩余空间，统一开关
+    dimsGroup.visible = showDims;
+    palletGroup.add(dimsGroup);
+
+    const perRow = 4, gapX = 60, gapZ = 80;
+    plan.pallets.forEach((p, i) => {
+      const col = i % perRow, row = Math.floor(i / perRow);
+      const ox = col * (pallet.L + gapX), oz = row * (pallet.W + gapZ);
+
+      // 托盘示意底板
+      const slab = new THREE.Mesh(new THREE.BoxGeometry(pallet.L, PALLET_T, pallet.W), woodMat);
+      slab.position.set(ox + pallet.L / 2, PALLET_T / 2, oz + pallet.W / 2);
+      palletGroup.add(slab);
+      const slabEdge = new THREE.LineSegments(new THREE.EdgesGeometry(slab.geometry), woodEdgeMat);
+      slabEdge.position.copy(slab.position);
+      palletGroup.add(slabEdge);
+
+      // 箱子：单箱规板 = 一个柱；拼板 = 多个柱（并排或叠放，y 为所在块底的偏移）
+      const stacks = p.type === 'mixed'
+        ? p.blocks.map((b) => ({ x: b.x, z: b.z, y: b.y, layer: b.block.layer, vh: b.block.vh, fullLayers: b.block.fullLayers, top: b.block.topPlacements, skuIdx: b.block.skuIdx }))
+        : [{ x: 0, z: 0, y: 0, layer: p.layer, vh: p.vh, fullLayers: p.fullLayers, top: p.partial > 0 ? p.layer.slice(0, p.partial) : [], skuIdx: p.skuIdx }];
+      for (const st of stacks) {
+        const totalLayers = st.fullLayers + (st.top.length > 0 ? 1 : 0);
+        for (let li = 0; li < totalLayers; li++) {
+          const placements = li < st.fullLayers ? st.layer : st.top;
+          for (const pl of placements) {
+            const y = PALLET_T + st.y + li * st.vh + st.vh / 2 + li * currentGap();
+            const mesh = new THREE.Mesh(boxGeo(pl.w, st.vh, pl.h), boxMat(st.skuIdx));
+            mesh.position.set(ox + st.x + pl.x + pl.w / 2, y, oz + st.z + pl.y + pl.h / 2);
+            mesh.userData = { layerIdx: li, baseY: PALLET_T + st.y + li * st.vh + st.vh / 2 };
+            palletGroup.add(mesh);
+            const e = new THREE.LineSegments(boxEdges(pl.w, st.vh, pl.h), edgeMat);
+            e.position.copy(mesh.position);
+            e.userData = { layerIdx: li, baseY: mesh.userData.baseY };
+            palletGroup.add(e);
+          }
+        }
+      }
+
+      // 板号标签
+      const tag = p.type === 'mixed' ? `P${String(i + 1).padStart(2, '0')} · 拼${p.count}箱 · ${Math.round(p.weight)}kg` : `P${String(i + 1).padStart(2, '0')} · ${p.count}箱 · ${Math.round(p.weight)}kg`;
+      const label = makeLabel(tag);
+      label.position.set(ox + pallet.L / 2, PALLET_T + p.loadH + 26, oz + pallet.W / 2);
+      palletGroup.add(label);
+
+      // 剩余空间标注：分层最大空白矩形（≥5cm、≥5000cm³，按体积取前3），与尺寸包络同开关
+      const occBlocks = p.type === 'mixed'
+        ? p.blocks.map((b) => ({ x: b.x, z: b.z, y: b.y, w: b.w, d: b.d, h: b.block.h }))
+        : [{ x: 0, z: 0, y: 0, w: p.loadL, d: p.loadW, h: p.loadH }];
+      computeVoids(pallet, occBlocks).forEach((v) =>
+        addVoid(dimsGroup, ox + v.x, PALLET_T + v.y, oz + v.z, v.w, v.h, v.d, `余${f0(v.w)}×${f0(v.d)}×${f0(v.h)}`)
+      );
+    });
+
+    // 尺寸标注：P01 的虚线可用空间包络（L×W×H）+ 三向尺寸（CAD 风格，透视穿透显示）
+    const envelope = new THREE.LineSegments(
+      new THREE.EdgesGeometry(new THREE.BoxGeometry(pallet.L, pallet.H, pallet.W)),
+      new THREE.LineDashedMaterial({ color: 0x211d17, dashSize: 7, gapSize: 5, transparent: true, opacity: 0.65, depthTest: false })
+    );
+    envelope.computeLineDistances();
+    envelope.position.set(pallet.L / 2, PALLET_T + pallet.H / 2, pallet.W / 2);
+    envelope.renderOrder = 1;
+    dimsGroup.add(envelope);
+    const dim = (text, x, y, z) => {
+      const s = makeLabel(text);
+      s.scale.multiplyScalar(0.62);
+      s.material.depthTest = false; // CAD 标注置顶，不被货物遮挡
+      s.renderOrder = 2;
+      s.position.set(x, y, z);
+      dimsGroup.add(s);
+    };
+    dim(`${pallet.L} cm`, pallet.L / 2, PALLET_T + 10, pallet.W + 34);
+    dim(`${pallet.W} cm`, pallet.L + 38, PALLET_T + 10, pallet.W / 2);
+    dim(`${pallet.H} cm`, pallet.L + 34, PALLET_T + pallet.H / 2, pallet.W + 34);
+
+    // 图签 & 图例
+    document.getElementById('tbInfo').textContent =
+      `${plan.totals.pallets} PLTS · ${plan.totals.boxes} CTNS · ${plan.totals.weight.toFixed(1)} KG · ${plan.totals.volumeM3.toFixed(3)} M³`;
+    // 图例：按实际出现的箱规索引生成（拼板由多箱规组成）
+    const idxs = new Set();
+    plan.pallets.forEach((p) => {
+      if (p.type === 'mixed') p.blocks.forEach((b) => idxs.add(b.block.skuIdx));
+      else idxs.add(p.skuIdx);
+    });
+    document.getElementById('legend').innerHTML = [...idxs]
+      .map((idx) => `<span><span class="chip" style="background:${COLORS[idx % COLORS.length]}"></span>${plan.skus[idx].l}×${plan.skus[idx].w}×${plan.skus[idx].h} cm</span>`)
+      .join('');
+
+    fitCamera();
+  };
+
+  // 层间展开
+  let gap = 0;
+  const currentGap = () => gap;
+  document.getElementById('explode').addEventListener('input', (e) => {
+    gap = +e.target.value;
+    document.getElementById('explodeVal').textContent = gap;
+    if (!palletGroup) return;
+    palletGroup.traverse((o) => {
+      if (o.userData && o.userData.layerIdx !== undefined)
+        o.position.y = o.userData.baseY + o.userData.layerIdx * gap;
+    });
+  });
+
+  // 自动旋转 / 重置视角
+  const btnRotate = document.getElementById('btnRotate');
+  btnRotate.addEventListener('click', () => {
+    controls.autoRotate = !controls.autoRotate;
+    btnRotate.classList.toggle('on', controls.autoRotate);
+    btnRotate.textContent = controls.autoRotate ? '自动旋转：开' : '自动旋转：关';
+  });
+  document.getElementById('btnReset').addEventListener('click', () => { if (palletGroup) fitCamera(); });
+  const btnDims = document.getElementById('btnDims');
+  btnDims.addEventListener('click', () => {
+    showDims = !showDims;
+    btnDims.classList.toggle('on', showDims);
+    btnDims.textContent = showDims ? '尺寸标注：开' : '尺寸标注：关';
+    if (dimsGroup) dimsGroup.visible = showDims;
+  });
+
+  // 自适应尺寸
+  const resize = () => {
+    const w = viewport.clientWidth, h = viewport.clientHeight;
+    renderer.setSize(w, h);
+    camera.aspect = w / h;
+    camera.updateProjectionMatrix();
+  };
+  new ResizeObserver(resize).observe(viewport);
+  resize();
+
+  (function animate() {
+    requestAnimationFrame(animate);
+    controls.update();
+    renderer.render(scene, camera);
+  })();
+
+  if (window.__lastPlan) window.__palletRender(window.__lastPlan, window.__lastPallet);
+} catch (err) {
+  console.warn('3D 模块加载失败：', err);
+  const fb = document.getElementById('vpFallback');
+  fb.innerHTML = '3D 预览不可用（Three.js CDN 加载失败或无网络）。<br>计算结果与表格不受影响，可联网后刷新页面。';
+  fb.style.display = 'flex';
+}
+</script>
+</body>
+</html>
