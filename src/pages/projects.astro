@@ -3,7 +3,15 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import Navbar from '../components/Navbar.astro';
 import Footer from '../components/Footer.astro';
 
-const projects: { title: string; description: string; tags: string[] }[] = [];
+const projects: { title: string; description: string; tags: string[]; link?: string }[] = [
+  {
+    title: 'AI News Hub',
+    description:
+      'Android App，一屏读完当天 AI 世界。聚合 HackerNews、GitHub Trending、HuggingFace Papers、Product Hunt 等 8 个高质量信息源，配套数据管道每日预生成中文要点、跨源今日 Top 10 与热词榜，内置 WebView 支持阅读模式与整页翻译。',
+    tags: ['Kotlin', 'Jetpack Compose', 'Material 3', 'Android'],
+    link: 'https://github.com/burgessjp/AI-News-Hub',
+  },
+];
 ---
 
 <BaseLayout title="Projects" description="PENG 的开源项目和作品集">
@@ -13,7 +21,15 @@ const projects: { title: string; description: string; tags: string[] }[] = [];
     <div>
       {projects.map((project) => (
         <div class="py-4 border-b border-border last:border-b-0">
-          <h3 class="font-serif text-base font-bold text-text mb-1">{project.title}</h3>
+          <h3 class="font-serif text-base font-bold text-text mb-1">
+            {project.link ? (
+              <a href={project.link} target="_blank" rel="noopener" class="hover:text-accent">
+                {project.title}
+              </a>
+            ) : (
+              project.title
+            )}
+          </h3>
           <p class="text-sm text-text-muted leading-relaxed mb-2">{project.description}</p>
           <div class="flex flex-wrap gap-2">
             {project.tags.map((tag) => (
