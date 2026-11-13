@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MBTI 性格测试</title>
+<style>
+  :root {
+    --paper: #faf6ee;
+    --paper-deep: #f2ebdb;
+    --ink: #1a1713;
+    --ink-soft: #575046;
+    --muted: #8a8378;
+    --line: #ddd3bf;
+    --seal: #c8401f;
+    --serif: "Songti SC", "STSong", "Noto Serif CJK SC", "SimSun", serif;
+    --sans: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { -webkit-text-size-adjust: 100%; }
+  body { font-family: var(--sans); background: var(--paper); color: var(--ink);
+         min-height: 100vh; line-height: 1.6; }
+  /* 纸张颗粒 */
+  body::after {
+    content: '';
+    position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/></filter><rect width='140' height='140' filter='url(%23n)'/></svg>");
+    opacity: .05; mix-blend-mode: multiply; pointer-events: none; z-index: 40;
+  }
+  #app { max-width: 480px; margin: 0 auto; padding: 32px 22px 64px; position: relative; }
+  [hidden] { display: none !important; }
+  button { font: inherit; cursor: pointer; }
+
+  .screen { display: flex; flex-direction: column; gap: 18px;
+            animation: fadeUp .5s cubic-bezier(.2,.7,.3,1) both; }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(14px); }
+                      to   { opacity: 1; transform: none; } }
+  @media (prefers-reduced-motion: reduce) {
+    .screen, .screen * { animation: none !important; transition: none !important; }
+  }
+
+  /* ── 欢迎页 ── */
+  .screen-welcome { min-height: calc(100vh - 96px); justify-content: center; }
+  .kicker { color: var(--seal); font-size: 13px; letter-spacing: .35em; font-weight: 600; }
+  .title { font-family: var(--serif); font-size: 46px; font-weight: 900;
+           line-height: 1.3; letter-spacing: .04em; margin-top: -4px; }
+  .title em { font-style: normal; color: var(--seal); }
+  .rule { border: none; border-top: 1px solid var(--line); }
+  .intro { color: var(--muted); line-height: 1.9; }
+  .letters { display: flex; gap: 8px; flex-wrap: wrap; }
+  .letter-chip {
+    font-family: var(--serif); font-weight: 700; font-size: 15px;
+    width: 34px; height: 38px; display: grid; place-items: center;
+    border: 1px solid var(--line); border-radius: 6px; color: var(--ink-soft);
+    background: var(--paper-deep); animation: fadeUp .5s both;
+  }
+  .letter-chip:nth-child(odd) { color: var(--seal); border-color: rgba(200,64,31,.35); }
+  .letter-chip:nth-child(1) { animation-delay: .08s; }
+  .letter-chip:nth-child(2) { animation-delay: .14s; }
+  .letter-chip:nth-child(3) { animation-delay: .20s; }
+  .letter-chip:nth-child(4) { animation-delay: .26s; }
+  .letter-chip:nth-child(5) { animation-delay: .32s; }
+  .letter-chip:nth-child(6) { animation-delay: .38s; }
+  .letter-chip:nth-child(7) { animation-delay: .44s; }
+  .letter-chip:nth-child(8) { animation-delay: .50s; }
+  .btn-primary {
+    width: 100%; padding: 16px; border: none; border-radius: 4px;
+    background: var(--ink); color: var(--paper); font-size: 17px;
+    letter-spacing: .12em; font-weight: 600;
+    box-shadow: 4px 4px 0 rgba(200,64,31,.9);
+    transition: transform .12s, box-shadow .12s;
+  }
+  .btn-primary:active { transform: translate(3px, 3px); box-shadow: 1px 1px 0 rgba(200,64,31,.9); }
+  .footnote { text-align: center; color: var(--muted); font-size: 12px; letter-spacing: .08em; }
+
+  /* ── 答题页 ── */
+  .screen-quiz { position: relative; }
+  .screen-quiz::before {
+    content: attr(data-qnum);
+    position: absolute; top: -20px; right: -4px;
+    font-family: var(--serif); font-size: 118px; font-weight: 900;
+    color: var(--ink); opacity: .06; pointer-events: none; line-height: 1;
+  }
+  .folio { display: flex; align-items: baseline; justify-content: space-between; }
+  .folio .qno { font-family: var(--serif); font-size: 15px; font-weight: 700; letter-spacing: .1em; }
+  .progress-label { font-size: 13px; color: var(--muted); letter-spacing: .15em;
+                    font-variant-numeric: tabular-nums; }
+  .progress-bar { height: 3px; background: var(--line); }
+  .progress-fill { height: 100%; background: var(--seal); transition: width .35s ease; }
+  .question {
+    font-family: var(--serif); font-size: 27px; font-weight: 700; line-height: 1.7;
+    min-height: 6em; padding-left: 16px; border-left: 3px solid var(--seal);
+    animation: fadeUp .4s both;
+  }
+  .likert { display: flex; flex-direction: column; gap: 10px; }
+  .likert-btn {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 15px 18px; border: 1px solid var(--line); border-radius: 4px;
+    background: transparent; color: var(--ink); font-size: 15.5px; letter-spacing: .04em;
+    transition: background .15s, border-color .15s, color .15s;
+  }
+  .likert-btn::after {
+    content: ''; width: 18px; height: 18px; border-radius: 50%;
+    border: 1.5px solid var(--line); transition: all .15s;
+  }
+  .likert-btn.neutral { color: var(--ink-soft); }
+  .likert-btn.selected {
+    background: var(--ink); color: var(--paper); border-color: var(--ink);
+    animation: pickPulse .3s;
+  }
+  .likert-btn.selected::after {
+    border-color: var(--seal); background: var(--seal);
+    box-shadow: 0 0 0 3px rgba(200,64,31,.25);
+  }
+  @keyframes pickPulse { 0% { transform: scale(1); } 40% { transform: scale(1.015); } 100% { transform: scale(1); } }
+  .btn-ghost { padding: 10px 2px; border: none; background: none; color: var(--muted);
+               align-self: flex-start; letter-spacing: .1em; }
+  .btn-ghost:disabled { opacity: .35; cursor: default; }
+  .btn-ghost.center { align-self: center; }
+
+  /* ── 结果页 ── */
+  .result-hero { text-align: center; padding: 26px 0 4px; }
+  .type-code { font-family: var(--serif); font-size: 68px; font-weight: 900;
+               letter-spacing: .12em; color: var(--seal); line-height: 1.15; }
+  .type-name { font-family: var(--serif); font-size: 19px; color: var(--ink-soft);
+               margin-top: 6px; letter-spacing: .06em; }
+  .dim-block { display: flex; flex-direction: column; gap: 14px; margin: 6px 0; }
+  .dim-row { display: grid; grid-template-columns: 26px 1fr 26px 72px; gap: 10px; align-items: center; }
+  .dim-letter { font-family: var(--serif); text-align: center; font-weight: 700;
+                font-size: 17px; color: var(--muted); }
+  .dim-letter.win { color: var(--seal); }
+  .dim-track { height: 8px; background: var(--paper-deep); border: 1px solid var(--line); }
+  .dim-fill { height: 100%; background: var(--seal); }
+  .dim-pct { font-size: 13px; color: var(--ink-soft); text-align: right;
+             font-variant-numeric: tabular-nums; letter-spacing: .05em; }
+  .sec-head { display: flex; align-items: center; gap: 10px; margin-top: 12px; }
+  .sec-head .sec-no { font-family: var(--serif); color: var(--seal); font-weight: 700;
+                      font-size: 14px; letter-spacing: .2em; white-space: nowrap; }
+  .sec-head .sec-rule { flex: 1; border-top: 1px solid var(--line); }
+  .desc { line-height: 1.95; }
+  .plain { color: var(--ink-soft); line-height: 1.9; }
+  .plainlist { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+  .plainlist li { padding-left: 18px; position: relative; color: var(--ink-soft); line-height: 1.75; }
+  .plainlist li::before { content: '·'; position: absolute; left: 4px; color: var(--seal); font-weight: 900; }
+  .screen-result > * { animation: fadeUp .45s both; }
+  .screen-result > *:nth-child(2) { animation-delay: .06s; }
+  .screen-result > *:nth-child(3) { animation-delay: .12s; }
+  .screen-result > *:nth-child(4) { animation-delay: .18s; }
+  .screen-result > *:nth-child(5) { animation-delay: .24s; }
+  .screen-result > *:nth-child(n+6) { animation-delay: .3s; }
+
+  .share-wrap { display: flex; flex-direction: column; gap: 12px; }
+  .share-wrap .btn-primary { text-align: center; text-decoration: none; display: block; }
+  .share-img { width: 100%; border-radius: 4px;
+               box-shadow: 0 8px 30px rgba(26,23,19,.18); }
+</style>
+</head>
+<body>
+<div id="app"></div>
+
+<!-- SCORING-CORE-START -->
+<script>
+const DIMENSIONS = ['EI', 'SN', 'TF', 'JP'];
+const DIM_LABELS = { EI: ['E', 'I'], SN: ['S', 'N'], TF: ['T', 'F'], JP: ['J', 'P'] };
+const LIKERT = [
+  { v: -2, label: '非常不同意' },
+  { v: -1, label: '不同意' },
+  { v:  0, label: '中立' },
+  { v:  1, label: '同意' },
+  { v:  2, label: '非常同意' },
+];
+
+function computeResult(questions, answers) {
+  const dims = {};
+  for (const dim of DIMENSIONS) {
+    let raw = 0;
+    let max = 0;
+    for (const q of questions) {
+      if (q.dim !== dim) continue;
+      const a = Math.max(-2, Math.min(2, answers[q.id] ?? 0));
+      raw += a * q.dir;
+      max += 2;
+    }
+    const [first, second] = DIM_LABELS[dim];
+    const pole = raw > 0 ? first : second;   // tie-break：0 归第二极
+    const pct = Math.round(50 + (max > 0 ? Math.abs(raw) / max * 50 : 0));
+    dims[dim] = { pole, pct, raw };
+  }
+  const type = DIMENSIONS.map(d => dims[d].pole).join('');
+  return { type, dims };
+}
+
+function shuffle(arr) {
+  const a = arr.slice();
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+</script>
+<!-- SCORING-CORE-END -->
+
+<!-- CONTENT-DATA-START -->
+<script>
+const QUESTIONS = [
+  { id: 'q1',  dim: 'EI', dir:  1, text: '聚会上我常常是那个起哄带动气氛的人。' },
+  { id: 'q2',  dim: 'SN', dir:  1, text: '交代事情时，我更愿意把每个细节说清楚。' },
+  { id: 'q3',  dim: 'TF', dir:  1, text: '做决定时，我会先把利弊摆出来，感觉放后面。' },
+  { id: 'q4',  dim: 'JP', dir:  1, text: '出去玩之前，我会把行程攻略做到小时级。' },
+  { id: 'q5',  dim: 'EI', dir: -1, text: '热闹的场合待久了，我特别想找个安静的角落待着。' },
+  { id: 'q6',  dim: 'SN', dir: -1, text: '聊天的时候，我脑子里经常冒出毫不相干的点子。' },
+  { id: 'q7',  dim: 'TF', dir: -1, text: '拍板一件事之前，我很在意大家心里舒不舒服。' },
+  { id: 'q8',  dim: 'JP', dir: -1, text: '朋友一句“走不走”，我能直接收拾东西出门。' },
+  { id: 'q9',  dim: 'EI', dir:  1, text: '排队的功夫，我都能和旁边的人聊上几句。' },
+  { id: 'q10', dim: 'SN', dir:  1, text: '拿不准的时候，我更信自己亲身踩过的坑。' },
+  { id: 'q11', dim: 'TF', dir:  1, text: '意见不一样，我会当场说出来，不太顾面子。' },
+  { id: 'q12', dim: 'JP', dir:  1, text: '我离不开待办清单，做完一项划掉一项最爽。' },
+  { id: 'q13', dim: 'EI', dir: -1, text: '放假我就想在家待着，人多的地方一步都不想去。' },
+  { id: 'q14', dim: 'SN', dir: -1, text: '第一感觉觉得对的事，往往最后真的是对的。' },
+  { id: 'q15', dim: 'TF', dir: -1, text: '就算理由再充分，当面批评人我也开不了口。' },
+  { id: 'q16', dim: 'JP', dir: -1, text: '清单我也列，列完就基本不看了。' },
+  { id: 'q17', dim: 'EI', dir:  1, text: '有事我习惯直接打电话，三言两语说清楚。' },
+  { id: 'q18', dim: 'SN', dir:  1, text: '买书我基本只挑用得上的，小说很少碰。' },
+  { id: 'q19', dim: 'TF', dir:  1, text: '跟人认真辩一个问题，我越辩越起劲。' },
+  { id: 'q20', dim: 'JP', dir:  1, text: '任务我总想提前搞定，拖着不做心里悬得慌。' },
+  { id: 'q21', dim: 'EI', dir: -1, text: '开口之前，我会先在心里把话过一遍。' },
+  { id: 'q22', dim: 'SN', dir: -1, text: '我特别容易被小说电影里的世界吸进去。' },
+  { id: 'q23', dim: 'TF', dir: -1, text: '场面上有争执，哪怕跟我无关我心里也堵得慌。' },
+  { id: 'q24', dim: 'JP', dir: -1, text: '不到截止那天，我的效率就是上不来。' },
+  { id: 'q25', dim: 'EI', dir:  1, text: '群里聊天，我经常是发言最多的那一个。' },
+  { id: 'q26', dim: 'SN', dir:  1, text: '认路我得实际走过一遍才有感觉，光看地图没用。' },
+  { id: 'q27', dim: 'TF', dir:  1, text: '评价一个人的活儿，我只看做得好不好，不看他是谁。' },
+  { id: 'q28', dim: 'JP', dir:  1, text: '我的桌面和文件夹都收拾得整整齐齐，找东西从不费劲。' },
+  { id: 'q29', dim: 'EI', dir: -1, text: '能发微信说清楚的事，我绝不打电话。' },
+  { id: 'q30', dim: 'SN', dir: -1, text: '发呆的时候，我脑子里能演完一整部戏。' },
+  { id: 'q31', dim: 'TF', dir: -1, text: '朋友难过的时候，我更想陪着他，而不是急着给建议。' },
+  { id: 'q32', dim: 'JP', dir: -1, text: '东西我习惯随手一放，要用时再满屋子找。' },
+  { id: 'q33', dim: 'EI', dir:  1, text: '明天要认识一批新朋友，我今晚就有点兴奋。' },
+  { id: 'q34', dim: 'SN', dir:  1, text: '学新东西我喜欢按教程一步步来，跳着走心里没底。' },
+  { id: 'q35', dim: 'TF', dir:  1, text: '朋友找我吐槽，我的第一反应是帮他分析问题出在哪。' },
+  { id: 'q36', dim: 'JP', dir:  1, text: '说好的安排临时被改，我心里会烦一下。' },
+  { id: 'q37', dim: 'EI', dir: -1, text: '比起跟一群人寒暄，我更喜欢跟一个人深聊。' },
+  { id: 'q38', dim: 'SN', dir: -1, text: '遇到新鲜事，我总忍不住琢磨它背后意味着什么。' },
+  { id: 'q39', dim: 'TF', dir: -1, text: '买东西我常常看对眼就拿下，没耐心研究参数。' },
+  { id: 'q40', dim: 'JP', dir: -1, text: '计划做得再好也赶不上变化，我干脆就少做计划。' },
+  { id: 'q41', dim: 'EI', dir:  1, text: '我常常话说到一半，才完全想清楚自己要讲什么。' },
+  { id: 'q42', dim: 'SN', dir:  1, text: '老方法用着顺手，我没必要费劲去换新的。' },
+  { id: 'q43', dim: 'TF', dir:  1, text: '买东西之前，我会把配置参数研究透再决定。' },
+  { id: 'q44', dim: 'JP', dir:  1, text: '事情定下来的那一刻，我整个人才松下来。' },
+  { id: 'q45', dim: 'EI', dir: -1, text: '满屋子都是陌生人的场合，我待一会儿就想溜。' },
+  { id: 'q46', dim: 'SN', dir: -1, text: '我思考问题经常跳来跳去，旁人有点跟不上。' },
+  { id: 'q47', dim: 'TF', dir: -1, text: '拒绝别人的请求，我要纠结半天怎么开口。' },
+  { id: 'q48', dim: 'JP', dir: -1, text: '日程排太满我会喘不过气，留点空白才自在。' },
+  { id: 'q49', dim: 'EI', dir:  1, text: '临时起意喊朋友出来聚，这种事我干得出来。' },
+  { id: 'q50', dim: 'SN', dir:  1, text: '描述一件事，我会尽量把时间地点原样说清楚。' },
+  { id: 'q51', dim: 'TF', dir:  1, text: '定好的规矩，就算没人盯着，我也不想破坏。' },
+  { id: 'q52', dim: 'JP', dir:  1, text: '车票酒店我都是能订早就订，绝不拖到最后。' },
+  { id: 'q53', dim: 'EI', dir: -1, text: '一个人安安静静待着，对我来说是充电不是孤单。' },
+  { id: 'q54', dim: 'SN', dir: -1, text: '比起现在怎么样，我更好奇一件事将来能变成什么样。' },
+  { id: 'q55', dim: 'TF', dir: -1, text: '气氛一僵，我通常会第一个出来打圆场。' },
+  { id: 'q56', dim: 'JP', dir: -1, text: '晚上突然有人喊我出去，我大概率会答应。' },
+  { id: 'q57', dim: 'EI', dir:  1, text: '人越多我越来劲，热闹的场合让我精神百倍。' },
+  { id: 'q58', dim: 'SN', dir:  1, text: '我习惯把手头这件事做完，再去想下一件。' },
+  { id: 'q59', dim: 'TF', dir:  1, text: '一件事拿不准，我会去找数据而不是问感觉。' },
+  { id: 'q60', dim: 'JP', dir:  1, text: '周日晚上，我喜欢把下周的事情都排一遍。' },
+];
+
+const TYPES = {
+  INTJ: {
+    code: 'INTJ', name: '建筑师', tagline: '别人下棋，我在画棋盘',
+    desc: '你天生带着一张远景图，眼前的一切在你眼里都是半成品。定目标、拆步骤、排资源，你在脑子里跑一遍比很多人动手做一遍还清楚。你不爱闲聊不是高冷，是觉得时间应该花在有用的事上。你对自己狠，标准永远比外界给你的高，这让你走得远，也让你不容易快乐。在别人眼里你冷静得近乎冷酷，但其实你只是把感情收在地下室，钥匙随身带着。',
+    strengths: ['战略眼光，走一步看十步', '对自己要求极高', '独立，不依赖别人的认可', '定了就执行，反悔率极低'],
+    weaknesses: ['容易把人当变量而不是人', '过度自信于自己的判断', '情感表达欠费，亲密关系里容易失分'],
+    careers: ['战略咨询', '投资', '科研', '系统架构', '创业'],
+    famous: ['埃隆·马斯克', '尼采', '艾萨克·牛顿'],
+    relationship: '和建筑师相处，尊重他的独立空间就等于爱他。别用"你怎么从来不表达"逼问，他用把你的事安排得井井有条来表达。吵架时给他台阶下，他嘴上不服软，心里已经在改了。别试图用情绪攻势赢他，理性陈述你的需求才有胜算。',
+  },
+  INTP: {
+    code: 'INTP', name: '逻辑学家', tagline: '安静的大脑，轰鸣的宇宙',
+    desc: '你对世界的好奇心几乎没有开关，任何东西拆开看原理都是本能。别人聊结论，你聊前提；别人说"就是这样"，你已经开始想"凭什么就是这样"。你的大脑像一个永远开着会的智库，安静的外表下正在跑几十个并行线程。你不是不合群，只是大多数话题在你这儿三秒就推演完了，剩下时间在想更有意思的问题。在别人眼里你有点疏离、有点怪，但懂你的人知道，你只是把热情全部充值给了"想明白"这件事。',
+    strengths: ['逻辑严密，一眼看穿漏洞', '学习能力极强，兴趣广泛', '不受权威和惯例绑架', '危机时刻异常冷静'],
+    weaknesses: ['想太多，行动慢半拍', '对无意义的规则零容忍到刺头', '情感表达总是慢一拍'],
+    careers: ['科研', '算法工程', '哲学/思想类写作', '系统架构', '数据分析'],
+    famous: ['爱因斯坦', '笛卡尔', '比尔·盖茨'],
+    relationship: '和逻辑学家相处，别逼他当场表态，给他时间想清楚自然会给你答案。吵架时讲道理比讲态度有用一百倍。他不会说漂亮话，但愿意花三小时帮你研究问题，这就是他的深情。别试图用"别人都这样"说服他，会直接触发辩论模式。',
+  },
+  ENTJ: {
+    code: 'ENTJ', name: '指挥官', tagline: '天生带队冲锋的那个人',
+    desc: '你看不得低效，一眼就能指出问题出在哪，顺手还把方案想好了。别人还在纠结要不要干，你已经带着人冲出去了。你的世界里"不行"是个需要证据的词，目标定了你就会想尽办法够到。气场强、说话直接，跟你共事压力大但成长快，因为你真的能带人打胜仗。只是偶尔要记得：不是每个人都跟得上你的节奏，停下来等等队伍，不耽误赢。',
+    strengths: ['决断力强，从不内耗', '天生的组织者和领导者', '抗压，越难越兴奋', '目标感清晰，从不迷路'],
+    weaknesses: ['太强势，压得人喘不过气', '耐心余额不足', '容易忽略别人的情绪成本'],
+    careers: ['企业管理', '创业', '投资银行', '法律', '项目总监'],
+    famous: ['拿破仑', '史蒂夫·乔布斯', '撒切尔夫人'],
+    relationship: '和指挥官相处，直接说需求，别让他猜——猜心不是他的强项，执行才是。他批评你不是不爱你，是他默认你们是同一战壕的。吵架时别翻旧账，讲清楚你希望他改什么，他真的会列进待办。记住他的软肋：被最在乎的人否定时，他嘴硬心碎。',
+  },
+  ENTP: {
+    code: 'ENTP', name: '辩论家', tagline: '抬杠是爱好，拆解是本能',
+    desc: '你的大脑是个永不停机的提问机器，任何结论到你这儿都要过一遍"凭什么"。跟人抬杠不是想赢，是真的觉得对面逻辑有洞。新点子对你像呼吸一样自然，难的是把它们做完——毕竟做完一个，又冒出来十个更好玩的。你受不了"一直都是这么做的"这句话，传统在你眼里只是还没被推翻的假设。朋友又爱又怕：跟你聊天永远不无聊，但没人想在争论里挑战你。',
+    strengths: ['脑洞大，点子密度高', '思维敏捷，反驳速度一流', '敢挑战任何权威和惯例', '幽默，聊天自带梗'],
+    weaknesses: ['爱抬杠，赢了辩论输了人心', '三分钟热度，烂尾项目多', '讨厌重复琐碎的执行工作'],
+    careers: ['创业', '产品经理', '市场策划', '媒体', '投资分析'],
+    famous: ['托马斯·爱迪生', '马克·吐温', '苏格拉底'],
+    relationship: '和辩论家相处，别把他的抬杠当攻击，那只是他打招呼的方式。想让他听你的，别说"你就得这样"，说"你敢不敢试试这样"——激将法对他百试百灵。他能给你最好的东西是有趣：跟他在一起，生活永远不缺新鲜感。他最怕的不是吵架，是无趣。',
+  },
+  INFJ: {
+    code: 'INFJ', name: '提倡者', tagline: '温柔的皮囊，滚烫的理想',
+    desc: '你看人很准，常常对方话没说完，你已经在心里拼出了他没说的那部分。表面随和，内心其实有一套坚硬的原则，碰到底线时温和的人会比谁都固执。你对"意义"上瘾：做的事要对人有价值，关系要走心，否则做得再漂亮你都觉得空。你习惯把别人的情绪接过来扛着，却很少让人看见自己的疲惫。外人眼里的你安静神秘，懂你的人知道，你心里住着一个想把世界修好一点的人。',
+    strengths: ['洞察人心，共情力极强', '原则坚定，外柔内刚', '有远见，为理想能扛很久', '对在乎的人极度用心'],
+    weaknesses: ['太在意别人的情绪，内耗严重', '完美主义，容易把自己逼紧', '有委屈倾向报喜不报忧'],
+    careers: ['心理咨询', '教育', '写作', '公益', '人力资源'],
+    famous: ['甘地', '马丁·路德·金', '卡尔·荣格'],
+    relationship: '和提倡者相处，最要紧的是真诚——他的雷达太灵，敷衍一眼识破。他不说需求不代表没有，主动问一句"你今天累不累"能顶别人十句情话。别辜负他的信任，他掏心是有额度的。当他开始沉默，那不是没事，是在攒失望，请及时抱住他。',
+  },
+  INFP: {
+    code: 'INFP', name: '调停者', tagline: '心里有片海，谁也没见过',
+    desc: '你活得很"里面"：外部世界发生了什么不重要，重要的是它在你心里激起了什么。感受细腻到能听见情绪的音色，所以别人的难过你总能接住。你对真实的执念很深，人前演戏、说场面话这种事你做不来，一做就浑身难受。理想主义是你的底色，就算被现实捶过，心里还是留着一小块不肯熄灭的地方。别人觉得你慢热难懂，其实你只是把入口修得窄了点，进去的人都知道里面多辽阔。',
+    strengths: ['共情天赋，天然的情绪翻译器', '价值观坚定，不肯同流合污', '想象力和创造力旺盛', '对认定的人掏心掏肺'],
+    weaknesses: ['想太多，情绪内耗大户', '拖延，回避麻烦的现实事务', '太容易心软，边界感稀薄'],
+    careers: ['写作', '设计', '心理咨询', '翻译', '内容创作'],
+    famous: ['莎士比亚', 'J.R.R.托尔金', '约翰尼·德普'],
+    relationship: '和调停者相处，请好好说话，他们对语气的敏感度是普通人的十倍。别逼他当场表态，他需要时间把感受整理成语言。他生气多半不说，是怕伤到你——所以请主动留意他的沉默。他给爱的方式是把你写进他内心世界的主角位，请别辜负。',
+  },
+  ENFJ: {
+    code: 'ENFJ', name: '主人公', tagline: '点燃别人，也照亮房间',
+    desc: '你天生自带聚人光环，走到哪儿都能把气氛焐热。别人好你比谁都高兴，别人的潜力你看得到还忍不住想帮他挖出来。你是天生的老师型和领队型，擅长把一群不一样的人拧成一股绳，办法就是让每个人都觉得被看见。责任感应激对你来说很真实：团队有事你第一个顶上，朋友有事你睡不着。只是别忘了，那个总在照顾所有人的人，也需要被照顾一次。',
+    strengths: ['天生的感染力和领导力', '共情+行动力双在线', '把别人的成长当自己的事', '责任心可靠到变态'],
+    weaknesses: ['太在意别人的评价', '大包大揽，把自己累垮', '回避冲突，宁可自己委屈'],
+    careers: ['教育培训', '团队管理', '公益组织', '媒体主持', '人力资源'],
+    famous: ['巴拉克·奥巴马', '纳尔逊·曼德拉', '奥普拉'],
+    relationship: '和主人公相处，请接住他的热情，也看见他的付出——他嘴上说不用，心里等着你说辛苦了。他习惯照顾人，你要主动把"被照顾"的额度也给他。吵架时他最怕伤害到你在乎的东西，只要真诚沟通，他永远第一个递台阶。爱要说出口，他吃这一套。',
+  },
+  ENFP: {
+    code: 'ENFP', name: '竞选者', tagline: '人间小太阳，快乐永动机',
+    desc: '你对世界的好奇心是没开关的：新的城市、新的观点、新的人，都能让你眼睛发亮。聊天是你的主场，三分钟跟陌生人聊成老朋友不是传说。你脑子里同时跑着八个感兴趣的项目，虽然不一定都善终，但过程绝对精彩。你讨厌一成不变，"稳定"这个词在你这儿约等于"无聊"。朋友都觉得你是快乐小狗，只有深夜的你才知道，敏感的那根天线其实一直开着。',
+    strengths: ['热情外放，自带感染力', '好奇心爆棚，学什么都快', '真诚，情绪价值拉满', '创意多，点子管够'],
+    weaknesses: ['注意力涣散，虎头蛇尾', '情绪起伏大，上头快下头也快', '讨厌琐碎日常，账单和表格是天敌'],
+    careers: ['创意策划', '市场', '主播/主持', '公关', '自由职业'],
+    famous: ['华特·迪士尼', '罗宾·威廉姆斯', '威尔·史密斯'],
+    relationship: '和竞选者相处，跟上他的电量，也允许他偶尔没电。他需要新鲜感，时不时的惊喜和小冒险是感情保鲜剂。他说的多、想的也多，别嫌他话密，那是他在跟你分享世界。他崩溃时不用讲道理，陪着疯、陪着安静都行，就是别走开。',
+  },
+  ISTJ: {
+    code: 'ISTJ', name: '物流师', tagline: '靠谱，是刻在骨子里的',
+    desc: '你的字典里"说到做到"是默认设置。答应了的事，你会记在心里、写进日程、提前完成，出错率低到让人安心。你尊重规则和流程，不是死板，是你深知这些前人踩坑换来的东西有它的道理。你不喜欢冒险，但在你看来把每件小事做到位本身就是最聪明的活法。别人眼里的你话不多、存在感不强，可真出事的时候，大家回头第一个找的都是你。',
+    strengths: ['责任心和执行力天花板', '细节控，出错率极低', '沉稳，天塌下来先列清单', '对承诺绝对忠诚'],
+    weaknesses: ['保守，对新东西接受慢', '有点轴，不撞南墙不回头', '情感表达含蓄到让人着急'],
+    careers: ['财务审计', '行政管理', '工程', '法务', '公务员'],
+    famous: ['乔治·华盛顿', '安格拉·默克尔', '沃伦·巴菲特'],
+    relationship: '和物流师相处，请学会翻译他的爱：他不说想你，但他记得你所有忌口；他不发小作文，但你随口提的东西第二天就到家了。吵架时讲事实讲逻辑，别翻情绪账。给他一点确定性，说好的事别随便改，他对"变卦"的过敏程度超出你想象。',
+  },
+  ISFJ: {
+    code: 'ISFJ', name: '守卫者', tagline: '默默把所有人照顾好',
+    desc: '你是那种自己感冒了不当回事、朋友咳嗽一声就送去三盒药的人。细心到能记住每个人不吃香菜，周到到聚会散场你记得谁没上车。你不爱站在台前，习惯在幕后把一切托住，功劳不功劳的，你更在意在乎的人有没有被照顾到。你对熟悉的环境和人有深深的忠诚，改变对你来说需要勇气。只是别把自己排在最后一名太久，好人也需要被人好好对待。',
+    strengths: ['记性好，细节全在心上', '责任感强，托底型选手', '温暖耐心，人形安抚剂', '忠诚，认定就不离不弃'],
+    weaknesses: ['不懂拒绝，容易吃亏', '委屈自己成全别人', '抗拒变化，怕冲突'],
+    careers: ['医疗护理', '教育', '行政', '图书档案', '客户成功'],
+    famous: ['特蕾莎修女', '埃莉诺·罗斯福', '凯特·米德尔顿'],
+    relationship: '和守卫者相处，最重要的是别把他的好当成理所当然——他嘴上说着没事，心里的账本其实记着。多主动问他的想法，他习惯把"我都行"挂嘴边。他吃不了惊吓式的改变，大事提前打招呼。他表达爱是行动派：饭在锅里、伞在包里、你在心里。',
+  },
+  ESTJ: {
+    code: 'ESTJ', name: '总经理', tagline: '有我在，这事就稳了',
+    desc: '你是社会机器里最可靠的齿轮，也是那个看不得磨洋工的监工。规矩、流程、标准在你眼里不是官僚主义，是把事做成的脚手架。你说话直、下手快，开会永远是你先理清"所以到底要干什么"。家人朋友的事你比自己的还上心，只是方式是"你听我的准没错"。你不是不近人情，是真心觉得把事办漂亮就是对大家最好的交代。跟你在一起，天塌了都有人扛，就是偶尔嘴硬了点。',
+    strengths: ['执行力爆表，说到做到', '组织能力一流，天生管理者', '务实，从不飘在空中', '护短，家人朋友的事真上心'],
+    weaknesses: ['控制欲偏强，不放心交出去', '太直，说话容易伤人', '急于求成，看不惯慢节奏'],
+    careers: ['企业管理', '运营', '银行金融', '供应链', '政府管理'],
+    famous: ['亨利·福特', '约翰·D·洛克菲勒', '米歇尔·奥巴马'],
+    relationship: '和总经理相处，有事直说，他最烦猜谜。他觉得"帮你把事安排好"就是爱，请学会收下这份硬核浪漫。吵架时别上升态度问题，就事论事他十分钟就服软——去行动了。在外人前给他一点面子，回家你说了算这事他其实默许。',
+  },
+  ESFJ: {
+    code: 'ESFJ', name: '执政官', tagline: '气氛担当，人脉中心',
+    desc: '你是朋友圈的联络簿和聚会的主心骨，谁和谁有矛盾、谁最近不开心，你门儿清，还都想管一管。热情、周到、爱张罗，你的快乐很大一部分来自"大家都开心"。你重视关系里的礼数和回馈：记得别人的好，也希望自己的付出被看见。你做事踏实靠谱，答应的聚会一定到，答应的忙一定帮。只是别让"别人怎么看"变成枷锁，你已经很好了，不需要全场点赞。',
+    strengths: ['热心肠，人形暖场王', '组织协调能力一流', '记性好，人情账从不糊涂', '踏实靠谱，说到做到'],
+    weaknesses: ['太在意别人的看法', '大包大揽，有讨好的倾向', '和稀泥，回避正面冲突'],
+    careers: ['客户销售', '活动策划', '公关', '教育', '护理'],
+    famous: ['比尔·克林顿', '泰勒·斯威夫特', '詹妮弗·安妮斯顿'],
+    relationship: '和执政官相处，及时回应就是最好的爱：他的消息别晾着，他的付出请说谢谢。他吵架最怕冷暴力，有事摊开说，气氛缓和了他什么都好商量。记得在朋友面前给他面子，那是他的主战场。他张罗的每一场聚会，潜台词都是想见你。',
+  },
+  ISTP: {
+    code: 'ISTP', name: '鉴赏家', tagline: '动手能力天花板',
+    desc: '你话不多，手很巧，世界上大部分说明书在你眼里都多余——拆开看看不就知道了。危机时刻你最冷静，别人慌成一团，你已经默默把问题解决了。你享受亲手搞定一切的感觉，工具、机械、代码、菜刀，到你手里都听话。你极度看重自由和空间，最怕被人安排和黏着，"让我自己待会儿"是你的充电咒语。别人觉得你淡漠，其实你只是把感情也调成了静音模式。',
+    strengths: ['动手能力一流，实操派', '危机中冷静得吓人', '适应力强，到哪都能活', '不内耗，情绪占用极低'],
+    weaknesses: ['疏离，亲密关系里像失踪人口', '讨厌承诺和长期规划', '说话太省，容易让人误会'],
+    careers: ['工程技术', '飞行员', '外科医生', '机械维修', '竞技运动'],
+    famous: ['李小龙', '克林特·伊斯特伍德', '迈克尔·乔丹'],
+    relationship: '和鉴赏家相处，最重要的一课是别追着要回应——他的爱在行动里：修好的水管、装好的家具、默默查好的攻略。他需要大量独处时间，那不是不爱你，是充电。有事直接说事，别铺垫情绪。他若带你去看他捣鼓的东西，那是他在给你看心。',
+  },
+  ISFP: {
+    code: 'ISFP', name: '探险家', tagline: '温柔又叛逆的生活艺术家',
+    desc: '你看起来软软的，其实心里的主意谁也扭不动。你用五感生活：好听的音乐、好看的光线、好吃的味道，都能实实在在地击中你。你有自己的审美体系，穿搭、房间、照片都有讲究，只是不爱解释。你讨厌被安排、被贴标签，温和的外表下藏着"我的人生我做主"的硬核。冲突面前你习惯退开，不是怕，是觉得没必要。懂你的人知道，你是那种安安静静活得轰轰烈烈的人。',
+    strengths: ['审美在线，生活艺术家', '温柔包容，情绪稳定剂', '行动派的善意，帮人从不多话', '低调做自己，不被定义'],
+    weaknesses: ['回避冲突，有话不说', '长期规划薄弱，走一步看一步', '太随性，容易吃亏在条款上'],
+    careers: ['设计', '摄影', '料理', '手作', '艺术教育'],
+    famous: ['迈克尔·杰克逊', '周杰伦', '鲍勃·迪伦'],
+    relationship: '和探险家相处，请欣赏他眼里的世界——他拍给你的晚霞，就是他说想你的方式。别用条条框框框他，越放养越忠诚。他不爱吵架，但别把他的退让当妥协，逼急了他是会消失的。最好的爱法：陪他吃好吃的、看好看的，剩下交给时间。',
+  },
+  ESTP: {
+    code: 'ESTP', name: '企业家', tagline: '哪里刺激去哪里',
+    desc: '你的人生信条是"先干了再说"。风险在你眼里不是危险，是折扣力度大的机会。反应快、嘴巴快、行动更快，饭桌上谈成的事比别人会议室里一个月都多。你活在当下，五感全开，压力大反而表现越好——肾上腺素是你的营养液。规则在你眼里是参考意见，有用就遵守，碍事就绕开。朋友眼里你是那个永远有故事的人，只是偶尔，故事里带点伤疤。',
+    strengths: ['行动力闪电级，从不犹豫', '临场反应一流，危机变机会', '社交悍匪，跟谁都能称兄道弟', '抗压，越大战越兴奋'],
+    weaknesses: ['冲动，先干后想的代价不小', '不耐烦，讨厌开会谈感觉', '承诺来得快，兑现看心情'],
+    careers: ['销售', '创业', '投资交易', '体育', '危机公关'],
+    famous: ['欧内斯特·海明威', '麦当娜', '唐纳德·特朗普'],
+    relationship: '和企业家相处，请跟上他的节奏，也学会踩刹车。他吃软不吃硬，撒娇比讲道理管用十倍。他表达爱是大方行动派：说带你去的就真带你去。吵架时别翻旧账，直接说"抱我"能解决八成矛盾。他需要一点崇拜感，多夸他，他真的会更好。',
+  },
+  ESFP: {
+    code: 'ESFP', name: '表演者', tagline: '快乐是会传染的',
+    desc: '你走到哪儿，哪儿就是舞台，笑声就是你的背景音乐。你天生会来事儿，讲个八卦都自带运镜和配音。对你来说人生就是要体验：好吃的第一口、好听的现场、好玩的时刻，比什么大道理都珍贵。你慷慨、热情、共情快，朋友的坏情绪到你这儿三分钟就能哄好。有人说你咋咋呼呼，其实你只是把"活在当下"执行得比别人彻底。跟你待在一起，很难不开心。',
+    strengths: ['自带气氛组属性，快乐传染源', '慷慨大方，对朋友从不抠门', '共情快，安慰人一绝', '行动力强，想玩就约'],
+    weaknesses: ['冲动消费的重灾区', '讨厌计划，长远的事往后拖', '太在意当下的热闹，独处会发慌'],
+    careers: ['演艺主持', '直播', '活动执行', '旅游', '销售'],
+    famous: ['玛丽莲·梦露', '艾尔顿·约翰', '贾斯汀·比伯'],
+    relationship: '和表演者相处，请捧场——他讲笑话你就笑，他跳舞你就鼓掌，被看见就是他的氧气。他情绪来得快去得快，吵架别上纲上线，第二天他自己都忘了。用具体的陪伴爱他：一起去吃、一起去看、一起去疯。他闹哄哄的背后，其实最怕被冷落。',
+  },
+};
+</script>
+<!-- CONTENT-DATA-END -->
+
+<script>
+(function () {
+  'use strict';
+  var STORE_KEY = 'mbti-test-state';
+  var app = document.getElementById('app');
+
+  function newState() {
+    return { v: 1, phase: 'welcome', order: shuffle(QUESTIONS.map(function (q) { return q.id; })),
+             answers: {}, index: 0, result: null };
+  }
+  function loadState() {
+    try {
+      var raw = localStorage.getItem(STORE_KEY);
+      if (!raw) return null;
+      var s = JSON.parse(raw);
+      if (s.v !== 1 || !Array.isArray(s.order) || s.order.length !== QUESTIONS.length) return null;
+      return s;
+    } catch (e) { return null; }
+  }
+  function save() { try { localStorage.setItem(STORE_KEY, JSON.stringify(state)); } catch (e) {} }
+  function clearStore() { try { localStorage.removeItem(STORE_KEY); } catch (e) {} }
+
+  var state = loadState() || newState();
+  var qById = {};
+  QUESTIONS.forEach(function (q) { qById[q.id] = q; });
+
+  function el(tag, attrs, children) {
+    var node = document.createElement(tag);
+    for (var k in attrs) {
+      if (attrs[k] == null) continue;
+      if (k === 'text') node.textContent = attrs[k];
+      else if (k === 'html') node.innerHTML = attrs[k];
+      else if (k.slice(0, 2) === 'on') node.addEventListener(k.slice(2), attrs[k]);
+      else node.setAttribute(k, attrs[k]);
+    }
+    (children || []).forEach(function (c) { node.appendChild(c); });
+    return node;
+  }
+
+  function renderWelcome() {
+    var screen = el('section', { 'data-testid': 'screen-welcome', 'class': 'screen screen-welcome' });
+    screen.appendChild(el('p', { 'class': 'kicker', text: '六十题 · 约八分钟' }));
+    screen.appendChild(el('h1', { 'class': 'title', html: '<em>MBTI</em> 性格测试' }));
+    screen.appendChild(el('hr', { 'class': 'rule' }));
+    screen.appendChild(el('p', { 'class': 'intro', text: '六十道题，没有对错，凭第一直觉作答。做完看看你是十六种人格里的哪一种。' }));
+    var letters = el('div', { 'class': 'letters' });
+    'EISNTFJP'.split('').forEach(function (ch) {
+      letters.appendChild(el('span', { 'class': 'letter-chip', text: ch }));
+    });
+    screen.appendChild(letters);
+    screen.appendChild(el('button', { 'data-testid': 'btn-start', 'class': 'btn-primary',
+      onclick: function () { state.phase = 'quiz'; state.index = 0; save(); render(); }, text: '开始测试 →' }));
+    screen.appendChild(el('p', { 'class': 'footnote', text: '结果可保存成卡片，发给朋友对照' }));
+    app.innerHTML = '';
+    app.appendChild(screen);
+  }
+
+  function renderQuiz() {
+    var qId = state.order[state.index];
+    var q = qById[qId];
+    var answered = Object.keys(state.answers).length;
+    var screen = el('section', { 'data-testid': 'screen-quiz', 'class': 'screen screen-quiz',
+      'data-qnum': String(state.index + 1) });
+    var folio = el('div', { 'class': 'folio' });
+    folio.appendChild(el('span', { 'class': 'qno', text: '第 ' + (state.index + 1) + ' 题' }));
+    folio.appendChild(el('span', { 'data-testid': 'progress-label', 'class': 'progress-label',
+      text: (state.index + 1) + ' / ' + state.order.length }));
+    screen.appendChild(folio);
+    var barWrap = el('div', { 'class': 'progress-bar' });
+    var pctDone = Math.round(answered / state.order.length * 100);
+    barWrap.appendChild(el('div', { 'class': 'progress-fill', style: 'width:' + pctDone + '%' }));
+    screen.appendChild(barWrap);
+    screen.appendChild(el('h2', { 'data-testid': 'question-text', 'class': 'question', text: q.text }));
+
+    var row = el('div', { 'class': 'likert' });
+    LIKERT.forEach(function (opt) {
+      var selected = state.answers[qId] === opt.v;
+      row.appendChild(el('button', {
+        'data-testid': 'likert-' + opt.v,
+        'class': 'likert-btn' + (selected ? ' selected' : '') + (opt.v === 0 ? ' neutral' : ''),
+        text: opt.label,
+        onclick: function () { pick(opt.v); }
+      }));
+    });
+    screen.appendChild(row);
+    screen.appendChild(el('button', { 'data-testid': 'btn-prev', 'class': 'btn-ghost',
+      text: '上一题', disabled: state.index === 0 ? 'disabled' : null,
+      onclick: function () { if (state.index > 0) { state.index--; save(); render(); } } }));
+    app.innerHTML = '';
+    app.appendChild(screen);
+  }
+
+  var advanceTimer = null;
+  function pick(v) {
+    var qId = state.order[state.index];
+    state.answers[qId] = v;
+    save();
+    // 清掉旧高亮再加新反馈（重答同题场景）
+    document.querySelectorAll('.likert-btn').forEach(function (b) { b.classList.remove('selected'); });
+    var btn = document.querySelector('[data-testid="likert-' + v + '"]');
+    if (btn) btn.classList.add('selected');
+    clearTimeout(advanceTimer);
+    advanceTimer = setTimeout(function () {
+      if (state.index < state.order.length - 1) {
+        state.index++; save(); render();
+      } else {
+        state.result = computeResult(QUESTIONS, state.answers);
+        state.phase = 'result'; save(); render();
+      }
+    }, 200);
+  }
+
+  var CARD_STYLE = { bg: '#faf6ee', ink: '#1a1713', seal: '#c8401f', muted: '#6f675a',
+                     line: '#ddd3bf', deep: '#f2ebdb', w: 750, h: 1000 };
+
+  function drawShareCard(r) {
+    var s = CARD_STYLE;
+    var c = document.createElement('canvas');
+    c.width = s.w; c.height = s.h;
+    var ctx = c.getContext('2d');
+    var SERIF = '"Songti SC", "STSong", "Noto Serif CJK SC", serif';
+    ctx.fillStyle = s.bg; ctx.fillRect(0, 0, s.w, s.h);
+    // 双线框：外粗朱砂、内细墨线
+    ctx.strokeStyle = s.seal; ctx.lineWidth = 3; ctx.strokeRect(26, 26, s.w - 52, s.h - 52);
+    ctx.strokeStyle = s.line; ctx.lineWidth = 1; ctx.strokeRect(40, 40, s.w - 80, s.h - 80);
+
+    ctx.textAlign = 'center';
+    ctx.fillStyle = s.ink; ctx.font = '600 24px ' + SERIF;
+    ctx.fillText('M B T I  性 格 测 试', s.w / 2, 112);
+    ctx.fillStyle = s.seal; ctx.font = '900 160px ' + SERIF;
+    ctx.fillText(r.type, s.w / 2, 318);
+    ctx.fillStyle = s.ink; ctx.font = '600 52px ' + SERIF;
+    ctx.fillText(TYPES[r.type].name, s.w / 2, 418);
+    ctx.fillStyle = s.muted; ctx.font = '400 30px ' + SERIF;
+    ctx.fillText(TYPES[r.type].tagline, s.w / 2, 478);
+
+    var y = 570;
+    DIMENSIONS.forEach(function (dim) {
+      var d = r.dims[dim];
+      var first = DIM_LABELS[dim][0], second = DIM_LABELS[dim][1];
+      var x0 = 120, x1 = s.w - 120;
+      var w = (x1 - x0) * d.pct / 100;
+      ctx.textAlign = 'right'; ctx.fillStyle = d.pole === first ? s.seal : s.muted;
+      ctx.font = '700 38px ' + SERIF; ctx.fillText(first, x0 - 26, y + 15);
+      ctx.textAlign = 'left'; ctx.fillStyle = d.pole === second ? s.seal : s.muted;
+      ctx.fillText(second, x1 + 26, y + 15);
+      ctx.fillStyle = s.deep; ctx.fillRect(x0, y, x1 - x0, 14);
+      ctx.strokeStyle = s.line; ctx.lineWidth = 1; ctx.strokeRect(x0 + .5, y + .5, x1 - x0 - 1, 13);
+      // 色块贴获胜一极：第一极贴左，第二极贴右
+      ctx.fillStyle = s.seal;
+      if (d.pole === first) ctx.fillRect(x0 + 2, y + 2, w - 4, 10);
+      else ctx.fillRect(x1 - 2 - (w - 4), y + 2, w - 4, 10);
+      ctx.textAlign = 'center'; ctx.fillStyle = s.ink; ctx.font = '600 27px ' + SERIF;
+      ctx.fillText(d.pole + ' ' + d.pct + '%', s.w / 2, y + 56);
+      y += 96;
+    });
+
+    ctx.textAlign = 'center'; ctx.fillStyle = s.muted; ctx.font = '400 24px ' + SERIF;
+    ctx.fillText('长按保存 · 发给朋友看看准不准', s.w / 2, 948);
+    return c.toDataURL('image/png');
+  }
+
+  function dataUrlToBlob(dataUrl) {
+    var parts = dataUrl.split(',');
+    var bin = atob(parts[1]);
+    var arr = new Uint8Array(bin.length);
+    for (var i = 0; i < bin.length; i++) arr[i] = bin.charCodeAt(i);
+    return new Blob([arr], { type: 'image/png' });
+  }
+
+  function shareCard() {
+    var dataUrl = drawShareCard(state.result);
+    var btn = document.querySelector('[data-testid="btn-share"]');
+    var file = null;
+    try { file = new File([dataUrlToBlob(dataUrl)], 'mbti-' + state.result.type + '.png', { type: 'image/png' }); } catch (e) {}
+    if (file && navigator.canShare && navigator.canShare({ files: [file] })) {
+      navigator.share({ files: [file], title: '我的 MBTI 是 ' + state.result.type }).catch(function () {});
+      return;
+    }
+    var wrap = el('div', { 'class': 'share-wrap' });
+    wrap.appendChild(el('img', { 'data-testid': 'share-img', 'class': 'share-img', src: dataUrl, alt: 'MBTI 分享卡片' }));
+    wrap.appendChild(el('a', { 'data-testid': 'share-download', 'class': 'btn-primary', download: 'mbti-' + state.result.type + '.png',
+      href: dataUrl, text: '下载卡片' }));
+    btn.replaceWith(wrap);
+  }
+
+  function renderResult() {
+    var r = state.result;
+    var p = TYPES[r.type];
+    var screen = el('section', { 'data-testid': 'screen-result', 'class': 'screen screen-result' });
+    var hero = el('div', { 'class': 'result-hero' });
+    hero.appendChild(el('div', { 'data-testid': 'type-code', 'class': 'type-code', text: r.type }));
+    hero.appendChild(el('div', { 'data-testid': 'type-name', 'class': 'type-name', text: p.name + ' · ' + p.tagline }));
+    screen.appendChild(hero);
+
+    var dimBlock = el('div', { 'class': 'dim-block' });
+    DIMENSIONS.forEach(function (dim) {
+      var d = r.dims[dim];
+      var row = el('div', { 'data-testid': 'dim-' + dim, 'class': 'dim-row' });
+      var first = DIM_LABELS[dim][0], second = DIM_LABELS[dim][1];
+      // 色块贴获胜一极：第一极贴左，第二极贴右
+      var fillStyle = d.pole === first
+        ? 'width:' + d.pct + '%'
+        : 'width:' + d.pct + '%;margin-left:auto';
+      var track = el('div', { 'class': 'dim-track' });
+      track.appendChild(el('div', { 'class': 'dim-fill', style: fillStyle }));
+      row.appendChild(el('span', { 'class': 'dim-letter' + (d.pole === first ? ' win' : ''), text: first }));
+      row.appendChild(track);
+      row.appendChild(el('span', { 'class': 'dim-letter' + (d.pole === second ? ' win' : ''), text: second }));
+      row.appendChild(el('span', { 'class': 'dim-pct', text: d.pole + ' ' + d.pct + '%' }));
+      dimBlock.appendChild(row);
+    });
+    screen.appendChild(dimBlock);
+
+    var SEC_NO = ['壹', '贰', '叁', '肆', '伍', '陆'];
+    function secHead(title) {
+      var h = el('div', { 'class': 'sec-head' });
+      h.appendChild(el('span', { 'class': 'sec-no', text: SEC_NO[secHead.i++] }));
+      h.appendChild(el('span', { 'class': 'sec-title', text: title }));
+      h.appendChild(el('span', { 'class': 'sec-rule' }));
+      return h;
+    }
+    secHead.i = 0;
+
+    screen.appendChild(secHead('你是这样的 ' + p.name));
+    screen.appendChild(el('p', { 'class': 'desc', text: p.desc }));
+    screen.appendChild(secHead('优势'));
+    screen.appendChild(el('ul', { 'class': 'plainlist',
+      html: p.strengths.map(function (s) { return '<li>' + s + '</li>'; }).join('') }));
+    screen.appendChild(secHead('要留意'));
+    screen.appendChild(el('ul', { 'class': 'plainlist',
+      html: p.weaknesses.map(function (s) { return '<li>' + s + '</li>'; }).join('') }));
+    screen.appendChild(secHead('适合的方向'));
+    screen.appendChild(el('p', { 'class': 'plain', text: p.careers.join(' · ') }));
+    screen.appendChild(secHead('同款名人'));
+    screen.appendChild(el('p', { 'class': 'plain', text: p.famous.join(' · ') }));
+    screen.appendChild(secHead('和 ' + p.name + ' 相处'));
+    screen.appendChild(el('p', { 'class': 'desc', text: p.relationship }));
+
+    screen.appendChild(el('button', { 'data-testid': 'btn-share', 'class': 'btn-primary',
+      onclick: function () { shareCard(); }, text: '生成分享卡片' }));
+    screen.appendChild(el('button', { 'data-testid': 'btn-restart', 'class': 'btn-ghost center',
+      onclick: function () { clearStore(); state = newState(); render(); }, text: '重新测试' }));
+    app.innerHTML = '';
+    app.appendChild(screen);
+  }
+
+  function render() {
+    clearTimeout(advanceTimer);
+    if (state.phase === 'quiz') renderQuiz();
+    else if (state.phase === 'result' && state.result) renderResult();
+    else renderWelcome();
+  }
+  render();
+})();
+</script>
+</body>
+</html>
