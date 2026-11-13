@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800">
+  <rect width="1200" height="800" fill="#f2efe9"/>
+
+  <text x="600" y="64" text-anchor="middle" font-family="Songti SC, STSong, SimSun, serif" font-size="32" font-weight="bold" fill="#2b2a26">组织进化三原则</text>
+  <text x="600" y="98" text-anchor="middle" font-family="Songti SC, STSong, SimSun, serif" font-size="19" fill="#6b6a60">百度世界 2026 首次提出 · 已在百度内部与产品业务中初步验证</text>
+
+  <!-- card 1: 打破岗位边界 -->
+  <rect x="47" y="140" width="346" height="430" rx="8" fill="#ffffff" stroke="#d8d2c4"/>
+  <path d="M47,148 a8,8 0 0 1 8,-8 h330 a8,8 0 0 1 8,8 v56 h-346 Z" fill="#4a6741"/>
+  <text x="220" y="184" text-anchor="middle" font-family="Songti SC, STSong, SimSun, serif" font-size="22" font-weight="bold" fill="#ffffff">原则一</text>
+  <text x="220" y="252" text-anchor="middle" font-family="Songti SC, STSong, SimSun, serif" font-size="29" font-weight="bold" fill="#2b2a26">打破岗位边界</text>
+  <line x1="180" y1="272" x2="260" y2="272" stroke="#d8d2c4" stroke-width="1.5"/>
+
+  <circle cx="80" cy="312" r="3.5" fill="#4a6741"/>
+  <text x="96" y="319" font-family="Songti SC, STSong, SimSun, serif" font-size="19" fill="#2b2a26">岗位是工业时代的单元</text>
+  <circle cx="80" cy="352" r="3.5" fill="#4a6741"/>
+  <text x="96" y="359" font-family="Songti SC, STSong, SimSun, serif" font-size="19" fill="#2b2a26">任务是智能时代的单元</text>
+  <circle cx="80" cy="392" r="3.5" fill="#4a6741"/>
+  <text x="96" y="399" font-family="Songti SC, STSong, SimSun, serif" font-size="19" fill="#2b2a26">未来组织＝人与 Agent</text>
+  <text x="96" y="429" font-family="Songti SC, STSong, SimSun, serif" font-size="19" fill="#2b2a26">协作的「任务网络」</text>
+  <circle cx="80" cy="469" r="3.5" fill="#4a6741"/>
+  <text x="96" y="476" font-family="Songti SC, STSong, SimSun, serif" font-size="19" fill="#2b2a26">岗位收敛为两类：</text>
+  <text x="96" y="509" font-family="Songti SC, STSong, SimSun, serif" font-size="19" font-weight="bold" fill="#4a6741">Builder（创造）× Seller（连接）</text>
+
+  <!-- card 2: 沉淀隐性知识 -->
+  <rect x="427" y="140" width="346" height="430" rx="8" fill="#ffffff" stroke="#d8d2c4"/>
+  <path d="M427,148 a8,8 0 0 1 8,-8 h330 a8,8 0 0 1 8,8 v56 h-346 Z" fill="#5d7350"/>
+  <text x="600" y="184" text-anchor="middle" font-family="Songti SC, STSong, SimSun, serif" font-size="22" font-weight="bold" fill="#ffffff">原则二</text>
+  <text x="600" y="252" text-anchor="middle" font-family="Songti SC, STSong, SimSun, serif" font-size="29" font-weight="bold" fill="#2b2a26">沉淀隐性知识</text>
+  <line x1="560" y1="272" x2="640" y2="272" stroke="#d8d2c4" stroke-width="1.5"/>
+
+  <circle cx="460" cy="312" r="3.5" fill="#5d7350"/>
+  <text x="476" y="319" font-family="Songti SC, STSong, SimSun, serif" font-size="19" fill="#2b2a26">怎么协作、怎么做决策、</text>
+  <text x="476" y="349" font-family="Songti SC, STSong, SimSun, serif" font-size="19" fill="#2b2a26">怎么把客户谈下来</text>
+  <circle cx="460" cy="389" r="3.5" fill="#5d7350"/>
+  <text x="476" y="396" font-family="Songti SC, STSong, SimSun, serif" font-size="19" fill="#2b2a26">显性化、沉淀到公司平台：</text>
+  <text x="476" y="426" font-family="Songti SC, STSong, SimSun, serif" font-size="19" fill="#2b2a26">持续累积 · 随时调用 · 人人可用</text>
+  <text x="476" y="472" font-family="Songti SC, STSong, SimSun, serif" font-size="19" fill="#4a6741" font-style="italic">「让一个人的经验，</text>
+  <text x="476" y="502" font-family="Songti SC, STSong, SimSun, serif" font-size="19" fill="#4a6741" font-style="italic">成为整个组织的能力」</text>
+
+  <!-- card 3: 设计流程闭环 -->
+  <rect x="807" y="140" width="346" height="430" rx="8" fill="#ffffff" stroke="#d8d2c4"/>
+  <path d="M807,148 a8,8 0 0 1 8,-8 h330 a8,8 0 0 1 8,8 v56 h-346 Z" fill="#71875f"/>
+  <text x="980" y="184" text-anchor="middle" font-family="Songti SC, STSong, SimSun, serif" font-size="22" font-weight="bold" fill="#ffffff">原则三</text>
+  <text x="980" y="252" text-anchor="middle" font-family="Songti SC, STSong, SimSun, serif" font-size="29" font-weight="bold" fill="#2b2a26">设计流程闭环</text>
+  <line x1="940" y1="272" x2="1020" y2="272" stroke="#d8d2c4" stroke-width="1.5"/>
+
+  <text x="980" y="319" text-anchor="middle" font-family="Songti SC, STSong, SimSun, serif" font-size="21" font-weight="bold" fill="#4a6741">可衡量 + Looping</text>
+  <text x="980" y="352" text-anchor="middle" font-family="Songti SC, STSong, SimSun, serif" font-size="21" font-weight="bold" fill="#4a6741">＝ 持续进化</text>
+  <circle cx="840" cy="392" r="3.5" fill="#71875f"/>
+  <text x="856" y="399" font-family="Songti SC, STSong, SimSun, serif" font-size="19" fill="#2b2a26">人机围绕任务形成「迭代闭环」</text>
+  <circle cx="840" cy="432" r="3.5" fill="#71875f"/>
+  <text x="856" y="439" font-family="Songti SC, STSong, SimSun, serif" font-size="19" fill="#2b2a26">跑一轮、衡量一次、优化一轮</text>
+  <circle cx="840" cy="472" r="3.5" fill="#71875f"/>
+  <text x="856" y="479" font-family="Songti SC, STSong, SimSun, serif" font-size="19" fill="#2b2a26">公司＝由无数 Loops 组成的</text>
+  <text x="856" y="509" font-family="Songti SC, STSong, SimSun, serif" font-size="19" fill="#2b2a26">高度自动化运营组织</text>
+
+  <text x="600" y="660" text-anchor="middle" font-family="Songti SC, STSong, SimSun, serif" font-size="21" fill="#4a6741">「组织智能，才是企业最深的护城河——别人抄不走、挖不动、买不来的。」</text>
+</svg>

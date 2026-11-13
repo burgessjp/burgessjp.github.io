@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="720" viewBox="0 0 1200 720">
+  <rect width="1200" height="720" fill="#f2efe9"/>
+
+  <text x="60" y="70" font-family="Songti SC, STSong, SimSun, serif" font-size="32" font-weight="bold" fill="#2b2a26">一年之变：百度内部智能体看板</text>
+  <text x="60" y="106" font-family="Songti SC, STSong, SimSun, serif" font-size="19" fill="#6b6a60">2025 → 2026（百度世界 2026 主题演讲披露口径）</text>
+
+  <!-- axis -->
+  <line x1="60" y1="190" x2="60" y2="480" stroke="#d8d2c4" stroke-width="1.5"/>
+
+  <!-- group 1: DAA -->
+  <text x="60" y="180" font-family="Songti SC, STSong, SimSun, serif" font-size="22" font-weight="bold" fill="#2b2a26">日活智能体数 DAA（万个）</text>
+  <rect x="60" y="200" width="103" height="40" fill="#c6cbbd"/>
+  <text x="175" y="227" font-family="Songti SC, STSong, SimSun, serif" font-size="19" fill="#6b6a60">0.5 万（一年前）</text>
+  <rect x="60" y="254" width="760" height="40" fill="#4a6741"/>
+  <text x="832" y="281" font-family="Songti SC, STSong, SimSun, serif" font-size="20" font-weight="bold" fill="#2b2a26">3.7 万（现在 · ×6）</text>
+
+  <!-- group 2: tasks -->
+  <text x="60" y="370" font-family="Songti SC, STSong, SimSun, serif" font-size="22" font-weight="bold" fill="#2b2a26">智能体每周有效任务数（万个）</text>
+  <rect x="60" y="390" width="64" height="40" fill="#c6cbbd"/>
+  <text x="136" y="417" font-family="Songti SC, STSong, SimSun, serif" font-size="19" fill="#6b6a60">8.4 万（一年前）</text>
+  <rect x="60" y="444" width="760" height="40" fill="#4a6741"/>
+  <text x="832" y="471" font-family="Songti SC, STSong, SimSun, serif" font-size="20" font-weight="bold" fill="#2b2a26">100+ 万（现在 · ×11）</text>
+
+  <!-- chips -->
+  <rect x="60" y="540" width="340" height="80" rx="8" fill="#ffffff" stroke="#d8d2c4"/>
+  <text x="80" y="572" font-family="Songti SC, STSong, SimSun, serif" font-size="18" font-weight="bold" fill="#4a6741">知识沉淀</text>
+  <text x="80" y="600" font-family="Songti SC, STSong, SimSun, serif" font-size="17" fill="#2b2a26">Workspace 4300+ · 组织 Skill 2 万+</text>
+
+  <rect x="430" y="540" width="340" height="80" rx="8" fill="#ffffff" stroke="#d8d2c4"/>
+  <text x="450" y="572" font-family="Songti SC, STSong, SimSun, serif" font-size="18" font-weight="bold" fill="#4a6741">词元所上线 1 个月</text>
+  <text x="450" y="600" font-family="Songti SC, STSong, SimSun, serif" font-size="17" fill="#2b2a26">日调用 5000 万+ 次 · Token 7000 亿+</text>
+
+  <rect x="800" y="540" width="340" height="80" rx="8" fill="#ffffff" stroke="#d8d2c4"/>
+  <text x="820" y="572" font-family="Songti SC, STSong, SimSun, serif" font-size="18" font-weight="bold" fill="#4a6741">萝卜快跑</text>
+  <text x="820" y="600" font-family="Songti SC, STSong, SimSun, serif" font-size="17" fill="#2b2a26">28 城 · 全无人里程 2.4 亿公里</text>
+
+  <text x="60" y="682" font-family="Songti SC, STSong, SimSun, serif" font-size="16" fill="#6b6a60">数据来源：百度世界大会 2026 主题演讲披露口径，未经独立核实。</text>
+</svg>

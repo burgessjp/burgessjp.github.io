@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="760" viewBox="0 0 1200 760">
+  <rect width="1200" height="760" fill="#f2efe9"/>
+
+  <text x="60" y="70" font-family="Songti SC, STSong, SimSun, serif" font-size="32" font-weight="bold" fill="#2b2a26">「芯云模体」：AI 时代的技术栈</text>
+  <text x="60" y="108" font-family="Songti SC, STSong, SimSun, serif" font-size="19" fill="#6b6a60">传统 IT 是「芯片—操作系统—软件」三层；AI 在这十年里长出了独立的四层技术栈</text>
+
+  <!-- upstream arrow -->
+  <text x="190" y="348" text-anchor="middle" font-family="Songti SC, STSong, SimSun, serif" font-size="22" font-weight="bold" fill="#4a6741">上游 · 能源</text>
+  <line x1="130" y1="372" x2="296" y2="372" stroke="#4a6741" stroke-width="3"/>
+  <polygon points="310,372 292,363 292,381" fill="#4a6741"/>
+  <text x="190" y="402" text-anchor="middle" font-family="Songti SC, STSong, SimSun, serif" font-size="17" fill="#6b6a60">算力与电力</text>
+
+  <!-- downstream arrow -->
+  <text x="1000" y="348" text-anchor="middle" font-family="Songti SC, STSong, SimSun, serif" font-size="22" font-weight="bold" fill="#b0574a">下游 · 组织能力</text>
+  <line x1="904" y1="372" x2="1070" y2="372" stroke="#b0574a" stroke-width="3"/>
+  <polygon points="1084,372 1066,363 1066,381" fill="#b0574a"/>
+  <text x="1000" y="402" text-anchor="middle" font-family="Songti SC, STSong, SimSun, serif" font-size="17" fill="#6b6a60">AI 原生组织体系</text>
+  <text x="1000" y="434" text-anchor="middle" font-family="Songti SC, STSong, SimSun, serif" font-size="24" font-weight="bold" fill="#b0574a">智能组织</text>
+
+  <!-- stack: 体 / 模 / 云 / 芯 -->
+  <!-- 体 -->
+  <rect x="330" y="170" width="560" height="86" rx="6" fill="#ffffff" stroke="#d8d2c4"/>
+  <rect x="346" y="183" width="60" height="60" rx="8" fill="#859b70"/>
+  <text x="376" y="225" text-anchor="middle" font-family="Songti SC, STSong, SimSun, serif" font-size="30" font-weight="bold" fill="#ffffff">体</text>
+  <text x="430" y="208" font-family="Songti SC, STSong, SimSun, serif" font-size="23" font-weight="bold" fill="#2b2a26">应用层</text>
+  <text x="430" y="236" font-family="Songti SC, STSong, SimSun, serif" font-size="17" fill="#6b6a60">以智能体为核心的应用</text>
+
+  <!-- 模 -->
+  <rect x="330" y="276" width="560" height="86" rx="6" fill="#ffffff" stroke="#d8d2c4"/>
+  <rect x="346" y="289" width="60" height="60" rx="8" fill="#71875f"/>
+  <text x="376" y="331" text-anchor="middle" font-family="Songti SC, STSong, SimSun, serif" font-size="30" font-weight="bold" fill="#ffffff">模</text>
+  <text x="430" y="314" font-family="Songti SC, STSong, SimSun, serif" font-size="23" font-weight="bold" fill="#2b2a26">模型层</text>
+  <text x="430" y="342" font-family="Songti SC, STSong, SimSun, serif" font-size="17" fill="#6b6a60">文心等基础大模型</text>
+
+  <!-- 云 -->
+  <rect x="330" y="382" width="560" height="86" rx="6" fill="#ffffff" stroke="#d8d2c4"/>
+  <rect x="346" y="395" width="60" height="60" rx="8" fill="#5d7350"/>
+  <text x="376" y="437" text-anchor="middle" font-family="Songti SC, STSong, SimSun, serif" font-size="30" font-weight="bold" fill="#ffffff">云</text>
+  <text x="430" y="420" font-family="Songti SC, STSong, SimSun, serif" font-size="23" font-weight="bold" fill="#2b2a26">云基础设施</text>
+  <text x="430" y="448" font-family="Songti SC, STSong, SimSun, serif" font-size="17" fill="#6b6a60">百度智能云等</text>
+
+  <!-- 芯 -->
+  <rect x="330" y="488" width="560" height="86" rx="6" fill="#ffffff" stroke="#d8d2c4"/>
+  <rect x="346" y="501" width="60" height="60" rx="8" fill="#4a6741"/>
+  <text x="376" y="543" text-anchor="middle" font-family="Songti SC, STSong, SimSun, serif" font-size="30" font-weight="bold" fill="#ffffff">芯</text>
+  <text x="430" y="526" font-family="Songti SC, STSong, SimSun, serif" font-size="23" font-weight="bold" fill="#2b2a26">芯片层</text>
+  <text x="430" y="554" font-family="Songti SC, STSong, SimSun, serif" font-size="17" fill="#6b6a60">以 GPU 为核心（昆仑芯等）</text>
+
+  <text x="600" y="660" text-anchor="middle" font-family="Songti SC, STSong, SimSun, serif" font-size="18" fill="#6b6a60">黄仁勋的「五层蛋糕」是在四层之上加了能源层；李彦宏补上的是下游——组织</text>
+</svg>

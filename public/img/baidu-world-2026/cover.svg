@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#f2efe9"/>
+  <rect x="28" y="28" width="1144" height="574" fill="none" stroke="#4a6741" stroke-width="2"/>
+  <rect x="40" y="40" width="1120" height="550" fill="none" stroke="#d8d2c4" stroke-width="1"/>
+
+  <text x="600" y="150" text-anchor="middle" font-family="Songti SC, STSong, SimSun, serif" font-size="24" letter-spacing="10" fill="#4a6741">百度世界大会 2026 · 李彦宏主题演讲全记录</text>
+
+  <text x="600" y="292" text-anchor="middle" font-family="Songti SC, STSong, SimSun, serif" font-size="88" font-weight="bold" fill="#2b2a26">下一幕，智能组织</text>
+
+  <text x="600" y="356" text-anchor="middle" font-family="Songti SC, STSong, SimSun, serif" font-size="30" fill="#6b6a60">从「AI 新电能」到「组织新厂房」</text>
+
+  <!-- divider: bolt — diamond — factory -->
+  <line x1="360" y1="418" x2="536" y2="418" stroke="#4a6741" stroke-width="1.5"/>
+  <line x1="664" y1="418" x2="840" y2="418" stroke="#4a6741" stroke-width="1.5"/>
+
+  <!-- lightning bolt (新电能) -->
+  <polygon points="548,398 560,398 553,414 563,414 545,440 552,420 543,420" fill="#b0574a"/>
+  <!-- center diamond -->
+  <circle cx="600" cy="418" r="5" fill="#4a6741"/>
+  <!-- factory (新厂房) -->
+  <path d="M622,436 V410 L634,419 V410 L646,419 V410 L658,419 V436 Z" fill="#4a6741"/>
+  <rect x="622" y="398" width="7" height="12" fill="#4a6741"/>
+
+  <text x="600" y="500" text-anchor="middle" font-family="Songti SC, STSong, SimSun, serif" font-size="22" fill="#6b6a60">2026.11.12 · 北京 ｜ 全文实录 · 产品发布 · 关键数据</text>
+</svg>
