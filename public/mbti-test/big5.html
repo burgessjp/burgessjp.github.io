@@ -1,0 +1,843 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>大五人格测试 · IPIP-NEO-120</title>
+<style>
+  :root {
+    --paper: #faf6ee;
+    --paper-deep: #f2ebdb;
+    --ink: #1a1713;
+    --ink-soft: #575046;
+    --muted: #8a8378;
+    --line: #ddd3bf;
+    --accent: #1f3a5f;
+    --serif: "Songti SC", "STSong", "Noto Serif CJK SC", "SimSun", serif;
+    --sans: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { -webkit-text-size-adjust: 100%; }
+  body { font-family: var(--sans); background: var(--paper); color: var(--ink);
+         min-height: 100vh; line-height: 1.6; }
+  /* 纸张颗粒 */
+  body::after {
+    content: '';
+    position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/></filter><rect width='140' height='140' filter='url(%23n)'/></svg>");
+    opacity: .05; mix-blend-mode: multiply; pointer-events: none; z-index: 40;
+  }
+  #app { max-width: 480px; margin: 0 auto; padding: 32px 22px 64px; position: relative; }
+  [hidden] { display: none !important; }
+  button { font: inherit; cursor: pointer; }
+
+  .screen { display: flex; flex-direction: column; gap: 18px;
+            animation: fadeUp .5s cubic-bezier(.2,.7,.3,1) both; }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(14px); }
+                      to   { opacity: 1; transform: none; } }
+  @media (prefers-reduced-motion: reduce) {
+    .screen, .screen * { animation: none !important; transition: none !important; }
+  }
+
+  /* ── 欢迎页 ── */
+  .screen-welcome { min-height: calc(100vh - 96px); justify-content: center; }
+  .kicker { color: var(--accent); font-size: 13px; letter-spacing: .35em; font-weight: 600; }
+  .title { font-family: var(--serif); font-size: 44px; font-weight: 900;
+           line-height: 1.3; letter-spacing: .04em; margin-top: -4px; }
+  .title em { font-style: normal; color: var(--accent); }
+  .rule { border: none; border-top: 1px solid var(--line); }
+  .intro { color: var(--muted); line-height: 1.9; }
+  .letters { display: flex; gap: 8px; flex-wrap: wrap; }
+  .letter-chip {
+    font-family: var(--serif); font-weight: 700; font-size: 15px;
+    width: 34px; height: 38px; display: grid; place-items: center;
+    border: 1px solid var(--line); border-radius: 6px; color: var(--ink-soft);
+    background: var(--paper-deep); animation: fadeUp .5s both;
+  }
+  .letter-chip:nth-child(odd) { color: var(--accent); border-color: rgba(31,58,95,.35); }
+  .letter-chip:nth-child(1) { animation-delay: .08s; }
+  .letter-chip:nth-child(2) { animation-delay: .14s; }
+  .letter-chip:nth-child(3) { animation-delay: .20s; }
+  .letter-chip:nth-child(4) { animation-delay: .26s; }
+  .letter-chip:nth-child(5) { animation-delay: .32s; }
+  .btn-primary {
+    width: 100%; padding: 16px; border: none; border-radius: 4px;
+    background: var(--ink); color: var(--paper); font-size: 17px;
+    letter-spacing: .12em; font-weight: 600;
+    box-shadow: 4px 4px 0 rgba(31,58,95,.9);
+    transition: transform .12s, box-shadow .12s;
+  }
+  .btn-primary:active { transform: translate(3px, 3px); box-shadow: 1px 1px 0 rgba(31,58,95,.9); }
+  .footnote { text-align: center; color: var(--muted); font-size: 12px; letter-spacing: .08em; line-height: 2; }
+  .footnote a { color: var(--accent); text-decoration: none; border-bottom: 1px solid rgba(31,58,95,.4); }
+
+  /* ── 答题页 ── */
+  .screen-quiz { position: relative; }
+  .screen-quiz::before {
+    content: attr(data-qnum);
+    position: absolute; top: -20px; right: -4px;
+    font-family: var(--serif); font-size: 118px; font-weight: 900;
+    color: var(--ink); opacity: .06; pointer-events: none; line-height: 1;
+  }
+  .folio { display: flex; align-items: baseline; justify-content: space-between; }
+  .folio .qno { font-family: var(--serif); font-size: 15px; font-weight: 700; letter-spacing: .1em; }
+  .progress-label { font-size: 13px; color: var(--muted); letter-spacing: .15em;
+                    font-variant-numeric: tabular-nums; }
+  .progress-bar { height: 3px; background: var(--line); }
+  .progress-fill { height: 100%; background: var(--accent); transition: width .35s ease; }
+  .question {
+    font-family: var(--serif); font-size: 27px; font-weight: 700; line-height: 1.7;
+    min-height: 6em; padding-left: 16px; border-left: 3px solid var(--accent);
+    animation: fadeUp .4s both;
+  }
+  .likert { display: flex; flex-direction: column; gap: 10px; }
+  .likert-btn {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 15px 18px; border: 1px solid var(--line); border-radius: 4px;
+    background: transparent; color: var(--ink); font-size: 15.5px; letter-spacing: .04em;
+    transition: background .15s, border-color .15s, color .15s;
+  }
+  .likert-btn::after {
+    content: ''; width: 18px; height: 18px; border-radius: 50%;
+    border: 1.5px solid var(--line); transition: all .15s;
+  }
+  .likert-btn.neutral { color: var(--ink-soft); }
+  .likert-btn.selected {
+    background: var(--ink); color: var(--paper); border-color: var(--ink);
+    animation: pickPulse .3s;
+  }
+  .likert-btn.selected::after {
+    border-color: var(--accent); background: var(--accent);
+    box-shadow: 0 0 0 3px rgba(31,58,95,.25);
+  }
+  @keyframes pickPulse { 0% { transform: scale(1); } 40% { transform: scale(1.015); } 100% { transform: scale(1); } }
+  .btn-ghost { padding: 10px 2px; border: none; background: none; color: var(--muted);
+               align-self: flex-start; letter-spacing: .1em; }
+  .btn-ghost:disabled { opacity: .35; cursor: default; }
+  .btn-ghost.center { align-self: center; }
+
+  /* ── 报告页 ── */
+  .report-hero { text-align: center; padding: 26px 0 4px; }
+  .report-title { font-family: var(--serif); font-size: 34px; font-weight: 900;
+                  letter-spacing: .06em; line-height: 1.4; }
+  .report-sub { font-size: 14px; color: var(--muted); margin-top: 6px; letter-spacing: .05em; }
+  .domain-block { display: flex; flex-direction: column; gap: 16px; margin: 6px 0; }
+  .domain-card { display: flex; flex-direction: column; gap: 8px; padding: 14px 0 4px;
+                 border-top: 1px solid var(--line); }
+  .domain-head { display: flex; align-items: baseline; gap: 10px; }
+  .domain-name { font-family: var(--serif); font-size: 21px; font-weight: 700; }
+  .domain-name .en { font-size: 13px; color: var(--muted); font-weight: 400; letter-spacing: .08em; }
+  .domain-t { margin-left: auto; font-variant-numeric: tabular-nums; font-size: 15px; }
+  .domain-t .tval { font-weight: 800; font-size: 22px; color: var(--accent); }
+  .domain-band { font-size: 12px; color: var(--paper); background: var(--accent);
+                 border-radius: 3px; padding: 2px 8px; letter-spacing: .1em; }
+  .tbar { position: relative; height: 10px; background: var(--paper-deep);
+          border: 1px solid var(--line); }
+  .tbar-fill { position: absolute; top: 0; bottom: 0; left: 0; background: var(--accent); }
+  .tbar-mid { position: absolute; top: -3px; bottom: -3px; left: 50%; width: 1px;
+              background: var(--muted); opacity: .6; }
+  .tbar-scale { display: flex; justify-content: space-between; font-size: 10.5px;
+                color: var(--muted); font-variant-numeric: tabular-nums; }
+  .domain-desc { line-height: 1.9; font-size: 15px; }
+  .facet-row { display: flex; flex-direction: column; gap: 3px; padding: 7px 0;
+               border-bottom: 1px dashed var(--line); }
+  .facet-row:last-child { border-bottom: none; }
+  .facet-head { display: flex; align-items: baseline; gap: 8px; font-size: 14px; }
+  .facet-name { font-weight: 600; }
+  .facet-t { margin-left: auto; color: var(--ink-soft); font-variant-numeric: tabular-nums; font-size: 13px; }
+  .facet-bar { position: relative; height: 6px; background: var(--paper-deep);
+               border: 1px solid var(--line); }
+  .facet-bar-fill { position: absolute; top: 0; bottom: 0; background: var(--accent); opacity: .75; }
+  .facet-desc { font-size: 13px; color: var(--ink-soft); line-height: 1.7; }
+  .sec-head { display: flex; align-items: center; gap: 10px; margin-top: 12px; }
+  .sec-head .sec-no { font-family: var(--serif); color: var(--accent); font-weight: 700;
+                      font-size: 14px; letter-spacing: .2em; white-space: nowrap; }
+  .sec-head .sec-rule { flex: 1; border-top: 1px solid var(--line); }
+  .method { background: var(--paper-deep); border: 1px solid var(--line); border-radius: 4px;
+            padding: 16px; display: flex; flex-direction: column; gap: 8px; }
+  .method h4 { font-family: var(--serif); font-size: 16px; }
+  .method p, .method li { font-size: 13px; color: var(--ink-soft); line-height: 1.85; }
+  .method ul { padding-left: 18px; }
+  .screen-result > * { animation: fadeUp .45s both; }
+  .screen-result > *:nth-child(2) { animation-delay: .06s; }
+  .screen-result > *:nth-child(3) { animation-delay: .12s; }
+  .screen-result > *:nth-child(4) { animation-delay: .18s; }
+  .screen-result > *:nth-child(5) { animation-delay: .24s; }
+  .screen-result > *:nth-child(n+6) { animation-delay: .3s; }
+
+  .share-wrap { display: flex; flex-direction: column; gap: 12px; }
+  .share-wrap .btn-primary { text-align: center; text-decoration: none; display: block; }
+  .share-img { width: 100%; border-radius: 4px;
+               box-shadow: 0 8px 30px rgba(26,23,19,.18); }
+</style>
+</head>
+<body>
+<div id="app"></div>
+
+<!-- SCORING-CORE-START -->
+<script>
+const DIM5 = ['O', 'C', 'E', 'A', 'N'];
+const FACETS = {
+  N: ['N1', 'N2', 'N3', 'N4', 'N5', 'N6'],
+  E: ['E1', 'E2', 'E3', 'E4', 'E5', 'E6'],
+  O: ['O1', 'O2', 'O3', 'O4', 'O5', 'O6'],
+  A: ['A1', 'A2', 'A3', 'A4', 'A5', 'A6'],
+  C: ['C1', 'C2', 'C3', 'C4', 'C5', 'C6'],
+};
+const LIKERT5 = [
+  { v: 1, label: '非常不准确' },
+  { v: 2, label: '比较不准确' },
+  { v: 3, label: '既不准确也不不准确' },
+  { v: 4, label: '比较准确' },
+  { v: 5, label: '非常准确' },
+];
+
+function bandOf(T) {
+  return T < 30 ? '很低' : T < 45 ? '低' : T <= 55 ? '中' : T <= 70 ? '高' : '很高';
+}
+
+function computeBig5(questions, norms, answers) {
+  const facets = {}, domains = {};
+  for (const d of DIM5) {
+    let dRaw = 0;
+    for (const f of FACETS[d]) {
+      let fRaw = 0;
+      for (const q of questions) {
+        if (q.facet !== f) continue;
+        const a = Math.max(1, Math.min(5, answers[q.id] ?? 3));
+        const s = q.rev ? 6 - a : a;
+        fRaw += s; dRaw += s;
+      }
+      const { M, SD } = norms.facets[f];
+      const T = Math.round((50 + 10 * (fRaw - M) / SD) * 10) / 10;
+      facets[f] = { raw: fRaw, T, band: bandOf(T) };
+    }
+    const { M, SD } = norms.domains[d];
+    const T = Math.round((50 + 10 * (dRaw - M) / SD) * 10) / 10;
+    domains[d] = { raw: dRaw, T, band: bandOf(T) };
+  }
+  return { domains, facets };
+}
+
+function shuffle(arr) {
+  const a = arr.slice();
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+</script>
+<!-- SCORING-CORE-END -->
+
+<!-- CONTENT-DATA-START -->
+<script>
+// 题目顺序与正反向计分键：ipip.ori.org/30FacetNEO-PI-RItems.htm（Johnson IPIP-NEO-120，公有领域）
+// 英文为官方原文；中文为自译（docs/big5-sources.md）
+const REVERSE_COUNT = 55; // 反向题合计，与官方计分键核对一致
+
+const QUESTIONS = [
+  // ── N 神经质 ──
+  { id: 'b1',  dim: 'N', facet: 'N1', rev: 0, en: 'Worry about things.', zh: '我经常为各种事情操心。' },
+  { id: 'b2',  dim: 'N', facet: 'N1', rev: 0, en: 'Fear for the worst.', zh: '我总担心会出现最坏的结果。' },
+  { id: 'b3',  dim: 'N', facet: 'N1', rev: 0, en: 'Am afraid of many things.', zh: '我害怕的东西很多。' },
+  { id: 'b4',  dim: 'N', facet: 'N1', rev: 0, en: 'Get stressed out easily.', zh: '我很容易感到紧张有压力。' },
+  { id: 'b5',  dim: 'N', facet: 'N2', rev: 0, en: 'Get angry easily.', zh: '我容易发火。' },
+  { id: 'b6',  dim: 'N', facet: 'N2', rev: 0, en: 'Get irritated easily.', zh: '我容易感到烦躁。' },
+  { id: 'b7',  dim: 'N', facet: 'N2', rev: 0, en: 'Lose my temper.', zh: '我会发脾气。' },
+  { id: 'b8',  dim: 'N', facet: 'N2', rev: 1, en: 'Am not easily annoyed.', zh: '我不容易被惹恼。' },
+  { id: 'b9',  dim: 'N', facet: 'N3', rev: 0, en: 'Often feel blue.', zh: '我常常情绪低落。' },
+  { id: 'b10', dim: 'N', facet: 'N3', rev: 0, en: 'Dislike myself.', zh: '我不喜欢自己。' },
+  { id: 'b11', dim: 'N', facet: 'N3', rev: 0, en: 'Am often down in the dumps.', zh: '我经常萎靡不振。' },
+  { id: 'b12', dim: 'N', facet: 'N3', rev: 1, en: 'Feel comfortable with myself.', zh: '我对自己感到坦然自在。' },
+  { id: 'b13', dim: 'N', facet: 'N4', rev: 0, en: 'Find it difficult to approach others.', zh: '我觉得主动接近别人很难。' },
+  { id: 'b14', dim: 'N', facet: 'N4', rev: 0, en: 'Am afraid to draw attention to myself.', zh: '我害怕引起别人对我的注意。' },
+  { id: 'b15', dim: 'N', facet: 'N4', rev: 0, en: 'Only feel comfortable with friends.', zh: '我只有在朋友身边才放得开。' },
+  { id: 'b16', dim: 'N', facet: 'N4', rev: 1, en: 'Am not bothered by difficult social situations.', zh: '棘手的社交场合难不倒我。' },
+  { id: 'b17', dim: 'N', facet: 'N5', rev: 0, en: 'Go on binges.', zh: '我会放纵自己狂吃狂玩。' },
+  { id: 'b18', dim: 'N', facet: 'N5', rev: 1, en: 'Rarely overindulge.', zh: '我很少过度放纵自己。' },
+  { id: 'b19', dim: 'N', facet: 'N5', rev: 1, en: 'Easily resist temptations.', zh: '我能轻松抵制诱惑。' },
+  { id: 'b20', dim: 'N', facet: 'N5', rev: 1, en: 'Am able to control my cravings.', zh: '我能控制住自己的冲动欲望。' },
+  { id: 'b21', dim: 'N', facet: 'N6', rev: 0, en: 'Panic easily.', zh: '我容易慌乱。' },
+  { id: 'b22', dim: 'N', facet: 'N6', rev: 0, en: 'Become overwhelmed by events.', zh: '我常被发生的事情压得喘不过气。' },
+  { id: 'b23', dim: 'N', facet: 'N6', rev: 0, en: "Feel that I'm unable to deal with things.", zh: '我觉得自己应付不了那些事。' },
+  { id: 'b24', dim: 'N', facet: 'N6', rev: 1, en: 'Remain calm under pressure.', zh: '我在压力下依然能保持冷静。' },
+  // ── E 外向性 ──
+  { id: 'b25', dim: 'E', facet: 'E1', rev: 0, en: 'Make friends easily.', zh: '我交朋友很轻松。' },
+  { id: 'b26', dim: 'E', facet: 'E1', rev: 0, en: 'Feel comfortable around people.', zh: '我和别人相处时很自在。' },
+  { id: 'b27', dim: 'E', facet: 'E1', rev: 1, en: 'Avoid contacts with others.', zh: '我会回避和人来往。' },
+  { id: 'b28', dim: 'E', facet: 'E1', rev: 1, en: 'Keep others at a distance.', zh: '我和别人保持着距离。' },
+  { id: 'b29', dim: 'E', facet: 'E2', rev: 0, en: 'Love large parties.', zh: '我喜欢大型聚会。' },
+  { id: 'b30', dim: 'E', facet: 'E2', rev: 0, en: 'Talk to a lot of different people at parties.', zh: '聚会上我会和很多不同的人聊天。' },
+  { id: 'b31', dim: 'E', facet: 'E2', rev: 1, en: 'Prefer to be alone.', zh: '我更喜欢独处。' },
+  { id: 'b32', dim: 'E', facet: 'E2', rev: 1, en: 'Avoid crowds.', zh: '我会躲开人多的地方。' },
+  { id: 'b33', dim: 'E', facet: 'E3', rev: 0, en: 'Take charge.', zh: '我能主导局面。' },
+  { id: 'b34', dim: 'E', facet: 'E3', rev: 0, en: 'Try to lead others.', zh: '我会试着带领别人。' },
+  { id: 'b35', dim: 'E', facet: 'E3', rev: 0, en: 'Take control of things.', zh: '我会把事情掌控在自己手里。' },
+  { id: 'b36', dim: 'E', facet: 'E3', rev: 1, en: 'Wait for others to lead the way.', zh: '我习惯等别人带头。' },
+  { id: 'b37', dim: 'E', facet: 'E4', rev: 0, en: 'Am always busy.', zh: '我总是忙个不停。' },
+  { id: 'b38', dim: 'E', facet: 'E4', rev: 0, en: 'Am always on the go.', zh: '我总是停不下来。' },
+  { id: 'b39', dim: 'E', facet: 'E4', rev: 0, en: 'Do a lot in my spare time.', zh: '我业余时间安排得满满当当。' },
+  { id: 'b40', dim: 'E', facet: 'E4', rev: 1, en: 'Like to take it easy.', zh: '我喜欢慢慢来、不赶趟。' },
+  { id: 'b41', dim: 'E', facet: 'E5', rev: 0, en: 'Love excitement.', zh: '我热爱刺激。' },
+  { id: 'b42', dim: 'E', facet: 'E5', rev: 0, en: 'Seek adventure.', zh: '我追求冒险。' },
+  { id: 'b43', dim: 'E', facet: 'E5', rev: 0, en: 'Enjoy being reckless.', zh: '我享受不计后果的感觉。' },
+  { id: 'b44', dim: 'E', facet: 'E5', rev: 0, en: 'Act wild and crazy.', zh: '我会做出疯狂出格的举动。' },
+  { id: 'b45', dim: 'E', facet: 'E6', rev: 0, en: 'Radiate joy.', zh: '我浑身散发着快乐。' },
+  { id: 'b46', dim: 'E', facet: 'E6', rev: 0, en: 'Have a lot of fun.', zh: '我玩得很尽兴。' },
+  { id: 'b47', dim: 'E', facet: 'E6', rev: 0, en: 'Love life.', zh: '我热爱生活。' },
+  { id: 'b48', dim: 'E', facet: 'E6', rev: 0, en: 'Look at the bright side of life.', zh: '我总看到生活光明的一面。' },
+  // ── O 开放性 ──
+  { id: 'b49', dim: 'O', facet: 'O1', rev: 0, en: 'Have a vivid imagination.', zh: '我的想象力很丰富。' },
+  { id: 'b50', dim: 'O', facet: 'O1', rev: 0, en: 'Enjoy wild flights of fantasy.', zh: '我享受天马行空的幻想。' },
+  { id: 'b51', dim: 'O', facet: 'O1', rev: 0, en: 'Love to daydream.', zh: '我喜欢做白日梦。' },
+  { id: 'b52', dim: 'O', facet: 'O1', rev: 0, en: 'Like to get lost in thought.', zh: '我喜欢沉浸在思考里。' },
+  { id: 'b53', dim: 'O', facet: 'O2', rev: 0, en: 'Believe in the importance of art.', zh: '我相信艺术很重要。' },
+  { id: 'b54', dim: 'O', facet: 'O2', rev: 0, en: 'See beauty in things that others might not notice.', zh: '我能注意到别人留意不到的美。' },
+  { id: 'b55', dim: 'O', facet: 'O2', rev: 1, en: 'Do not like poetry.', zh: '我不喜欢诗歌。' },
+  { id: 'b56', dim: 'O', facet: 'O2', rev: 1, en: 'Do not enjoy going to art museums.', zh: '我不爱逛美术馆。' },
+  { id: 'b57', dim: 'O', facet: 'O3', rev: 0, en: 'Experience my emotions intensely.', zh: '我的情绪体验很强烈。' },
+  { id: 'b58', dim: 'O', facet: 'O3', rev: 0, en: "Feel others' emotions.", zh: '我能感受到别人的情绪。' },
+  { id: 'b59', dim: 'O', facet: 'O3', rev: 1, en: 'Rarely notice my emotional reactions.', zh: '我很少留意自己的情绪反应。' },
+  { id: 'b60', dim: 'O', facet: 'O3', rev: 1, en: "Don't understand people who get emotional.", zh: '我理解不了那些容易激动的人。' },
+  { id: 'b61', dim: 'O', facet: 'O4', rev: 0, en: 'Prefer variety to routine.', zh: '相比按部就班，我更喜欢花样多变。' },
+  { id: 'b62', dim: 'O', facet: 'O4', rev: 1, en: 'Prefer to stick with things that I know.', zh: '我更愿意守着自己熟悉的东西。' },
+  { id: 'b63', dim: 'O', facet: 'O4', rev: 1, en: 'Dislike changes.', zh: '我不喜欢变化。' },
+  { id: 'b64', dim: 'O', facet: 'O4', rev: 1, en: 'Am attached to conventional ways.', zh: '我依恋传统的做法。' },
+  { id: 'b65', dim: 'O', facet: 'O5', rev: 0, en: 'Love to read challenging material.', zh: '我喜欢读有难度的材料。' },
+  { id: 'b66', dim: 'O', facet: 'O5', rev: 1, en: 'Avoid philosophical discussions.', zh: '我会回避哲学话题的讨论。' },
+  { id: 'b67', dim: 'O', facet: 'O5', rev: 1, en: 'Have difficulty understanding abstract ideas.', zh: '我理解抽象概念有困难。' },
+  { id: 'b68', dim: 'O', facet: 'O5', rev: 1, en: 'Am not interested in theoretical discussions.', zh: '我对理论讨论不感兴趣。' },
+  { id: 'b69', dim: 'O', facet: 'O6', rev: 0, en: 'Tend to vote for liberal political candidates.', zh: '我倾向于支持自由派候选人。' },
+  { id: 'b70', dim: 'O', facet: 'O6', rev: 0, en: 'Believe that there is no absolute right and wrong.', zh: '我相信世上没有绝对的对与错。' },
+  { id: 'b71', dim: 'O', facet: 'O6', rev: 1, en: 'Tend to vote for conservative political candidates.', zh: '我倾向于支持保守派候选人。' },
+  { id: 'b72', dim: 'O', facet: 'O6', rev: 1, en: 'Believe that we should be tough on crime.', zh: '我认为对犯罪应该从严惩处。' },
+  // ── A 宜人性 ──
+  { id: 'b73', dim: 'A', facet: 'A1', rev: 0, en: 'Trust others.', zh: '我信任别人。' },
+  { id: 'b74', dim: 'A', facet: 'A1', rev: 0, en: 'Believe that others have good intentions.', zh: '我相信别人是出于好意。' },
+  { id: 'b75', dim: 'A', facet: 'A1', rev: 0, en: 'Trust what people say.', zh: '我相信别人说的话。' },
+  { id: 'b76', dim: 'A', facet: 'A1', rev: 1, en: 'Distrust people.', zh: '我不信任别人。' },
+  { id: 'b77', dim: 'A', facet: 'A2', rev: 1, en: 'Use others for my own ends.', zh: '我会利用别人达到自己的目的。' },
+  { id: 'b78', dim: 'A', facet: 'A2', rev: 1, en: 'Cheat to get ahead.', zh: '我会靠作弊取得领先。' },
+  { id: 'b79', dim: 'A', facet: 'A2', rev: 1, en: 'Take advantage of others.', zh: '我会占别人的便宜。' },
+  { id: 'b80', dim: 'A', facet: 'A2', rev: 1, en: "Obstruct others' plans.", zh: '我会阻挠别人的计划。' },
+  { id: 'b81', dim: 'A', facet: 'A3', rev: 0, en: 'Am concerned about others.', zh: '我关心别人。' },
+  { id: 'b82', dim: 'A', facet: 'A3', rev: 0, en: 'Love to help others.', zh: '我乐于帮助别人。' },
+  { id: 'b83', dim: 'A', facet: 'A3', rev: 1, en: 'Am indifferent to the feelings of others.', zh: '我对别人的感受漠不关心。' },
+  { id: 'b84', dim: 'A', facet: 'A3', rev: 1, en: 'Take no time for others.', zh: '我不肯为别人花时间。' },
+  { id: 'b85', dim: 'A', facet: 'A4', rev: 1, en: 'Love a good fight.', zh: '我喜欢痛痛快快地吵一架。' },
+  { id: 'b86', dim: 'A', facet: 'A4', rev: 1, en: 'Yell at people.', zh: '我会冲人吼叫。' },
+  { id: 'b87', dim: 'A', facet: 'A4', rev: 1, en: 'Insult people.', zh: '我会羞辱别人。' },
+  { id: 'b88', dim: 'A', facet: 'A4', rev: 1, en: 'Get back at others.', zh: '我会报复别人。' },
+  { id: 'b89', dim: 'A', facet: 'A5', rev: 1, en: 'Believe that I am better than others.', zh: '我认为自己比别人强。' },
+  { id: 'b90', dim: 'A', facet: 'A5', rev: 1, en: 'Think highly of myself.', zh: '我对自己评价很高。' },
+  { id: 'b91', dim: 'A', facet: 'A5', rev: 1, en: 'Have a high opinion of myself.', zh: '我很看得起自己。' },
+  { id: 'b92', dim: 'A', facet: 'A5', rev: 1, en: 'Boast about my virtues.', zh: '我会炫耀自己的优点。' },
+  { id: 'b93', dim: 'A', facet: 'A6', rev: 0, en: 'Sympathize with the homeless.', zh: '我同情无家可归的人。' },
+  { id: 'b94', dim: 'A', facet: 'A6', rev: 0, en: 'Feel sympathy for those who are worse off than myself.', zh: '我同情那些境况不如我的人。' },
+  { id: 'b95', dim: 'A', facet: 'A6', rev: 1, en: "Am not interested in other people's problems.", zh: '我对别人的问题不感兴趣。' },
+  { id: 'b96', dim: 'A', facet: 'A6', rev: 1, en: 'Try not to think about the needy.', zh: '我尽量不去想那些需要帮助的人。' },
+  // ── C 尽责性 ──
+  { id: 'b97',  dim: 'C', facet: 'C1', rev: 0, en: 'Complete tasks successfully.', zh: '我能成功完成任务。' },
+  { id: 'b98',  dim: 'C', facet: 'C1', rev: 0, en: 'Excel in what I do.', zh: '我在自己做的事情上表现出色。' },
+  { id: 'b99',  dim: 'C', facet: 'C1', rev: 0, en: 'Handle tasks smoothly.', zh: '我处理任务很顺畅。' },
+  { id: 'b100', dim: 'C', facet: 'C1', rev: 0, en: 'Know how to get things done.', zh: '我知道怎么把事情办成。' },
+  { id: 'b101', dim: 'C', facet: 'C2', rev: 0, en: 'Like to tidy up.', zh: '我喜欢收拾整理。' },
+  { id: 'b102', dim: 'C', facet: 'C2', rev: 1, en: 'Often forget to put things back in their proper place.', zh: '我经常忘记把东西放回原处。' },
+  { id: 'b103', dim: 'C', facet: 'C2', rev: 1, en: 'Leave a mess in my room.', zh: '我把房间弄得乱糟糟。' },
+  { id: 'b104', dim: 'C', facet: 'C2', rev: 1, en: 'Leave my belongings around.', zh: '我随手乱放自己的东西。' },
+  { id: 'b105', dim: 'C', facet: 'C3', rev: 0, en: 'Keep my promises.', zh: '我信守承诺。' },
+  { id: 'b106', dim: 'C', facet: 'C3', rev: 0, en: 'Tell the truth.', zh: '我说真话。' },
+  { id: 'b107', dim: 'C', facet: 'C3', rev: 1, en: 'Break rules.', zh: '我会违反规则。' },
+  { id: 'b108', dim: 'C', facet: 'C3', rev: 1, en: 'Break my promises.', zh: '我会违背承诺。' },
+  { id: 'b109', dim: 'C', facet: 'C4', rev: 0, en: "Do more than what's expected of me.", zh: '我做的比别人期望的更多。' },
+  { id: 'b110', dim: 'C', facet: 'C4', rev: 0, en: 'Work hard.', zh: '我工作努力。' },
+  { id: 'b111', dim: 'C', facet: 'C4', rev: 1, en: 'Put little time and effort into my work.', zh: '我在工作上投入的时间和精力很少。' },
+  { id: 'b112', dim: 'C', facet: 'C4', rev: 1, en: 'Do just enough work to get by.', zh: '我干活只求过得去。' },
+  { id: 'b113', dim: 'C', facet: 'C5', rev: 0, en: 'Am always prepared.', zh: '我总是准备充分。' },
+  { id: 'b114', dim: 'C', facet: 'C5', rev: 0, en: 'Carry out my plans.', zh: '我会把计划执行下去。' },
+  { id: 'b115', dim: 'C', facet: 'C5', rev: 1, en: 'Waste my time.', zh: '我浪费自己的时间。' },
+  { id: 'b116', dim: 'C', facet: 'C5', rev: 1, en: 'Have difficulty starting tasks.', zh: '我很难着手开始任务。' },
+  { id: 'b117', dim: 'C', facet: 'C6', rev: 1, en: 'Jump into things without thinking.', zh: '我不加思考就一头扎进去。' },
+  { id: 'b118', dim: 'C', facet: 'C6', rev: 1, en: 'Make rash decisions.', zh: '我会做出草率的决定。' },
+  { id: 'b119', dim: 'C', facet: 'C6', rev: 1, en: 'Rush into things.', zh: '我做事鲁莽求快。' },
+  { id: 'b120', dim: 'C', facet: 'C6', rev: 1, en: 'Act without thinking.', zh: '我做事不经大脑。' },
+];
+
+// 常模（单一来源推导，docs/big5-sources.md §2）：
+// facet M/SD 取自 ipipneo.org/reliability（JobCannon 手册，CC BY 4.0，n=3,079），原 0–16 量程 +4 → 4–20
+// 域 M = 该域 facet M 之和；域 SD = SEM/√(1−α)×0.96（同表推导）→ 24–120 量程
+const NORMS = {
+  domains: {
+    O: { M: 86.6, SD: 11.72 },
+    C: { M: 85.4, SD: 15.33 },
+    E: { M: 74.0, SD: 15.03 },
+    A: { M: 87.1, SD: 13.49 },
+    N: { M: 68.1, SD: 16.64 },
+  },
+  facets: {
+    O1: { M: 15.6, SD: 3.6 }, O2: { M: 15.0, SD: 3.5 }, O3: { M: 14.9, SD: 3.4 },
+    O4: { M: 12.9, SD: 3.5 }, O5: { M: 15.6, SD: 3.4 }, O6: { M: 12.6, SD: 3.3 },
+    C1: { M: 15.2, SD: 3.3 }, C2: { M: 12.6, SD: 4.6 }, C3: { M: 15.6, SD: 2.9 },
+    C4: { M: 15.0, SD: 3.5 }, C5: { M: 12.8, SD: 3.7 }, C6: { M: 14.2, SD: 4.3 },
+    E1: { M: 12.4, SD: 4.1 }, E2: { M: 10.0, SD: 4.1 }, E3: { M: 13.7, SD: 3.7 },
+    E4: { M: 12.0, SD: 3.5 }, E5: { M: 11.8, SD: 3.7 }, E6: { M: 14.1, SD: 3.6 },
+    A1: { M: 12.2, SD: 3.7 }, A2: { M: 16.3, SD: 3.5 }, A3: { M: 15.4, SD: 3.3 },
+    A4: { M: 16.2, SD: 3.5 }, A5: { M: 12.6, SD: 3.9 }, A6: { M: 14.4, SD: 3.6 },
+    N1: { M: 13.0, SD: 4.1 }, N2: { M: 11.0, SD: 4.0 }, N3: { M: 10.3, SD: 4.0 },
+    N4: { M: 12.1, SD: 4.0 }, N5: { M: 11.6, SD: 3.7 }, N6: { M: 10.1, SD: 3.9 },
+  },
+};
+
+// 报告文案：域级三档（T≥55 取 high / 45–55 取 mid / <45 取 low）、facet 高低两档（中档用 facetMid）
+const REPORT_TEXT = {
+  domains: {
+    O: {
+      high: '你对新鲜事物有天然的胃口：新想法、新地方、新表达方式都让你兴奋。你容易在艺术、阅读和讨论里找到乐趣，习惯对"理所当然"多问一句为什么。你的世界是敞开的，可能性比惯例更有吸引力。代价是有时想法太多落地太少，常规事务（报税、家务、重复性工作）对你像一种消耗。你适合需要创意和审美的环境，在高度标准化、规则极严的环境里会感到憋闷。',
+      mid: '你的开放性居中：既不排斥新鲜事物，也不会为了新奇丢下熟悉的可靠。你能欣赏一场展览，也能享受一部爆米花电影；愿意听新观点，但接受它之前会想想它和自己经验的出入。这种位置其实是一种弹性——兴趣面够宽，又不至于被每一阵风带着走。你在"稳"和"变"之间按需切换，多数环境下都不拧巴。',
+      low: '你的务实超过猎奇：比起抽象概念和艺术表达，你更信任看得见摸得着的东西。新方法要先证明有用你才会用，新潮流多半与你无关。这不是头脑封闭，而是你的精力优先给了确定性和效率——例行公事不折磨你，反而让你安心。你在需要执行力和稳定性的位置上非常可靠，只是别让"从没这么干过"成为自动挡，偶尔听听那些天马行空的人在说什么，常有意外收获。',
+    },
+    C: {
+      high: '你是把"答应的事就要办到"当默认设置的人：计划、清单、截止日期在你的世界里是秩序而不是束缚。你工作起来有持续的推进力，事情交到你手里，别人就不用再惦记。高标准是你的底色，也是双刃剑——你对自己的要求有时严到接近自我苛责，事情不在掌控中会让你格外难受。学会区分"重要"和"完美"，是你这类人一生的功课。',
+      mid: '你的尽责性居中：该认真的时候能认真，但不是时刻上满发条。你能按计划推进，也容忍计划被打乱；会做该做的事，也会给自己留偷懒的余地。这种位置的好处是不容易被"必须完美"绑架，坏处是遇到漫长枯燥的任务时，推进力时强时弱。给自己设一些外部节奏——明确的截止、公开的承诺——通常能让你的执行更稳。',
+      low: '你对规则和计划天然保持距离：截止日期是参考，清单写完就忘。这不等于你做不成事——你灵活、随机应变，不被"应该"绑架，在宽松自由的环境里反而如鱼得水。但代价是长期项目容易烂尾，重要但不紧急的事（体检、存钱、学习）会一直往后漂。你不需要变成自律狂人，只需要在真正重要的一两件事上建立最小的固定动作，其余的留给随性。',
+    },
+    E: {
+      high: '你从人和热闹里获取能量：聚会散场别人瘫了，你才刚进入状态。你习惯边说边想，聊天帮你把想法理清楚；陌生人多的场合你常常最先破冰。社交是你的充电方式，也容易被误读为"不深沉"——其实你只是把思考过程外放了而已。要留意的是给自己留独处的时间：热闹是充电，安静是保养，两个都要。',
+      mid: '你的外向性居中：能社交也能独处，像一块可调的电池。场合需要你能热络起来，事情做完你也需要安静回血。你不依赖聚会，也不害怕人群，周末宅家或出门都能自洽。这种弹性让你在多数社交场景里不消耗，唯一的弱点是"都行"有时意味着选择困难——搞清楚哪种场合真正给你能量，比"随叫随到"更值得做功课。',
+      low: '你的能量来自内部：独处不是孤僻，是你的充电方式。你习惯想清楚再说，深聊一次好过寒暄十次，人多的场合待久了会真的累。书面表达往往比即兴发言更能展现你的水平。别人可能催你"多出去走走"，但内向不是需要修复的缺陷——它是你的运行方式。要留意的是别把"回血"变成"回避"，重要的人和事，值得你偶尔走出舒适区。',
+    },
+    A: {
+      high: '你默认相信人是善意的，别人的感受会真实地影响你：让步、打圆场、把方便让给别人，对你常常是本能。你是天然的合作者，团队因为你而顺滑。但"好说话"有代价——你的边界容易被人越过去，委屈攒多了要么内伤要么突然爆发。记住：拒绝一次不合理的请求，不会让你变成坏人。',
+      mid: '你的宜人性居中：愿意合作，但不是无条件的。你能体谅别人，也能在必要时守住自己的立场；大多数时候好说话，但重要的事上不让步。这种位置让你在谈判和协作之间切换自如，不容易被占便宜，也不至于咄咄逼人。对你来说，关键不是"要不要更善良"，而是识别什么时候该用哪一面。',
+      low: '你直接、就事论事，不太为了让别人舒服而软化立场。别人眼里的你有点硬，但你的公平是规则式的：对事不对人，不看交情看标准。这让你在需要把关、砍价、做艰难决定的位置上特别有价值。要留意的是表达方式：同一句真话，加一层体谅，效果常常好一倍——直率是优点，带刺的直率会白白消耗你的盟友。',
+    },
+    N: {
+      high: '你的警报系统灵敏：事情还没出问题，你已经开始预演坏结果；批评会在你心里停留很久。这让你能提前发现风险、把细节补牢，是你独有的价值——很多"心大"的人做不到这一点。代价是情绪消耗：焦虑、反刍、失眠可能周期性找上你。你只是感受器的增益调得比别人高。规律作息、运动、把担忧写下来再核对事实，这些朴素动作对你比对别人更有效。',
+      mid: '你的情绪稳定性居中：日常压力能消化，大事来了也会真的难受一阵。你有情绪，但情绪不轻易接管你的判断；波动有，恢复也快。这种位置让你既不至于麻木，也较少被情绪拖着走，是相当有韧性的配置。要留意的是压力的累积效应——连续高压期你依然需要主动排解，别等情绪账户透支了才处理。',
+      low: '你的情绪基线平稳：天塌下来先干活，慌乱很少出现在你脸上。危机中你是那个还清醒的人，别人愿意把急事交给你。要留意两点：一是平静不等于没有情绪，被压下去的感受有时会变成身体症状或突然的爆发；二是对你是小事的事，对高神经质的亲友可能是大事——"这有什么好担心的"这句话，通常帮不到他们。',
+    },
+  },
+  facets: {
+    N1: {
+      high: '警报器灵敏：坏结果会提前在你脑内上演，事情没定下来之前你安心不了。提前排雷是本事，但也要给"想了也没用"的事设个截止。',
+      low: '大事临头你也稳：不是没心没肺，是真的不容易被预期焦虑困住。你的镇定是身边人的锚，只是偶尔也留意一下真实存在的风险信号。',
+    },
+    N2: {
+      high: '你的怒点低、来得快：被怠慢、被不公对待，火气当场就上来。愤怒说明你有立场，但先烧掉的常常是关系。给爆发设个三秒延迟，收益巨大。',
+      low: '惹你动怒不容易：多数摩擦你笑笑就过，被冒犯了也倾向冷处理。好脾气是你的资产，但一直咽下去的不满，记得找个出口。',
+    },
+    N3: {
+      high: '你的情绪容易往低处走：自我怀疑、提不起劲的周期可能反复出现。这是特质不是缺陷，但值得被认真对待——规律的生活和可倾诉的人，是你的基础设施。',
+      low: '你的情绪底盘稳，很少陷进自我否定的泥潭。低落有，但能自己爬出来。这份免疫力让你有力气托住身边的人。',
+    },
+    N4: {
+      high: '你对"别人怎么看我"高度敏感：被注视、当众发言、陌生场合都消耗你。敏感的另一面是体面——你很少失礼。把注意力从"我表现如何"挪到事情本身，紧张会掉一半。',
+      low: '众目睽睽之下你照常发挥，不太被评价焦虑绑架。这在当众表达上是巨大优势，只需留意：不是人人都和你一样不慌，别用自己的从容去要求别人。',
+    },
+    N5: {
+      high: '诱惑来了你很难只尝一口：吃、玩、刷、买，容易上头就过量。快乐值得要，但事后常伴账单和后悔。给自己设物理防线（不带手机上床、不囤零食）比意志力管用。',
+      low: '想吃就停、想买能忍：欲望在你这里排队，不插队。自律不是苦行，是你真的更在意结果。偶尔放纵一下也没关系，你欠自己的不只是效率。',
+    },
+    N6: {
+      high: '压力过临界点时你容易被淹没：手足无措、判断力下降，这是真实的应激反应，不是软弱。识别自己的早期信号、提前求助，是你最重要的技能。',
+      low: '危机来临时你反而更清醒：别人慌了你还在拆解问题。你是天生的救火队员，但别把所有人的火都扛在自己身上，会累垮的。',
+    },
+    E1: {
+      high: '你对人自带暖意：破冰、记住名字、让新面孔融入群体，是你顺手做的事。人缘是你攒出来的资产，但要筛选——不是所有人都值得你的热络。',
+      low: '你对新关系慢热甚至警惕：交情需要时间发酵，你不做表面功夫。你的朋友不多但都过硬，只是别让"慢热"挡住真正值得的人。',
+    },
+    E2: {
+      high: '人多是你的主场：聚会、饭局、集体活动让你越待越有劲。注意分辨"热闹"和"联结"的区别——散场之后还剩下的关系，才是真的。',
+      low: '你天然偏好小圈子或独处：人声鼎沸的地方待久了反而空虚。三两深交胜过满场泛交，这是你的社交经济学，成立。',
+    },
+    E3: {
+      high: '你习惯站在主导位：拍板、带节奏、替集体拿主意。主导力配上倾听就是领导力，配不上就是独裁——差的那一步，是让别人也说话。',
+      low: '你习惯跟随而不是领头：不是没主意，是不想承担指挥的社交成本。安静的支持者同样关键，但在真正在乎的事上，你的声音值得被听见。',
+    },
+    E4: {
+      high: '你的待机功率高：日程排满、闲下来反而不自在。行动力是你的名片，但要区分"忙"和"有效"——偶尔停下来校准方向，比多跑十步更值钱。',
+      low: '你偏好低耗节奏：慢生活、留白、不赶。你不是懒，是不愿把力气花在瞎忙上。该冲刺时你也能顶上去，这就是够用的强度。',
+    },
+    E5: {
+      high: '平淡让你发慌，你需要速度、风险和不确定性带来的电流。这让你敢做别人不敢的事，也请给冲动装个护栏——尤其是身体和钱包承担不起的那种。',
+      low: '你偏好确定和安稳：刺激对你更像消耗而非享受。稳扎稳打是你的长期优势，只是偶尔的未知里也藏着礼物，别一律拒收。',
+    },
+    E6: {
+      high: '你的快乐是外放的：笑点低、兴致高、容易把气氛带起来。这种感染力是稀缺资源，也是你抵御低谷的本钱。低落时不强迫自己振作，快乐会自己回来。',
+      low: '你的快乐是内敛的：满足更多是安静的感受而非外显的兴奋。不容易兴奋不代表不幸福，只是你的快乐波长比较长。',
+    },
+    O1: {
+      high: '你的脑内世界人口稠密：白日梦、假设、"如果怎样怎样"是你的日常娱乐。创造力从这里来，注意力也从这里漏——重要场合给脑子系根绳。',
+      low: '你活在具体里：想法要落地才算数，空想让你不耐烦。执行型的清醒在你这里，世界靠你们把幻想变成桥。',
+    },
+    O2: {
+      high: '美对你不是装饰是必需：音乐、文字、画面、光影都能真实地击中你。审美是你的操作系统之一，别让生计把它挤到没有位置。',
+      low: '艺术于你是可选项而非刚需：你更在意东西有没有用。这没问题，只是偶尔的美学体验成本很低，回报常常意外。',
+    },
+    O3: {
+      high: '你对情绪的感知是高清的：自己的、别人的，都能捕捉到细颗粒度。共情是你的天赋，也意味着别人的情绪会真实消耗你——学会关掉接收器是必修课。',
+      low: '你靠事实而非感受做判断：情绪信号弱，冷静是你的默认。理性可靠，但偶尔读一读自己的情绪，能帮你发现理性迟到的问题。',
+    },
+    O4: {
+      high: '熟悉的路你走不住：新地方、新菜式、新方法自带吸引力。你的舒适区比别人大，适应力是你的竞争力，只是别把"还没试过"直接等于"更好"。',
+      low: '你偏好已知与稳定：老店、老方法、固定的路线是你的舒适区。稳定是你的护城河，但一年一两次的小出轨，通常不会要你的命。',
+    },
+    O5: {
+      high: '你喜欢啃硬东西：复杂的概念、烧脑的讨论、读起来费劲的书，对你是乐趣而非任务。思辨是你的娱乐方式，注意把想清楚的成果做出来，别停在颅内高潮。',
+      low: '你偏好具体实用的问题：抽象讨论让你犯困。动手能力和常识是你的强项，理论的部分，让爱理论的人替你读就好。',
+    },
+    O6: {
+      high: '你对权威和传统天然存疑，愿意为少数立场留空间，接受世界没有标准答案。开放是你的底色，也记得：跟你立场不同的人未必愚昧，只是前提不同。',
+      low: '你尊重传统与秩序，相信有对的答案和该守的规矩。稳定的价值观给你定力，只需留意"一直都是这样"有时正是需要被检查的地方。',
+    },
+    A1: {
+      high: '你默认人是可信的：不设防、先给善意。合作在你这里成本低、启动快，但吃过一两回亏之后，你会学会"信任，但要核对"。',
+      low: '你默认怀疑：别人的动机和承诺，你都要先验证。谨慎让你很少被骗，但防备本身有成本——把怀疑留给证据，而不是人。',
+    },
+    A2: {
+      high: '你拒绝把人当工具：不占便宜、不耍手段，哪怕有机会。这是你信用账户的本金——人们把重要的事，交给靠得住的人。',
+      low: '在自利和手段上你给自己留的空间较大：灵活是灵活，但信用一旦破产，重建的成本远超当初省下的那点力气。',
+    },
+    A3: {
+      high: '帮人对你是需要而非负担：别人的事你真的上心。世界靠你这样的人运转，但先把自己的氧气面罩戴好——耗尽的善意谁也续不上。',
+      low: '你先把资源留给自己和眼前的事：帮助是选择而非义务。健康的边界感没错，只是偶尔的举手之劳，回报周期比你想的短。',
+    },
+    A4: {
+      high: '你天生避战：摩擦当前，你的第一反应是降温而不是加码。你是团队的减震器，但该拍的桌子不拍，问题会在别处爆炸。',
+      low: '冲突对你不是禁忌：该争就争、该怼就怼。敢于交锋是稀缺能力，只是把每次分歧都打成遭遇战，盟友会变少——挑真正值得打的仗。',
+    },
+    A5: {
+      high: '你把自己放得低：功劳让出去、镜头让出去。谦逊攒人心，但别谦到隐形——你的贡献需要被看见，才有下一次机会。',
+      low: '你清楚自己的分量，并且不介意让人知道。自信是好事，只是"我很强"和"别人都不行"之间有条线，别踩过去。',
+    },
+    A6: {
+      high: '别人的苦难会真实地硌到你：新闻里的、路上的、朋友的。柔软是你的出厂设置，它让你成为好的朋友，但情绪上别替全世界扛。',
+      low: '你对苦难的回应偏理性：先问原因和办法，而不是先难受。冷静的善意同样珍贵——出钱出力你未必少，只是不走心口那条路。',
+    },
+    C1: {
+      high: '你对自己的能力有实打实的信心：事情来了先想怎么干成，而不是能不能成。底气来自过往战绩，它让你敢接难的活。和盲目自信的分界靠复盘习惯来守。',
+      low: '你常怀疑自己能不能干好：机会面前先看到自己不够的地方。持续的自我怀疑有时比能力本身更拖后腿——记录你做成过的事，数据比感觉可靠。',
+    },
+    C2: {
+      high: '东西有位置、事情有清单、日程有格子，秩序给你安全感。你的系统让产出可复用、可交接。对混乱的低容忍是软肋——世界不会永远整齐。',
+      low: '你的桌面和文件夹像考古现场，但混乱中有你自己的索引。找东西慢一点是你付的租金，换来的灵活不亏——只是重要文件，还是备份一下。',
+    },
+    C3: {
+      high: '承诺对你有分量：答应了就办，规则内行事是默认。你是那种把钥匙交给他就能睡好觉的人——这份可靠，是值得每个合作者珍惜的信用资产。',
+      low: '规则对你更像建议：能绕就绕、能变通就变通。灵活有时真能解决问题，但透支承诺的代价是——下次你说什么，别人先打折扣。',
+    },
+    C4: {
+      high: '"差不多"不在你的词典里：标准总比要求高一截，做成的事是你的多巴胺来源。成就动机是你的引擎，但引擎也需要停机保养——不休息的代价是燃烧自己。',
+      low: '你对往上冲没有执念：够用就好、舒服重要。你躲开了内卷的消耗，只是长期看，一两件真正想做成的事，值得你调高火力试一次。',
+    },
+    C5: {
+      high: '你说做就做：计划不会躺在待办清单里发霉，坚持是你的常态。你是那种新年计划真能立住的人。自律是你的复利账户，但别用它绑架身边人的节奏。',
+      low: '开始难、坚持更难：好计划常死于第三天。别急着骂自己意志力——把目标切小、把干扰拿走、让环境推着你走，比硬扛有效十倍。',
+    },
+    C6: {
+      high: '三思而后行是你的出厂设置：决定慢，是因为你把后果都过了一遍。你很少踩大坑，这份谨慎是护城河——但机会有时比风险更不耐等。',
+      low: '你行动先于思考：先干起来再调整是你的风格。速度是优势，学费是账单——不可逆的事（钱、辞职、发出去的话），值得多想三十秒。',
+    },
+  },
+  facetMid: '你的这项特质居中：它会随情境和状态波动，而不是稳定的偏高或偏低。对照自己"什么时候高、什么时候低"，往往比分数本身更有信息量。',
+};
+</script>
+<!-- CONTENT-DATA-END -->
+
+<script>
+(function () {
+  'use strict';
+  var STORE_KEY = 'big5-test-state';
+  var app = document.getElementById('app');
+
+  var DIM_INFO = {
+    O: { name: '开放性', en: 'Openness', intro: '对新观念、审美与变化的胃口' },
+    C: { name: '尽责性', en: 'Conscientiousness', intro: '计划、坚持与把事办成的能力' },
+    E: { name: '外向性', en: 'Extraversion', intro: '能量朝向人与外部世界的程度' },
+    A: { name: '宜人性', en: 'Agreeableness', intro: '合作与体谅的默认设置' },
+    N: { name: '神经质', en: 'Neuroticism', intro: '负面情绪的敏感度与恢复速度' },
+  };
+  var FACET_INFO = {
+    N1: '焦虑', N2: '愤怒', N3: '抑郁', N4: '自我意识', N5: '无节制', N6: '脆弱性',
+    E1: '友善', E2: '合群', E3: '坚定', E4: '活力', E5: '求刺激', E6: '愉悦',
+    O1: '想象力', O2: '艺术兴趣', O3: '情感体验', O4: '求新', O5: '智性', O6: '价值观开放',
+    A1: '信任', A2: '直率', A3: '利他', A4: '合作', A5: '谦逊', A6: '同情',
+    C1: '自我效能', C2: '条理', C3: '责任', C4: '成就追求', C5: '自律', C6: '审慎',
+  };
+
+  function newState() {
+    return { v: 1, phase: 'welcome', order: shuffle(QUESTIONS.map(function (q) { return q.id; })),
+             answers: {}, index: 0, result: null };
+  }
+  function loadState() {
+    try {
+      var raw = localStorage.getItem(STORE_KEY);
+      if (!raw) return null;
+      var s = JSON.parse(raw);
+      if (s.v !== 1 || !Array.isArray(s.order) || s.order.length !== QUESTIONS.length) return null;
+      return s;
+    } catch (e) { return null; }
+  }
+  function save() { try { localStorage.setItem(STORE_KEY, JSON.stringify(state)); } catch (e) {} }
+  function clearStore() { try { localStorage.removeItem(STORE_KEY); } catch (e) {} }
+
+  var state = loadState() || newState();
+  var qById = {};
+  QUESTIONS.forEach(function (q) { qById[q.id] = q; });
+
+  function el(tag, attrs, children) {
+    var node = document.createElement(tag);
+    for (var k in attrs) {
+      if (attrs[k] == null) continue;
+      if (k === 'text') node.textContent = attrs[k];
+      else if (k === 'html') node.innerHTML = attrs[k];
+      else if (k.slice(0, 2) === 'on') node.addEventListener(k.slice(2), attrs[k]);
+      else node.setAttribute(k, attrs[k]);
+    }
+    (children || []).forEach(function (c) { node.appendChild(c); });
+    return node;
+  }
+
+  function renderWelcome() {
+    var screen = el('section', { 'data-testid': 'screen-welcome', 'class': 'screen screen-welcome' });
+    screen.appendChild(el('p', { 'class': 'kicker', text: '120 题 · 约 20 分钟 · 学界标准模型' }));
+    screen.appendChild(el('h1', { 'class': 'title', html: '大五人格<em>专业版</em>' }));
+    screen.appendChild(el('hr', { 'class': 'rule' }));
+    screen.appendChild(el('p', { 'class': 'intro',
+      text: '基于公有领域题库 IPIP-NEO-120：五个大维度、三十个子特质，给出对标常模的 T 分数报告。凭自己的日常印象作答，不要想"正确答案"。' }));
+    var letters = el('div', { 'class': 'letters' });
+    'OCEAN'.split('').forEach(function (ch) {
+      letters.appendChild(el('span', { 'class': 'letter-chip', text: ch }));
+    });
+    screen.appendChild(letters);
+    screen.appendChild(el('button', { 'data-testid': 'btn-start', 'class': 'btn-primary',
+      onclick: function () { state.phase = 'quiz'; state.index = 0; save(); render(); }, text: '开始测试 →' }));
+    screen.appendChild(el('p', { 'class': 'footnote', html:
+      '常模为在线自选样本（n≈3,011），T 分对标该样本 · 非临床工具<br>' +
+      '<a data-testid="link-mbti" href="index.html">只想轻松玩？试试 MBTI 十六型人格 →</a>' }));
+    app.innerHTML = '';
+    app.appendChild(screen);
+  }
+
+  function renderQuiz() {
+    var qId = state.order[state.index];
+    var q = qById[qId];
+    var answered = Object.keys(state.answers).length;
+    var screen = el('section', { 'data-testid': 'screen-quiz', 'class': 'screen screen-quiz',
+      'data-qnum': String(state.index + 1) });
+    var folio = el('div', { 'class': 'folio' });
+    folio.appendChild(el('span', { 'class': 'qno', text: '第 ' + (state.index + 1) + ' 题' }));
+    folio.appendChild(el('span', { 'data-testid': 'progress-label', 'class': 'progress-label',
+      text: (state.index + 1) + ' / ' + state.order.length }));
+    screen.appendChild(folio);
+    var barWrap = el('div', { 'class': 'progress-bar' });
+    var pctDone = Math.round(answered / state.order.length * 100);
+    barWrap.appendChild(el('div', { 'class': 'progress-fill', style: 'width:' + pctDone + '%' }));
+    screen.appendChild(barWrap);
+    screen.appendChild(el('h2', { 'data-testid': 'question-text', 'class': 'question', text: q.zh }));
+
+    var row = el('div', { 'class': 'likert' });
+    LIKERT5.forEach(function (opt) {
+      var selected = state.answers[qId] === opt.v;
+      row.appendChild(el('button', {
+        'data-testid': 'likert-' + opt.v,
+        'class': 'likert-btn' + (selected ? ' selected' : '') + (opt.v === 3 ? ' neutral' : ''),
+        text: opt.label,
+        onclick: function () { pick(opt.v); }
+      }));
+    });
+    screen.appendChild(row);
+    screen.appendChild(el('button', { 'data-testid': 'btn-prev', 'class': 'btn-ghost',
+      text: '上一题', disabled: state.index === 0 ? 'disabled' : null,
+      onclick: function () { if (state.index > 0) { state.index--; save(); render(); } } }));
+    app.innerHTML = '';
+    app.appendChild(screen);
+  }
+
+  var advanceTimer = null;
+  function pick(v) {
+    var qId = state.order[state.index];
+    state.answers[qId] = v;
+    save();
+    document.querySelectorAll('.likert-btn').forEach(function (b) { b.classList.remove('selected'); });
+    var btn = document.querySelector('[data-testid="likert-' + v + '"]');
+    if (btn) btn.classList.add('selected');
+    clearTimeout(advanceTimer);
+    advanceTimer = setTimeout(function () {
+      if (state.index < state.order.length - 1) {
+        state.index++; save(); render();
+      } else {
+        state.result = computeBig5(QUESTIONS, NORMS, state.answers);
+        state.phase = 'result'; save(); render();
+      }
+    }, 200);
+  }
+
+  function tbar(T) {
+    var pct = Math.max(0, Math.min(100, T));
+    var wrap = el('div', { 'class': 'tbar' });
+    wrap.appendChild(el('div', { 'class': 'tbar-fill', style: 'width:' + pct + '%' }));
+    wrap.appendChild(el('div', { 'class': 'tbar-mid' }));
+    return wrap;
+  }
+
+  function renderResult() {
+    var r = state.result;
+    var screen = el('section', { 'data-testid': 'screen-result', 'class': 'screen screen-result' });
+    var hero = el('div', { 'class': 'report-hero' });
+    hero.appendChild(el('h1', { 'class': 'report-title', text: '你的大五人格剖面' }));
+    hero.appendChild(el('p', { 'class': 'report-sub',
+      text: 'IPIP-NEO-120 · T 分对标在线常模（50 为常模均值）' }));
+    screen.appendChild(hero);
+
+    // 五域总分
+    var domainBlock = el('div', { 'class': 'domain-block' });
+    DIM5.forEach(function (d) {
+      var dd = r.domains[d];
+      var info = DIM_INFO[d];
+      var bucket = dd.T >= 55 ? 'high' : dd.T < 45 ? 'low' : 'mid';
+      var card = el('div', { 'data-testid': 'report-domain-' + d, 'class': 'domain-card' });
+      var head = el('div', { 'class': 'domain-head' });
+      var name = el('span', { 'class': 'domain-name', html: info.name + ' <span class="en">' + info.en + '</span>' });
+      head.appendChild(name);
+      var tEl = el('span', { 'class': 'domain-t' });
+      tEl.appendChild(el('span', { 'class': 'tval', text: dd.T.toFixed(1) }));
+      tEl.appendChild(el('span', { text: ' ' }));
+      tEl.appendChild(el('span', { 'class': 'domain-band', text: dd.band }));
+      head.appendChild(tEl);
+      card.appendChild(head);
+      card.appendChild(tbar(dd.T));
+      var scale = el('div', { 'class': 'tbar-scale' });
+      scale.appendChild(el('span', { text: '0' }));
+      scale.appendChild(el('span', { text: 'T 50' }));
+      scale.appendChild(el('span', { text: '100' }));
+      card.appendChild(scale);
+      card.appendChild(el('p', { 'class': 'domain-desc', text: REPORT_TEXT.domains[d][bucket] }));
+
+      // 域内 6 facet
+      FACETS[d].forEach(function (f) {
+        var fd = r.facets[f];
+        var fBucket = fd.T >= 55 ? 'high' : fd.T < 45 ? 'low' : 'mid';
+        var row = el('div', { 'data-testid': 'report-facet-' + f, 'class': 'facet-row' });
+        var fHead = el('div', { 'class': 'facet-head' });
+        fHead.appendChild(el('span', { 'class': 'facet-name', text: FACET_INFO[f] }));
+        fHead.appendChild(el('span', { 'class': 'facet-t', text: 'T ' + fd.T.toFixed(1) + ' · ' + fd.band }));
+        row.appendChild(fHead);
+        var bar = el('div', { 'class': 'facet-bar' });
+        bar.appendChild(el('div', { 'class': 'facet-bar-fill',
+          style: 'width:' + Math.max(0, Math.min(100, fd.T)) + '%' }));
+        row.appendChild(bar);
+        row.appendChild(el('p', { 'class': 'facet-desc',
+          text: fBucket === 'mid' ? REPORT_TEXT.facetMid : REPORT_TEXT.facets[f][fBucket] }));
+        card.appendChild(row);
+      });
+      domainBlock.appendChild(card);
+    });
+    screen.appendChild(domainBlock);
+
+    // 方法学披露
+    screen.appendChild(el('div', { 'class': 'sec-head' }));
+    var sec = screen.lastChild;
+    sec.appendChild(el('span', { 'class': 'sec-no', text: '方法学与边界' }));
+    sec.appendChild(el('span', { 'class': 'sec-rule' }));
+    var method = el('div', { 'class': 'method' });
+    method.appendChild(el('h4', { text: '这份报告是怎么来的' }));
+    method.appendChild(el('ul', { html:
+      '<li>题库：IPIP-NEO-120（Johnson, 2014），国际人格题库（IPIP）公有领域量表；中文为基于英文原文的自译，未做回译校验。</li>' +
+      '<li>计分：反向题反转后求和，facet 4–20、域 24–120；T 分 = 50 + 10 × (raw − M) / SD。</li>' +
+      '<li>常模：ipipneo.org / JobCannon 技术手册（CC BY 4.0），n≈3,011 的在线自选样本——不是全国概率样本，也非中国常模；你的 T 分对标的是"会上网做人格测试的这群人"。</li>' +
+      '<li>档位：很低 &lt;30 / 低 30–45 / 中 45–55 / 高 55–70 / 很高 &gt;70（T 分刻度）。</li>' +
+      '<li>边界：这是严肃的自评工具，不是临床诊断；四题的子特质测量误差不小，facet 分数读趋势即可，别抠小数点。</li>' }));
+    screen.appendChild(method);
+
+    screen.appendChild(el('button', { 'data-testid': 'btn-share', 'class': 'btn-primary',
+      onclick: function () { shareCard(); }, text: '生成分享卡片' }));
+    screen.appendChild(el('button', { 'data-testid': 'btn-restart', 'class': 'btn-ghost center',
+      onclick: function () { clearStore(); state = newState(); render(); }, text: '重新测试' }));
+    app.innerHTML = '';
+    app.appendChild(screen);
+  }
+
+  var CARD_STYLE = { bg: '#faf6ee', ink: '#1a1713', accent: '#1f3a5f', muted: '#6f675a',
+                     line: '#ddd3bf', deep: '#f2ebdb', w: 750, h: 1000 };
+
+  function drawShareCard(r) {
+    var s = CARD_STYLE;
+    var c = document.createElement('canvas');
+    c.width = s.w; c.height = s.h;
+    var ctx = c.getContext('2d');
+    var SERIF = '"Songti SC", "STSong", "Noto Serif CJK SC", serif';
+    ctx.fillStyle = s.bg; ctx.fillRect(0, 0, s.w, s.h);
+    ctx.strokeStyle = s.accent; ctx.lineWidth = 3; ctx.strokeRect(26, 26, s.w - 52, s.h - 52);
+    ctx.strokeStyle = s.line; ctx.lineWidth = 1; ctx.strokeRect(40, 40, s.w - 80, s.h - 80);
+
+    ctx.textAlign = 'center';
+    ctx.fillStyle = s.ink; ctx.font = '600 24px ' + SERIF;
+    ctx.fillText('大 五 人 格 · IPIP-NEO-120', s.w / 2, 108);
+    ctx.fillStyle = s.muted; ctx.font = '400 26px ' + SERIF;
+    ctx.fillText('T 分对标在线常模 · 50 为均值', s.w / 2, 170);
+
+    var y = 280;
+    var rowH = 132;
+    DIM5.forEach(function (d) {
+      var dd = r.domains[d];
+      var info = DIM_INFO[d];
+      ctx.textAlign = 'left'; ctx.fillStyle = s.ink;
+      ctx.font = '700 40px ' + SERIF; ctx.fillText(info.name, 80, y + 14);
+      ctx.fillStyle = s.muted; ctx.font = '400 22px ' + SERIF;
+      ctx.fillText(info.en, 82, y + 46);
+      var x0 = 320, x1 = 560;
+      ctx.fillStyle = s.deep; ctx.fillRect(x0, y - 4, x1 - x0, 18);
+      ctx.strokeStyle = s.line; ctx.lineWidth = 1; ctx.strokeRect(x0 + .5, y - 3.5, x1 - x0 - 1, 17);
+      var w = (x1 - x0) * Math.max(0, Math.min(100, dd.T)) / 100;
+      ctx.fillStyle = s.accent; ctx.fillRect(x0, y - 4, w, 18);
+      ctx.strokeStyle = s.muted; ctx.beginPath();
+      ctx.moveTo(x0 + (x1 - x0) / 2, y - 12); ctx.lineTo(x0 + (x1 - x0) / 2, y + 22); ctx.stroke();
+      ctx.textAlign = 'right'; ctx.fillStyle = s.ink;
+      ctx.font = '800 44px ' + SERIF; ctx.fillText(dd.T.toFixed(0), 670, y + 16);
+      ctx.textAlign = 'left'; ctx.fillStyle = s.muted; ctx.font = '400 22px ' + SERIF;
+      ctx.fillText(dd.band, 596, y + 46);
+      y += rowH;
+    });
+
+    ctx.textAlign = 'center'; ctx.fillStyle = s.muted; ctx.font = '400 24px ' + SERIF;
+    ctx.fillText('长按保存 · 在线样本常模（n≈3,011）· 非临床', s.w / 2, 948);
+    return c.toDataURL('image/png');
+  }
+
+  function dataUrlToBlob(dataUrl) {
+    var parts = dataUrl.split(',');
+    var bin = atob(parts[1]);
+    var arr = new Uint8Array(bin.length);
+    for (var i = 0; i < bin.length; i++) arr[i] = bin.charCodeAt(i);
+    return new Blob([arr], { type: 'image/png' });
+  }
+
+  function shareCard() {
+    var dataUrl = drawShareCard(state.result);
+    var btn = document.querySelector('[data-testid="btn-share"]');
+    var file = null;
+    try { file = new File([dataUrlToBlob(dataUrl)], 'big5-' + Date.now() + '.png', { type: 'image/png' }); } catch (e) {}
+    if (file && navigator.canShare && navigator.canShare({ files: [file] })) {
+      navigator.share({ files: [file], title: '我的大五人格剖面' }).catch(function () {});
+      return;
+    }
+    var wrap = el('div', { 'class': 'share-wrap' });
+    wrap.appendChild(el('img', { 'data-testid': 'share-img', 'class': 'share-img', src: dataUrl, alt: '大五人格分享卡片' }));
+    wrap.appendChild(el('a', { 'data-testid': 'share-download', 'class': 'btn-primary', download: 'big5-profile.png',
+      href: dataUrl, text: '下载卡片' }));
+    btn.replaceWith(wrap);
+  }
+
+  function render() {
+    clearTimeout(advanceTimer);
+    if (state.phase === 'quiz') renderQuiz();
+    else if (state.phase === 'result' && state.result) renderResult();
+    else renderWelcome();
+  }
+  render();
+})();
+</script>
+</body>
+</html>

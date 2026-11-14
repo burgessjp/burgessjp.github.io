@@ -467,7 +467,9 @@ const TYPES = {
     screen.appendChild(letters);
     screen.appendChild(el('button', { 'data-testid': 'btn-start', 'class': 'btn-primary',
       onclick: function () { state.phase = 'quiz'; state.index = 0; save(); render(); }, text: '开始测试 →' }));
-    screen.appendChild(el('p', { 'class': 'footnote', text: '结果可保存成卡片，发给朋友对照' }));
+    screen.appendChild(el('p', { 'class': 'footnote', html:
+      '结果可保存成卡片，发给朋友对照<br>' +
+      '<a data-testid="link-big5" href="big5.html">想要更专业的？试试大五人格完整版 →</a>' }));
     app.innerHTML = '';
     app.appendChild(screen);
   }
