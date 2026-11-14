@@ -56,6 +56,14 @@ Warm ink theme defined in `global.css` `@theme` block:
 
 **删除文章**：用户告知标题 → 确认后删除文件 → `npm run build` 验证 → commit + push
 
+## 工具项目（mbti-test）
+
+`mbti-test/` 是独立维护的单文件 Web 应用（MBTI + 大五人格测试），有自己的 CLAUDE.md——在那个目录下工作遵守它的约定，验证命令也在该目录内运行。
+
+- **唯一事实源是 `mbti-test/`**；`public/mbti-test/` 由 `scripts/sync-mbti.mjs` 在 `predev`/`prebuild` 时自动同步，已 gitignore，不要手工编辑或提交
+- 改动 `mbti-test/*.html` 后：进入 `mbti-test/` 跑它 CLAUDE.md 里的验证命令 → 回根目录 `npm run build` → commit + push
+- 站内入口在 `src/pages/tools.astro`（卡片文案与链接）
+
 ## Deployment
 
 GitHub Actions (`.github/workflows/deploy.yml`): push to `master` → `npm ci && npm run build` → deploy `dist/` to GitHub Pages.

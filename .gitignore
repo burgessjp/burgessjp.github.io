@@ -3,6 +3,9 @@ dist/
 # generated types
 .astro/
 
+# 由 scripts/sync-mbti.mjs 从 mbti-test/ 同步生成，不进 git
+public/mbti-test/
+
 # dependencies
 node_modules/
 
