@@ -11,7 +11,7 @@ export interface StandalonePost {
 
 export const standalonePosts: StandalonePost[] = [
   {
-    title: '为什么按钮变小了？新手图解 Android 像素密度',
+    title: '5 个词，重新搞懂 Android 像素密度',
     excerpt: 'px、ppi、dpi、dp、sp 一次讲透：4 个可交互实验，从「按钮失踪案」建立密度直觉。',
     date: new Date('2026-11-21'),
     tags: ['Android'],
