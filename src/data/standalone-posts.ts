@@ -11,6 +11,13 @@ export interface StandalonePost {
 
 export const standalonePosts: StandalonePost[] = [
   {
+    title: '黄仁勋，英伟达 CEO，1993–2026 — Stratechery 中译',
+    excerpt: 'Stratechery 长文汉译：芯片管制、AI 泡沫与一个人的外骨骼——黄仁勋离场与英伟达护城河的崩解。',
+    date: new Date('2026-11-21'),
+    tags: ['英伟达', '黄仁勋', 'Stratechery', 'AI'],
+    url: '/articles/jensen-huang/',
+  },
+  {
     title: '5 个词，重新搞懂 Android 像素密度',
     excerpt: 'px、ppi、dpi、dp、sp 一次讲透：4 个可交互实验，从「按钮失踪案」建立密度直觉。',
     date: new Date('2026-11-21'),
