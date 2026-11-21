@@ -5,9 +5,13 @@ import Hero from '../components/Hero.astro';
 import PostRow from '../components/PostRow.astro';
 import Footer from '../components/Footer.astro';
 import { getCollection } from 'astro:content';
+import { standalonePosts } from '../data/standalone-posts';
 
-const posts = (await getCollection('blog'))
-  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+const posts = [
+  ...(await getCollection('blog')).map((p) => ({ ...p.data, url: `/blog/${p.id}/` })),
+  ...standalonePosts.map(({ url, ...data }) => ({ ...data, url })),
+]
+  .sort((a, b) => b.date.valueOf() - a.date.valueOf())
   .slice(0, 6);
 ---
 
@@ -19,10 +23,10 @@ const posts = (await getCollection('blog'))
     <div>
       {posts.map((post) => (
         <PostRow
-          title={post.data.title}
-          excerpt={post.data.excerpt}
-          date={post.data.date.toLocaleDateString('zh-CN', { year: 'numeric', month: '2-digit' }).replace(/\//g, '.')}
-          slug={post.id}
+          title={post.title}
+          excerpt={post.excerpt}
+          date={post.date.toLocaleDateString('zh-CN', { year: 'numeric', month: '2-digit' }).replace(/\//g, '.')}
+          href={post.url}
         />
       ))}
     </div>

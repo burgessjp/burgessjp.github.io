@@ -56,6 +56,14 @@ Warm ink theme defined in `global.css` `@theme` block:
 
 **删除文章**：用户告知标题 → 确认后删除文件 → `npm run build` 验证 → commit + push
 
+## 独立文章（单文件 HTML）
+
+不转 markdown、不套 BlogPost 布局的自包含交互式文章（自带样式/脚本/导航/页脚）：
+
+- 存放 `public/articles/<slug>/index.html`，原样部署不走构建，URL 即 `/articles/<slug>/`
+- 元数据必须登记到 `src/data/standalone-posts.ts`（title/excerpt/date/tags/url），首页、/blog 列表、RSS 均从该文件合并
+- 这类页面没有站点 Navbar/Footer/Giscus/busuanzi——它们自带 chrome，不要往里注入
+
 ## 工具项目（mbti-test）
 
 `mbti-test/` 是独立维护的单文件 Web 应用（MBTI + 大五人格测试），有自己的 CLAUDE.md——在那个目录下工作遵守它的约定，验证命令也在该目录内运行。

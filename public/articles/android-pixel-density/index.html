@@ -1,0 +1,1243 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-zcode-design>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script>document.documentElement.classList.add('js')</script>
+<title>为什么按钮变小了？· 新手图解 Android 像素密度</title>
+<style>
+/* ============ 设计变量:工程坐标纸 × Android 图鉴 ============ */
+:root{
+  --paper:#FAF7F1;
+  --panel:#FFFFFF;
+  --ink:#22252B;
+  --ink-2:#5E6873;
+  --green:#1E8E3E;
+  --green-bright:#3DDC84;
+  --green-soft:rgba(30,142,62,.12);
+  --red:#C23A12;
+  --red-soft:rgba(194,58,18,.08);
+  --gold:#A66900;
+  --green-deep:#17652C;
+  --red-deep:#A83211;
+  --gold-deep:#7a5400;
+  --shadow-card:none;
+  --shadow-pop:none;
+  --shadow-chip:none;
+  --mono:"SF Mono","JetBrains Mono",Menlo,Consolas,"Courier New",monospace;
+  --serif:"Songti SC","Noto Serif SC","STSong","SimSun",serif;
+  --sans:"PingFang SC","Hiragino Sans GB","Source Han Sans SC","Microsoft YaHei",sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:var(--sans);
+  color:var(--ink);
+  background-color:var(--paper);
+  line-height:1.75;
+  -webkit-font-smoothing:antialiased;
+}
+
+/* ============ 进度条 & 导航 ============ */
+#progress{position:fixed;top:0;left:0;height:3px;width:0;background:var(--green);z-index:99;transition:width .1s linear}
+nav{
+  position:sticky;top:0;z-index:90;
+  background:rgba(250,247,241,.92);backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--ink);
+}
+.nav-in{max-width:1080px;margin:0 auto;padding:12px 24px;display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+.nav-logo{font-family:var(--serif);font-weight:900;font-size:19px;letter-spacing:.06em}
+.nav-logo em{font-style:normal;color:var(--green)}
+.nav-links{display:flex;gap:4px;margin-left:auto;flex-wrap:wrap}
+.nav-links a{
+  font-family:var(--mono);font-size:12.5px;text-decoration:none;color:var(--ink);
+  padding:4px 11px;border:1.4px solid transparent;border-radius:999px;transition:border-color .18s,background-color .18s,color .18s;
+}
+.nav-links a:hover{border-color:var(--ink);background:var(--green-soft)}
+
+/* ============ 版心 ============ */
+.wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+
+/* ============ Hero ============ */
+header.hero{padding:60px 0 44px;position:relative;overflow:hidden}
+.hero-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:40px;align-items:center}
+.hero h1{
+  font-family:var(--serif);font-weight:900;
+  font-size:clamp(36px,5.6vw,64px);line-height:1.18;letter-spacing:.02em;margin:18px 0 20px;
+}
+.hero h1 .hl{background:linear-gradient(transparent 62%, var(--green-soft) 62%);padding:0 4px}
+.hero .kicker{
+  font-family:var(--mono);font-size:13px;letter-spacing:.28em;color:var(--ink-2);
+  display:inline-flex;align-items:center;gap:10px;
+}
+.kicker::before{content:"";width:34px;height:2px;background:var(--green)}
+.hero p.lead{font-size:17px;color:var(--ink-2);max-width:34em}
+.hero .lead b{color:var(--ink)}
+.hero-badges{display:flex;gap:10px;margin-top:26px;flex-wrap:wrap}
+.badge{
+  font-family:var(--mono);font-size:12.5px;padding:5px 12px;
+  border:1px solid var(--ink);border-radius:999px;background:var(--panel);
+  box-shadow:var(--shadow-chip);
+}
+.badge.g{background:var(--green-bright);color:var(--ink)}
+.hero-art{position:relative}
+.hero-art svg{width:100%;height:auto;display:block;filter:none}
+.float{animation:float 5.5s ease-in-out infinite}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+.blink1{animation:blink 2.4s steps(1) infinite}
+.blink2{animation:blink 2.4s steps(1) .8s infinite}
+.blink3{animation:blink 2.4s steps(1) 1.6s infinite}
+@keyframes blink{0%,55%{opacity:1}60%,90%{opacity:.15}95%,100%{opacity:1}}
+.hero-grid>*{animation:fadeUp .8s cubic-bezier(.2,.7,.2,1) both}
+.hero-grid>*:nth-child(2){animation-delay:.15s}
+@keyframes fadeUp{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:none}}
+
+/* ============ 人话卡(每章开场) ============ */
+.plaincard{
+  border:1px solid var(--ink);border-left:4px solid var(--green);
+  background:#fff;padding:22px 26px;margin:6px 0 20px;
+  box-shadow:var(--shadow-pop);
+}
+.plaincard .pc-tag{
+  font-family:var(--mono);font-size:12px;letter-spacing:.25em;
+  color:var(--green-deep);margin-bottom:6px;font-weight:700;
+}
+.plaincard p{font-size:16.5px;line-height:1.8}
+.plaincard p + p{margin-top:10px}
+.plaincard b{background:linear-gradient(transparent 65%, var(--green-soft) 65%)}
+
+/* ============ 记住这一句 ============ */
+.takeaway{
+  margin-top:24px;border:1px solid var(--ink);background:var(--ink);color:var(--paper);
+  padding:14px 20px;display:flex;gap:14px;align-items:flex-start;
+  box-shadow:var(--shadow-pop);
+}
+.takeaway .tk-ico{
+  flex-shrink:0;width:26px;height:26px;border-radius:50%;background:var(--green-bright);
+  color:var(--ink);display:flex;align-items:center;justify-content:center;
+  font-weight:900;font-size:15px;margin-top:3px;
+}
+.takeaway .tk-t{font-family:var(--mono);font-size:12px;letter-spacing:.22em;color:var(--green-bright);display:block;margin-bottom:2px}
+.takeaway p{font-size:15.5px;line-height:1.7;font-weight:600}
+.takeaway .g{color:var(--green-bright)}
+
+/* ============ 费曼检验 & 终检清单 ============ */
+.feynman{margin-top:14px;border:1.8px dashed var(--gold);background:rgba(201,151,0,.06);padding:16px 20px}
+.feynman .fy-head{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.feynman .fy-badge{
+  width:24px;height:24px;border-radius:50%;background:var(--gold-deep);color:#fff;
+  display:flex;align-items:center;justify-content:center;font-weight:900;font-size:14px;flex-shrink:0;
+}
+.feynman .fy-title{font-family:var(--mono);font-size:12px;letter-spacing:.22em;color:var(--gold-deep);font-weight:700}
+.feynman .fy-q{font-size:15px;font-weight:600;line-height:1.8}
+.feynman details{margin-top:10px}
+.feynman summary{cursor:pointer;font-family:var(--mono);font-size:12px;color:var(--gold-deep);user-select:none;width:fit-content}
+.feynman summary:hover{text-decoration:underline}
+.feynman .fy-a{margin-top:8px;border-left:3px solid var(--gold);padding:8px 14px;font-size:14px;color:var(--ink-2);line-height:1.8;background:#fff}
+
+.recite{border:1px solid var(--ink);background:#fff;margin:24px 0 8px;box-shadow:var(--shadow-pop)}
+.recite-head{border-bottom:1px solid var(--ink);background:var(--ink);color:var(--paper);padding:14px 22px}
+.recite-head h3{font-family:var(--serif);font-size:19px;font-weight:900}
+.recite-head p{font-size:12.5px;color:rgba(244,239,225,.65);margin-top:2px;line-height:1.7}
+.recite-item{display:flex;align-items:center;gap:14px;padding:13px 22px;cursor:pointer;user-select:none;transition:background-color .15s}
+.recite-item + .recite-item{border-top:1.4px dashed rgba(34,37,43,.32)}
+.recite-item:hover{background:var(--green-soft)}
+.recite-item .rc-check{
+  width:22px;height:22px;border:1px solid var(--ink);border-radius:50%;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:900;color:transparent;transition:.15s;
+}
+.recite-item.ok .rc-check{background:var(--green-bright);color:var(--ink)}
+.recite-item .rc-q{flex:1;font-size:14.5px;font-weight:600;line-height:1.7}
+.recite-item.ok .rc-q{color:var(--ink-2)}
+.recite-item .rc-back{
+  font-family:var(--mono);font-size:12px;color:var(--red-deep);text-decoration:none;
+  border:1.3px solid var(--red);border-radius:999px;padding:2px 10px;flex-shrink:0;
+}
+.recite-item .rc-back:hover{background:var(--red-soft)}
+
+/* ============ 章节卡片 ============ */
+section.card{
+  background:var(--panel);border:1px solid var(--ink);
+  box-shadow:var(--shadow-card);
+  margin-bottom:56px;position:relative;
+  scroll-margin-top:70px;
+}
+.card-head{display:flex;align-items:baseline;gap:16px;flex-wrap:wrap;padding:26px 32px 0;position:relative}
+.card-num{
+  position:absolute;right:22px;top:2px;font-family:var(--serif);font-weight:900;
+  font-size:88px;line-height:1;color:transparent;-webkit-text-stroke:1px rgba(34,37,43,.22);
+  user-select:none;pointer-events:none;
+}
+.card-head h2{font-family:var(--serif);font-weight:900;font-size:clamp(23px,3.2vw,32px);letter-spacing:.03em}
+.card-head .en{
+  font-family:var(--mono);font-size:12.5px;color:var(--green-deep);
+  border:1.4px solid var(--green);padding:2px 10px;border-radius:999px;letter-spacing:.2em;
+  transform:translateY(-4px);
+}
+.card-body{padding:20px 32px 32px}
+.card-body p{margin-bottom:14px;max-width:42em}
+.card-body p:last-child{margin-bottom:0}
+code.inline{
+  font-family:var(--mono);font-size:.86em;background:var(--green-soft);
+  border:1px solid rgba(30,142,62,.35);border-radius:4px;padding:1px 6px;white-space:nowrap;
+}
+.note{
+  border-left:3px solid var(--gold);background:rgba(201,151,0,.08);
+  padding:12px 18px;margin:18px 0;font-size:15px;
+}
+.note b{font-family:var(--mono);font-size:12px;letter-spacing:.2em;color:var(--gold-deep);display:block;margin-bottom:3px}
+
+.js .rv{opacity:0;transform:translateY(20px);transition:opacity .7s cubic-bezier(.2,.7,.2,1),transform .7s cubic-bezier(.2,.7,.2,1)}
+.js .rv.in{opacity:1;transform:none}
+
+/* ============ 子组件 ============ */
+.duo{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin:20px 0}
+.mini{border:1px solid var(--ink);background:#fff;padding:18px;display:flex;flex-direction:column;align-items:center;gap:12px}
+.mini .cap{font-size:13.5px;color:var(--ink-2);text-align:center;line-height:1.7}
+.mini .cap b{color:var(--ink)}
+.stage{
+  border:1.6px dashed rgba(34,37,43,.42);width:100%;min-height:170px;
+  background:
+    linear-gradient(rgba(34,37,43,.05) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(34,37,43,.05) 1px,transparent 1px);
+  background-size:14px 14px;padding:18px;display:flex;align-items:center;justify-content:center;
+}
+.stat-row{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:20px 0}
+.stat{border:1px solid var(--ink);background:#fff;padding:16px 18px}
+.stat .v{font-family:var(--mono);font-weight:700;font-size:24px}
+.stat .v small{font-size:13px;color:var(--ink-2);font-weight:400}
+.stat .k{font-size:13px;color:var(--ink-2);margin-top:4px;line-height:1.6}
+.stat.good{background:var(--green-soft)}
+.stat.good .v{color:var(--green-deep)}
+
+table.spec{width:100%;border-collapse:collapse;margin:18px 0;font-size:14.5px}
+table.spec th{
+  font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-align:left;
+  background:var(--ink);color:var(--paper);padding:9px 14px;font-weight:600;
+}
+table.spec td{border:1.4px solid rgba(34,37,43,.38);padding:9px 14px;background:#fff;font-variant-numeric:tabular-nums}
+table.spec td.m{font-family:var(--mono)}
+table.spec tr.rowhl td{background:var(--green-soft)}
+table.spec tr.rowhl-2 td{background:rgba(61,220,132,.07)}
+.pill{display:inline-block;font-family:var(--mono);font-size:12px;border:1px solid var(--ink);border-radius:999px;padding:0 8px;margin-left:8px;transform:translateY(-1.5px)}
+.pill.base{background:var(--gold-deep);color:#fff;border-color:var(--gold-deep)}
+.pill.now{background:var(--green-bright)}
+
+/* 交互控件 */
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0}
+.chip{
+  font-family:var(--mono);font-size:13px;padding:6px 14px;cursor:pointer;
+  border:1px solid var(--ink);background:#fff;color:var(--ink);
+  box-shadow:var(--shadow-chip);transition:.14s;user-select:none;
+}
+.chip:hover{transform:translate(-1px,-1px);box-shadow:var(--shadow-pop)}
+.chip:active{transform:translate(2px,2px);box-shadow:1px 1px 0 rgba(34,37,43,.32)}
+.chip.on{background:var(--ink);color:var(--green-bright)}
+.field{display:flex;flex-direction:column;gap:5px}
+.field label{font-size:12.5px;color:var(--ink-2);font-family:var(--mono);letter-spacing:.06em}
+.field input{font-family:var(--mono);font-size:16px;padding:8px 12px;width:110px;border:1px solid var(--ink);background:#fff;color:var(--ink)}
+.field input:focus{outline:2.5px solid var(--green-bright)}
+.result-big{font-family:var(--mono);font-weight:700;font-size:clamp(34px,4.5vw,52px);line-height:1.1}
+.result-big small{font-size:15px;color:var(--ink-2);font-weight:400}
+.result-sub{font-family:var(--mono);font-size:14px;margin-top:6px}
+.result-sub .bkt{background:var(--green-bright);border:1px solid var(--ink);padding:1px 8px;font-weight:700}
+
+.heart-box{display:flex;flex-direction:column;align-items:center;gap:8px}
+.heart-box svg{shape-rendering:crispEdges}
+
+/* 密度轴 */
+.axis-wrap{margin:26px 0 8px;position:relative;padding-top:26px}
+.axis-ticks{position:relative;height:18px;border-bottom:1px solid var(--ink)}
+.axis-ticks span{position:absolute;transform:translateX(-50%);font-family:var(--mono);font-size:12px;color:var(--ink-2)}
+.axis-ticks span::after{content:"";position:absolute;left:50%;top:16px;width:1.5px;height:8px;background:var(--ink)}
+.axis-zones{display:flex;height:64px;border:1px solid var(--ink);border-top:none}
+.zone{
+  position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  border-right:1.5px dashed rgba(34,37,43,.42);transition:background-color .15s;overflow:hidden;
+}
+.zone:last-child{border-right:none}
+.zone:hover{background:var(--green-soft)!important}
+.zone .zn{font-family:var(--mono);font-weight:700;font-size:13px}
+.zone .zx{font-family:var(--mono);font-size:12px;color:var(--ink-2)}
+.axis-dots{position:relative;height:88px}
+.dot{position:absolute;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center}
+.dot i{width:13px;height:13px;border-radius:50%;background:var(--red);border:1px solid var(--ink);box-shadow:2px 2px 0 rgba(34,37,43,.32)}
+.dot em{font-style:normal;font-family:var(--mono);font-size:12px;color:var(--ink-2);white-space:nowrap;margin-top:3px}
+.dot::before{content:"";width:1.5px;height:10px;background:rgba(217,72,31,.5);order:-1}
+.axis-dots .dot:nth-child(2){transform:translateX(-50%) translateY(30px)}
+.axis-dots .dot:nth-child(4){transform:translateX(-50%) translateY(30px)}
+.axis-cap{font-size:12.5px;color:var(--ink-2);margin-top:2px}
+
+/* 真机档案卡 */
+.devices{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin:20px 0}
+.dev-profile{
+  border:1px solid var(--ink);background:#fff;padding:16px 12px;
+  display:flex;flex-direction:column;align-items:center;gap:10px;
+}
+.dev-profile.me{border-style:dashed;border-width:2px;background:var(--panel)}
+.dp-phone{
+  width:44px;height:88px;border:1px solid var(--ink);border-radius:9px;
+  background-color:#fff;
+  background-image:
+    repeating-linear-gradient(rgba(30,142,62,.55) 0 1px, transparent 1px var(--cell)),
+    repeating-linear-gradient(90deg, rgba(30,142,62,.55) 0 1px, transparent 1px var(--cell));
+}
+.dp-tag{font-family:var(--mono);font-size:12px;letter-spacing:.12em;color:#fff;background:var(--ink);padding:1px 9px;border-radius:999px}
+.dp-tag.me{background:var(--red-deep)}
+.dp-name{font-family:var(--mono);font-size:12px;font-weight:700;text-align:center;line-height:1.5}
+.dp-sub{font-size:12px;color:var(--ink-2);text-align:center;margin-top:-7px;line-height:1.5}
+.dp-rows{width:100%;font-size:12px}
+.dp-row{display:flex;justify-content:space-between;gap:6px;padding:4px 2px;border-top:1.3px dashed rgba(34,37,43,.32)}
+.dp-row span{color:var(--ink-2)}
+.dp-row b{font-family:var(--mono);white-space:nowrap}
+.dp-row.hl{background:var(--green-soft);border-top:1px solid var(--ink)}
+.dp-row.hl b{color:var(--green-deep)}
+.mini-code{
+  background:var(--ink);color:#D7E4D0;font-family:var(--mono);font-size:14px;
+  line-height:1.7;padding:10px 12px;width:100%;overflow-x:auto;border-radius:4px;white-space:pre-wrap;word-break:break-word;
+}
+.mini-code .c{color:#8fa39a}
+
+/* 厂商选码三步流程 */
+.flow{display:flex;align-items:stretch;margin:20px 0;border:1px solid var(--ink);background:#fff}
+.flow-step{flex:1;padding:16px 14px;border-right:1.6px dashed rgba(34,37,43,.38)}
+.flow-step:last-child{border-right:none}
+.flow-step .fn{font-family:var(--mono);font-size:12px;color:var(--green-deep);letter-spacing:.2em;font-weight:700}
+.flow-step h3{font-family:var(--serif);font-size:16px;margin:4px 0 6px}
+.flow-step p{font-size:13px;color:var(--ink-2);line-height:1.7;margin:0}
+.flow-arr{align-self:center;font-size:22px;padding:0 8px;color:var(--green);font-weight:900;flex-shrink:0}
+
+/* dp vs px 实验 */
+.lab{border:1px solid var(--ink);background:#fff;margin-top:22px}
+.lab-top{
+  display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+  border-bottom:1px solid var(--ink);background:var(--ink);color:var(--paper);
+  padding:10px 18px;font-family:var(--mono);font-size:13px;
+}
+.lab-top .lamp{width:9px;height:9px;border-radius:50%;background:var(--green-bright);animation:blink 2s steps(1) infinite}
+.lab-body{padding:22px 22px 26px}
+.lab-intro{font-size:14px;color:var(--ink-2);text-align:center;max-width:38em;margin:0 auto 12px}
+.ruler{position:relative;height:26px;width:300px;margin:0 auto}
+.ruler::after{content:"";position:absolute;left:0;right:0;bottom:0;height:1.8px;background:var(--ink)}
+.ruler .tk{position:absolute;bottom:0;width:1.5px;height:8px;background:var(--ink)}
+.ruler .tk.maj{height:14px}
+.ruler .lb{position:absolute;bottom:12px;transform:translateX(-50%);font-family:var(--mono);font-size:12px;color:var(--ink-2)}
+.screenstrip{
+  width:300px;margin:0 auto;position:relative;border:1px solid var(--ink);
+  background:
+    linear-gradient(rgba(34,37,43,.05) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(34,37,43,.05) 1px,transparent 1px);
+  background-size:12.5px 12.5px;padding:18px 0;
+}
+.strip-row{display:flex;align-items:center;gap:14px;padding:10px 14px}
+.strip-row + .strip-row{border-top:1.5px dashed rgba(34,37,43,.32)}
+.rowtag{font-family:var(--mono);font-size:12.5px;width:52px;flex-shrink:0;text-align:right}
+.rowtag.px{color:var(--red-deep);font-weight:700}
+.rowtag.dp{color:var(--green-deep);font-weight:700}
+.demo-btn{
+  height:34px;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;
+  border:1px solid var(--ink);font-family:var(--mono);font-size:11px;white-space:nowrap;
+  transition:width .35s cubic-bezier(.2,.7,.2,1);overflow:hidden;
+}
+.demo-btn.px{background:var(--red-soft);color:var(--red)}
+.demo-btn.dp{background:var(--green-bright);color:var(--ink)}
+.strip-cap{font-family:var(--mono);font-size:12px;color:var(--ink-2);margin-left:4px;line-height:1.5}
+.lab-meta{margin-top:18px;text-align:center;font-family:var(--mono);font-size:13px;border-top:1.5px dashed rgba(34,37,43,.32);padding-top:14px}
+.lab-meta b{color:var(--green-deep)}
+
+/* 公式卡 */
+.formula{margin:22px 0;padding:26px 20px;text-align:center;border:1px solid var(--ink);background:#fff;box-shadow:var(--shadow-card);position:relative}
+.formula .fx{font-family:var(--mono);font-weight:700;font-size:clamp(21px,3.4vw,30px);letter-spacing:.02em}
+.formula .fx .g{color:var(--green)} .formula .fx .r{color:var(--red)}
+.stamp{position:absolute;top:-14px;right:18px;transform:rotate(3deg);font-family:var(--mono);font-size:12px;font-weight:700;color:var(--red-deep);border:1.4px solid var(--red);padding:3px 10px;background:var(--panel);letter-spacing:.1em}
+.formula .why{margin-top:12px;font-size:14.5px;color:var(--ink-2)}
+
+/* 汇率卡 */
+.rate{display:grid;grid-template-columns:auto 1fr;gap:26px;align-items:center;border:1px solid var(--ink);background:#fff;padding:24px;margin:20px 0;box-shadow:var(--shadow-pop)}
+.price-tag{
+  align-self:start;transform:rotate(-2.5deg);
+  border:1.5px solid var(--red);color:var(--red-deep);background:#fff;
+  font-family:var(--mono);font-weight:700;font-size:26px;
+  padding:12px 22px;box-shadow:4px 4px 0 rgba(217,72,31,.25);
+}
+.price-tag small{display:block;font-size:12px;letter-spacing:.2em;font-weight:400}
+.rate-lines{display:flex;flex-direction:column;gap:10px;min-width:0}
+.rate-line{display:flex;align-items:center;gap:12px;flex-wrap:wrap;font-family:var(--mono);font-size:14px}
+.rate-line .arr{color:var(--ink-2)}
+.rate-line .money{border:1px solid var(--ink);background:var(--panel);padding:3px 12px;font-weight:700}
+.rate-line .eq{color:var(--green-deep);font-size:12.5px}
+
+/* 事故对比 */
+.crash{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin:20px 0}
+.crash .mini{align-items:stretch}
+.phone-mock{
+  border:1px solid var(--ink);border-radius:14px;background:#fff;
+  padding:14px 12px;display:flex;flex-direction:column;gap:10px;width:100%;
+}
+.phone-mock .pm-bar{font-family:var(--mono);font-size:12px;color:var(--ink-2);border-bottom:1.5px dashed rgba(34,37,43,.32);padding-bottom:6px}
+.pm-btn{
+  background:var(--green-bright);border:1px solid var(--ink);
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--mono);font-size:11px;height:42px;flex-shrink:0;overflow:hidden;
+}
+.pm-finger{align-self:flex-start;margin-top:-4px;color:var(--ink)}
+.pm-verdict{font-size:13px;line-height:1.6;padding-top:6px;border-top:1.5px dashed rgba(34,37,43,.32)}
+.pm-verdict b.ok{color:var(--green-deep)} .pm-verdict b.bad{color:var(--red-deep)}
+.pm-btnlab{font-family:var(--mono);font-size:12px;font-weight:700}
+.tscroll{overflow-x:auto}
+@media print{.js .rv{opacity:1;transform:none}}
+
+/* FAQ */
+.faq{border:1px solid var(--ink);background:#fff;margin-top:16px}
+.faq-q{padding:14px 20px;font-weight:700;display:flex;gap:10px;align-items:baseline}
+.faq-q .qmark{font-family:var(--mono);color:var(--green-deep);flex-shrink:0}
+.faq-a{padding:0 20px 16px 46px;color:var(--ink-2);font-size:14.5px}
+.faq + .faq{margin-top:14px}
+
+/* 口诀 */
+.mantras{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:20px 0}
+.mantra{border:1px solid var(--ink);background:var(--ink);color:var(--paper);padding:20px 18px;box-shadow:var(--shadow-pop);position:relative}
+.mantra .no{font-family:var(--mono);color:var(--green-bright);font-size:12px;letter-spacing:.25em}
+.mantra p{font-family:var(--serif);font-weight:900;font-size:18px;line-height:1.6;margin-top:8px}
+.mantra .sub{font-size:12.5px;color:rgba(244,239,225,.65);font-family:var(--sans);font-weight:400;margin-top:8px;line-height:1.7}
+
+/* 代码块 */
+pre.code{
+  background:var(--ink);color:#D7E4D0;border:1px solid var(--ink);
+  font-family:var(--mono);font-size:14px;line-height:1.8;
+  padding:18px 22px;overflow-x:auto;margin:16px 0;
+  box-shadow:var(--shadow-pop);
+}
+pre.code .c{color:#8fa39a}
+pre.code .k{color:var(--green-bright)}
+pre.code .n{color:#FFB56B}
+
+/* 实战卡片 */
+.dev-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:20px}
+.dev-card{border:1px solid var(--ink);background:#fff;padding:18px 20px}
+.dev-card h3{font-family:var(--serif);font-size:18px;margin-bottom:8px}
+.dev-card h3 .no{font-family:var(--mono);font-size:12px;color:var(--green-deep);margin-right:8px}
+.dev-card p{font-size:14px;color:var(--ink-2);margin:0;line-height:1.7}
+.dev-card .path{font-family:var(--mono);font-size:12.5px;color:var(--ink);background:var(--green-soft);border:1px solid rgba(30,142,62,.3);border-radius:4px;padding:2px 8px;display:inline-block;margin-top:8px}
+
+/* 尾声 */
+footer{margin-top:24px;background:var(--ink);color:var(--paper);border-top:1px solid var(--ink);padding:52px 0 40px}
+footer .chain{font-family:var(--serif);font-size:clamp(17px,2.4vw,22px);font-weight:700;line-height:2;max-width:34em}
+footer .chain .g{color:var(--green-bright)}
+footer .chain .r{color:#FF9D7E}
+footer .chain .y{color:#FFD666}
+footer .foot-meta{margin-top:28px;font-family:var(--mono);font-size:12px;color:rgba(244,239,225,.7);display:flex;gap:18px;flex-wrap:wrap}
+
+/* ============ 响应式 ============ */
+@media (max-width:860px){
+  .hero-grid{grid-template-columns:1fr;gap:28px}
+  .hero-art{max-width:440px;margin:0 auto}
+  .duo,.dev-grid,.crash,.rate{grid-template-columns:1fr}
+  .stat-row,.mantras{grid-template-columns:1fr}
+  .devices{grid-template-columns:repeat(2,1fr)}
+  .flow{flex-direction:column}
+  .flow-step{border-right:none;border-bottom:1.6px dashed rgba(34,37,43,.38)}
+  .flow-step:last-child{border-bottom:none}
+  .flow-arr{transform:rotate(90deg);text-align:center;padding:2px 0}
+  .card-head,.card-body{padding-left:20px;padding-right:20px}
+  .card-num{font-size:64px}
+  .strip-row{flex-wrap:wrap}
+  .rowtag{width:auto;text-align:left}
+  .tscroll table.spec{min-width:620px}
+  section.card{scroll-margin-top:120px}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  html{scroll-behavior:auto}
+}
+</style>
+</head>
+<body>
+
+<div id="progress"></div>
+
+<nav>
+  <div class="nav-in">
+    <div class="nav-logo">像素密度<em>新手图解</em></div>
+    <div class="nav-links">
+      <a href="#sec-crash">事故</a><a href="#sec-px">格子</a><a href="#sec-ppi">ppi</a><a href="#sec-dpi">尺码</a><a href="#sec-dp">dp</a><a href="#sec-sp">sp</a><a href="#sec-dev">速记</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ================= HERO ================= -->
+<header class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <span class="kicker">ANDROID 像素密度 · 零基础版</span>
+      <h1>为什么你的按钮，<br>在别的手机上<span class="hl">变小了</span>？</h1>
+      <p class="lead">
+        你写了个按钮，自己的手机上刚刚好；拿到别的手机上，小得点不中。
+        这页图解用 6 小节 + 4 个<b>能动手玩的实验</b>，把原因讲透：
+        不用背公式，先建立直觉。全程只用 5 个词：<b>px、ppi、dpi、dp、sp</b>。
+      </p>
+      <div class="hero-badges">
+        <span class="badge g">新手友好</span>
+        <span class="badge">4 个可交互演示</span>
+        <span class="badge">零外部依赖 · 离线可用</span>
+      </div>
+    </div>
+    <div class="hero-art" aria-hidden="true">
+      <!-- 把屏幕凑近看:全是格子 -->
+      <svg viewBox="0 0 440 350" role="img" aria-label="屏幕在放大镜下呈现像素格子">
+        <defs>
+          <pattern id="cellsFine" width="7" height="7" patternUnits="userSpaceOnUse">
+            <rect width="6.3" height="6.3" fill="#E4F3E9" stroke="#A9CFB8" stroke-width="0.6"/>
+          </pattern>
+          <pattern id="cellsCoarse" width="26" height="26" patternUnits="userSpaceOnUse">
+            <rect width="24" height="24" fill="#E4F3E9" stroke="#8FBFA3" stroke-width="1"/>
+          </pattern>
+        </defs>
+        <rect x="36" y="18" width="160" height="304" rx="20" fill="#fff" stroke="#20303C" stroke-width="2.5"/>
+        <rect x="48" y="42" width="136" height="256" fill="url(#cellsFine)" stroke="#20303C" stroke-width="1.6"/>
+        <rect x="96" y="28" width="40" height="7" rx="3.5" fill="#20303C"/>
+        <circle cx="116" cy="312" r="6" fill="none" stroke="#20303C" stroke-width="1.6"/>
+        <line x1="48" y1="322" x2="48" y2="334" stroke="#D9481F" stroke-width="2"/>
+        <line x1="116" y1="322" x2="116" y2="334" stroke="#D9481F" stroke-width="2"/>
+        <line x1="48" y1="328" x2="116" y2="328" stroke="#D9481F" stroke-width="2"/>
+        <text x="82" y="346" text-anchor="middle" font-family="Menlo,monospace" font-size="18" fill="#D9481F">1 英寸</text>
+        <line x1="186" y1="120" x2="262" y2="176" stroke="#20303C" stroke-width="1.4" stroke-dasharray="5 5"/>
+        <line x1="186" y1="230" x2="268" y2="240" stroke="#20303C" stroke-width="1.4" stroke-dasharray="5 5"/>
+        <g class="float">
+          <circle cx="318" cy="208" r="86" fill="#fff" stroke="#20303C" stroke-width="4"/>
+          <circle cx="318" cy="208" r="86" fill="url(#cellsCoarse)" opacity=".9"/>
+          <circle cx="318" cy="208" r="86" fill="none" stroke="#20303C" stroke-width="4"/>
+          <line x1="380" y1="268" x2="424" y2="312" stroke="#20303C" stroke-width="9" stroke-linecap="round"/>
+          <g fill="#3DDC84" stroke="#1E8E3E" stroke-width="1">
+            <rect class="blink1" x="292" y="182" width="26" height="26"/>
+            <rect class="blink2" x="344" y="182" width="26" height="26"/>
+            <rect class="blink1" x="292" y="208" width="78" height="26"/>
+            <rect class="blink3" x="292" y="234" width="78" height="26"/>
+            <rect class="blink2" x="318" y="260" width="26" height="26"/>
+          </g>
+          <text x="318" y="118" text-anchor="middle" font-family="Songti SC,serif" font-weight="700" font-size="20" fill="#20303C">凑近看：全是小格子</text>
+        </g>
+      </svg>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <!-- ================= 00 事故现场 ================= -->
+  <section class="card rv" id="sec-crash">
+    <div class="card-head">
+      <span class="en">THE CRASH · 事故现场</span>
+      <h2>先看一起「按钮失踪案」</h2>
+      <span class="card-num" aria-hidden="true">00</span>
+    </div>
+    <div class="card-body">
+      <div class="crash">
+        <div class="mini">
+          <div class="phone-mock">
+            <div class="pm-bar">2010 年的手机 · 屏幕格子大</div>
+            <div class="pm-btnlab">按钮 100px</div>
+            <div class="pm-btn" style="width:31%"></div>
+            <div class="pm-finger" aria-hidden="true"><svg viewBox="0 0 24 24" width="26" height="26"><circle cx="12" cy="12" r="3" fill="currentColor"/><circle cx="12" cy="12" r="6.8" fill="none" stroke="currentColor" stroke-width="1.7" opacity=".5"/><circle cx="12" cy="12" r="10.2" fill="none" stroke="currentColor" stroke-width="1.7" opacity=".22"/></svg></div>
+            <div class="pm-verdict">100 个格子 = 屏幕宽度的 1/3，手指一点一个准。<b class="ok">✓ 正常</b></div>
+          </div>
+        </div>
+        <div class="mini">
+          <div class="phone-mock">
+            <div class="pm-bar">2026 年的旗舰 · 屏幕格子细</div>
+            <div class="pm-btnlab">按钮 100px</div>
+            <div class="pm-btn" style="width:9%"></div>
+            <div class="pm-finger" style="margin-left:8%" aria-hidden="true"><svg viewBox="0 0 24 24" width="26" height="26"><circle cx="12" cy="12" r="3" fill="currentColor"/><circle cx="12" cy="12" r="6.8" fill="none" stroke="currentColor" stroke-width="1.7" opacity=".5"/><circle cx="12" cy="12" r="10.2" fill="none" stroke="currentColor" stroke-width="1.7" opacity=".22"/></svg></div>
+            <div class="pm-verdict">还是 100 个格子，但只占屏幕宽度的 1/10，手指比它大好几倍。<b class="bad">✗ 点不中</b></div>
+          </div>
+        </div>
+      </div>
+      <p>
+        注意：<b>两台手机上的代码一行都没改</b>，都是 <code class="inline">width = "100px"</code>。
+        按钮占的格子数一样多，可格子本身的个头不一样——老手机格子大，旗舰机格子小。
+        于是同样的 100 个格子，老手机上是小半截拇指，旗舰机上只剩一粒米。
+      </p>
+      <p>
+        用户不管你屏幕多少格子，用户只在乎<b>手指点的地方够不够大</b>——也就是物理尺寸。
+        整个 Android 的密度体系，就是为了解决这一个问题：<b>让「大小」不随屏幕变化</b>。
+        接下来 5 节，一步一步把这个解决方案拆开。
+      </p>
+    </div>
+  </section>
+
+  <!-- ================= 01 PX ================= -->
+  <section class="card rv" id="sec-px">
+    <div class="card-head">
+      <span class="en">STEP 1 · PX</span>
+      <h2>屏幕其实是一面格子墙</h2>
+      <span class="card-num" aria-hidden="true">01</span>
+    </div>
+    <div class="card-body">
+      <div class="plaincard">
+        <div class="pc-tag">人话版</div>
+        <p>
+          屏幕不是一整块玻璃在「平滑地」变色。它由几百万个<b>小格子</b>组成，
+          每个格子一次只能显示一个颜色。远看是照片，凑近看全是格子——
+          就像体育场的大屏，远看是画面，近看是一颗颗灯珠。
+        </p>
+        <p>
+          <b>px(像素)= 其中一个格子</b>，屏幕的最小单位，再也切不小了。
+        </p>
+      </div>
+      <p>
+        平常说的「分辨率 1080 × 1920」，翻译过来就是：
+        这块屏<b>横着数有 1080 个格子，竖着数有 1920 个格子</b>。
+      </p>
+      <div class="duo">
+        <div class="mini">
+          <div class="stage">
+            <div style="display:grid;grid-template-columns:repeat(6,22px);grid-auto-rows:22px">
+              <div></div><div style="background:var(--green-bright);border:1px solid var(--ink)"></div><div style="background:var(--green-bright);border:1px solid var(--ink)"></div><div></div><div style="background:var(--green-bright);border:1px solid var(--ink)"></div><div></div>
+              <div style="background:var(--green-bright);border:1px solid var(--ink)"></div><div style="background:var(--green-bright);border:1px solid var(--ink)"></div><div style="background:var(--green-bright);border:1px solid var(--ink)"></div><div style="background:var(--green-bright);border:1px solid var(--ink)"></div><div style="background:var(--green-bright);border:1px solid var(--ink)"></div><div></div>
+              <div></div><div style="background:var(--green-bright);border:1px solid var(--ink)"></div><div style="background:var(--green-bright);border:1px solid var(--ink)"></div><div style="background:var(--green-bright);border:1px solid var(--ink)"></div><div style="background:var(--green-bright);border:1px solid var(--ink)"></div><div></div>
+              <div></div><div></div><div style="background:var(--green-bright);border:1px solid var(--ink)"></div><div style="background:var(--green-bright);border:1px solid var(--ink)"></div><div></div><div></div>
+            </div>
+          </div>
+          <div class="cap"><b>老手机：格子大而少</b><br>同样 100 个格子，占很宽</div>
+        </div>
+        <div class="mini">
+          <div class="stage">
+            <div style="display:grid;grid-template-columns:repeat(12,11px);grid-auto-rows:11px">
+              <div></div><div style="background:var(--green-bright);outline:.8px solid var(--ink)"></div><div style="background:var(--green-bright);outline:.8px solid var(--ink)"></div><div></div><div style="background:var(--green-bright);outline:.8px solid var(--ink)"></div><div></div><div></div><div style="background:var(--green-bright);outline:.8px solid var(--ink)"></div><div></div><div style="background:var(--green-bright);outline:.8px solid var(--ink)"></div><div style="background:var(--green-bright);outline:.8px solid var(--ink)"></div><div></div>
+              <div style="background:var(--green-bright);outline:.8px solid var(--ink)"></div><div style="background:var(--green-bright);outline:.8px solid var(--ink)"></div><div style="background:var(--green-bright);outline:.8px solid var(--ink)"></div><div style="background:var(--green-bright);outline:.8px solid var(--ink)"></div><div style="background:var(--green-bright);outline:.8px solid var(--ink)"></div><div style="background:var(--green-bright);outline:.8px solid var(--ink)"></div><div style="background:var(--green-bright);outline:.8px solid var(--ink)"></div><div style="background:var(--green-bright);outline:.8px solid var(--ink)"></div><div style="background:var(--green-bright);outline:.8px solid var(--ink)"></div><div style="background:var(--green-bright);outline:.8px solid var(--ink)"></div><div></div>
+              <div></div><div style="background:var(--green-bright);outline:.8px solid var(--ink)"></div><div style="background:var(--green-bright);outline:.8px solid var(--ink)"></div><div style="background:var(--green-bright);outline:.8px solid var(--ink)"></div><div style="background:var(--green-bright);outline:.8px solid var(--ink)"></div><div style="background:var(--green-bright);outline:.8px solid var(--ink)"></div><div style="background:var(--green-bright);outline:.8px solid var(--ink)"></div><div style="background:var(--green-bright);outline:.8px solid var(--ink)"></div><div style="background:var(--green-bright);outline:.8px solid var(--ink)"></div><div></div><div></div><div></div>
+              <div></div><div></div><div style="background:var(--green-bright);outline:.8px solid var(--ink)"></div><div style="background:var(--green-bright);outline:.8px solid var(--ink)"></div><div style="background:var(--green-bright);outline:.8px solid var(--ink)"></div><div style="background:var(--green-bright);outline:.8px solid var(--ink)"></div><div></div><div></div><div></div><div></div><div style="background:var(--green-bright);outline:.8px solid var(--ink)"></div><div style="background:var(--green-bright);outline:.8px solid var(--ink)"></div>
+            </div>
+          </div>
+          <div class="cap"><b>新旗舰：格子小而密</b><br>同样 100 个格子，只剩指甲盖</div>
+        </div>
+      </div>
+      <div class="takeaway">
+        <span class="tk-ico">✓</span>
+        <div><span class="tk-t">记住这一句</span>
+        <p>px 数的是<b class="g">格子的数量</b>，不是大小。同样的格数，格子大的屏幕上就更宽——这就是按钮失踪案的元凶。</p></div>
+      </div>
+      <div class="feynman">
+        <div class="fy-head"><span class="fy-badge">？</span><span class="fy-title">费曼检验 · 讲给别人听</span></div>
+        <p class="fy-q">不看这一页，用「格子」给产品经理解释：同一行 <code class="inline">48px</code> 的代码，为什么在旗舰机上就点不中了？</p>
+        <details><summary>▸ 讲完再展开，对答案</summary>
+          <div class="fy-a">屏幕是格子墙，px 数的是格子个数；旗舰机的格子小，同样 48 个格子物理上只有一粒米大。讲清「数量 ≠ 大小」即过关。</div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 02 PPI ================= -->
+  <section class="card rv" id="sec-ppi">
+    <div class="card-head">
+      <span class="en">STEP 2 · PPI</span>
+      <h2>ppi：数一数格子有多密</h2>
+      <span class="card-num" aria-hidden="true">02</span>
+    </div>
+    <div class="card-body">
+      <div class="plaincard">
+        <div class="pc-tag">人话版</div>
+        <p>
+          格子到底有多大？单个格子太小，没法拿尺子量。于是换个思路：<b>数</b>。
+          在屏幕上量出 1 英寸(约 2.54 cm)，数数这段里排了几个格子——
+          这个数就是 <b>ppi(每英寸多少个像素)</b>。
+        </p>
+        <p>
+          就像十字绣：一英寸缝 160 针的布，和一英寸缝 480 针的布，
+          后者针脚更密，绣出来的图案自然更精细。
+        </p>
+      </div>
+      <p>
+        ppi 是屏幕<b>出厂时就定死的硬件参数</b>，和 Android、和 App 都没关系。
+        它的算法只用了一次勾股定理：横竖各数一遍，斜着量一下：
+      </p>
+      <div class="formula">
+        <span class="stamp">全文唯一的公式</span>
+        <div class="fx">ppi = <span class="r">对角线上的格子数</span> ÷ <span class="g">屏幕对角线英寸数</span></div>
+        <div class="why">例：5.5 英寸、1080 × 1920 的屏 → 对角线格子数 √(1080² + 1920²) ≈ 2203 → 2203 ÷ 5.5 ≈ <b>401 ppi</b></div>
+      </div>
+      <div class="duo">
+        <div class="mini">
+          <div class="stage"><div class="heart-box" id="heartCoarse"></div></div>
+          <div class="cap"><b>~160ppi 的老屏</b>：针脚稀，格子肉眼可见，图标边缘有锯齿</div>
+        </div>
+        <div class="mini">
+          <div class="stage"><div class="heart-box" id="heartFine"></div></div>
+          <div class="cap"><b>~480ppi 的旗舰</b>：针脚密到人眼分不清，所以「看起来很清晰」</div>
+        </div>
+      </div>
+      <div class="note">
+        <b>动手玩 · 算算真机的 ppi</b>
+        填三个数，或者直接点一台真机。算完它还会告诉你 Google 把它归到哪一档(下一节的概念)。
+      </div>
+      <div class="chips" id="ppiPresets">
+        <button class="chip" data-d="5.5" data-w="1080" data-h="1920">经典 1080p · 5.5″</button>
+        <button class="chip" data-d="6.3" data-w="1080" data-h="2424">Pixel 9</button>
+        <button class="chip" data-d="6.36" data-w="1200" data-h="2670">小米 15</button>
+        <button class="chip" data-d="6.8" data-w="1440" data-h="3120">S24 Ultra</button>
+        <button class="chip" data-d="3.2" data-w="320" data-h="480">2008 · HTC G1</button>
+      </div>
+      <div style="display:flex;gap:22px;flex-wrap:wrap;align-items:flex-end;border:1px solid var(--ink);background:#fff;padding:22px">
+        <div class="field"><label>对角线(英寸)</label><input type="number" id="inDiag" value="5.5" step="0.1" min="1"></div>
+        <div class="field"><label>横着几个格子</label><input type="number" id="inW" value="1080" step="10" min="10"></div>
+        <div class="field"><label>竖着几个格子</label><input type="number" id="inH" value="1920" step="10" min="10"></div>
+        <div style="flex:1;min-width:200px">
+          <div class="result-big"><span id="ppiOut">401</span> <small>ppi</small></div>
+          <div class="result-sub" id="ppiBucket"></div>
+        </div>
+      </div>
+      <div class="takeaway">
+        <span class="tk-ico">✓</span>
+        <div><span class="tk-t">记住这一句</span>
+        <p>ppi 是屏幕<b class="g">出厂时的物理事实</b>，量的是「格子有多密」。数字越大，画面越细腻。</p></div>
+      </div>
+      <div class="feynman">
+        <div class="fy-head"><span class="fy-badge">？</span><span class="fy-title">费曼检验 · 讲给别人听</span></div>
+        <p class="fy-q">同事指着两台手机问：「都说这台显示更细腻，细腻到底由什么决定？」——用 ppi 一句话答，并说清它跟「分辨率」的区别。</p>
+        <details><summary>▸ 讲完再展开，对答案</summary>
+          <div class="fy-a">细腻度看 ppi——一英寸里塞了几个格子，出厂定死；分辨率只是格子总数。同样 1080p，屏越小 ppi 越高，反而更细腻。</div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 03 DPI ================= -->
+  <section class="card rv" id="sec-dpi">
+    <div class="card-head">
+      <span class="en">STEP 3 · DPI</span>
+      <h2>dpi：给屏幕发一件「尺码」</h2>
+      <span class="card-num" aria-hidden="true">03</span>
+    </div>
+    <div class="card-body">
+      <div class="plaincard">
+        <div class="pc-tag">人话版</div>
+        <p>
+          麻烦来了：各厂商屏幕的 ppi 五花八门——421、460、505……如果每个数都要单独适配，开发者得疯。
+          于是 Google 学了服装厂一招：<b>不管你实测身高 178 还是 185，尺码只有 S / M / L 几档。</b>
+        </p>
+        <p>
+          ppi 是「量出来的身高」，<b>dpi 是「发到你手里的尺码」</b>。
+          Android 内部所有按密度走的逻辑，用的都是尺码(dpi)，不是身高(ppi)。
+        </p>
+      </div>
+      <p>
+        Android 总共只有 6 个尺码档，每档配一个「倍率」——倍率的意思是：
+        这件尺码的屏幕上，<b>1 个逻辑单位要画几个真实格子</b>：
+      </p>
+      <div class="tscroll">
+      <table class="spec">
+        <thead><tr><th>尺码(档)</th><th>DPI</th><th>倍率</th><th>直白地说</th><th>谁在穿</th></tr></thead>
+        <tbody>
+          <tr><td class="m">ldpi</td><td class="m">120</td><td class="m">0.75×</td><td class="m">1 单位 = 0.75 格</td><td>已淘汰</td></tr>
+          <tr class="rowhl-2"><td class="m">mdpi<span class="pill base">基准码</span></td><td class="m">160</td><td class="m">1.0×</td><td class="m">1 单位 = 1 格</td><td>2008–2011 的老手机</td></tr>
+          <tr><td class="m">hdpi</td><td class="m">240</td><td class="m">1.5×</td><td class="m">1 单位 = 1.5 格</td><td>老款手机</td></tr>
+          <tr><td class="m">xhdpi</td><td class="m">320</td><td class="m">2.0×</td><td class="m">1 单位 = 2 格</td><td>中低端机</td></tr>
+          <tr class="rowhl"><td class="m">xxhdpi<span class="pill now">主流</span></td><td class="m">480</td><td class="m">3.0×</td><td class="m">1 单位 = 3 格</td><td>绝大多数在售手机</td></tr>
+          <tr><td class="m">xxxhdpi</td><td class="m">640</td><td class="m">4.0×</td><td class="m">1 单位 = 4 格</td><td>2K 屏旗舰</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p>
+        但有一件事，新手几乎都搞错，值得单独说：
+        <b>手机自身的尺码，不是量出来的，是厂商选的。</b>
+        ppi 只是参考，最终写进系统的值(<code class="inline">densityDpi</code>)，厂商说了算——
+        Pixel 5 实测 432ppi，官方配的是 420；大量 1080p 的 6.5 英寸国产机实测 400ppi 上下，配的却是 480。
+        为什么不按「就近」来？下一节真机档案给你看活例子。
+      </p>
+      <div class="note">
+        <b>看图 · App 挑资源柜的规则</b>
+        轴上是 6 档尺码的管辖区间，红点是几台真机的实测 ppi。App 给它们挑图时，按「就近」落进同一批柜子——
+        这是<b>找资源</b>的规则；手机自身按几倍渲染，是另一回事，见下方真机档案。
+      </div>
+      <div class="axis-wrap">
+        <div class="axis-ticks">
+          <span style="left:18.2%">120</span><span style="left:24.2%">160</span><span style="left:36.4%">240</span><span style="left:48.5%">320</span><span style="left:72.7%">480</span><span style="left:97%">640</span>
+        </div>
+        <div class="axis-zones">
+          <div class="zone" style="width:21.2%;background:rgba(34,37,43,.05)"><span class="zn">ldpi</span><span class="zx">0.75×</span></div>
+          <div class="zone" style="width:9.1%;background:rgba(201,151,0,.15)"><span class="zn">mdpi</span><span class="zx">1×</span></div>
+          <div class="zone" style="width:12.1%;background:rgba(34,37,43,.05)"><span class="zn">hdpi</span><span class="zx">1.5×</span></div>
+          <div class="zone" style="width:18.2%;background:rgba(34,37,43,.07)"><span class="zn">xhdpi</span><span class="zx">2×</span></div>
+          <div class="zone" style="width:24.2%;background:rgba(61,220,132,.22)"><span class="zn">xxhdpi</span><span class="zx">3×</span></div>
+          <div class="zone" style="width:15.2%;background:rgba(34,37,43,.07)"><span class="zn">xxxhdpi</span><span class="zx">4×</span></div>
+        </div>
+        <div class="axis-dots">
+          <div class="dot" style="left:27.3%"><i></i><em>G1 · 180</em></div>
+          <div class="dot" style="left:63.8%"><i></i><em>Pixel 9 · 421</em></div>
+          <div class="dot" style="left:69.7%"><i></i><em>小米15 · 460</em></div>
+          <div class="dot" style="left:76.5%"><i></i><em>S24U · 505</em></div>
+        </div>
+        <div class="axis-cap">▲ 三台旗舰 ppi 各不相同，App 挑图却落进同一个 xxhdpi 柜：按就近挑的</div>
+      </div>
+
+      <div class="plaincard" style="margin-top:28px">
+        <div class="pc-tag">划重点 · 两件事别混</div>
+        <p><b>① 手机按几倍渲染</b>：厂商出厂直接写好(480、420、440……)，不搞就近，ppi 只是参考。</p>
+        <p><b>② App 去哪找图</b>：系统拿手机的尺码，去 drawable 各档目录里<b>就近</b>挑一套——「找最接近的档」说的是这一步，官方原话 next-best match。</p>
+      </div>
+
+      <p style="font-family:var(--serif);font-weight:900;font-size:20px;margin:26px 0 4px">真机档案：尺码是厂商选的</p>
+      <p>
+        五台手机，物理 ppi 天差地别，官方尺码却「不就近」——注意最后一行的屏宽：
+        <b>所有手机都被厂商调进了 320~411dp 这条窄巷</b>，因为厂商真正想控制的，是一屏显示多少内容。
+      </p>
+      <div class="devices">
+        <div class="dev-profile">
+          <div class="dp-phone" style="--cell:9px"></div>
+          <span class="dp-tag">2008</span>
+          <div class="dp-name">HTC G1<br><span style="font-weight:400;color:var(--ink-2)">3.2″ · 480×320</span></div>
+          <div class="dp-rows">
+            <div class="dp-row"><span>物理 ppi</span><b>~180</b></div>
+            <div class="dp-row"><span>官方尺码</span><b>160 mdpi</b></div>
+            <div class="dp-row"><span>倍率</span><b>1×</b></div>
+            <div class="dp-row hl"><span>屏宽</span><b>320dp</b></div>
+          </div>
+        </div>
+        <div class="dev-profile">
+          <div class="dp-phone" style="--cell:4.5px"></div>
+          <span class="dp-tag">2020</span>
+          <div class="dp-name">Pixel 5<br><span style="font-weight:400;color:var(--ink-2)">6.0″ · 1080×2340</span></div>
+          <div class="dp-rows">
+            <div class="dp-row"><span>物理 ppi</span><b>~432</b></div>
+            <div class="dp-row"><span>官方尺码</span><b>420</b></div>
+            <div class="dp-row"><span>倍率</span><b>2.625×</b></div>
+            <div class="dp-row hl"><span>屏宽</span><b>411dp</b></div>
+          </div>
+        </div>
+        <div class="dev-profile">
+          <div class="dp-phone" style="--cell:4.5px"></div>
+          <span class="dp-tag">2021</span>
+          <div class="dp-name">Pixel 6<br><span style="font-weight:400;color:var(--ink-2)">6.4″ · 1080×2400</span></div>
+          <div class="dp-rows">
+            <div class="dp-row"><span>物理 ppi</span><b>~411</b></div>
+            <div class="dp-row"><span>官方尺码</span><b>420</b></div>
+            <div class="dp-row"><span>倍率</span><b>2.625×</b></div>
+            <div class="dp-row hl"><span>屏宽</span><b>411dp</b></div>
+          </div>
+        </div>
+        <div class="dev-profile">
+          <div class="dp-phone" style="--cell:3.5px"></div>
+          <span class="dp-tag">一大类</span>
+          <div class="dp-name">1080p 千元机<br><span style="font-weight:400;color:var(--ink-2)">6.5″ 级 · 华为/荣耀 等</span></div>
+          <div class="dp-rows">
+            <div class="dp-row"><span>物理 ppi</span><b>~400</b></div>
+            <div class="dp-row"><span>官方尺码</span><b>480</b></div>
+            <div class="dp-row"><span>倍率</span><b>3×</b></div>
+            <div class="dp-row hl"><span>屏宽</span><b>360dp</b></div>
+          </div>
+        </div>
+        <div class="dev-profile me">
+          <div class="dp-phone" style="--cell:6px;opacity:.45"></div>
+          <span class="dp-tag me">你的手机</span>
+          <pre class="mini-code"><span class="c">$</span> adb shell wm density
+<span class="c"># Physical density: 480</span>
+<span class="c">$</span> adb shell wm size
+<span class="c"># Physical size: 1080x2400</span></pre>
+          <div class="dp-rows">
+            <div class="dp-row hl"><span>倍率</span><b>读数 ÷ 160</b></div>
+          </div>
+        </div>
+      </div>
+      <p>
+        看出厂商的算盘了吗？那台 6.5 英寸的 1080p 千元机，ppi 只有 400，离 320(2×)其实更近。
+        但若按 2× 配，屏宽 = 1080÷2 = <b>540dp</b>——按钮、文字全都物理巨大，一屏塞不下几行列表；
+        按 3×(480)配，屏宽正好 <b>360dp</b>，紧凑刚好。<b>厂商选码，选的是一屏装多少内容，不是贴着物理事实走。</b>
+      </p>
+      <div class="flow">
+        <div class="flow-step">
+          <div class="fn">STEP 1</div>
+          <h3>厂商选码</h3>
+          <p>量 ppi 只是参考。真正决定 densityDpi 的，是想要多大的内容：屏宽维持在 320~430dp 的惯例区间。</p>
+        </div>
+        <div class="flow-arr">→</div>
+        <div class="flow-step">
+          <div class="fn">STEP 2</div>
+          <h3>系统按码渲染</h3>
+          <p>你写的 dp，在这台手机上统一乘「尺码÷160」：480 就 3 倍，420 就 2.625 倍，不看 ppi。</p>
+        </div>
+        <div class="flow-arr">→</div>
+        <div class="flow-step">
+          <div class="fn">STEP 3</div>
+          <h3>App 就近挑柜</h3>
+          <p>系统拿尺码找资源目录：尺码 480 → drawable-xxhdpi；没有正好对应的档，就取最近的那套，再缩放到位。</p>
+        </div>
+      </div>
+
+      <div class="takeaway">
+        <span class="tk-ico">✓</span>
+        <div><span class="tk-t">记住这一句</span>
+        <p>手机的尺码由<b class="g">厂商直接配置</b>(不看就近)，App 的图才按<b class="g">就近</b>挑柜。查真机尺码：<code class="inline" style="background:none;border-color:rgba(61,220,132,.5)">adb shell wm density</code>，读数 ÷ 160 = 倍率。</p></div>
+      </div>
+      <div class="feynman">
+        <div class="fy-head"><span class="fy-badge">？</span><span class="fy-title">费曼检验 · 一个真被问过的问题</span></div>
+        <p class="fy-q">朋友的手机 ppi 才 400 出头，系统却按 3 倍处理，他问你：「不是该就近归 2 倍吗？」你来讲。</p>
+        <details><summary>▸ 讲完再展开，对答案</summary>
+          <div class="fy-a">尺码不是量出来就近领的，是厂商直接配置的——厂商要的是屏宽落在 360dp 上下；这台若按 2× 配，屏宽 540dp，内容全是巨物。「就近」只是 App 挑资源目录(drawable-xxhdpi)的规则。</div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 04 DP ================= -->
+  <section class="card rv" id="sec-dp">
+    <div class="card-head">
+      <span class="en">STEP 4 · DP</span>
+      <h2>dp：统一用「美元」标价</h2>
+      <span class="card-num" aria-hidden="true">04</span>
+    </div>
+    <div class="card-body">
+      <div class="plaincard">
+        <div class="pc-tag">人话版</div>
+        <p>
+          现在解决开头的事故。各国货币面值乱七八糟，世界贸易怎么办？<b>统一用美元标价</b>，
+          到了当地再按汇率换成当地货币。
+        </p>
+        <p>
+          px 就是「当地货币」(每台手机格子大小不同)，<b>dp 就是「美元」</b>——
+          你在代码里只写美元价，系统拿到具体手机上，按「汇率」自动换算成 px。
+          汇率就是上一节的倍率：mdpi 汇率 1、xhdpi 汇率 2、xxhdpi 汇率 3。
+        </p>
+      </div>
+      <div class="rate">
+        <div class="price-tag"><small>全球统一标价</small>48dp</div>
+        <div class="rate-lines">
+          <div class="rate-line"><span class="money">mdpi 机 · 汇率 1</span><span class="arr">→</span><span>付 48px</span><span class="eq">= 同样的大小</span></div>
+          <div class="rate-line"><span class="money">xhdpi 机 · 汇率 2</span><span class="arr">→</span><span>付 96px</span><span class="eq">= 同样的大小</span></div>
+          <div class="rate-line"><span class="money">xxhdpi 机 · 汇率 3</span><span class="arr">→</span><span>付 144px</span><span class="eq">= 同样的大小</span></div>
+        </div>
+      </div>
+      <p style="font-size:14.5px;color:var(--ink-2)">
+        ※ 补一句实话：<b>汇率由厂商定，不一定是整数</b>。Pixel 5 的汇率是 2.625，Pixel 6 Pro 和不少三星 2K 屏是 3.5——
+        美元价照写不误，系统按自己的汇率换，这正是「标价不用管当地货币」的好处。
+      </p>
+      <p>
+        换算规则只有一个，而且很好记——<b>汇率 = dpi ÷ 160</b>。
+        为什么是 160？Google 定规矩那会儿，主流手机正好一英寸 160 个格子，
+        所以规定这种屏上 1dp 就是 1px，以后所有屏幕都拿它当基准。
+      </p>
+      <div class="formula">
+        <span class="stamp">还是它 · 第二次出现</span>
+        <div class="fx">px = <span class="g">dp</span> × ( <span class="r">dpi</span> ÷ 160 )</div>
+        <div class="why">写 48dp：老手机上画 48 格，旗舰上画 144 格 —— 格子数在变，物理宽度永远是 0.3 英寸</div>
+      </div>
+      <div class="note">
+        <b>伸手比一比</b>
+        看看你的小拇指指甲盖：大约 0.3 英寸 ≈ 48dp。
+        Material Design 推荐的「最小可点区域 48dp」，出处就在这里。
+      </div>
+      <div class="lab">
+        <div class="lab-top"><span class="lamp"></span>对撞实验 · 从同一块屏幕上抠下 2 英寸宽的区域</div>
+        <div class="lab-body">
+          <p class="lab-intro">
+            下面这块区域固定 2 英寸宽(上方有尺子)。两个按钮，一个用 px 标价、一个用 dp 标价。
+            <b>切换系统密度</b>，看两个按钮各自怎么变：红按钮（px）越切越瘦，绿按钮（dp）始终一样宽。
+          </p>
+          <div class="chips" id="denChips" style="justify-content:center;margin-top:0">
+            <button class="chip" data-dpi="160" data-x="1">mdpi 160</button>
+            <button class="chip" data-dpi="240" data-x="1.5">hdpi 240</button>
+            <button class="chip" data-dpi="320" data-x="2">xhdpi 320</button>
+            <button class="chip on" data-dpi="480" data-x="3">xxhdpi 480</button>
+            <button class="chip" data-dpi="640" data-x="4">xxxhdpi 640</button>
+          </div>
+          <div class="ruler" aria-hidden="true">
+            <span class="tk" style="left:0"></span><span class="tk maj" style="left:75px"></span><span class="tk maj" style="left:150px"></span><span class="tk maj" style="left:225px"></span><span class="tk" style="left:299px"></span>
+            <span class="lb" style="left:0">0</span><span class="lb" style="left:75px">0.5″</span><span class="lb" style="left:150px">1.0″</span><span class="lb" style="left:225px">1.5″</span><span class="lb" style="left:292px">2.0″</span>
+          </div>
+          <div class="screenstrip">
+            <div class="strip-row">
+              <span class="rowtag px">48px</span>
+              <span class="demo-btn px" id="btnPx"></span>
+              <span class="strip-cap" id="capPx"></span>
+            </div>
+            <div class="strip-row">
+              <span class="rowtag dp">48dp</span>
+              <span class="demo-btn dp" id="btnDp"></span>
+              <span class="strip-cap" id="capDp"></span>
+            </div>
+          </div>
+          <div class="lab-meta" id="labMeta"></div>
+        </div>
+      </div>
+      <pre class="code"><span class="c">// 代码里怎么摸到这些数(Kotlin)</span>
+<span class="k">val</span> dm = resources.displayMetrics
+dm.density      <span class="c">// 3.0  ← 汇率(dp × 它 = px)</span>
+dm.densityDpi   <span class="c">// <span class="n">480</span>  ← 尺码(上一节表格里的档)</span>
+<span class="c">// 用户在系统设置里调「显示大小」,改的就是汇率,所以整个 UI 会等比缩放</span>
+<span class="c">// 查真机厂商配的尺码(终端里跑):</span>
+<span class="c">// $ adb shell wm density   →   Physical density: 480(÷160 = 3,即 3×)</span></pre>
+      <div class="takeaway">
+        <span class="tk-ico">✓</span>
+        <div><span class="tk-t">记住这一句</span>
+        <p>dp 是<b class="g">穿了马甲的物理单位</b>：160dp = 1 英寸。写 48dp，任何手机上都是小拇指指甲盖那么大。</p></div>
+      </div>
+      <div class="feynman">
+        <div class="fy-head"><span class="fy-badge">？</span><span class="fy-title">费曼检验 · 讲给别人听</span></div>
+        <p class="fy-q">不看页面，用「美元标价」把 dp / px / 汇率的关系讲一遍；讲完伸手比划 48dp 有多长，再看答案。</p>
+        <details><summary>▸ 讲完再展开，对答案</summary>
+          <div class="fy-a">dp 是全球统一的美元标价，px 是当地货币，汇率 = densityDpi ÷ 160(可能是 2.625 这种小数)；48dp ≈ 小拇指指甲盖，160dp = 1 英寸。</div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 05 SP ================= -->
+  <section class="card rv" id="sec-sp">
+    <div class="card-head">
+      <span class="en">STEP 5 · SP</span>
+      <h2>sp：字体专用的「松紧带」</h2>
+      <span class="card-num" aria-hidden="true">05</span>
+    </div>
+    <div class="card-body">
+      <div class="plaincard">
+        <div class="pc-tag">人话版</div>
+        <p>
+          dp 有个原则问题：尺寸锁死，<b>不听用户的</b>。对按钮这是优点，对文字是灾难——
+          长辈觉得字小，把系统字体调到 130%，是希望字<b>真的变大</b>，结果你用 dp 写死了，纹丝不动。
+        </p>
+        <p>
+          所以字体专用 sp：平时和 dp 一模一样，但会<b>再乘一次用户设置的字体缩放</b>。
+          dp 是皮鞋，尺码定死；sp 是松紧带，能伸能缩。
+        </p>
+      </div>
+      <div class="sp-lab" style="border:1px solid var(--ink);background:#fff;margin-top:20px">
+        <div class="sp-row" style="display:flex;align-items:center;gap:16px;padding:16px 20px">
+          <span style="font-family:var(--mono);font-size:12.5px;font-weight:700;width:44px;flex-shrink:0;color:var(--green-deep)">18sp</span>
+          <div class="sp-sample" id="spText" style="font-size:calc(18px * var(--fs,1));border:1.5px solid rgba(34,37,43,.32);padding:10px 16px;background:var(--panel);line-height:1.5">这行字用 sp：会跟着系统设置变大变小</div>
+        </div>
+        <div class="sp-row" style="display:flex;align-items:center;gap:16px;padding:16px 20px;border-top:1.5px dashed rgba(34,37,43,.32)">
+          <span style="font-family:var(--mono);font-size:12.5px;font-weight:700;width:44px;flex-shrink:0;color:var(--ink-2)">18dp</span>
+          <div style="font-size:18px;color:var(--ink-2);border:1.5px solid rgba(34,37,43,.32);padding:10px 16px;background:var(--panel);line-height:1.5">这行字用 dp：尺寸锁死，长辈调字体也带不动</div>
+        </div>
+        <div class="sp-ctrl" style="display:flex;align-items:center;gap:14px;padding:14px 20px;border-top:1px solid var(--ink);background:var(--ink)">
+          <label style="font-family:var(--mono);font-size:12.5px;color:var(--paper)">模拟：系统字体缩放(长辈模式)</label>
+          <input type="range" id="fsRange" min="0.85" max="1.3" step="0.05" value="1" style="flex:1;accent-color:var(--green-bright)">
+          <output id="fsOut" style="font-family:var(--mono);font-size:14px;color:var(--green-bright);font-weight:700;min-width:52px;text-align:right">100%</output>
+        </div>
+      </div>
+      <div class="takeaway">
+        <span class="tk-ico">✓</span>
+        <div><span class="tk-t">记住这一句</span>
+        <p><b class="g">布局用 dp，文字用 sp</b>。就这一条，能避开九成的适配坑。</p></div>
+      </div>
+      <div class="feynman">
+        <div class="fy-head"><span class="fy-badge">？</span><span class="fy-title">费曼检验 · 讲给别人听</span></div>
+        <p class="fy-q">为什么字体不用 dp，偏要再发明一个 sp？用「松紧带」讲给写后端的同事。</p>
+        <details><summary>▸ 讲完再展开，对答案</summary>
+          <div class="fy-a">dp 尺寸锁死、不听用户的；sp 在 dp 基础上再乘一次用户字体缩放——长辈把系统字体调到 130%，sp 的字会真的变大。皮鞋尺码定死 vs 松紧带能伸能缩。</div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 06 速记 ================= -->
+  <section class="card rv" id="sec-dev">
+    <div class="card-head">
+      <span class="en">CHEAT SHEET</span>
+      <h2>新手速记卡</h2>
+      <span class="card-num" aria-hidden="true">06</span>
+    </div>
+    <div class="card-body">
+      <div class="mantras">
+        <div class="mantra"><span class="no">口诀 一</span><p>布局用 dp<br>文字用 sp<br>几乎不用 px</p><div class="sub">日常开发 99% 的场景，这一句够用</div></div>
+        <div class="mantra"><span class="no">口诀 二</span><p>记两个数<br>160 是基准<br>主流手机 3 倍</p><div class="sub">设计稿 px ÷ 倍率 = dp；倍率 = densityDpi ÷ 160，常有 2.625 这类小数，且由厂商配置</div></div>
+        <div class="mantra"><span class="no">口诀 三</span><p>48dp<br>≈ 小拇指指甲盖<br>最小可点区域</p><div class="sub">Material 规范的物理来历，顺手记住 160dp = 1 英寸</div></div>
+      </div>
+
+      <div class="recite">
+        <div class="recite-head">
+          <h3>合上页面，你能讲清这 5 件事吗？</h3>
+          <p>费曼式终检：把每条讲给一个没读过本页的人听，不许看页面。卡壳的那条，点「回炉」重读——卡在哪，哪里就没真懂。讲清一条，点一下圆圈。</p>
+        </div>
+        <div class="recite-item"><span class="rc-check">✓</span><span class="rc-q">屏幕 = 格子墙；px 数的是格子数，不是大小</span><a class="rc-back" href="#sec-px">卡壳？回炉</a></div>
+        <div class="recite-item"><span class="rc-check">✓</span><span class="rc-q">ppi = 一英寸几格，出厂定死，决定细腻度；分辨率只是总格子数</span><a class="rc-back" href="#sec-ppi">卡壳？回炉</a></div>
+        <div class="recite-item"><span class="rc-check">✓</span><span class="rc-q">手机的倍率是厂商配置的(为了控屏宽)，「就近」只是 App 挑图的规则</span><a class="rc-back" href="#sec-dpi">卡壳？回炉</a></div>
+        <div class="recite-item"><span class="rc-check">✓</span><span class="rc-q">dp = 美元标价，汇率 = densityDpi ÷ 160；160dp = 1 英寸，48dp ≈ 指甲盖</span><a class="rc-back" href="#sec-dp">卡壳？回炉</a></div>
+        <div class="recite-item"><span class="rc-check">✓</span><span class="rc-q">布局用 dp、文字用 sp；设计稿 px ÷ 倍率 = dp</span><a class="rc-back" href="#sec-sp">卡壳？回炉</a></div>
+      </div>
+
+      <p style="font-family:var(--serif);font-weight:900;font-size:20px;margin:26px 0 6px">新手最常见的五个困惑</p>
+      <div class="faq">
+        <div class="faq-q"><span class="qmark">Q1</span>设计师说「这个图标 48px」，我用 48dp 对吗？</div>
+        <div class="faq-a">
+          大概率对。设计师说的 px 通常是「1x 稿上的 px」——1x 稿恰好 1px = 1dp，直接抄成 48dp。
+          如果拿到的是 3x 稿(标注 144px)，除以 3，还是 48dp。记住换算口诀：<b>稿上 px ÷ 倍率 = dp</b>。
+        </div>
+      </div>
+      <div class="faq">
+        <div class="faq-q"><span class="qmark">Q2</span>那张 6 档尺码表，我要背吗？</div>
+        <div class="faq-a">
+          不用。日常只需要知道：160 是基准(1dp=1px)，在售主流手机是 xxhdpi(3 倍)。
+          其他的遇到了再查。连 App 挑图都是「就近匹配」(官方叫 next-best match)，没人要求你背。
+        </div>
+      </div>
+      <div class="faq">
+        <div class="faq-q"><span class="qmark">Q3</span>为什么我手机 ppi 才 400 出头，却按 3 倍处理？不算「就近」啊？</div>
+        <div class="faq-a">
+          因为<b>尺码是厂商选的，不是量出来的</b>。厂商的目标是把屏宽控制在 360dp 上下、保证一屏的内容量：
+          1080p 的大屏如果按 2× 配，屏宽 540dp，什么都显得特别大；配 3× 正好 360dp。ppi 只是参考之一。
+          真实倍率用 <code class="inline">adb shell wm density</code> 一查便知(读数 ÷ 160)。
+          详见 03 节的「真机档案」五张卡。
+        </div>
+      </div>
+      <div class="faq">
+        <div class="faq-q"><span class="qmark">Q4</span>倍率一定是 1 / 1.5 / 2 / 3 这种整数吗？</div>
+        <div class="faq-a">
+          不是。倍率 = densityDpi ÷ 160，厂商配 420 就是 <b>2.625×</b>，配 440 就是 2.75×，Pixel 6 Pro 和不少三星 2K 屏配 560(<b>3.5×</b>)。
+          Pixel 全家都是小数倍率。RN 里 <code class="inline">PixelRatio.get()</code> 返回 2.625 完全正常。
+          那张表只是主要地标，真实倍率落在档位之间的多得很。
+        </div>
+      </div>
+      <div class="faq">
+        <div class="faq-q"><span class="qmark">Q5</span>那什么时候才真的用 px？</div>
+        <div class="faq-a">
+          需要「物理上极细」的场合：比如 1px 的分割线、像素级对齐的边框。
+          此时要写 <code class="inline">1px ÷ density</code> 换算回 dp，属于少数派的精细活，入门阶段可以先忽略。
+        </div>
+      </div>
+
+      <p style="font-family:var(--serif);font-weight:900;font-size:20px;margin:30px 0 4px">工作里会遇到的四样东西</p>
+      <div class="dev-grid">
+        <div class="dev-card">
+          <h3><span class="no">A</span>切图放哪</h3>
+          <p>设计师给 3x 图 → 放 xxhdpi 目录，系统自动缩放给其他密度的手机。现在通常只出这一套，省包体积。</p>
+          <span class="path">res/drawable-xxhdpi/icon_avatars.png</span>
+        </div>
+        <div class="dev-card">
+          <h3><span class="no">B</span>启动图标是例外</h3>
+          <p>Launcher 会按手机最大密度取图，被放大就糊。图标每个桶都放，至少放 xxxhdpi 一份。</p>
+          <span class="path">res/mipmap-xxxhdpi/ic_launcher.png</span>
+        </div>
+        <div class="dev-card">
+          <h3><span class="no">C</span>Compose 里同名同义</h3>
+          <p>Compose 的 Dp 就是这套体系，没有新概念要学。</p>
+          <span class="path">Modifier.width(48.dp)</span>
+        </div>
+        <div class="dev-card">
+          <h3><span class="no">D</span>React Native 里也一样</h3>
+          <p>RN 样式里的数字，单位就是 dp；PixelRatio 拿到的就是汇率。</p>
+          <span class="path">PixelRatio.get() === 3</span>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ================= 尾声 ================= -->
+<footer>
+  <div class="wrap">
+    <p class="chain">
+      串起来讲一遍：屏幕是<b class="y">格子墙</b>(px)；
+      一英寸缝几针叫 <b class="g">ppi</b>；
+      Google 把它<b class="g">取整归档成尺码</b>(dpi)；
+      你按「<b class="y">美元」标价</b>写布局(dp)，系统按汇率换成当地货币；
+      字体多一条<b class="g">松紧带</b>(sp)。
+      绕了一大圈，就为做到一件事：<b class="r">在哪儿看，都一样大</b>。
+    </p>
+    <div class="foot-meta">
+      <span>PIXEL DENSITY · BEGINNER EDITION</span><span>单文件 · 零外部依赖 · 离线可用</span><span>为 JIA PENG 制作</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* ============ 进度条 & 滚动显现 ============ */
+const bar = document.getElementById('progress');
+addEventListener('scroll', () => {
+  const h = document.documentElement;
+  bar.style.width = (h.scrollTop / (h.scrollHeight - h.clientHeight) * 100) + '%';
+}, {passive:true});
+
+const io = new IntersectionObserver(es => {
+  es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+}, {threshold:.1});
+document.querySelectorAll('.rv').forEach(el => io.observe(el));
+
+/* ============ 像素心(ppi 直观对比) ============ */
+const HEART = [
+  "..XX..XX..",
+  ".XXXXXXXX.",
+  "XXXXXXXXXX",
+  "XXXXXXXXXX",
+  "XXXXXXXXXX",
+  ".XXXXXXXX.",
+  "..XXXXXX..",
+  "...XXXX...",
+  "....XX...."
+];
+function drawHeart(el, cell, displayW){
+  const w = 10 * cell, h = HEART.length * cell;
+  let s = `<svg width="${displayW}" height="${displayW * h / w}" viewBox="0 0 ${w} ${h}">`;
+  HEART.forEach((row, y) => [...row].forEach((c, x) => {
+    if (c === 'X') s += `<rect x="${x*cell}" y="${y*cell}" width="${cell}" height="${cell}" fill="#3DDC84" stroke="#1E8E3E" stroke-width="${cell*.08}"/>`;
+  }));
+  el.innerHTML = s + '</svg>';
+}
+drawHeart(document.getElementById('heartCoarse'), 10, 150);
+drawHeart(document.getElementById('heartFine'), 3.4, 150);
+
+/* ============ 桶工具 ============ */
+const BUCKETS = [
+  [120,'ldpi',0.75],[160,'mdpi',1],[240,'hdpi',1.5],
+  [320,'xhdpi',2],[480,'xxhdpi',3],[640,'xxxhdpi',4]
+];
+function nearestBucket(dpi){
+  let best = BUCKETS[0], bd = Infinity;
+  for (const b of BUCKETS){ const d = Math.abs(b[0]-dpi); if (d < bd){ bd = d; best = b; } }
+  return best;
+}
+
+/* ============ PPI 计算器 ============ */
+const $ = id => document.getElementById(id);
+function calcPpi(){
+  const d = parseFloat($('inDiag').value), w = parseFloat($('inW').value), h = parseFloat($('inH').value);
+  if (!(d > 0 && w > 0 && h > 0)){ $('ppiOut').textContent = '—'; $('ppiBucket').textContent = ''; return; }
+  const ppi = Math.sqrt(w*w + h*h) / d;
+  const b = nearestBucket(ppi);
+  $('ppiOut').textContent = Math.round(ppi);
+  $('ppiBucket').innerHTML =
+    `→ 按物理 ppi 就近<b>估</b>档：<span class="bkt">${b[1]}</span>(dpi=${b[0]},约 ${b[2]}×)<br><span style="color:var(--ink-2);font-size:12px">※ 手机真实倍率由厂商配置，不一定就近 —— 见 03 节真机档案</span>`;
+}
+['inDiag','inW','inH'].forEach(id => $(id).addEventListener('input', calcPpi));
+document.querySelectorAll('#ppiPresets .chip').forEach(c => c.addEventListener('click', () => {
+  $('inDiag').value = c.dataset.d; $('inW').value = c.dataset.w; $('inH').value = c.dataset.h;
+  calcPpi();
+}));
+calcPpi();
+
+/* ============ PX vs DP 对撞实验 ============ */
+const SCALE = 150; // 150 css px = 1 英寸(演示比例)
+function runDensity(chip){
+  document.querySelectorAll('#denChips .chip').forEach(c => c.classList.remove('on'));
+  chip.classList.add('on');
+  const dpi = +chip.dataset.dpi, x = +chip.dataset.x;
+  const name = chip.textContent.trim().split(' ')[0];
+  const pxW = 48 / dpi * SCALE;        // 48 个设备像素的物理宽度:48/dpi 英寸
+  const dpPx = 48 * x;                 // 48dp 换算出的设备像素数
+  const dpW = dpPx / dpi * SCALE;      // 物理宽度 = dpPx/dpi 英寸,恒为 0.3 英寸
+  $('btnPx').style.width = pxW + 'px';
+  $('btnDp').style.width = dpW + 'px';
+  $('capPx').innerHTML = `${name} 机 · 还是 48 格<br>但只占 ${(48/dpi).toFixed(2)}″ ${dpi>=480?'← 缩成一粒米':''}`;
+  $('capDp').innerHTML = `${name} 机 · 画 ${dpPx} 格<br>占 0.30″，不变`;
+  $('labMeta').innerHTML = `这台机的「汇率」density = <b>${x.toFixed(2).replace(/\.?0+$/,'')}</b> · 尺码 densityDpi = <b>${dpi}</b> · 1dp = ${x}px`;
+}
+document.querySelectorAll('#denChips .chip').forEach(c =>
+  c.addEventListener('click', () => runDensity(c)));
+runDensity(document.querySelector('#denChips .chip.on'));
+
+/* ============ SP 字体缩放 ============ */
+$('fsRange').addEventListener('input', e => {
+  const v = +e.target.value;
+  document.getElementById('spText').style.setProperty('--fs', v);
+  $('fsOut').textContent = Math.round(v * 100) + '%';
+});
+
+/* ============ 费曼终检:点圆圈标记「已讲清」 ============ */
+document.querySelectorAll('.recite-item').forEach(item => {
+  item.addEventListener('click', e => {
+    if (e.target.closest('.rc-back')) return;  // 点「回炉」链接不触发
+    item.classList.toggle('ok');
+  });
+});
+</script>
+</body>
+</html>

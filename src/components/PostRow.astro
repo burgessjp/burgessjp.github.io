@@ -3,13 +3,13 @@ interface Props {
   title: string;
   excerpt: string;
   date: string;
-  slug: string;
+  href: string;
 }
 
-const { title, excerpt, date, slug } = Astro.props;
+const { title, excerpt, date, href } = Astro.props;
 ---
 
-<a href={`/blog/${slug}/`} class="flex gap-4 py-4 border-b border-border no-underline group last:border-b-0">
+<a href={href} class="flex gap-4 py-4 border-b border-border no-underline group last:border-b-0">
   <span class="text-xs text-accent whitespace-nowrap pt-0.5 font-medium">{date}</span>
   <div class="min-w-0">
     <h3 class="font-serif text-base font-bold text-text mb-1 group-hover:text-accent transition-colors">{title}</h3>
